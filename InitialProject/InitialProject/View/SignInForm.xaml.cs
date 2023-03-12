@@ -1,6 +1,7 @@
 ﻿using InitialProject.Forms;
 using InitialProject.Model;
 using InitialProject.Repository;
+using InitialProject.View;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -41,6 +42,11 @@ namespace InitialProject
             InitializeComponent();
             DataContext = this;
             _repository = new UserRepository();
+            //Only to speed up testing
+            User user = _repository.GetByUsername("Zika");
+            AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
+            accommodationBrowser.Show();
+            Close();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -50,8 +56,7 @@ namespace InitialProject
             {
                 if(user.Password == txtPassword.Password)
                 {
-                    CommentsOverview commentsOverview = new CommentsOverview(user);
-                    commentsOverview.Show();
+                    OpenAppropriateWindow(user);
                     Close();
                 } 
                 else
@@ -64,6 +69,37 @@ namespace InitialProject
                 MessageBox.Show("Wrong username!");
             }
             
+        }
+        private void OpenAppropriateWindow(User user)
+        {
+            switch (user.UserType)
+            {
+                // TO DO: otrvoriti odgovarajuce prozore za svaki tip korisnika
+                case UserType.Owner:
+                    {
+                        CommentsOverview commentsOverview = new CommentsOverview(user);
+                        commentsOverview.Show();
+                        break;
+                    }
+                case UserType.Guest1:
+                    {
+                        AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
+                        accommodationBrowser.Show();
+                        break;
+                    }
+                case UserType.TourGuide:
+                    {
+                        CommentsOverview commentsOverview = new CommentsOverview(user);
+                        commentsOverview.Show();
+                        break;
+                    }
+                case UserType.Guest2:
+                    {
+                        CommentsOverview commentsOverview = new CommentsOverview(user);
+                        commentsOverview.Show();
+                        break;
+                    }
+            }
         }
     }
 }
