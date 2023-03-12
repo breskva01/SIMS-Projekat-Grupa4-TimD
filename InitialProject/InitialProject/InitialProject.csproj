@@ -9,9 +9,12 @@
 
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
+    <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\brvnara_tara.jpg" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\view.png" />
+    <None Remove="Resources\Images\vila_slap.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +30,16 @@
     <Content Include="Resources\Images\view.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\apartman_liman.jpg" />
+    <Resource Include="Resources\Images\brvnara_tara.jpg" />
+    <Resource Include="Resources\Images\vila_slap.jpg" />
   </ItemGroup>
 
 </Project>
