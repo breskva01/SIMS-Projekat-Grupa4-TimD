@@ -71,5 +71,6 @@
                 Click="RegisterAccommodation_Click" FontSize="18"/>
             </WrapPanel>
         </Grid>
-
+        
+    </Grid>
 </Window>

@@ -29,7 +29,7 @@ namespace InitialProject.Repository
 
         public Accommodation Save(Accommodation accommodation)
         {
-            //accommodation.Id = NextId(); Drugacije sam mislio da implementiram ovaj deo al mozemo posle korigovati
+            accommodation.Id = NextId();
             _accommodations = _serializer.FromCSV(FilePath);
             _accommodations.Add(accommodation);
             _serializer.ToCSV(FilePath, _accommodations);

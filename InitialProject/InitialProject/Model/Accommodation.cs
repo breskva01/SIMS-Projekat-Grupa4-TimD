@@ -9,8 +9,9 @@ using System.Xml.Linq;
 
 namespace InitialProject.Model
 {
-    public enum AccommodationType { Apartment, House, Cottage}
-    class Accommodation : ISerializable
+    //Everything only used for filter purposes, no accommodation should be assigned this value
+    public enum AccommodationType { Apartment, House, Cottage, Everything}
+    public class Accommodation : ISerializable
     {
         public int Id { get; set; }
         public string Name { get; set; }
