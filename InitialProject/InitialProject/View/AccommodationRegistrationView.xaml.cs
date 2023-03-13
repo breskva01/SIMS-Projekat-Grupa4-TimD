@@ -23,5 +23,16 @@ namespace InitialProject.View
         {
             InitializeComponent();
         }
+
+        private void RegisterAccomodation_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
     }
 }
