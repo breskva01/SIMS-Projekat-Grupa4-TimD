@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Model
 {
-    class Language
+    public class Language
     {
         public string Id { get; set; }
         public string Name { get; set; }

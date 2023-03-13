@@ -1,6 +1,10 @@
-﻿using System;
+﻿using InitialProject.Controller;
+using InitialProject.Model;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,11 +21,139 @@ namespace InitialProject.View
     /// <summary>
     /// Interaction logic for TourCreationView.xaml
     /// </summary>
-    public partial class TourCreationView : Window
+    public partial class TourCreationView : Window, INotifyPropertyChanged
     {
-        public TourCreationView()
+        private readonly TourController _tourController;
+        private readonly LocationController _locationController;
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if(value != _name)
+                {
+                    _name = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                if (value != _description)
+                {
+                    _description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private int _maximumGuests;
+        public int MaximumGuests
+        {
+            get => _maximumGuests;
+            set
+            {
+                if (value != _maximumGuests)
+                {
+                    _maximumGuests = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private DateTime _start;
+        public DateTime Start
+        {
+            get => _start;
+            set
+            {
+                if (value != _start)
+                {
+                    _start = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _duration;
+        public string Duration
+        {
+            get => _duration;
+            set
+            {
+                if (value != _duration)
+                {
+                    _duration = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _pictureUrl;
+        public string PictureUrl
+        {
+            get => _pictureUrl;
+            set
+            {
+                if (value != _pictureUrl)
+                {
+                    _pictureUrl = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _country;
+        public string Country
+        {
+            get => _country;
+            set
+            {
+                if (value != _country)
+                {
+                    _country = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _city;
+        public string City
+        {
+            get => _city;
+            set
+            {
+                if (value != _city)
+                {
+                    _city = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public TourCreationView(User user, TourController TourController, LocationController LocationController)
         {
             InitializeComponent();
+            DataContext = this;
+            
+            _tourController = TourController;
+            _locationController = LocationController;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void TourCreationClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void CancelButtonClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

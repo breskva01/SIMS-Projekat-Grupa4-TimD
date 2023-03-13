@@ -1,4 +1,5 @@
-﻿using InitialProject.Forms;
+﻿using InitialProject.Controller;
+using InitialProject.Forms;
 using InitialProject.Model;
 using InitialProject.Repository;
 using InitialProject.View;
@@ -13,7 +14,8 @@ namespace InitialProject
     /// </summary>
     public partial class SignInForm : Window
     {
-
+        private readonly TourController _tourController;
+        private readonly LocationController _locationController;
         private readonly UserRepository _repository;
 
         private string _username;
@@ -42,11 +44,11 @@ namespace InitialProject
             InitializeComponent();
             DataContext = this;
             _repository = new UserRepository();
-            //Only to speed up testing
+            /*//Only to speed up testing
             User user = _repository.GetByUsername("Zika");
             AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
             accommodationBrowser.Show();
-            Close();
+            Close();*/
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -89,8 +91,8 @@ namespace InitialProject
                     }
                 case UserType.TourGuide:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        TourCreationView tourCreationView = new TourCreationView(user, _tourController, _locationController);
+                        tourCreationView.Show();
                         break;
                     }
                 case UserType.Guest2:

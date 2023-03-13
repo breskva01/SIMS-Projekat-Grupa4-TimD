@@ -38,9 +38,10 @@
             <Label Grid.Row="7" Grid.Column="0" Height="30">Image</Label>
 
             <TextBox Grid.Row="0" Grid.Column="1" Height="20"></TextBox>
-            <ComboBox Grid.Row="1" Grid.Column="1" Height="20"></ComboBox>
+            <ComboBox Grid.Row="1" Grid.Column="1" Height="20" Width="90" HorizontalAlignment="Left"></ComboBox>
+            <ComboBox Grid.Row="1" Grid.Column="1" Height="20" Width="90" HorizontalAlignment="Right"></ComboBox>
             <TextBox Grid.Row="2" Grid.Column="1" Height="20"></TextBox>
-            <ComboBox Grid.Row="3" Grid.Column="1" Height="20"></ComboBox>
+            <ComboBox Grid.Row="3" Grid.Column="1" Height="20" ></ComboBox>
             <TextBox Grid.Row="4" Grid.Column="1" Height="20"></TextBox>
             <DatePicker Grid.Row="5" Grid.Column="1" Height="20"></DatePicker>
             <TextBox Grid.Row="6" Grid.Column="1" Height="20"></TextBox>
@@ -49,9 +50,9 @@
         </Grid>
         <WrapPanel Grid.Row="1" FlowDirection="RightToLeft">
             <Button IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="20, 5, 20, 5">Cancel</Button>
+                    Margin="20, 5, 20, 5" Content="Cancel" Click="CancelButtonClick"></Button>
             <Button IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="20, 5, 20, 5">Confirm</Button>
+                    Margin="20, 5, 20, 5" Content="Confirm" Click="TourCreationClick"></Button>
         </WrapPanel>
 
     </Grid>
