@@ -43,10 +43,10 @@ namespace InitialProject
             DataContext = this;
             _repository = new UserRepository();
             //Only to speed up testing
-            User user = _repository.GetByUsername("Zika");
-            AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
-            accommodationBrowser.Show();
-            Close();
+            //User user = _repository.GetByUsername("Bob");
+            //AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
+            //accommodationBrowser.Show();
+            //Close();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
