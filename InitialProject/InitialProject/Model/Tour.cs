@@ -11,7 +11,7 @@ using InitialProject.Model;
 
 namespace InitialProject.Model
 {
-    public enum Language
+    public enum GuideLanguage
     {
         Serbian,
         English
@@ -20,9 +20,10 @@ namespace InitialProject.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
+        public City City { get; set; }
+        public int CityId { get; set; }
         public string Description { get; set; }
-        public Language Language { get; set; }
+        public GuideLanguage Language { get; set; }
 
         public int MaximumGuests { get; set; }
         
@@ -30,13 +31,20 @@ namespace InitialProject.Model
         public int Duration { get; set; }
         public string PictureURL { get; set; }
         public int CurrentNumberOfGuests { get; set; }
-        public Tour() { }
+        public Tour() 
+        {
+            Name = string.Empty;
+            City = new City();
+            Description = string.Empty;
+            PictureURL = string.Empty;
+        }
 
-        public Tour(int id, string name, string location, string description, Language language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests)
+        public Tour(int id, string name, City city, int cityId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests)
         {
             Id = id;
             Name = name;
-            Location = location;
+            City = city;
+            CityId = cityId;
             Description = description;
             Language = language;
             MaximumGuests = maximumGuests;
@@ -50,9 +58,11 @@ namespace InitialProject.Model
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            Location = values[2];
+            CityId = Convert.ToInt32(values[2]);
+            /*City.Name = values[2];
+            City.Country = values[3];*/
             Description = values[3];
-            Language = (Language)Enum.Parse(typeof(Language), values[4]);
+            Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[4]);
             MaximumGuests = Convert.ToInt32(values[5]);
             Start = DateTime.Parse(values[6]);
             Duration = Convert.ToInt32(values[7]);
@@ -66,7 +76,7 @@ namespace InitialProject.Model
             {
                 Id.ToString(),
                 Name,
-                Location,
+                CityId.ToString(),
                 Description,
                 Language.ToString(),
                 MaximumGuests.ToString(),

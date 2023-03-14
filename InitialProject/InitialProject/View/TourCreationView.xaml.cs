@@ -1,5 +1,6 @@
 ﻿using InitialProject.Controller;
 using InitialProject.Model;
+using InitialProject.Storage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,19 +26,21 @@ namespace InitialProject.View
     /// </summary>
     public partial class TourCreationView : Window, INotifyPropertyChanged
     {
+        private List<City> cities;
+        private readonly Storage<City> _storage;
+        private const string FilePath = "../../../Resources/Data/cities.csv";
         private readonly TourController _tourController;
-        private readonly LocationController _locationController;
-        public ObservableCollection<Location> Locations { get; set; }
+        
 
-        private string _name;
-        public string Name
+        private string _tourName;
+        public new string TourName
         {
-            get => _name;
+            get => _tourName;
             set
             {
-                if(value != _name)
+                if(value != _tourName)
                 {
-                    _name = value;
+                    _tourName = value;
                     OnPropertyChanged();
                 }
             }
@@ -55,8 +58,8 @@ namespace InitialProject.View
                 }
             }
         }
-        private int _maximumGuests;
-        public int MaximumGuests
+        private string _maximumGuests;
+        public string MaximumGuests
         {
             get => _maximumGuests;
             set
@@ -94,6 +97,19 @@ namespace InitialProject.View
                 }
             }
         }
+        private string _languageType;
+        public string LanguageType
+        {
+            get => _languageType;
+            set
+            {
+                if (value != _languageType)
+                {
+                    _languageType = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         private string _pictureUrl;
         public string PictureUrl
         {
@@ -120,15 +136,15 @@ namespace InitialProject.View
                 }
             }
         }
-        private string _city;
-        public string City
+        private string _town;
+        public string Town
         {
-            get => _city;
+            get => _town;
             set
             {
-                if (value != _city)
+                if (value != _town)
                 {
-                    _city = value;
+                    _town = value;
                     OnPropertyChanged();
                 }
             }
@@ -139,21 +155,33 @@ namespace InitialProject.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TourCreationView(User user, TourController TourController, LocationController LocationController)
+        public TourCreationView(User user)
         {
             InitializeComponent();
             DataContext = this;
-            
-            _tourController = TourController;
-            _locationController = LocationController;
-            Locations = new ObservableCollection<Location>(_locationController.GetAll());
+            _storage = new Storage<City>(FilePath);
+            cities = _storage.Load();
+
+            // Set the items source of the country combo box to the distinct list of countries.
+            countryComboBox.ItemsSource = cities.Select(c => c.Country).Distinct();
+
+            _tourController = new TourController();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private void TourCreationClick(object sender, RoutedEventArgs e)
         {
-           //Location Location = _locationController.Create(Country, City);
+            City City = new City
+            {
+                Country = Country,
+                Name = Town
+            };
+            int TourDuration = int.Parse(Duration);
+            int MaxGuests = int.Parse(MaximumGuests);
+            GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
+            _tourController.CreateTour(TourName, City, Description,lang, MaxGuests, Start, TourDuration, PictureUrl);
+            Close();
 
         }
         private void CancelButtonClick(object sender, RoutedEventArgs e)
@@ -172,5 +200,13 @@ namespace InitialProject.View
             //(sender as ComboBox).ItemsSource = filteredItems;
         }
 
+        private void countryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Get the selected country.
+            string selectedCountry = (string)countryComboBox.SelectedValue;
+
+            // Set the items source of the city combo box to the cities of the selected country.
+            cityComboBox.ItemsSource = cities.Where(c => c.Country == selectedCountry);
+        }
     }
 }

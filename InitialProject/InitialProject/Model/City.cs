@@ -9,6 +9,7 @@ namespace InitialProject.Model
 {
     public class City : ISerializable
     {   
+        
         public string Name { get; set; }
         public string Country { get; set; }
         public City() { }
