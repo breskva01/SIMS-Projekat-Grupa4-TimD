@@ -61,7 +61,7 @@ namespace InitialProject.View
             string country = cmbCountry.Text;
             string city = cmbCity.Text;
             int duration = GetDuration();
-            Language language = GetLanguage();
+            GuideLanguage language = GetLanguage();
             int currentNumberOfGuests = GetCurrentNumberOfGuests();
 
             Tours.Clear();
@@ -83,16 +83,16 @@ namespace InitialProject.View
             return duration;
         }
 
-        private Language GetLanguage()
+        private GuideLanguage GetLanguage()
         {
             switch (cmbLanguage.SelectedIndex)
             {
                 case 0:
-                    return Model.Language.All;
+                    return GuideLanguage.All;
                 case 1:
-                    return Model.Language.Serbian;
+                    return GuideLanguage.Serbian;
                 default:
-                    return Model.Language.English;
+                    return GuideLanguage.English;
             }
         }
 

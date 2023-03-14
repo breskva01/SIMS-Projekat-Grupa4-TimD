@@ -20,7 +20,11 @@
             <TextBlock Text="Duration:" Margin="0,10,0,5" />
             <TextBox x:Name="tbDuration" Width="150" />
             <TextBlock Text="Language:" Margin="0,10,0,5" />
-            <ComboBox x:Name="cmbLanguage" Width="150" />
+            <ComboBox x:Name="cmbLanguage" Width="150">
+                <ComboBoxItem IsSelected="True" Content="All"/>
+                <ComboBoxItem Content="Serbian"/>
+                <ComboBoxItem Content="English"/>
+            </ComboBox>
             <TextBlock Text="Number of guests:" Margin="0,10,0,5" />
             <TextBox x:Name="tbNumberOfGuests" Width="150" />
         </StackPanel>
@@ -28,7 +32,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Image}" Width="100" Height="100" Margin="0,0,10,0" />
+                        <Image Source="{Binding PictureURL}" Width="100" Height="100" Margin="0,0,10,0" />
                         <StackPanel>
                             <TextBlock Text="{Binding Name}" FontWeight="Bold" />
                             <TextBlock>
@@ -38,6 +42,7 @@
                             <TextBlock>
                                 Tour duration: 
                                 <Run Text="{Binding Duration}"/>
+                                 h
                             </TextBlock>
                             <TextBlock>
                                 Language: 
