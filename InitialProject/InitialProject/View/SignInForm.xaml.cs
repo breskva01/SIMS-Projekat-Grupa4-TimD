@@ -1,4 +1,5 @@
-﻿using InitialProject.Forms;
+﻿using InitialProject.Controller;
+using InitialProject.Forms;
 using InitialProject.Model;
 using InitialProject.Repository;
 using InitialProject.View;
@@ -13,7 +14,8 @@ namespace InitialProject
     /// </summary>
     public partial class SignInForm : Window
     {
-
+        private readonly TourController _tourController;
+        private readonly LocationController _locationController;
         private readonly UserRepository _repository;
 
         private string _username;
@@ -43,10 +45,10 @@ namespace InitialProject
             DataContext = this;
             _repository = new UserRepository();
             //Only to speed up testing
-            //User user = _repository.GetByUsername("Bob");
-            //AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
-            //accommodationBrowser.Show();
-            //Close();
+            /*User user = _repository.GetByUsername("Zika");
+            AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
+            accommodationBrowser.Show();
+            Close();*/
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -74,11 +76,11 @@ namespace InitialProject
         {
             switch (user.UserType)
             {
-                // TO DO: otrvoriti odgovarajuce prozore za svaki tip korisnika
+                // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        AccommodationRegistrationView accommodationRegistrationView = new AccommodationRegistrationView(user);
+                        accommodationRegistrationView.Show();
                         break;
                     }
                 case UserType.Guest1:
@@ -89,8 +91,8 @@ namespace InitialProject
                     }
                 case UserType.TourGuide:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        TourCreationView tourCreationView = new TourCreationView(user, _tourController, _locationController);
+                        tourCreationView.Show();
                         break;
                     }
                 case UserType.Guest2:
