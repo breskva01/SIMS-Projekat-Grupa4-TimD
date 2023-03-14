@@ -43,6 +43,7 @@ namespace InitialProject.Model.DAO
             }
             return _tours.Max(t => t.Id) + 1;
         }
+        
         public void Delete(Tour tour)
         {
             _tours = _storage.Load();

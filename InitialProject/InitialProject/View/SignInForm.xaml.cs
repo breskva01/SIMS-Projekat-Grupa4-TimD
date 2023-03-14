@@ -14,7 +14,8 @@ namespace InitialProject
     /// </summary>
     public partial class SignInForm : Window
     {
-        private readonly TourController _tourController;
+        
+       
         private readonly UserRepository _repository;
 
         private string _username;
@@ -90,7 +91,7 @@ namespace InitialProject
                     }
                 case UserType.TourGuide:
                     {
-                        TourCreationView tourCreationView = new TourCreationView(user, _tourController);
+                        TourCreationView tourCreationView = new TourCreationView(user);
                         tourCreationView.Show();
                         break;
                     }
