@@ -15,6 +15,8 @@ namespace InitialProject.Model.DAO
         private readonly Storage<Accommodation> _storage;
         private List<Accommodation> _accommodations;
         private const string FilePath = "../../../Resources/Data/accommodations.csv";
+
+
         public AccommodationDAO()
         {
             _storage = new Storage<Accommodation>(FilePath);

@@ -1,9 +1,11 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Controller;
+using InitialProject.Model;
 using InitialProject.Storage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,22 +25,135 @@ namespace InitialProject.View
     public partial class AccommodationRegistrationView : Window, INotifyPropertyChanged
     {
 
-        private List<City> cities;
+        private List<City> _cities;
         private readonly Storage<City> _storage;
+        private readonly AccommodationController _controller;
         private const string FilePath = "../../../Resources/Data/cities.csv";
 
-        
+        private string _accommodationName;
+        public string AccommodationName
+        {
+            get => _accommodationName;
+            set
+            {
+                if (value != _accommodationName)
+                {
+                    _accommodationName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _country;
+        public string Country
+        {
+            get => _country;
+            set
+            {
+                if (value != _country)
+                {
+                    _country = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _city;
+        public string City
+        {
+            get => _city;
+            set
+            {
+                if (value != _city)
+                {
+                    _city = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private AccommodationType _type;
+        public AccommodationType Type
+        {
+            get => _type;
+            set
+            {
+                if (value != _type)
+                {
+                    _type = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _maximumGuests;
+        public string MaximumGuests
+        {
+            get => _maximumGuests;
+            set
+            {
+                if (value != _maximumGuests)
+                {
+                    _maximumGuests = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _minimumDays;
+        public string MinimumDays
+        {
+            get => _minimumDays;
+            set
+            {
+                if (value != _minimumDays)
+                {
+                    _minimumDays = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _minimumCancellationNotice = "1";
+        public string MinimumCancellationNotice
+        {
+            get => _minimumCancellationNotice;
+            set
+            {
+                if (value != _minimumCancellationNotice)
+                {
+                    _minimumCancellationNotice = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _pictureURL;
+        public string PictureURL
+        {
+            get => _pictureURL;
+            set
+            {
+                if (value != _pictureURL)
+                {
+                    _pictureURL = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
 
         public AccommodationRegistrationView(User user)
         {
             InitializeComponent();
-
+            DataContext = this;
+            _controller= new AccommodationController();
             // Assume citiesList is already initialized with data.
             _storage = new Storage<City>(FilePath);
-            cities = _storage.Load();
+            _cities = _storage.Load();
 
             // Set the items source of the country combo box to the distinct list of countries.
-            countryComboBox.ItemsSource = cities.Select(c => c.Country).Distinct();
+            countryComboBox.ItemsSource = _cities.Select(c => c.Country).Distinct();
         }
 
         private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -47,11 +162,15 @@ namespace InitialProject.View
             string selectedCountry = (string)countryComboBox.SelectedValue;
 
             // Set the items source of the city combo box to the cities of the selected country.
-            cityComboBox.ItemsSource = cities.Where(c => c.Country == selectedCountry);
+            cityComboBox.ItemsSource = _cities.Where(c => c.Country == selectedCountry);
         }
 
         private void RegisterAccommodation_Click(object sender, RoutedEventArgs e)
         {
+            int maximumGuests = int.Parse(MaximumGuests);
+            int minimumDays = int.Parse(MinimumDays);
+            int minimumCancellationNotice = int.Parse(MinimumCancellationNotice);
+            _controller.RegisterAccommodation(AccommodationName, Country, City, Type, maximumGuests, minimumDays, minimumCancellationNotice, PictureURL);
             Close();
         }
 
@@ -61,6 +180,11 @@ namespace InitialProject.View
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
     }
 }

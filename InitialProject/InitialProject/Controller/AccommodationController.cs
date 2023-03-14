@@ -26,5 +26,10 @@ namespace InitialProject.Controller
         {
             return _accommodationDAO.GetFiltered(keyWords, type, guestNumber, numberOfDays);
         }
+        public void RegisterAccommodation(string name, string country, string city, AccommodationType type, int maximumGuests,
+            int minimumDays, int minimumCancelationNotice, string pictureURL)
+        {
+            _accommodationDAO.Add(name, country, city, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL);
+        }
     }
 }
