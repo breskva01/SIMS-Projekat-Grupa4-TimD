@@ -2,6 +2,7 @@
 using InitialProject.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace InitialProject.View
 {
@@ -25,6 +27,7 @@ namespace InitialProject.View
     {
         private readonly TourController _tourController;
         private readonly LocationController _locationController;
+        public ObservableCollection<Location> Locations { get; set; }
 
         private string _name;
         public string Name
@@ -143,17 +146,31 @@ namespace InitialProject.View
             
             _tourController = TourController;
             _locationController = LocationController;
+            Locations = new ObservableCollection<Location>(_locationController.GetAll());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private void TourCreationClick(object sender, RoutedEventArgs e)
         {
+           //Location Location = _locationController.Create(Country, City);
 
         }
         private void CancelButtonClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
+
+        private void ComboBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var currentText = (sender as ComboBox).Text;
+
+            // Filter the items based on the current text
+            //var filteredItems = Locations.Where(l => l.StartsWith(currentText, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            // Set the ItemsSource of the combobox to the filtered items
+            //(sender as ComboBox).ItemsSource = filteredItems;
+        }
+
     }
 }

@@ -1,12 +1,13 @@
-﻿using InitialProject.Serializer;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Media;
+using System.Xaml.Schema;
 using System.Xml.Linq;
+using InitialProject.Serializer;
+using InitialProject.Model;
 
 namespace InitialProject.Model
 {
@@ -15,6 +16,13 @@ namespace InitialProject.Model
         public int Id { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
+        public Location() { }   
+        public Location(int id, string country, string city)
+        {
+            Id = id;
+            Country = country;
+            City = city;
+        }
 
         public void FromCSV(string[] values)
         {
