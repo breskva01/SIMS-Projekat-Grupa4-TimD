@@ -43,10 +43,10 @@ namespace InitialProject
             DataContext = this;
             _repository = new UserRepository();
             //Only to speed up testing
-            User user = _repository.GetByUsername("Zika");
+            /*User user = _repository.GetByUsername("Zika");
             AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
             accommodationBrowser.Show();
-            Close();
+            Close();*/
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -74,11 +74,11 @@ namespace InitialProject
         {
             switch (user.UserType)
             {
-                // TO DO: otrvoriti odgovarajuce prozore za svaki tip korisnika
+                // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        AccommodationRegistrationView accommodationRegistrationView = new AccommodationRegistrationView(user);
+                        accommodationRegistrationView.Show();
                         break;
                     }
                 case UserType.Guest1:

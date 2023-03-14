@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.View"
         mc:Ignorable="d"
-        Title="AccommodationRegistrationView" Height="650" Width="850">
-    <Grid>
+        Title="AccommodationRegistrationView" Height="660" Width="850">
+    <Grid RenderTransformOrigin="0.492,0.511">
         <Grid.RowDefinitions>
             <RowDefinition Height="580"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -45,9 +45,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Row="0" Grid.Column="0" Height="30" FontSize="18">
+                <ComboBox x:Name="countryComboBox" Grid.Row="0" Grid.Column="0" Height="30" FontSize="18" 
+                          SelectionChanged="CountryComboBox_SelectionChanged">
                 </ComboBox>
-                <ComboBox Grid.Row="0" Grid.Column="1" Height="30" FontSize="18">
+                <ComboBox Grid.Row="0" Grid.Column="1" Height="30" FontSize="18" x:Name="cityComboBox" DisplayMemberPath="Name" SelectedValuePath="Name" >
                 </ComboBox>
             </Grid>
             <ComboBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged}" Height="30" FontSize="18">
@@ -64,13 +65,11 @@
             <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Path=PictureURL, UpdateSourceTrigger=PropertyChanged}" Height="30" FontSize="18">
             </TextBox>
         </Grid>
-                <WrapPanel Grid.Row="1" Grid.Column="0" FlowDirection="RightToLeft">
-                <Button Content="Odustani" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+        <WrapPanel Grid.Row="1" Grid.Column="0" FlowDirection="RightToLeft">
+            <Button Content="Odustani" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
                 Click="CancelButton_Click" FontSize="18"/>
-                <Button Content="Potvrdi" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+            <Button Content="Potvrdi" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
                 Click="RegisterAccommodation_Click" FontSize="18"/>
-            </WrapPanel>
-        </Grid>
-        
+        </WrapPanel>
     </Grid>
 </Window>
