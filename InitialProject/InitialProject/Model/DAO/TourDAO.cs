@@ -50,6 +50,27 @@ namespace InitialProject.Model.DAO
             _tours.Remove(founded);
             _storage.Save(_tours);
         }
+
+        public List<Tour> GetFiltered(string country, string city, int duration, Language language, int currentNumberOfGuests)
+        {
+            _tours = _storage.Load();
+            List<Tour> filteredTours = new();
+
+            foreach (Tour tour in _tours)
+            {
+                bool countryMatch = tour.City.Country == country || country == null;
+                bool cityMatch = tour.City.Name == city || city == null;
+                bool durationMatch = tour.Duration == duration || duration == 0;
+                bool languageMatch = tour.Language == language || language == Language.All;
+                bool currentNumberOfGuestsMatch = (tour.CurrentNumberOfGuests == currentNumberOfGuests && tour.CurrentNumberOfGuests <= tour.MaximumGuests) || currentNumberOfGuests == 0;
+                if (countryMatch && cityMatch && durationMatch && languageMatch && currentNumberOfGuestsMatch)
+                {
+                    filteredTours.Add(tour);
+                }
+            }
+            return filteredTours;
+        }
+
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

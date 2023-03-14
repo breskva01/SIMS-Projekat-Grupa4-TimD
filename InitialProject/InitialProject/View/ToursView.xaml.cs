@@ -1,6 +1,7 @@
 ﻿using InitialProject.Controller;
 using InitialProject.Model;
 using InitialProject.Repository;
+using InitialProject.Storage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +29,10 @@ namespace InitialProject.View
         public ObservableCollection<Tour> Tours { get; set; }
         public Tour SelectedTour { get; set; }
         private readonly TourController _controller;
-        
+        private List<City> cities;
+        private readonly Storage<City> citiesStorage;
+        private const string FilePath = "../../../Resources/Data/cities.csv";
+
 
         public ToursView(User user)
         {
@@ -37,25 +41,89 @@ namespace InitialProject.View
             LoggedInUser = user;
             _controller = new TourController();
             Tours = new ObservableCollection<Tour>(_controller.GetAll());
+            citiesStorage = new Storage<City>(FilePath);
+            cities = citiesStorage.Load();
+            cmbCountry.ItemsSource = cities.Select(c => c.Country).Distinct();
+
 
             Height = SystemParameters.PrimaryScreenHeight * 0.75;
             Width = SystemParameters.PrimaryScreenWidth * 0.75;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        private void cmbCountrySelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedCountry = (string)cmbCountry.SelectedValue;
+            cmbCity.ItemsSource = cities.Where(c => c.Country == selectedCountry);
+        }
 
         private void ApplyClick(object sender, RoutedEventArgs e)
         {
-            string keyWords = SearchTextBox.Text;
-            AccommodationType type = GetType();
-            int guestNumber = GetGuestNumber();
-            int numberOfDays = GetNumberOfDays();
+            string country = cmbCountry.Text;
+            string city = cmbCity.Text;
+            int duration = GetDuration();
+            Language language = GetLanguage();
+            int currentNumberOfGuests = GetCurrentNumberOfGuests();
 
-            Accommodations.Clear();
-            foreach (var accommodation in _controller.GetFiltered(keyWords, type, guestNumber, numberOfDays))
+            Tours.Clear();
+            foreach (var tour in _controller.GetFiltered(country, city, duration, language, currentNumberOfGuests))
             {
-                Accommodations.Add(accommodation);
+                Tours.Add(tour);
             }
         }
+
+        private int GetDuration()
+        {
+            int duration = 0;
+            try
+            {
+                duration = int.Parse(tbDuration.Text);
+            }
+            catch { };
+            
+            return duration;
+        }
+
+        private Language GetLanguage()
+        {
+            switch (cmbLanguage.SelectedIndex)
+            {
+                case 0:
+                    return Model.Language.All;
+                case 1:
+                    return Model.Language.Serbian;
+                default:
+                    return Model.Language.English;
+            }
+        }
+
+        private int GetCurrentNumberOfGuests()
+        {
+            int currentNumberOfGuests = 0;
+            try
+            {
+                currentNumberOfGuests = int.Parse(tbNumberOfGuests.Text);
+            }
+            catch { };
+
+            return currentNumberOfGuests;
+        }
+
+        private void ResetClick(object sender, RoutedEventArgs e)
+        {
+            cmbCountry.SelectedItem = null; 
+            cmbCity.SelectedItem = null;
+            tbDuration.Clear();
+            cmbLanguage.SelectedIndex = 0;
+            tbNumberOfGuests.Clear();
+            Tours.Clear();
+            foreach (var tour in _controller.GetAll())
+            {
+                Tours.Add(tour);
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        
     }
 }

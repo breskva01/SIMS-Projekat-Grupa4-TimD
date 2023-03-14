@@ -26,7 +26,6 @@ namespace InitialProject.View
     public partial class TourCreationView : Window, INotifyPropertyChanged
     {
         private readonly TourController _tourController;
-        private readonly LocationController _locationController;
         public ObservableCollection<Location> Locations { get; set; }
 
         private string _name;
@@ -139,14 +138,12 @@ namespace InitialProject.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TourCreationView(User user, TourController TourController, LocationController LocationController)
+        public TourCreationView(User user, TourController TourController)
         {
             InitializeComponent();
             DataContext = this;
-            
+
             _tourController = TourController;
-            _locationController = LocationController;
-            Locations = new ObservableCollection<Location>(_locationController.GetAll());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

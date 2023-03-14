@@ -13,6 +13,7 @@ namespace InitialProject.Model
 {
     public enum Language
     {
+        All,
         Serbian,
         English
     }
