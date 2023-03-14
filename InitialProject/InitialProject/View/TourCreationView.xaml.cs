@@ -172,11 +172,17 @@ namespace InitialProject.View
 
         private void TourCreationClick(object sender, RoutedEventArgs e)
         {
+            /*
             City City = new City
             {
+                CityId
                 Country = Country,
                 Name = Town
-            };
+            };*/
+            City City = new City();
+            City.Country = Country;
+            City.Name = Town;
+            City.CityId = cities.Where(c => c.Name == Town).Select(c => c.CityId).FirstOrDefault();
             int TourDuration = int.Parse(Duration);
             int MaxGuests = int.Parse(MaximumGuests);
             GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
@@ -184,6 +190,16 @@ namespace InitialProject.View
             Close();
 
         }
+        /*
+        public int NextId()
+        {
+            cities = _storage.Load();
+            if (cities.Count < 1)
+            {
+                return 1;
+            }
+            return cities.Max(t => t.CityId) + 1;
+        }*/
         private void CancelButtonClick(object sender, RoutedEventArgs e)
         {
             Close();

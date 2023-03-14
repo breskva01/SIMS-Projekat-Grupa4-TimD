@@ -31,6 +31,7 @@ namespace InitialProject.Model
         public int Duration { get; set; }
         public string PictureURL { get; set; }
         public int CurrentNumberOfGuests { get; set; }
+        public List<KeyPoint> keyPoints { get; set; }
         public Tour() 
         {
             Name = string.Empty;
@@ -39,11 +40,10 @@ namespace InitialProject.Model
             PictureURL = string.Empty;
         }
 
-        public Tour(int id, string name, City city, int cityId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests)
+        public Tour(int id, string name, int cityId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests)
         {
             Id = id;
             Name = name;
-            City = city;
             CityId = cityId;
             Description = description;
             Language = language;

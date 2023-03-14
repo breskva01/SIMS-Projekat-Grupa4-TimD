@@ -23,9 +23,11 @@ namespace InitialProject.Controller
         }
         public Tour CreateTour(string Name, City City, string Description,GuideLanguage Language, int MaximumGuests, DateTime Start,int Duration, string PictureUrl) 
         {
+            int CityId = City.CityId;
             Tour Tour = new Tour();
             Tour.Name = Name;
             Tour.City = City;
+            Tour.CityId = CityId;
             Tour.Description = Description;
             Tour.Language = Language;
             Tour.MaximumGuests = MaximumGuests;
