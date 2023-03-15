@@ -59,8 +59,8 @@ namespace InitialProject.Model.DAO
 
             foreach (Tour tour in _tours)
             {
-                bool countryMatch = tour.City.Country == country || country == null || country == "";
-                bool cityMatch = tour.City.Name == city || city == null || city =="";
+                bool countryMatch = tour.City.Country == country || country == "";
+                bool cityMatch = tour.City.Name == city || city =="";
                 bool durationMatch = tour.Duration == duration || duration == 0;
                 bool languageMatch = tour.Language == language || language == GuideLanguage.All;
                 bool currentNumberOfGuestsMatch = (tour.CurrentNumberOfGuests == currentNumberOfGuests && tour.CurrentNumberOfGuests <= tour.MaximumGuests) || currentNumberOfGuests == 0;

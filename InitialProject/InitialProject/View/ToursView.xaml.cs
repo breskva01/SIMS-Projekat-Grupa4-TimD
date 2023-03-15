@@ -110,8 +110,8 @@ namespace InitialProject.View
 
         private void ResetClick(object sender, RoutedEventArgs e)
         {
-            cmbCountry.SelectedItem = null; 
-            cmbCity.SelectedItem = null;
+            cmbCountry.SelectedItem = ""; 
+            cmbCity.SelectedItem = "";
             tbDuration.Clear();
             cmbLanguage.SelectedIndex = 0;
             tbNumberOfGuests.Clear();
