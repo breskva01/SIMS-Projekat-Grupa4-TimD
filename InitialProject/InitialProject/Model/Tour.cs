@@ -82,10 +82,6 @@ namespace InitialProject.Model
             {
                KeyPointIds.Add(Convert.ToInt32(keyPoint));
             }
-            foreach(int ky in KeyPointIds)
-            {
-                Console.WriteLine(ky);
-            }
 
         }
         public string[] ToCSV()
