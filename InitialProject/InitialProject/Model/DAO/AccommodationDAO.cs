@@ -1,4 +1,5 @@
-﻿using InitialProject.Observer;
+﻿using InitialProject.FileHandler;
+using InitialProject.Observer;
 using InitialProject.Serializer;
 using InitialProject.Storage;
 using System;
@@ -12,22 +13,21 @@ namespace InitialProject.Model.DAO
     public class AccommodationDAO : ISubject
     {
         private readonly List<IObserver> _observers;
-        private readonly Storage<Accommodation> _storage;
+        private readonly AccommodationFileHandler _fileHandler;
         private List<Accommodation> _accommodations;
-        private const string FilePath = "../../../Resources/Data/accommodations.csv";
         public AccommodationDAO()
         {
-            _storage = new Storage<Accommodation>(FilePath);
-            _accommodations = _storage.Load();
+            _fileHandler = new AccommodationFileHandler();
+            _accommodations = _fileHandler.Load();
             _observers = new List<IObserver>();
         }
         public List<Accommodation> GetAll()
         {
-            return _storage.Load();
+            return _fileHandler.Load();
         }
         public List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
         {
-            _accommodations = _storage.Load();
+            _accommodations = _fileHandler.Load();
             List<Accommodation> filteredAccommodations = new();
 
             foreach (Accommodation accommodation in _accommodations)
@@ -57,15 +57,15 @@ namespace InitialProject.Model.DAO
         public Accommodation Save(Accommodation accommodation)
         {
             accommodation.Id = NextId();
-            _accommodations = _storage.Load();
+            _accommodations = _fileHandler.Load();
             _accommodations.Add(accommodation);
-            _storage.Save(_accommodations);
+            _fileHandler.Save(_accommodations);
             return accommodation;
         }
 
         public int NextId()
         {
-            _accommodations = _storage.Load();
+            _accommodations = _fileHandler.Load();
             if (_accommodations.Count < 1)
             {
                 return 1;
@@ -75,10 +75,10 @@ namespace InitialProject.Model.DAO
 
         public void Delete(Accommodation accommodation)
         {
-            _accommodations = _storage.Load();
+            _accommodations = _fileHandler.Load();
             Accommodation founded = _accommodations.Find(a => a.Id == accommodation.Id);
             _accommodations.Remove(founded);
-            _storage.Save(_accommodations);
+            _fileHandler.Save(_accommodations);
         }
         public void Subscribe(IObserver observer)
         {
