@@ -16,6 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using Xceed.Wpf.Toolkit;
@@ -105,6 +106,15 @@ namespace InitialProject.View
             {
                 Accommodations.Add(accommodation);
             }
+        }
+
+        private void AccommodationNameClick(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            string name = textBlock.Text;
+            SelectedAccommodation = Accommodations.FirstOrDefault(a => a.Name == name);
+            AccommodationReservation accommodationReservation = new AccommodationReservation(_controller, LoggedInUser, SelectedAccommodation);
+            accommodationReservation.ShowDialog();
         }
     }
 }
