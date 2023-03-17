@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Printing;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +27,13 @@ namespace InitialProject.View
     /// </summary>
     public partial class TourCreationView : Window, INotifyPropertyChanged
     {
+        //public ObservableCollection<string> MyList { get; set; }
         private List<City> cities;
-        private readonly Storage<City> _storage;
+        private List<KeyPoint> keyPoints;
+        private readonly Storage<City> _storageCity;
+        private readonly Storage<KeyPoint> _storageKeyPoint;
         private const string FilePath = "../../../Resources/Data/cities.csv";
+        private const string FilePathKY = "../../../Resources/Data/keyPoints.csv";
         private readonly TourController _tourController;
         
 
@@ -149,7 +154,8 @@ namespace InitialProject.View
                 }
             }
         }
-
+        private List<KeyPoint> tourKeyPoints = new List<KeyPoint>();
+        private List<KeyPoint> attractions = new List<KeyPoint>();
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -159,35 +165,42 @@ namespace InitialProject.View
         {
             InitializeComponent();
             DataContext = this;
-            _storage = new Storage<City>(FilePath);
-            cities = _storage.Load();
+            _storageCity = new Storage<City>(FilePath);
+            _storageKeyPoint = new Storage<KeyPoint>(FilePathKY);
+            keyPoints = _storageKeyPoint.Load();
+            cities = _storageCity.Load();
 
             // Set the items source of the country combo box to the distinct list of countries.
             countryComboBox.ItemsSource = cities.Select(c => c.Country).Distinct();
+            keyPointCity.ItemsSource = cities.Select(c => c.Name).Distinct();
+            //countryComboBox1.ItemsSource = keyPoints.Select(k => k.Attraction).Distinct();
 
             _tourController = new TourController();
+            //MyList = new ObservableCollection<string> { "Zela", "Spale", "Papi" };
+            //DataContext = MyList;
+            //combo.ItemsSource = MyList;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private void TourCreationClick(object sender, RoutedEventArgs e)
         {
-            /*
-            City City = new City
+            if(tourKeyPoints.Count() > 1)
             {
-                CityId
-                Country = Country,
-                Name = Town
-            };*/
-            City City = new City();
-            City.Country = Country;
-            City.Name = Town;
-            City.CityId = cities.Where(c => c.Name == Town).Select(c => c.CityId).FirstOrDefault();
-            int TourDuration = int.Parse(Duration);
-            int MaxGuests = int.Parse(MaximumGuests);
-            GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
-            _tourController.CreateTour(TourName, City, Description,lang, MaxGuests, Start, TourDuration, PictureUrl);
-            Close();
+                City City = new City();
+                City.Country = Country;
+                City.Name = Town;
+                City.CityId = cities.Where(c => c.Name == Town).Select(c => c.CityId).FirstOrDefault();
+                int TourDuration = int.Parse(Duration);
+                int MaxGuests = int.Parse(MaximumGuests);
+                GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
+                _tourController.CreateTour(TourName, City, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, tourKeyPoints);
+                MessageBox.Show("Tura uspesno kreirana");
+            }
+            else
+            {
+                MessageBox.Show("Mora biti najmanje dve kljucne tacke");
+            }
 
         }
         /*
@@ -223,6 +236,67 @@ namespace InitialProject.View
 
             // Set the items source of the city combo box to the cities of the selected country.
             cityComboBox.ItemsSource = cities.Where(c => c.Country == selectedCountry);
+        }
+
+        private void KeyPointCity(object sender, TextCompositionEventArgs e)
+        {
+            keyPointCity.ItemsSource = cities.Select(c => c.Name).Distinct();
+        }
+
+        private void KeyPointAttraction(object sender, TextCompositionEventArgs e)
+        {
+           
+        }
+
+        private void cityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string city = cityComboBox.SelectedValue.ToString();
+            keyPointCity.SelectedValue = city;
+            
+            //keyPointCity.Text = cityComboBox.SelectedValue.ToString();
+            /*Console.WriteLine(keyPointCity.Inde);
+            Console.WriteLine(keyPointCity.SelectedValue);*/
+        }
+
+        private void keyPointCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (keyPointCity.SelectedIndex != -1)
+            {
+                string city = keyPointCity.SelectedValue.ToString();
+                List<KeyPoint> attractions = new List<KeyPoint>();
+
+
+                foreach (City c in cities)
+                {
+                    if (city == c.Name)
+                    {
+                        foreach (KeyPoint ky in keyPoints)
+                        {
+                            if (ky.CityId == c.CityId)
+                            {
+                                attractions.Add(ky);
+                            }
+                        }
+                    }
+                }
+                keyPointAttraction.ItemsSource = attractions.Select(a => a.Attraction);
+            }
+        }
+
+        private void Add_Attraction_Click(object sender, RoutedEventArgs e)
+        {
+            KeyPoint ky = keyPoints.Where(ky => ky.Attraction == keyPointAttraction.SelectedValue.ToString()).FirstOrDefault();
+            
+            tourKeyPoints.Add(ky);
+            Console.WriteLine(ky.Id);
+            keyPointCity.SelectedIndex = -1;
+            keyPointAttraction.SelectedIndex = -1;
+
+        }
+
+        private void keyPointAttraction_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

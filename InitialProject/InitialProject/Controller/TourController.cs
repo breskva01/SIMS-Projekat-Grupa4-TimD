@@ -21,7 +21,7 @@ namespace InitialProject.Controller
         {
             return _tourDAO.GetAll();
         }
-        public Tour CreateTour(string Name, City City, string Description,GuideLanguage Language, int MaximumGuests, DateTime Start,int Duration, string PictureUrl) 
+        public Tour CreateTour(string Name, City City, string Description,GuideLanguage Language, int MaximumGuests, DateTime Start,int Duration, string PictureUrl, List<KeyPoint> ky) 
         {
             int CityId = City.CityId;
             Tour Tour = new Tour();
@@ -35,6 +35,7 @@ namespace InitialProject.Controller
             Tour.Duration = Duration;
             Tour.PictureURL = PictureUrl;
             Tour.CurrentNumberOfGuests = 0;
+            Tour.KeyPoints = ky;
             return _tourDAO.Save(Tour);
         }
     }
