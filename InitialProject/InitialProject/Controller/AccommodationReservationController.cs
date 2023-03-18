@@ -21,5 +21,11 @@ namespace InitialProject.Controller
         {
             return _reservationDAO.GetAll();
         }
+        public List<AccommodationReservation> FindAvailable(DateTime beginDateTime, DateTime endDateTime, int days, Accommodation accommodation, User guest)
+        {
+            DateOnly beginDate = DateOnly.FromDateTime(beginDateTime);
+            DateOnly endDate = DateOnly.FromDateTime(endDateTime);
+            return _reservationDAO.FindAvailable(beginDate, endDate, days, accommodation, guest);
+        }
     }
 }
