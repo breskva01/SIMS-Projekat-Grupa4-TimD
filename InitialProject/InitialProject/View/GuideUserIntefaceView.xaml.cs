@@ -37,7 +37,8 @@ namespace InitialProject.View
 
         private void TourTrackingClick(object sender, RoutedEventArgs e)
         {
-
+            GuideTourListView guideTourList = new GuideTourListView(User);
+            guideTourList.Show();
         }
     }
 }

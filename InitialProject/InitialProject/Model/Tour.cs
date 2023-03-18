@@ -16,6 +16,12 @@ namespace InitialProject.Model
         Serbian,
         English
     }
+    public enum TourState
+    {
+        Started,
+        Interrupted,
+        Finished
+    }
     public class Tour : ISerializable
     {
         public int Id { get; set; }
@@ -34,6 +40,7 @@ namespace InitialProject.Model
         public List<KeyPoint> KeyPoints { get; set; }
 
         public List<int> KeyPointIds { get; set; }
+        public TourState State { get; set; }
         public Tour() 
         {
             Name = string.Empty;

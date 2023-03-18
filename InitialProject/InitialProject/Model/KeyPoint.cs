@@ -10,13 +10,14 @@ namespace InitialProject.Model
     public class KeyPoint : ISerializable
     {
         public int Id { get; set; }
-        public int CityId { get; set; }
+        public int LocationId { get; set; }
+        public Location Location { get; set; }
         public string Attraction { get; set; }
 
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            CityId = Convert.ToInt32(values[1]);
+            LocationId = Convert.ToInt32(values[1]);
             Attraction = values[2];
         }
 
@@ -25,7 +26,7 @@ namespace InitialProject.Model
             string[] csvValues =
             {
                 Id.ToString(),
-                CityId.ToString(),
+                LocationId.ToString(),
                 Attraction
             };
             return csvValues;

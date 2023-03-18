@@ -252,7 +252,7 @@ namespace InitialProject.View
                     {
                         foreach (KeyPoint ky in keyPoints)
                         {
-                            if (ky.CityId == l.Id)
+                            if (ky.LocationId == l.Id)
                             {
                                 attractions.Add(ky);
                             }
