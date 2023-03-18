@@ -78,8 +78,8 @@ namespace InitialProject
                 // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
-                        AccommodationRegistrationView accommodationRegistrationView = new AccommodationRegistrationView(user);
-                        accommodationRegistrationView.Show();
+                        OwnerView ownerView= new OwnerView(user);
+                        ownerView.Show();
                         break;
                     }
                 case UserType.Guest1:
