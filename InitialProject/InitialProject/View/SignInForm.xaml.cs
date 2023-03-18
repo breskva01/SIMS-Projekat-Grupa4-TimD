@@ -91,8 +91,8 @@ namespace InitialProject
                     }
                 case UserType.TourGuide:
                     {
-                        TourCreationView tourCreationView = new TourCreationView(user);
-                        tourCreationView.Show();
+                        GuideUserIntefaceView guideInteface = new GuideUserIntefaceView(user);
+                        guideInteface.Show();
                         break;
                     }
                 case UserType.Guest2:

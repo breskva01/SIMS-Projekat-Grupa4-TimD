@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InitialProject.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using InitialProject.View;
 
 namespace InitialProject.View
 {
@@ -19,9 +21,23 @@ namespace InitialProject.View
     /// </summary>
     public partial class GuideUserIntefaceView : Window
     {
-        public GuideUserIntefaceView()
+        User User { get; set; }
+        public GuideUserIntefaceView(User user)
         {
             InitializeComponent();
+            DataContext = this;
+            User = user;
+        }
+
+        private void CreateTourClick(object sender, RoutedEventArgs e)
+        {
+            TourCreationView tourCreation = new TourCreationView(User);
+            tourCreation.Show();
+        }
+
+        private void TourTrackingClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

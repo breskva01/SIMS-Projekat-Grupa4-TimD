@@ -20,8 +20,8 @@ namespace InitialProject.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public City City { get; set; }
-        public int CityId { get; set; }
+        public Location Location { get; set; }
+        public int LocationId { get; set; }
         public string Description { get; set; }
         public GuideLanguage Language { get; set; }
 
@@ -37,17 +37,18 @@ namespace InitialProject.Model
         public Tour() 
         {
             Name = string.Empty;
-            City = new City();
+            Location = new Location();
             Description = string.Empty;
             PictureURL = string.Empty;
             KeyPoints = new List<KeyPoint>();
+            KeyPointIds = new List<int>();  
         }
 
-        public Tour(int id, string name, int cityId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky)
+        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky)
         {
             Id = id;
             Name = name;
-            CityId = cityId;
+            LocationId = locationId;
             Description = description;
             Language = language;
             MaximumGuests = maximumGuests;
@@ -62,17 +63,13 @@ namespace InitialProject.Model
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            CityId = Convert.ToInt32(values[2]);
-            /*City.Name = values[2];
-            City.Country = values[3];*/ 
+            LocationId = Convert.ToInt32(values[2]);
             Description = values[3];
-
             Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[4]);
             MaximumGuests = Convert.ToInt32(values[5]);
             Start = DateTime.Parse(values[6]);
             Duration = Convert.ToInt32(values[7]);
             PictureURL = values[8];
-            // maybe change the name of field to NumberOfGuests
             CurrentNumberOfGuests = Convert.ToInt32(values[9]);
             string keyPoints = values[10];
             string[] splitKeyPoints = keyPoints.Split(',');
@@ -86,16 +83,16 @@ namespace InitialProject.Model
         }
         public string[] ToCSV()
         {
-            string keyPoints = "";
-            foreach (KeyPoint ky in KeyPoints)
+            string keyPointIds = "";
+            foreach (int kyid in KeyPointIds)
             {
-                keyPoints += ky.Id.ToString() + ",";
+                keyPointIds += kyid.ToString() + ",";
             }
             string[] csvValues =
             {
                 Id.ToString(),
                 Name,
-                CityId.ToString(),
+                LocationId.ToString(),
                 Description,
                 Language.ToString(),
                 MaximumGuests.ToString(),
@@ -103,7 +100,7 @@ namespace InitialProject.Model
                 Duration.ToString(),  
                 PictureURL.ToString(),
                 CurrentNumberOfGuests.ToString(),
-                keyPoints
+                keyPointIds
             };
             return csvValues;
         }
