@@ -53,7 +53,7 @@
                 <StackPanel Margin="10 0 0 0">
                     <DatePicker x:Name="startDatePicker" Language="sr-Latn" Margin="5 0 0 10" DisplayDateStart="{x:Static sys:DateTime.Now}"/>
                     <DatePicker x:Name="endDatePicker" Language="sr-Latn" Margin="5 0 0 10" DisplayDateStart="{x:Static sys:DateTime.Now}"/>
-                    <TextBox x:Name="daysTextBox" Margin="5,0" MinWidth="100" Text="{Binding Path=Days, Mode=OneWayToSource}"/>
+                    <TextBox x:Name="daysTextBox" Margin="5,0" MinWidth="100" Text="{Binding Path=Days, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </StackPanel>
             <Button HorizontalAlignment="Left" Content="Pronađi slobodne termine" Padding="3" Margin="0 20 "

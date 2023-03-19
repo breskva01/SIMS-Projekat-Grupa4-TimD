@@ -27,5 +27,9 @@ namespace InitialProject.Controller
             DateOnly endDate = DateOnly.FromDateTime(endDateTime);
             return _reservationDAO.FindAvailable(beginDate, endDate, days, accommodation, guest);
         }
+        public void Save(AccommodationReservation reservation)
+        {
+            _reservationDAO.Save(reservation);
+        }
     }
 }
