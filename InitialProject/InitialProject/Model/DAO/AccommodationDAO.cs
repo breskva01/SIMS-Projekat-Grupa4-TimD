@@ -43,15 +43,19 @@ namespace InitialProject.Model.DAO
             }
             return filteredAccommodations;
         }
-        public bool CheckIfContainted(string keyWords, Accommodation accommodation)
+        private bool CheckIfContainted(string keyWords, Accommodation accommodation)
         {
-            if (accommodation.Name.ToLower().Contains(keyWords.ToLower()) || 
-                accommodation.City.ToLower().Contains(keyWords.ToLower()) ||
-                accommodation.Country.ToLower().Contains(keyWords.ToLower()))
+            string[] splitKeyWords = keyWords.Split(" ");
+            foreach (string keyWord in splitKeyWords)
             {
-                return true;
+                if (!(accommodation.Name.ToLower().Contains(keyWord.ToLower()) ||
+                    accommodation.City.ToLower().Contains(keyWord.ToLower()) ||
+                    accommodation.Country.ToLower().Contains(keyWord.ToLower())))
+                {
+                    return false;
+                }
             }
-            return false;
+            return true;
         }
 
         public Accommodation Save(Accommodation accommodation)
