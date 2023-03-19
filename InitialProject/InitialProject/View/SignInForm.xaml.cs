@@ -1,11 +1,14 @@
 ﻿using InitialProject.Controller;
+using InitialProject.FileHandler;
 using InitialProject.Forms;
 using InitialProject.Model;
+using InitialProject.Model.DAO;
 using InitialProject.Repository;
 using InitialProject.View;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace InitialProject
 {
@@ -15,6 +18,7 @@ namespace InitialProject
     public partial class SignInForm : Window
     {
 
+        private readonly UserController _userController;
         private readonly UserRepository _repository;
 
         private string _username;
@@ -48,11 +52,12 @@ namespace InitialProject
             AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
             accommodationBrowser.Show();
             Close();*/
+            _userController = new UserController();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
-            User user = _repository.GetByUsername(Username);
+            User user = _userController.GetByUsername(Username);
             if (user != null)
             {
                 if(user.Password == txtPassword.Password)
@@ -78,8 +83,8 @@ namespace InitialProject
                 // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
-                        AccommodationRegistrationView accommodationRegistrationView = new AccommodationRegistrationView(user);
-                        accommodationRegistrationView.Show();
+                        OwnerView ownerView= new OwnerView(user);
+                        ownerView.Show();
                         break;
                     }
                 case UserType.Guest1:
