@@ -1,5 +1,6 @@
 ﻿using InitialProject.Serializer;
 using System;
+using System.Collections.Generic;
 using System.Windows.Documents;
 
 namespace InitialProject.Model
@@ -11,7 +12,7 @@ namespace InitialProject.Model
         public string Username { get; set; }
         public string Password { get; set; }
         public UserType UserType { get; set; }
-        public List<Rating> Ratings { get; set; }
+        public List<GuestRating> Ratings { get; set; }
 
         public User() { }
 
