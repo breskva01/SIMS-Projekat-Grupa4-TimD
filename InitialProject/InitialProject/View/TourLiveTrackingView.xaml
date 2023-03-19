@@ -7,12 +7,20 @@
         mc:Ignorable="d"
         Title="TourLiveTrackingView" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="keyPointsDataGrid" AutoGenerateColumns="False">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0"  x:Name="keyPointsDataGrid" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Country" Binding="{Binding Location.Country}"/>
-                <DataGridCheckBoxColumn Header="City" Binding="{Binding Location.City}"/>
-                <DataGridCheckBoxColumn Header="Place" Binding="{Binding Attraction}"/>
+                <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"/>
+                <DataGridTextColumn Header="City" Binding="{Binding Location.City}"/>
+                <DataGridTextColumn Header="Place" Binding="{Binding Attraction}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Click="StopTourClick" Content="Stop Tour" HorizontalAlignment="Left" Margin="78,35,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="59"/>
+
+
+
     </Grid>
 </Window>

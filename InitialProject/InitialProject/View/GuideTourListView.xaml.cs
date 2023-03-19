@@ -3,6 +3,7 @@ using InitialProject.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,6 +33,10 @@ namespace InitialProject.View
         private readonly Storage<Location> _storageLocation;
 
         private DateTime Today;
+        public int NumberOfActiveTours;
+
+        public Tour selectedTour;
+
 
         private List<string> cityCountry { get; set; }
 
@@ -40,9 +45,11 @@ namespace InitialProject.View
             InitializeComponent();
             DataContext = this;
 
+            selectedTour = new Tour();
             Today = DateTime.Now;
 
             _toursToday = new List<Tour>();
+            NumberOfActiveTours = 0;
 
             _storageTour = new Storage<Tour>(FilePathTour);
             _storageLocation = new Storage<Location>(FilePathLocation);
@@ -69,18 +76,25 @@ namespace InitialProject.View
                 }
             }
             tourDataGrid.ItemsSource = _toursToday;
+
         }
         private void tourDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Tour selectedTour = (Tour)tourDataGrid.SelectedItem;
-
-            if (selectedTour != null)
+            if (NumberOfActiveTours == 0)
             {
-                //selectedTour.State = (TourState)Enum.Parse(typeof(TourState), "Started");
-                selectedTour.State = 0;
+                selectedTour = (Tour)tourDataGrid.SelectedItem;
+
+                if (selectedTour != null)
+                {
+                    //selectedTour.State = (TourState)Enum.Parse(typeof(TourState), "Started");
+                    selectedTour.State = 0;
+                }
+                NumberOfActiveTours++;
+                tourDataGrid.SelectedIndex = -1;
+                TourLiveTrackingView tourLiveTrackingView = new TourLiveTrackingView(selectedTour, this);
+                tourLiveTrackingView.Show();
             }
-            TourLiveTrackingView tourLiveTrackingView = new TourLiveTrackingView(selectedTour);
-            tourLiveTrackingView.Show();
+            
         }
     }
 }

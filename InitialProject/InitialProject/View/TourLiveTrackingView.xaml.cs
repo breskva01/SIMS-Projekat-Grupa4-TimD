@@ -31,11 +31,15 @@ namespace InitialProject.View
         private readonly Storage<KeyPoint> _storageKeyPoint;
         private readonly Storage<Location> _storageLocation;
         private List<string> keyPointsShow;
-        public TourLiveTrackingView(Tour tour)
+        //private int numberOfActiveTours;
+        private GuideTourListView tourListView;
+        public TourLiveTrackingView(Tour tour, GuideTourListView guideTourListView)
         {
             InitializeComponent();
             DataContext = this;
 
+            tourListView = guideTourListView;
+            //numberOfActiveTours = NumberOfActiveTours;
             keyPointsShow = new List<string>();
             _tour = tour;
             _keyPointsFromSelectedTour = new List<KeyPoint>();
@@ -69,5 +73,13 @@ namespace InitialProject.View
           
         }
 
+        private void StopTourClick(object sender, RoutedEventArgs e)
+        {
+            _tour.State = (TourState)1;
+            tourListView.NumberOfActiveTours = 0;
+            tourListView.selectedTour.State = _tour.State;
+            Close();
+            
+        }
     }
 }
