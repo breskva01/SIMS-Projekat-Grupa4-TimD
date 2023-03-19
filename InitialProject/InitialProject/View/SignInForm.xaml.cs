@@ -53,6 +53,7 @@ namespace InitialProject
             accommodationBrowser.Show();
             Close();*/
             _userController = new UserController();
+            _userController = new UserController();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
