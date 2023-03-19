@@ -47,12 +47,6 @@ namespace InitialProject
             InitializeComponent();
             DataContext = this;
             _repository = new UserRepository();
-            //Only to speed up testing
-            /*User user = _repository.GetByUsername("Zika");
-            AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
-            accommodationBrowser.Show();
-            Close();*/
-            _userController = new UserController();
             _userController = new UserController();
         }
 
