@@ -26,9 +26,9 @@ namespace InitialProject.View
     /// </summary>
     public partial class TourCreationView : Window, INotifyPropertyChanged
     {
-        private List<City> cities;
-        private readonly Storage<City> _storage;
-        private const string FilePath = "../../../Resources/Data/cities.csv";
+        private List<Location> locations;
+        private readonly Storage<Location> _storage;
+        private const string FilePath = "../../../Resources/Data/locations.csv";
         private readonly TourController _tourController;
         
 
@@ -159,11 +159,11 @@ namespace InitialProject.View
         {
             InitializeComponent();
             DataContext = this;
-            _storage = new Storage<City>(FilePath);
-            cities = _storage.Load();
+            _storage = new Storage<Location>(FilePath);
+            locations = _storage.Load();
 
             // Set the items source of the country combo box to the distinct list of countries.
-            countryComboBox.ItemsSource = cities.Select(c => c.Country).Distinct();
+            countryComboBox.ItemsSource = locations.Select(l => l.Country).Distinct();
 
             _tourController = new TourController();
         }
@@ -172,15 +172,15 @@ namespace InitialProject.View
 
         private void TourCreationClick(object sender, RoutedEventArgs e)
         {
-            City City = new City
-            {
-                Country = Country,
-                Name = Town
-            };
+            Location Location = new Location();
+            Location.Id = locations.Where(l => l.City == Town).Select(l => l.Id).FirstOrDefault();
+            Location.Country = Country;
+            Location.City = Town;
+           
             int TourDuration = int.Parse(Duration);
             int MaxGuests = int.Parse(MaximumGuests);
             GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
-            _tourController.CreateTour(TourName, City, Description,lang, MaxGuests, Start, TourDuration, PictureUrl);
+            _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl);
             Close();
 
         }
@@ -206,7 +206,7 @@ namespace InitialProject.View
             string selectedCountry = (string)countryComboBox.SelectedValue;
 
             // Set the items source of the city combo box to the cities of the selected country.
-            cityComboBox.ItemsSource = cities.Where(c => c.Country == selectedCountry);
+            cityComboBox.ItemsSource = locations.Where(l => l.Country == selectedCountry);
         }
     }
 }

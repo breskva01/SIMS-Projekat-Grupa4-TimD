@@ -5,18 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.View"
         mc:Ignorable="d"
-        Title="ToursView" Height="450" Width="800">
+        Title="ToursView" Height="500" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <StackPanel Grid.Column="0" Margin="10,10,10,150">
             <TextBlock Text="Filters:" Margin="0,0,0,5" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
             <TextBlock Text="Country:" Margin="0,0,0,5" />
             <ComboBox x:Name="cmbCountry" Width="150" SelectionChanged="cmbCountrySelectionChanged"/>
             <TextBlock Text="City:" Margin="0,10,0,5" />
-            <ComboBox x:Name="cmbCity" Width="150" DisplayMemberPath="Name" SelectedValuePath="Name"/>
+            <ComboBox x:Name="cmbCity" Width="150" DisplayMemberPath="City" SelectedValuePath="City"/>
             <TextBlock Text="Duration:" Margin="0,10,0,5" />
             <TextBox x:Name="tbDuration" Width="150" />
             <TextBlock Text="Language:" Margin="0,10,0,5" />
@@ -28,7 +32,7 @@
             <TextBlock Text="Number of guests:" Margin="0,10,0,5" />
             <TextBox x:Name="tbNumberOfGuests" Width="150" />
         </StackPanel>
-        <ListBox Grid.Column="1" Margin="10" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}" SelectedItem="SelectedTour" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListBox Name="lbTours" Grid.Row ="0" Grid.Column="1" Margin="10,10,10,10" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -36,8 +40,8 @@
                         <StackPanel>
                             <TextBlock Text="{Binding Name}" FontWeight="Bold" />
                             <TextBlock>
-                                <Run Text="{Binding City.Country}"/> -
-                                <Run Text="{Binding City.Name}" />
+                                <Run Text="{Binding Location.Country}"/> -
+                                <Run Text="{Binding Location.City}" />
                             </TextBlock>
                             <TextBlock>
                                 Tour duration: 
@@ -58,7 +62,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Apply" HorizontalAlignment="Left" Height="25" Margin="13,330,0,0" VerticalAlignment="Top" Width="70" Click="ApplyClick"/>
-        <Button Content="Reset" HorizontalAlignment="Left" Height="25" Margin="90,330,0,0" VerticalAlignment="Top" Width="70" Click="ResetClick"/>
+        <Button Content="Apply" HorizontalAlignment="Left" Height="25" Margin="10,368,0,0" VerticalAlignment="Top" Width="70" Click="ApplyClick"/>
+        <Button Content="Reset" HorizontalAlignment="Left" Height="25" Margin="90,368,0,0" VerticalAlignment="Top" Width="70" Click="ResetClick"/>
+        <Button Grid.Row="1" Grid.Column="1" Content="Reserve spots" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center" Width="110" Click="ReserveSpotsClick" Margin="10,0,0,0"/>
+
     </Grid>
 </Window>

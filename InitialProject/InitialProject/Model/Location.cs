@@ -7,23 +7,25 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Model
 {
-    public class City : ISerializable
+    public class Location : ISerializable
     {   
         
-        public string Name { get; set; }
+        public int Id { get; set; }
+        public string City { get; set; }
         public string Country { get; set; }
-        public City() { }
+        public Location() { }
         public void FromCSV(string[] values)
         {
-            Name = values[0];
-            Country = values[1];
+            Id = Convert.ToInt32(values[0]);
+            City = values[1];
+            Country = values[2];
         }
 
         public string[] ToCSV()
         {
             string[] csvValues =
             {
-                Name, Country
+                Id.ToString(), City, Country
             };
             return csvValues;
         }

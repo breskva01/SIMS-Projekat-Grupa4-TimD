@@ -21,8 +21,8 @@ namespace InitialProject.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public City City { get; set; }
-        //public int CityId { get; set; }
+        public Location Location { get; set; }
+        public int LocationId { get; set; }
         public string Description { get; set; }
         public GuideLanguage Language { get; set; }
 
@@ -35,16 +35,16 @@ namespace InitialProject.Model
         public Tour() 
         {
             Name = string.Empty;
-            City = new City();
+            Location = new Location();
             Description = string.Empty;
             PictureURL = string.Empty;
         }
 
-        public Tour(int id, string name, City city, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests)
+        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests)
         {
             Id = id;
             Name = name;
-            City = city;
+            LocationId = locationId;
             Description = description;
             Language = language;
             MaximumGuests = maximumGuests;
@@ -58,17 +58,15 @@ namespace InitialProject.Model
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            //CityId = Convert.ToInt32(values[2]);
-            City.Name = values[2];
-            City.Country = values[3];
-            Description = values[4];
-            Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[5]);
-            MaximumGuests = Convert.ToInt32(values[6]);
-            Start = DateTime.Parse(values[7]);
-            Duration = Convert.ToInt32(values[8]);
-            PictureURL = values[9];
+            LocationId = Convert.ToInt32(values[2]);
+            Description = values[3];
+            Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[4]);
+            MaximumGuests = Convert.ToInt32(values[5]);
+            Start = DateTime.Parse(values[6]);
+            Duration = Convert.ToInt32(values[7]);
+            PictureURL = values[8];
             // maybe change the name of field to NumberOfGuests
-            CurrentNumberOfGuests = Convert.ToInt32(values[10]);
+            CurrentNumberOfGuests = Convert.ToInt32(values[9]);
         }
         public string[] ToCSV()
         {
@@ -76,9 +74,7 @@ namespace InitialProject.Model
             {
                 Id.ToString(),
                 Name,
-                //CityId.ToString(),
-                City.Name,
-                City.Country,
+                LocationId.ToString(),
                 Description,
                 Language.ToString(),
                 MaximumGuests.ToString(),

@@ -23,8 +23,8 @@ namespace InitialProject.View
     public partial class AccommodationRegistrationView : Window, INotifyPropertyChanged
     {
 
-        private List<City> cities;
-        private readonly Storage<City> _storage;
+        private List<Location> cities;
+        private readonly Storage<Location> _storage;
         private const string FilePath = "../../../Resources/Data/cities.csv";
 
         
@@ -34,7 +34,7 @@ namespace InitialProject.View
             InitializeComponent();
 
             // Assume citiesList is already initialized with data.
-            _storage = new Storage<City>(FilePath);
+            _storage = new Storage<Location>(FilePath);
             cities = _storage.Load();
 
             // Set the items source of the country combo box to the distinct list of countries.

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +30,9 @@ namespace InitialProject.View
         public ObservableCollection<Tour> Tours { get; set; }
         public Tour SelectedTour { get; set; }
         private readonly TourController _controller;
-        private List<City> cities;
-        private readonly Storage<City> citiesStorage;
-        private const string FilePath = "../../../Resources/Data/cities.csv";
+        private List<Location> locations;
+        private readonly Storage<Location> locationStorage;
+        private const string FilePath = "../../../Resources/Data/locations.csv";
 
 
         public ToursView(User user)
@@ -41,9 +42,13 @@ namespace InitialProject.View
             LoggedInUser = user;
             _controller = new TourController();
             Tours = new ObservableCollection<Tour>(_controller.GetAll());
-            citiesStorage = new Storage<City>(FilePath);
-            cities = citiesStorage.Load();
-            cmbCountry.ItemsSource = cities.Select(c => c.Country).Distinct();
+            locationStorage = new Storage<Location>(FilePath);
+            locations = locationStorage.Load();
+            foreach (Tour t in Tours)
+            {
+                t.Location = locations.FirstOrDefault(l => l.Id == t.LocationId);
+            }
+            cmbCountry.ItemsSource = locations.Select(l => l.Country).Distinct();
 
 
             Height = SystemParameters.PrimaryScreenHeight * 0.75;
@@ -53,7 +58,7 @@ namespace InitialProject.View
         private void cmbCountrySelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selectedCountry = (string)cmbCountry.SelectedValue;
-            cmbCity.ItemsSource = cities.Where(c => c.Country == selectedCountry);
+            cmbCity.ItemsSource = locations.Where(l => l.Country == selectedCountry);
         }
 
         private void ApplyClick(object sender, RoutedEventArgs e)
@@ -62,11 +67,12 @@ namespace InitialProject.View
             string city = cmbCity.Text;
             int duration = GetDuration();
             GuideLanguage language = GetLanguage();
-            int currentNumberOfGuests = GetCurrentNumberOfGuests();
+            int NumberOfGuests = GetNumberOfGuests();
 
             Tours.Clear();
-            foreach (var tour in _controller.GetFiltered(country, city, duration, language, currentNumberOfGuests))
+            foreach (var tour in _controller.GetFiltered(country, city, duration, language, NumberOfGuests))
             {
+                tour.Location = locations.FirstOrDefault(l => l.Id == tour.LocationId);
                 Tours.Add(tour);
             }
         }
@@ -96,16 +102,16 @@ namespace InitialProject.View
             }
         }
 
-        private int GetCurrentNumberOfGuests()
+        private int GetNumberOfGuests()
         {
-            int currentNumberOfGuests = 0;
+            int NumberOfGuests = 0;
             try
             {
-                currentNumberOfGuests = int.Parse(tbNumberOfGuests.Text);
+                NumberOfGuests = int.Parse(tbNumberOfGuests.Text);
             }
             catch { };
 
-            return currentNumberOfGuests;
+            return NumberOfGuests;
         }
 
         private void ResetClick(object sender, RoutedEventArgs e)
@@ -118,8 +124,43 @@ namespace InitialProject.View
             Tours.Clear();
             foreach (var tour in _controller.GetAll())
             {
+                tour.Location = locations.FirstOrDefault(l => l.Id == tour.LocationId);
                 Tours.Add(tour);
             }
+
+        }
+
+        private void ReserveSpotsClick(object sender, RoutedEventArgs e)
+        {
+            SelectedTour = (Tour)lbTours.SelectedItem;
+            if (SelectedTour == null)
+            {
+                MessageBox.Show("Please select a tour first.");
+                return;
+                
+            }
+            if (SelectedTour.CurrentNumberOfGuests == SelectedTour.MaximumGuests)
+            {
+                MessageBox.Show("Unfortunately, the tour that you are interested in is fully booked. On the previous window you can take a look at other tours that are located in the same location.");
+                Tours.Clear();
+                foreach (var tour in _controller.GetFiltered(SelectedTour.Location.Country, SelectedTour.Location.City, 0, GuideLanguage.All, 1))
+                {
+                    tour.Location = locations.FirstOrDefault(l => l.Id == tour.LocationId);
+                    Tours.Add(tour);
+                }
+                return;
+            }
+
+            TourReservationWindow tourReservationWindow = new TourReservationWindow(SelectedTour, LoggedInUser);
+            tourReservationWindow.ShowDialog();
+
+            Tours.Clear();
+            foreach (var tour in _controller.GetAll())
+            {
+                tour.Location = locations.FirstOrDefault(l => l.Id == tour.LocationId);
+                Tours.Add(tour);
+            }
+
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
