@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Model
 {
-    public class KeyPoint : ISerializable
+    public class Attendance : ISerializable
     {
         public int Id { get; set; }
-        public int LocationId { get; set; }
-        public Location Location { get; set; }
-        public string Place { get; set; }
-        public bool Visited { get; set; }
+        public User Guest { get; set; }
+        public int GuestId { get; set; }
+        public KeyPoint KeyPoint { get; set; }
+        public int KeyPointId { get; set; }
 
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            LocationId = Convert.ToInt32(values[1]);
-            Place = values[2];
-            Visited = bool.Parse(values[3]);
+            GuestId = Convert.ToInt32(values[1]);
+            KeyPointId = Convert.ToInt32(values[2]);
         }
 
         public string[] ToCSV()
@@ -28,9 +27,8 @@ namespace InitialProject.Model
             string[] csvValues =
             {
                 Id.ToString(),
-                LocationId.ToString(),
-                Place,
-                Visited.ToString()
+                GuestId.ToString(),
+                KeyPointId.ToString()
             };
             return csvValues;
         }

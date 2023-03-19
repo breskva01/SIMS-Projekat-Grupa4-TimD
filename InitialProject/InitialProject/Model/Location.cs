@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 namespace InitialProject.Model
 {
     public class Location : ISerializable
-    {   
-        
+    {
+        public int Id { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public int Id { get; set; }
         public Location() { }
         public void FromCSV(string[] values)
         {

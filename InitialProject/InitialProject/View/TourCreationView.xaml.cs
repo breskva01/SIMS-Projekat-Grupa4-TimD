@@ -29,12 +29,18 @@ namespace InitialProject.View
     {
         private List<Location> locations;
         private List<KeyPoint> keyPoints;
+
         private readonly Storage<Location> _storageLocation;
         private readonly Storage<KeyPoint> _storageKeyPoint;
+
         private const string FilePath = "../../../Resources/Data/locations.csv";
-        private const string FilePathKY = "../../../Resources/Data/keyPoints.csv";
+        private const string FilePathKeyPoint = "../../../Resources/Data/keyPoints.csv";
+
         private readonly TourController _tourController;
-        
+
+        private List<KeyPoint> tourKeyPoints = new List<KeyPoint>();
+        //private List<KeyPoint> attractions = new List<KeyPoint>();
+        private List<int> KeyPointIds = new List<int>();
 
         private string _tourName;
         public new string TourName
@@ -153,9 +159,7 @@ namespace InitialProject.View
                 }
             }
         }
-        private List<KeyPoint> tourKeyPoints = new List<KeyPoint>();
-        private List<KeyPoint> attractions = new List<KeyPoint>();
-        private List<int> KeyPointIds = new List<int>();
+       
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -165,24 +169,19 @@ namespace InitialProject.View
         {
             InitializeComponent();
             DataContext = this;
+
             _storageLocation= new Storage<Location>(FilePath);
-            _storageKeyPoint = new Storage<KeyPoint>(FilePathKY);
+            _storageKeyPoint = new Storage<KeyPoint>(FilePathKeyPoint);
             keyPoints = _storageKeyPoint.Load();
             locations = _storageLocation.Load();
          
-            string dateTime = "01/01/2001 00:00:00";
-            Start = DateTime.Parse(dateTime);
 
             // Set the items source of the country combo box to the distinct list of countries.
             countryComboBox.ItemsSource = locations.Select(c => c.Country).Distinct();
+
             keyPointCity.ItemsSource = locations.Select(c => c.City).Distinct();
-            //countryComboBox1.ItemsSource = keyPoints.Select(k => k.Attraction).Distinct();
 
             _tourController = new TourController();
-
-
-          
-
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -195,10 +194,12 @@ namespace InitialProject.View
                 Location.Country = Country;
                 Location.City = Town;
                 Location.Id = locations.Where(c => c.City == Town).Select(c => c.Id).FirstOrDefault();
+
                 int TourDuration = int.Parse(Duration);
                 int MaxGuests = int.Parse(MaximumGuests);
-                //DateTime s = DateTime.Parse(Start);
+
                 GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
+
                 foreach (KeyPoint ky in tourKeyPoints)
                 {
                     KeyPointIds.Add(ky.Id);
@@ -231,19 +232,19 @@ namespace InitialProject.View
             string city = cityComboBox.SelectedValue.ToString();
             keyPointCity.SelectedValue = city;
 
-            //keyPointCity.Text = cityComboBox.SelectedValue.ToString();
         }
 
         private void keyPointCity_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             keyPointCity.ItemsSource = locations.Select(c => c.City).Distinct();
         }
+
         private void keyPointCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (keyPointCity.SelectedIndex != -1)
             {
                 string city = keyPointCity.SelectedValue.ToString();
-                List<KeyPoint> attractions = new List<KeyPoint>();
+                List<KeyPoint> keyPointsShow = new List<KeyPoint>();
 
 
                 foreach (Location l in locations)
@@ -254,21 +255,22 @@ namespace InitialProject.View
                         {
                             if (ky.LocationId == l.Id)
                             {
-                                attractions.Add(ky);
+                                keyPointsShow.Add(ky);
                             }
                         }
                     }
                 }
-                keyPointAttraction.ItemsSource = attractions.Select(a => a.Attraction);
+                keyPointAttraction.ItemsSource = keyPointsShow.Select(ky => ky.Place);
             }
         }
 
         private void AddAttractionClick(object sender, RoutedEventArgs e)
         {
-            KeyPoint keyPoint = keyPoints.Where(ky => ky.Attraction == keyPointAttraction.SelectedValue.ToString()).FirstOrDefault();
+            KeyPoint keyPoint = keyPoints.Where(ky => ky.Place == keyPointAttraction.SelectedValue.ToString()).FirstOrDefault();
             
             tourKeyPoints.Add(keyPoint);
-            Console.WriteLine(keyPoint.Id);
+
+            // Clearing comboboxes after adding one keyPoint
             keyPointCity.SelectedIndex = -1;
             keyPointAttraction.SelectedIndex = -1;
 

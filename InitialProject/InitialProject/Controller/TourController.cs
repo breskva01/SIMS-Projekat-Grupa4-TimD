@@ -39,5 +39,9 @@ namespace InitialProject.Controller
             Tour.KeyPointIds = kyIds;  
             return _tourDAO.Save(Tour);
         }
+        public Tour Update(Tour tour)
+        {
+            return _tourDAO.Update(tour);
+        }
     }
 }

@@ -34,6 +34,15 @@ namespace InitialProject.Model.DAO
             _storage.Save(_tours);
             return tour;
         }
+        public Tour Update(Tour tour)
+        {
+            _tours = _storage.Load();
+            Tour updated = _tours.Find(t => t.Id == tour.Id);
+            _tours.Remove(updated);
+            _tours.Add(tour);
+            _storage.Save(_tours);
+            return tour;
+        }
         public int NextId()
         {
             _tours = _storage.Load();

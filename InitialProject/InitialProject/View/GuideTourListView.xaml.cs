@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Controller;
+using InitialProject.Model;
 using InitialProject.Storage;
 using System;
 using System.Collections.Generic;
@@ -26,17 +27,17 @@ namespace InitialProject.View
         private List<Tour> _toursToday;
         private List<Location> _locations;
 
-        private const string FilePathTour = "../../../Resources/Data/tours.csv";
         private const string FilePathLocation = "../../../Resources/Data/locations.csv";
 
-        private readonly Storage<Tour> _storageTour;
         private readonly Storage<Location> _storageLocation;
 
         private DateTime Today;
+
         public int NumberOfActiveTours;
 
         public Tour selectedTour;
 
+        private readonly TourController _controller;
 
         private List<string> cityCountry { get; set; }
 
@@ -51,11 +52,13 @@ namespace InitialProject.View
             _toursToday = new List<Tour>();
             NumberOfActiveTours = 0;
 
-            _storageTour = new Storage<Tour>(FilePathTour);
+            
             _storageLocation = new Storage<Location>(FilePathLocation);
 
-            _tours = _storageTour.Load();
             _locations = _storageLocation.Load();
+
+            _controller = new TourController();
+            _tours = new List<Tour>(_controller.GetAll());
 
             // Using LocationIds in list _tours creating objects Location
             foreach (Tour t in _tours)
@@ -80,19 +83,25 @@ namespace InitialProject.View
         }
         private void tourDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             if (NumberOfActiveTours == 0)
             {
                 selectedTour = (Tour)tourDataGrid.SelectedItem;
 
-                if (selectedTour != null)
+                if(selectedTour.State == 0 || selectedTour.State == (TourState)1)
                 {
-                    //selectedTour.State = (TourState)Enum.Parse(typeof(TourState), "Started");
-                    selectedTour.State = 0;
-                }
-                NumberOfActiveTours++;
-                tourDataGrid.SelectedIndex = -1;
-                TourLiveTrackingView tourLiveTrackingView = new TourLiveTrackingView(selectedTour, this);
-                tourLiveTrackingView.Show();
+                     if (selectedTour != null)
+                     {
+                           
+                            selectedTour.State = (TourState)1;
+                            _controller.Update(selectedTour);
+                    }
+                     NumberOfActiveTours++;
+                     tourDataGrid.SelectedIndex = -1;
+                     TourLiveTrackingView tourLiveTrackingView = new TourLiveTrackingView(selectedTour, this);
+                     tourLiveTrackingView.Show();
+                }    
+                
             }
             
         }

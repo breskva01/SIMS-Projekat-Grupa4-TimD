@@ -11,16 +11,23 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0"  x:Name="keyPointsDataGrid" AutoGenerateColumns="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DataGrid IsReadOnly="True" Grid.Row="0" Grid.Column="0" x:Name="keyPointsDataGrid" AutoGenerateColumns="False" SelectionChanged="keyPointsDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"/>
                 <DataGridTextColumn Header="City" Binding="{Binding Location.City}"/>
-                <DataGridTextColumn Header="Place" Binding="{Binding Attraction}"/>
+                <DataGridTextColumn Header="Place" Binding="{Binding Place}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Click="StopTourClick" Content="Stop Tour" HorizontalAlignment="Left" Margin="78,35,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="59"/>
-
-
-
+        <Button Grid.Column="0" Grid.Row="1" Click="StopTourClick" Content="Stop Tour" HorizontalAlignment="Left" Margin="78,35,0,0" VerticalAlignment="Top" Height="33" Width="59"/>
+        <DataGrid IsReadOnly="True" Grid.Row="0" Grid.Column="1" x:Name="guestsDataGrid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="FirstName" Binding="{Binding Guest.FirstName}"/>
+                <DataGridTextColumn Header="LastName" Binding="{Binding Guest.LastName}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

@@ -18,6 +18,7 @@ namespace InitialProject.Model
     }
     public enum TourState
     {
+        None,
         Started,
         Interrupted,
         Finished
@@ -30,15 +31,12 @@ namespace InitialProject.Model
         public int LocationId { get; set; }
         public string Description { get; set; }
         public GuideLanguage Language { get; set; }
-
         public int MaximumGuests { get; set; }
-        
         public DateTime Start { get; set; }
         public int Duration { get; set; }
         public string PictureURL { get; set; }
         public int CurrentNumberOfGuests { get; set; }
         public List<KeyPoint> KeyPoints { get; set; }
-
         public List<int> KeyPointIds { get; set; }
         public TourState State { get; set; }
         public Tour() 
@@ -48,7 +46,8 @@ namespace InitialProject.Model
             Description = string.Empty;
             PictureURL = string.Empty;
             KeyPoints = new List<KeyPoint>();
-            KeyPointIds = new List<int>();  
+            KeyPointIds = new List<int>(); 
+            State = TourState.None;
         }
 
         public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky)
@@ -86,6 +85,7 @@ namespace InitialProject.Model
             {
                KeyPointIds.Add(Convert.ToInt32(keyPoint));
             }
+            State = (TourState)Enum.Parse(typeof(TourState), values[11]);
 
         }
         public string[] ToCSV()
@@ -107,7 +107,8 @@ namespace InitialProject.Model
                 Duration.ToString(),  
                 PictureURL.ToString(),
                 CurrentNumberOfGuests.ToString(),
-                keyPointIds
+                keyPointIds,
+                State.ToString()
             };
             return csvValues;
         }
