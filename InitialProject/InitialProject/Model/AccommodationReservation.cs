@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,18 +46,18 @@ namespace InitialProject.Model
             AccommodationId = int.Parse(values[1]);
             GuestId = int.Parse(values[2]);
             NumberOfDays = int.Parse(values[3]);
-            CheckInDate = DateOnly.Parse(values[4]);
-            GuestNumber = int.Parse(values[5]);
-            CheckOutDate = DateOnly.Parse(values[6]);
-            LastNotification = DateOnly.Parse(values[7]);
+            GuestNumber = int.Parse(values[4]);
+            CheckInDate = DateOnly.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            CheckOutDate = DateOnly.ParseExact(values[6], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LastNotification = DateOnly.ParseExact(values[7], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             IsGuestRated = bool.Parse(values[8]);
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), AccommodationId.ToString(), GuestId.ToString(),
-                                    NumberOfDays.ToString(), GuestNumber.ToString(), CheckInDate.ToString(), CheckOutDate.ToString(),
-                                    LastNotification.ToString(), IsGuestRated.ToString()};
+                                    NumberOfDays.ToString(), GuestNumber.ToString(), CheckInDate.ToString("dd/MM/yyyy"), CheckOutDate.ToString("dd/MM/yyyy"),
+                                    LastNotification.ToString("dd/MM/yyyy"), IsGuestRated.ToString()};
             return csvValues;
         }
     }
