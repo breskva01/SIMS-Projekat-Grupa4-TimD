@@ -20,6 +20,7 @@ namespace InitialProject.Model
         public DateOnly CheckInDate { get; set; }
         public DateOnly CheckOutDate { get; set; }
         public DateOnly LastNotification { get; set; }
+        public bool IsGuestRated { get; set; }
         public AccommodationReservation() { }
         public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkInDate, DateOnly checkOutDate)
         {
@@ -30,6 +31,7 @@ namespace InitialProject.Model
             NumberOfDays = numberOfDays;
             CheckInDate = checkInDate;
             CheckOutDate = checkOutDate;
+            //IsGuestRated = false;
         }
         public bool Overlap(DateOnly checkIn, DateOnly checkOut)
         {
@@ -45,13 +47,14 @@ namespace InitialProject.Model
             CheckInDate = DateOnly.Parse(values[4]);
             CheckOutDate = DateOnly.Parse(values[5]);
             LastNotification = DateOnly.Parse(values[6]);
+            //IsGuestRated = bool.Parse(values[7]);
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), AccommodationId.ToString(), GuestId.ToString(),
                                     NumberOfDays.ToString(), CheckInDate.ToString(), CheckOutDate.ToString(),
-                                    LastNotification.ToString() };
+                                    LastNotification.ToString()/*, IsGuestRated.ToString()*/};
             return csvValues;
         }
     }

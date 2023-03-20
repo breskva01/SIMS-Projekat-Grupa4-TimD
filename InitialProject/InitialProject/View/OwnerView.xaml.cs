@@ -25,12 +25,11 @@ namespace InitialProject.View
     public partial class OwnerView : Window
     {
         private readonly User _owner;
-
         public OwnerView(User user)
         {
             InitializeComponent();
             DataContext = this;
-            _owner = user;
+            _owner = user; 
         }
 
         private void ShowRegistrationAccommodationView_Click(object sender, RoutedEventArgs e)

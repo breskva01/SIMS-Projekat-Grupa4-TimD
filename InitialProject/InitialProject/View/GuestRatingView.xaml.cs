@@ -24,8 +24,10 @@ namespace InitialProject.View
     /// </summary>
     public partial class GuestRatingView : Window, INotifyPropertyChanged
     {
-        private readonly GuestRatingController _controller;
+        private readonly GuestRatingController _guestRatingController;
+        private readonly UserController _userController;
         private AccommodationReservation _selectedReservation;
+        private readonly AccommodationReservationController _reservationController;
         private const string FilePath = "../../../Resources/Data/guestRatings.csv";
 
         private string _hygiene;
@@ -61,9 +63,9 @@ namespace InitialProject.View
             get => _comment;
             set 
             {
-                if (value != _respectsRules)
+                if (value != _comment)
                 {
-                    _respectsRules = value;
+                    _comment = value;
                     OnPropertyChanged();
                 }
             }
@@ -72,7 +74,10 @@ namespace InitialProject.View
         {
             InitializeComponent();
             DataContext = this;
-            _selectedReservation= SelectedReservation;
+            _selectedReservation = SelectedReservation;
+            _userController= new UserController();
+            _guestRatingController= new GuestRatingController();
+            _reservationController = new AccommodationReservationController();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -83,7 +88,11 @@ namespace InitialProject.View
 
         private void RateGuest_Click(object sender, RoutedEventArgs e)
         {
-            int ownerId = _selectedReservation.Accommodation.
+            int ownerId = _selectedReservation.Accommodation.OwnerId;
+            int guestId = _selectedReservation.GuestId;
+            GuestRating guestRating = _guestRatingController.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), Comment);
+            //_reservationController.updateRatingStatus(_selectedReservation);
+            _userController.AddGuestRating(guestId, guestRating);
             Close();
         }
 

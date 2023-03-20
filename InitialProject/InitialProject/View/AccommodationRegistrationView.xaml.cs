@@ -74,7 +74,6 @@ namespace InitialProject.View
         }
 
         private string _address;
-
         public string Address
         {
             get => _address;

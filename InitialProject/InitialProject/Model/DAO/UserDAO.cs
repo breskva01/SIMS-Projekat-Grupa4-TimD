@@ -1,6 +1,7 @@
 ﻿using InitialProject.FileHandler;
 using InitialProject.Observer;
 using InitialProject.Serializer;
+using InitialProject.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace InitialProject.Model.DAO
     internal class UserDAO
     {
         private readonly UserFileHandler _fileHandler;
+        private readonly Storage<GuestRating> _storage;
         private List<User> _users;
         public UserDAO()
         {
@@ -25,6 +27,19 @@ namespace InitialProject.Model.DAO
         }
         public List<User> GetUsers() {
             return _fileHandler.Load();
+        }
+        public void AddGuestRating(int id, GuestRating guestRating)
+        {
+            List<GuestRating> guestRatings = new List<GuestRating>();
+            _users = _fileHandler.Load();
+            foreach (User u in _users)
+            {
+                if (id == u.Id)
+                {
+                    guestRatings.Add(guestRating);
+                    u.Ratings = guestRatings;
+                }   
+            }
         }
     }
 }

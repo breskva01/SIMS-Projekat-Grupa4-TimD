@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace InitialProject.Model.DAO
 {
@@ -67,23 +68,45 @@ namespace InitialProject.Model.DAO
             return reservation;
         }
 
-        public bool IsCompleted(AccommodationReservation accommodationReservation)
+        public bool IsCompleted(AccommodationReservation accommodationReservation, int ownerId)
         {
-            return accommodationReservation.CheckOutDate < DateOnly.FromDateTime(DateTime.Now) && DateOnly.FromDateTime(DateTime.Now) < (accommodationReservation.CheckOutDate.AddDays(5));
+            return (accommodationReservation.CheckOutDate < DateOnly.FromDateTime(DateTime.Now)) 
+                    && (DateOnly.FromDateTime(DateTime.Now) < (accommodationReservation.CheckOutDate.AddDays(5))) 
+                    && accommodationReservation.Accommodation.OwnerId == ownerId;
         }
 
-        public List<AccommodationReservation> FindCompletedReservations()
+        public List<AccommodationReservation> FindCompletedAndUnratedReservations(int ownerId)
         {
             List<AccommodationReservation> completedReservations= new List<AccommodationReservation>();
             foreach (AccommodationReservation accommodationReservation in _reservations)
             {
-                if (IsCompleted(accommodationReservation))
+                if (IsCompleted(accommodationReservation, ownerId) && !accommodationReservation.IsGuestRated)
                 {
                     completedReservations.Add(accommodationReservation);
                 }
             }
             return completedReservations;
         }
+        /*public void updateLastNotification(AccommodationReservation accommodationReservation)
+        {
+            AccommodationReservation newAccommodationReservation= new AccommodationReservation();
+            newAccommodationReservation = accommodationReservation;
+            newAccommodationReservation.LastNotification++;
+            _reservations.Remove(accommodationReservation);
+            _reservations.Add(newAccommodationReservation);
+            _fileHandler.Save(_reservations);
+            NotifyObservers();
+        }
+        public void updateRatingStatus(AccommodationReservation accommodationReservation)
+        {
+            AccommodationReservation newAccommodationReservation = new AccommodationReservation();
+            newAccommodationReservation = accommodationReservation;
+            newAccommodationReservation.IsGuestRated = true;
+            _reservations.Remove(accommodationReservation);
+            _reservations.Add(newAccommodationReservation);
+            _fileHandler.Save(_reservations);
+            NotifyObservers();
+        }*/
 
         public int NextId()
         {

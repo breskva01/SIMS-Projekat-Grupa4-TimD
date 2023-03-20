@@ -17,17 +17,20 @@ using System.Windows.Shapes;
 using InitialProject.Model;
 using InitialProject.FileHandler;
 using System.Collections.ObjectModel;
+using InitialProject.Observer;
 
 namespace InitialProject.View
 {
     /// <summary>
     /// Interaction logic for AccommodationReservationsListView.xaml
     /// </summary>
-    public partial class AccommodationReservationsListView : Window, INotifyPropertyChanged
+    public partial class AccommodationReservationsListView : Window, IObserver 
     {
         private readonly AccommodationReservationController _reservationController;
         private readonly AccommodationController _accommodationController;
         private readonly UserController _userController;
+        private readonly User _owner;
+        public readonly Accommodation Accommodation;
         private List<Accommodation> _accommodations;
         private List<User> _users;
         public ObservableCollection<AccommodationReservation> AccommodationReservations { get;  set; }
@@ -37,38 +40,14 @@ namespace InitialProject.View
         {
             InitializeComponent();
             DataContext = this;
+            _owner = user;
             _reservationController = new AccommodationReservationController();
+            _reservationController.Subscribe(this);
             _accommodationController = new AccommodationController();
             _userController = new UserController();
             _accommodations = _accommodationController.GetAll();
             _users = _userController.GetUsers();
-            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_reservationController.FindCompletedReservations());
-            foreach (Accommodation a in _accommodations)
-            {
-                foreach(AccommodationReservation res in AccommodationReservations)
-                {
-                    if (a.Id == res.AccommodationId)
-                    {
-                        res.Accommodation = a;
-                    }
-                }
-            }
-            foreach (User u in _users)
-            {
-                foreach (AccommodationReservation res in AccommodationReservations)
-                {
-                    if (u.Id == res.GuestId)
-                    {
-                        res.Guest = u;
-                    }
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_reservationController.FindCompletedAndUnratedReservations(_owner.Id));
         }
 
         private void RateGuests_Click(object sender, RoutedEventArgs e)
@@ -79,6 +58,7 @@ namespace InitialProject.View
             }
             else
             {
+                SelectedReservation.Accommodation.OwnerId = _owner.Id;
                 GuestRatingView guestRatingView = new GuestRatingView(SelectedReservation);
                 guestRatingView.Show();
             }
@@ -87,6 +67,19 @@ namespace InitialProject.View
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        public void Update()
+        {
+            UpdateReservations();
+        }
+        private void UpdateReservations()
+        {
+            AccommodationReservations.Clear();
+            foreach (var reservation in _reservationController.GetAll())
+            {
+                AccommodationReservations.Add(reservation);
+            }
         }
     }
 }

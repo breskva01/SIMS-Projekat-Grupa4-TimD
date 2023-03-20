@@ -14,7 +14,7 @@ namespace InitialProject.Model.DAO
         private readonly List<IObserver> _observers;
         private List<GuestRating> _guestRatings;
         private readonly Storage<GuestRating> _storage;
-        private const string FilePath = "../../../Resources/Data/guestRatings";
+        private const string FilePath = "../../../Resources/Data/guestRatings.csv";
 
         public GuestRatingDAO()
         {
@@ -34,13 +34,14 @@ namespace InitialProject.Model.DAO
             _storage.Save(_guestRatings);
             return guestRating;
         }
-        public void Add(int ownerId, int guestId, int hygiene, int respectsRules, string comment)
+        public GuestRating Add(int ownerId, int guestId, int hygiene, int respectsRules, string comment)
         {
             _guestRatings = _storage.Load();
             GuestRating guestRating = new GuestRating(ownerId, guestId, hygiene, respectsRules, comment);
             _guestRatings.Add(guestRating);
             _storage.Save(_guestRatings);
             NotifyObservers();
+            return guestRating;
         }
         public void Subscribe(IObserver observer)
         {

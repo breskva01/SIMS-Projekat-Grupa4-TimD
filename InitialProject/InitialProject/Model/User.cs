@@ -29,6 +29,7 @@ namespace InitialProject.Model
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
+            Ratings = new List<GuestRating>();
         }
 
         public string[] ToCSV()
