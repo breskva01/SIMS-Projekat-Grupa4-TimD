@@ -91,7 +91,7 @@ namespace InitialProject.View
             int ownerId = _selectedReservation.Accommodation.OwnerId;
             int guestId = _selectedReservation.GuestId;
             GuestRating guestRating = _guestRatingController.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), Comment);
-            //_reservationController.updateRatingStatus(_selectedReservation);
+            _reservationController.updateRatingStatus(_selectedReservation);
             _userController.AddGuestRating(guestId, guestRating);
             Close();
         }

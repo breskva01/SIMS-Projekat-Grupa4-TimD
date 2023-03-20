@@ -32,14 +32,14 @@ namespace InitialProject.Controller
         {
             return _reservationDAO.FindCompletedAndUnratedReservations(ownerId);
         }
-        /*public void updateLastNotification(AccommodationReservation accommodationReservation)
+        public void updateLastNotification(AccommodationReservation accommodationReservation)
         {
             _reservationDAO.updateLastNotification(accommodationReservation);
         }
         public void updateRatingStatus(AccommodationReservation accommodationReservation)
         {
             _reservationDAO.updateRatingStatus(accommodationReservation);
-        }*/
+        }
         public void Subscribe(IObserver observer)
         {
             _reservationDAO.Subscribe(observer);

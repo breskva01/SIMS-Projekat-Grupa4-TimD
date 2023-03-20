@@ -90,24 +90,19 @@ namespace InitialProject
                 // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
-                        /*int unratedGuests = 0;
+                        int unratedGuests = 0;
                         _reservations = _reservationController.FindCompletedAndUnratedReservations(user.Id);
                         foreach (AccommodationReservation res in _reservations)
                         {
-                            if (DateOnly.FromDateTime(DateTime.Now) == res.CheckOutDate)
-                            {
-                                res.LastNotification = 0;
-                                unratedGuests++;
-                            }
-                            if (res.LastNotification < 5)
+                            if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
                             {
                                 _reservationController.updateLastNotification(res);
-                                        unratedGuests++;
+                                unratedGuests++;
                             }
                                 
                         }
                         if (unratedGuests > 0)
-                            MessageBox.Show("You have " + unratedGuests.ToString() + " unrated guests!");*/
+                            MessageBox.Show("You have " + unratedGuests.ToString() + " unrated guests!");
 
                         OwnerView ownerView = new OwnerView(user);
                         ownerView.Show();

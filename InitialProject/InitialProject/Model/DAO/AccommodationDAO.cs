@@ -76,13 +76,12 @@ namespace InitialProject.Model.DAO
             return _accommodations.Max(a => a.Id) + 1;
         }
 
-        public void Add(string name, string country, string city, int locationId, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,
+        public void Add(string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,
                         User owner, int ownerId)
         {
             _accommodations = _storage.Load();
             int accommodationId = NextId();
-            Location location = new Location(country, city);
-            Accommodation accommodation = new Accommodation(accommodationId, name, location, locationId, address, type, maximumGuests, minimumDays, minimumCancelationNotice, 
+            Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, 
                                                             pictureURL, owner, ownerId);
             _accommodations.Add(accommodation);
             _storage.Save(_accommodations);

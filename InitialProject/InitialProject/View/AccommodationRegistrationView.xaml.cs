@@ -191,7 +191,7 @@ namespace InitialProject.View
                 MessageBox.Show("Nije uneta lokacija");
                 Close();
             }
-            _controller.RegisterAccommodation(AccommodationName, Country, City ,LocationId, Address, Type, maximumGuests, minimumDays, minimumCancellationNotice, PictureURL, _owner, _owner.Id);
+            _controller.RegisterAccommodation(AccommodationName, Country, City , Address, Type, maximumGuests, minimumDays, minimumCancellationNotice, PictureURL, _owner, _owner.Id);
             Close();
         }
 

@@ -14,8 +14,8 @@ namespace InitialProject.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Location Location { get; set; }
-        public int LocationId { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
         public string Address { get; set; }
         public AccommodationType Type { get; set; }
         public int MaximumGuests { get; set; }
@@ -25,13 +25,13 @@ namespace InitialProject.Model
         public User Owner { get; set; }
         public int OwnerId { get; set; }
         public Accommodation() { }
-        public Accommodation(int id, string name, Location location, int locationId, string address, AccommodationType type, int maximumGuests, int minimumDays, 
+        public Accommodation(int id, string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays, 
                              int minimumCancelationNotice, string pictureURL, User owner, int ownerId)
         {
             Id = id;
             Name = name;
-            Location = location;
-            LocationId = locationId;
+            City = city;
+            Country = country;
             Address = address;
             Type = type;
             MaximumGuests = maximumGuests;
@@ -46,14 +46,15 @@ namespace InitialProject.Model
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            LocationId = Convert.ToInt32(values[2]);
-            Address = values[3]; 
-            Type = (AccommodationType)Enum.Parse(typeof(AccommodationType), values[4]);
-            MaximumGuests = Convert.ToInt32(values[5]);
-            MinimumDays = Convert.ToInt32(values[6]);
-            MinimumCancelationNotice = Convert.ToInt32(values[7]);
-            PictureURL = values[8];
-            OwnerId = Convert.ToInt32(values[9]);
+            City = values[2];
+            Country = values[3];
+            Address = values[4]; 
+            Type = (AccommodationType)Enum.Parse(typeof(AccommodationType), values[5]);
+            MaximumGuests = Convert.ToInt32(values[6]);
+            MinimumDays = Convert.ToInt32(values[7]);
+            MinimumCancelationNotice = Convert.ToInt32(values[8]);
+            PictureURL = values[9];
+            OwnerId = Convert.ToInt32(values[10]);
         }
 
         public string[] ToCSV()
@@ -61,7 +62,8 @@ namespace InitialProject.Model
             string[] csvValues = 
                 { Id.ToString(), 
                   Name, 
-                  LocationId.ToString(), 
+                  City,
+                  Country,
                   Address, Type.ToString(), 
                   MaximumGuests.ToString(), 
                   MinimumDays.ToString(), 

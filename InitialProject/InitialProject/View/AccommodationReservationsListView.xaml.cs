@@ -76,7 +76,7 @@ namespace InitialProject.View
         private void UpdateReservations()
         {
             AccommodationReservations.Clear();
-            foreach (var reservation in _reservationController.GetAll())
+            foreach (var reservation in _reservationController.FindCompletedAndUnratedReservations(_owner.Id))
             {
                 AccommodationReservations.Add(reservation);
             }

@@ -87,11 +87,11 @@ namespace InitialProject.Model.DAO
             }
             return completedReservations;
         }
-        /*public void updateLastNotification(AccommodationReservation accommodationReservation)
+        public void updateLastNotification(AccommodationReservation accommodationReservation)
         {
-            AccommodationReservation newAccommodationReservation= new AccommodationReservation();
+            AccommodationReservation newAccommodationReservation = new AccommodationReservation();
             newAccommodationReservation = accommodationReservation;
-            newAccommodationReservation.LastNotification++;
+            newAccommodationReservation.LastNotification = newAccommodationReservation.LastNotification.AddDays(1);
             _reservations.Remove(accommodationReservation);
             _reservations.Add(newAccommodationReservation);
             _fileHandler.Save(_reservations);
@@ -99,14 +99,12 @@ namespace InitialProject.Model.DAO
         }
         public void updateRatingStatus(AccommodationReservation accommodationReservation)
         {
-            AccommodationReservation newAccommodationReservation = new AccommodationReservation();
-            newAccommodationReservation = accommodationReservation;
+            _reservations = _fileHandler.Load();
+            AccommodationReservation newAccommodationReservation = _reservations.Find(a => a.Id == accommodationReservation.Id);
             newAccommodationReservation.IsGuestRated = true;
-            _reservations.Remove(accommodationReservation);
-            _reservations.Add(newAccommodationReservation);
             _fileHandler.Save(_reservations);
             NotifyObservers();
-        }*/
+        }
 
         public int NextId()
         {
