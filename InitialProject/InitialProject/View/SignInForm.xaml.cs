@@ -47,10 +47,10 @@ namespace InitialProject
             DataContext = this;
             _userController = new UserController();
             //Only to speed up testing
-            User user = _userController.GetByUsername("Zika");
+            /*User user = _repository.GetByUsername("Zika");
             AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
             accommodationBrowser.Show();
-            Close();
+            Close();*/
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -78,11 +78,11 @@ namespace InitialProject
         {
             switch (user.UserType)
             {
-                // TO DO: otrvoriti odgovarajuce prozore za svaki tip korisnika
+                // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        AccommodationRegistrationView accommodationRegistrationView = new AccommodationRegistrationView(user);
+                        accommodationRegistrationView.Show();
                         break;
                     }
                 case UserType.Guest1:
@@ -93,14 +93,14 @@ namespace InitialProject
                     }
                 case UserType.TourGuide:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        TourCreationView tourCreationView = new TourCreationView(user);
+                        tourCreationView.Show();
                         break;
                     }
                 case UserType.Guest2:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        ToursView toursView = new ToursView(user);
+                        toursView.Show();
                         break;
                     }
             }

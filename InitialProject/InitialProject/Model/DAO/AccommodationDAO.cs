@@ -77,6 +77,16 @@ namespace InitialProject.Model.DAO
             return _accommodations.Max(a => a.Id) + 1;
         }
 
+        public void Add(string name, string country, string city, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL)
+        {
+            _accommodations = _fileHandler.Load();
+            int accommodationId = NextId();
+            Accommodation accommodation = new Accommodation(accommodationId, name, country, city, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL);
+            _accommodations.Add(accommodation);
+            _fileHandler.Save(_accommodations);
+            NotifyObservers();
+        }
+
         public void Delete(Accommodation accommodation)
         {
             _accommodations = _fileHandler.Load();
