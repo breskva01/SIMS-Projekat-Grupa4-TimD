@@ -14,12 +14,14 @@ namespace InitialProject.Model
         public int GuestId { get; set; }
         public KeyPoint KeyPoint { get; set; }
         public int KeyPointId { get; set; }
+        public DateTime Arrival { get; set; }
 
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
             GuestId = Convert.ToInt32(values[1]);
             KeyPointId = Convert.ToInt32(values[2]);
+            Arrival = Convert.ToDateTime(values[3]);
         }
 
         public string[] ToCSV()
@@ -28,7 +30,8 @@ namespace InitialProject.Model
             {
                 Id.ToString(),
                 GuestId.ToString(),
-                KeyPointId.ToString()
+                KeyPointId.ToString(),
+                Arrival.ToString()
             };
             return csvValues;
         }

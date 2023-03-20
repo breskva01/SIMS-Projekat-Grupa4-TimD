@@ -24,7 +24,15 @@ namespace InitialProject.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, UserType.ToString() };
+            string[] csvValues =
+            { 
+                Id.ToString(),
+                Username, 
+                Password, 
+                UserType.ToString(),
+                FirstName,
+                LastName
+            };
             return csvValues;
         }
 
@@ -34,6 +42,8 @@ namespace InitialProject.Model
             Username = values[1];
             Password = values[2];
             UserType = (UserType)Enum.Parse(typeof(UserType), values[3]);
+            FirstName = values[4]; 
+            LastName = values[5];
         }
     }
 }

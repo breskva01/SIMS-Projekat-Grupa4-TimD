@@ -43,5 +43,10 @@ namespace InitialProject.Controller
         {
             return _tourDAO.Update(tour);
         }
+
+        public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int NumberOfGuests)
+        {
+            return _tourDAO.GetFiltered(country, city, duration, language, NumberOfGuests);
+        }
     }
 }

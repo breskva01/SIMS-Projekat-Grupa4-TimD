@@ -97,8 +97,8 @@ namespace InitialProject
                     }
                 case UserType.Guest2:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        ToursView toursView = new ToursView(user);
+                        toursView.Show();
                         break;
                     }
             }

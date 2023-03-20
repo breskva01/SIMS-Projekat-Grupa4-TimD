@@ -13,6 +13,7 @@ namespace InitialProject.Model
 {
     public enum GuideLanguage
     {
+        All,
         Serbian,
         English
     }

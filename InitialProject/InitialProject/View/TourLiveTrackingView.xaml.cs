@@ -30,15 +30,13 @@ namespace InitialProject.View
         private const string FilePathLocation = "../../../Resources/Data/locations.csv";
 
         private readonly TourController _controller;
-
+        private readonly TourReservationController _reservationController;
 
         private List<KeyPoint> _keyPoints;
         private List<KeyPoint> _keyPointsFromSelectedTour;
         private List<Location> _locations;
-        private List<Tour> _tours;
 
         private readonly Storage<KeyPoint> _storageKeyPoint;
-        private readonly Storage<Tour> _storageTour;
         private readonly Storage<Location> _storageLocation;
 
         private GuideTourListView tourListView;
@@ -50,10 +48,11 @@ namespace InitialProject.View
             InitializeComponent();
             DataContext = this;
 
+            _tour = new Tour();
             _tour = tour;
 
+            _reservationController = new TourReservationController();
             _controller = new TourController();
-            _tours = new List<Tour>(_controller.GetAll());
 
             _storageLocation = new Storage<Location>(FilePathLocation);
             _storageKeyPoint = new Storage<KeyPoint>(FilePathKeyPoint);
@@ -93,6 +92,7 @@ namespace InitialProject.View
             keyPointsDataGrid.ItemsSource = _keyPointsFromSelectedTour;
         }
 
+
         private void StopTourClick(object sender, RoutedEventArgs e)
         {
             _tour.State = (TourState)2;
@@ -106,17 +106,23 @@ namespace InitialProject.View
         private void keyPointsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             KeyPoint selectedKeyPoint = (KeyPoint)keyPointsDataGrid.SelectedItem;
-            selectedKeyPoint.Visited = true;
+            //selectedKeyPoint.Visited = true;
             numberOfKeyPointsFromSelectedTour--;
-            if(numberOfKeyPointsFromSelectedTour == 0)
+            if (numberOfKeyPointsFromSelectedTour == 0)
             {
                 _tour.State = (TourState)3;
                 tourListView.NumberOfActiveTours = 0;
                 tourListView.selectedTour.State = _tour.State;
                 _controller.Update(tourListView.selectedTour);
-
                 Close();
             }
+            TourGuestsView tourGuestsView = new TourGuestsView();
+            tourGuestsView.Show();
+        }
+
+        private void CloseClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

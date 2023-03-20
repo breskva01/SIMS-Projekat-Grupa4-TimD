@@ -39,8 +39,7 @@ namespace InitialProject.View
         private readonly TourController _tourController;
 
         private List<KeyPoint> tourKeyPoints = new List<KeyPoint>();
-        //private List<KeyPoint> attractions = new List<KeyPoint>();
-        private List<int> KeyPointIds = new List<int>();
+        private List<int> keyPointIds = new List<int>();
 
         private string _tourName;
         public new string TourName
@@ -202,11 +201,11 @@ namespace InitialProject.View
 
                 foreach (KeyPoint ky in tourKeyPoints)
                 {
-                    KeyPointIds.Add(ky.Id);
+                    keyPointIds.Add(ky.Id);
                 }
                 Start = (DateTime)dateTimePicker.Value;
 
-                _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, tourKeyPoints, KeyPointIds);
+                _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, tourKeyPoints, keyPointIds);
                 MessageBox.Show(" Tour successfully created! ");
             }
             else

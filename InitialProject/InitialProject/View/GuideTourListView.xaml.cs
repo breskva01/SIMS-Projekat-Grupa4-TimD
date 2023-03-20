@@ -40,6 +40,7 @@ namespace InitialProject.View
         private readonly TourController _controller;
 
         private List<string> cityCountry { get; set; }
+        TourLiveTrackingView tourLiveTrackingView;
 
         public GuideTourListView(User user)
         {
@@ -52,9 +53,7 @@ namespace InitialProject.View
             _toursToday = new List<Tour>();
             NumberOfActiveTours = 0;
 
-            
             _storageLocation = new Storage<Location>(FilePathLocation);
-
             _locations = _storageLocation.Load();
 
             _controller = new TourController();
@@ -83,27 +82,24 @@ namespace InitialProject.View
         }
         private void tourDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            // Checking if there is any active tour
             if (NumberOfActiveTours == 0)
             {
                 selectedTour = (Tour)tourDataGrid.SelectedItem;
 
-                if(selectedTour.State == 0 || selectedTour.State == (TourState)1)
+                if (selectedTour.State == 0 || selectedTour.State == (TourState)1)
                 {
-                     if (selectedTour != null)
-                     {
-                           
-                            selectedTour.State = (TourState)1;
-                            _controller.Update(selectedTour);
+                    if (selectedTour != null)
+                    {
+                        selectedTour.State = (TourState)1;
+                        _controller.Update(selectedTour);
                     }
-                     NumberOfActiveTours++;
-                     tourDataGrid.SelectedIndex = -1;
-                     TourLiveTrackingView tourLiveTrackingView = new TourLiveTrackingView(selectedTour, this);
-                     tourLiveTrackingView.Show();
-                }    
-                
+                    NumberOfActiveTours++;
+                    tourDataGrid.SelectedIndex = -1;
+                    TourLiveTrackingView tourLiveTrackingView = new TourLiveTrackingView(selectedTour, this);
+                    tourLiveTrackingView.Show();
+                }
             }
-            
         }
     }
 }
