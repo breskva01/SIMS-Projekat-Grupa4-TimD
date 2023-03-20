@@ -79,11 +79,11 @@ namespace InitialProject.Model.DAO
 
         public void Add(string name, string country, string city, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL)
         {
-            _accommodations = _storage.Load();
+            _accommodations = _fileHandler.Load();
             int accommodationId = NextId();
             Accommodation accommodation = new Accommodation(accommodationId, name, country, city, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL);
             _accommodations.Add(accommodation);
-            _storage.Save(_accommodations);
+            _fileHandler.Save(_accommodations);
             NotifyObservers();
         }
 
