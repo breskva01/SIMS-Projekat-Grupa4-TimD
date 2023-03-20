@@ -1,5 +1,7 @@
 ﻿using InitialProject.Serializer;
 using System;
+using System.Collections.Generic;
+using System.Windows.Documents;
 
 namespace InitialProject.Model
 {
@@ -14,6 +16,7 @@ namespace InitialProject.Model
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public List<GuestRating> Ratings { get; set; }
 
         public User() { }
 
@@ -26,6 +29,7 @@ namespace InitialProject.Model
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
+            Ratings = new List<GuestRating>();
         }
 
         public string[] ToCSV()

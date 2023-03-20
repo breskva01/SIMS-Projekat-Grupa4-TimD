@@ -13,21 +13,24 @@ namespace InitialProject.Model.DAO
     public class AccommodationDAO : ISubject
     {
         private readonly List<IObserver> _observers;
-        private readonly AccommodationFileHandler _fileHandler;
+        private readonly Storage<Accommodation> _storage;
         private List<Accommodation> _accommodations;
+        private const string FilePath = "../../../Resources/Data/accommodations.csv";
+
+
         public AccommodationDAO()
         {
-            _fileHandler = new AccommodationFileHandler();
-            _accommodations = _fileHandler.Load();
+            _storage = new Storage<Accommodation>(FilePath);
+            _accommodations = _storage.Load();
             _observers = new List<IObserver>();
         }
         public List<Accommodation> GetAll()
         {
-            return _fileHandler.Load();
+            return _storage.Load();
         }
         public List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
         {
-            _accommodations = _fileHandler.Load();
+            _accommodations = _storage.Load();
             List<Accommodation> filteredAccommodations = new();
 
             foreach (Accommodation accommodation in _accommodations)
@@ -61,15 +64,15 @@ namespace InitialProject.Model.DAO
         public Accommodation Save(Accommodation accommodation)
         {
             accommodation.Id = NextId();
-            _accommodations = _fileHandler.Load();
+            _accommodations = _storage.Load();
             _accommodations.Add(accommodation);
-            _fileHandler.Save(_accommodations);
+            _storage.Save(_accommodations);
             return accommodation;
         }
 
         public int NextId()
         {
-            _accommodations = _fileHandler.Load();
+            _accommodations = _storage.Load();
             if (_accommodations.Count < 1)
             {
                 return 1;
@@ -77,22 +80,25 @@ namespace InitialProject.Model.DAO
             return _accommodations.Max(a => a.Id) + 1;
         }
 
-        public void Add(string name, string country, string city, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL)
+        public void Add(string name, string country, string city, int locationId, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,
+                        User owner, int ownerId)
         {
-            _accommodations = _fileHandler.Load();
+            _accommodations = _storage.Load();
             int accommodationId = NextId();
-            Accommodation accommodation = new Accommodation(accommodationId, name, country, city, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL);
+            Location location = new Location(country, city);
+            Accommodation accommodation = new Accommodation(accommodationId, name, location, locationId, address, type, maximumGuests, minimumDays, minimumCancelationNotice, 
+                                                            pictureURL, owner, ownerId);
             _accommodations.Add(accommodation);
-            _fileHandler.Save(_accommodations);
+            _storage.Save(_accommodations);
             NotifyObservers();
         }
 
         public void Delete(Accommodation accommodation)
         {
-            _accommodations = _fileHandler.Load();
+            _accommodations = _storage.Load();
             Accommodation founded = _accommodations.Find(a => a.Id == accommodation.Id);
             _accommodations.Remove(founded);
-            _fileHandler.Save(_accommodations);
+            _storage.Save(_accommodations);
         }
         public void Subscribe(IObserver observer)
         {
