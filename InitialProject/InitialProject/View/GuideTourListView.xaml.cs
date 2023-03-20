@@ -100,6 +100,7 @@ namespace InitialProject.View
                     tourLiveTrackingView.Show();
                 }
             }
+
         }
     }
 }

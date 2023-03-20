@@ -52,7 +52,7 @@
             <TextBox Grid.Row="7" Grid.Column="1" Height="20" Text="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="8" Grid.Column="1" Height="20" Text="{Binding Path=PictureUrl, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <ComboBox x:Name ="keyPointCity" PreviewTextInput="keyPointCity_PreviewTextInput" IsEditable="True" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" SelectionChanged="keyPointCity_SelectionChanged" VerticalAlignment="Center" Width="90" Height="18"/>
-            <ComboBox x:Name ="keyPointAttraction" IsEditable="True" Grid.Column="1" HorizontalAlignment="Left" Margin="107,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="84" Height="19"/>
+            <ComboBox x:Name ="keyPointPlace" IsEditable="True" Grid.Column="1" HorizontalAlignment="Left" Margin="107,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="84" Height="19"/>
             <Button Grid.Column="1" Content="+" HorizontalAlignment="Left" Margin="210,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="19" Width="20" Click="AddAttractionClick" RenderTransformOrigin="1.59,0.545"/>
 
 

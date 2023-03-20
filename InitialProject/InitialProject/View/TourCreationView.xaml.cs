@@ -259,19 +259,19 @@ namespace InitialProject.View
                         }
                     }
                 }
-                keyPointAttraction.ItemsSource = keyPointsShow.Select(ky => ky.Place);
+                keyPointPlace.ItemsSource = keyPointsShow.Select(ky => ky.Place);
             }
         }
 
         private void AddAttractionClick(object sender, RoutedEventArgs e)
         {
-            KeyPoint keyPoint = keyPoints.Where(ky => ky.Place == keyPointAttraction.SelectedValue.ToString()).FirstOrDefault();
+            KeyPoint keyPoint = keyPoints.Where(ky => ky.Place == keyPointPlace.SelectedValue.ToString()).FirstOrDefault();
             
             tourKeyPoints.Add(keyPoint);
 
             // Clearing comboboxes after adding one keyPoint
             keyPointCity.SelectedIndex = -1;
-            keyPointAttraction.SelectedIndex = -1;
+            keyPointPlace.SelectedIndex = -1;
 
         }
     }
