@@ -17,6 +17,7 @@ namespace InitialProject.Model
         public int GuestId { get; set; }
         public User Guest { get; set; }
         public int NumberOfDays { get; set; }
+        public int GuestNumber { get; set; }
         public DateOnly CheckInDate { get; set; }
         public DateOnly CheckOutDate { get; set; }
         public DateOnly LastNotification { get; set; }
@@ -45,15 +46,16 @@ namespace InitialProject.Model
             GuestId = int.Parse(values[2]);
             NumberOfDays = int.Parse(values[3]);
             CheckInDate = DateOnly.Parse(values[4]);
-            CheckOutDate = DateOnly.Parse(values[5]);
-            LastNotification = DateOnly.Parse(values[6]);
-            IsGuestRated = bool.Parse(values[7]);
+            GuestNumber = int.Parse(values[5]);
+            CheckOutDate = DateOnly.Parse(values[6]);
+            LastNotification = DateOnly.Parse(values[7]);
+            IsGuestRated = bool.Parse(values[8]);
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), AccommodationId.ToString(), GuestId.ToString(),
-                                    NumberOfDays.ToString(), CheckInDate.ToString(), CheckOutDate.ToString(),
+                                    NumberOfDays.ToString(), GuestNumber.ToString(), CheckInDate.ToString(), CheckOutDate.ToString(),
                                     LastNotification.ToString(), IsGuestRated.ToString()};
             return csvValues;
         }

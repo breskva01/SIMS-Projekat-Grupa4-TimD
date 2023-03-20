@@ -23,16 +23,14 @@ namespace InitialProject.View
     /// </summary>
     public partial class AccommodationReservationWindow : Window
     {
-        private readonly AccommodationController _accommodationController;
         private readonly AccommodationReservationController _reservationController;
         public Accommodation Accommodation { get; set; }
         public User LoggedInUser { get; set; }
         public int Days { get; set; }
-        public AccommodationReservationWindow(AccommodationController controller, User user, Accommodation accommodation)
+        public AccommodationReservationWindow(User user, Accommodation accommodation)
         {
             InitializeComponent();
             DataContext = this;
-            _accommodationController = controller;
             LoggedInUser = user;
             Accommodation = accommodation;
             _reservationController = new AccommodationReservationController();
@@ -52,6 +50,8 @@ namespace InitialProject.View
                 DateTime startDate = (DateTime)startDatePicker.SelectedDate;
                 DateTime endDate = (DateTime)endDatePicker.SelectedDate;
                 List<AccommodationReservation> reservations = _reservationController.FindAvailable(startDate, endDate, Days, Accommodation, LoggedInUser);
+                AccommodationReservationDatePicker datePicker = new AccommodationReservationDatePicker(_reservationController, reservations);
+                datePicker.ShowDialog();
             }
             else
                 MessageBox.Show("Izaberite željeni opseg datuma");

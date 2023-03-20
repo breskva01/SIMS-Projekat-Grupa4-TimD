@@ -54,7 +54,6 @@ namespace InitialProject
         {
             InitializeComponent();
             DataContext = this;
-            _repository = new UserRepository();
             _userController = new UserController();
             _reservationController = new AccommodationReservationController();
             _accommodationStorage = new Storage<Accommodation>(accommodationsFilePath);
@@ -116,14 +115,14 @@ namespace InitialProject
                     }
                 case UserType.TourGuide:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        GuideUserIntefaceView guideInteface = new GuideUserIntefaceView(user);
+                        guideInteface.Show();
                         break;
                     }
                 case UserType.Guest2:
                     {
-                        CommentsOverview commentsOverview = new CommentsOverview(user);
-                        commentsOverview.Show();
+                        ToursView toursView = new ToursView(user);
+                        toursView.Show();
                         break;
                     }
             }

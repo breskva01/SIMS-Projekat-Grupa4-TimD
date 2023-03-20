@@ -29,26 +29,74 @@ namespace InitialProject.Model.DAO
         public List<AccommodationReservation> FindAvailable(DateOnly beginDate, DateOnly endDate, int days, Accommodation accommodation, User guest)
         {
             List<AccommodationReservation> availableReservations = new List<AccommodationReservation>();
-            List<AccommodationReservation> existingReservations = FindExisting(accommodation);
+            List<AccommodationReservation> existingReservations = FindExisting(accommodation.Id);
 
-            int counter = 0;
+            int numberOfReservations = 0;
             DateOnly checkIn = beginDate;
             DateOnly checkOut = beginDate.AddDays(days);
-            while (counter < 3 && checkOut < endDate)
+            while (numberOfReservations < 3 && checkOut <= endDate)
             {
                 if (IsAvailable(checkIn, checkOut, existingReservations)) 
                 {
-                    AccommodationReservation reservation = CreateReservation(accommodation, guest, days, checkIn, checkOut);
-                    availableReservations.Add(reservation);
-                    counter++;
+                    availableReservations.Add(CreateReservation(accommodation, guest, days, checkIn, checkOut));
+                    numberOfReservations++;
                 }
                 checkIn = checkIn.AddDays(1);
                 checkOut = checkOut.AddDays(1);
             }
+            if (numberOfReservations == 0)
+                availableReservations = FindOutsideDateFrame(existingReservations, beginDate, endDate, days, accommodation, guest);
             return availableReservations;
         }
-        public bool IsAvailable(DateOnly checkIn, DateOnly checkOut, List<AccommodationReservation> reservations)
+        private List<AccommodationReservation> FindOutsideDateFrame(List<AccommodationReservation> existingReservations, DateOnly beginDate, DateOnly endDate, int days, Accommodation accommodation, User guest)
         {
+            List<AccommodationReservation> availableReservations = new List<AccommodationReservation>();
+            int numberOfReservations = 0;
+            int offset = 0;
+            bool beforeDateFrame = false;
+            DateOnly checkIn = FindStartingDates(ref beginDate, ref endDate, existingReservations, days);
+            DateOnly checkOut = checkIn.AddDays(days);
+
+            while (numberOfReservations < 3)
+            {
+                if (IsAvailable(checkIn, checkOut, existingReservations))
+                {
+                    availableReservations.Add(CreateReservation(accommodation, guest, days, checkIn, checkOut));
+                    numberOfReservations++;
+                }
+                if (beforeDateFrame)
+                {
+                    checkIn = beginDate.AddDays(-offset);
+                    checkOut = checkIn.AddDays(days);
+                    beforeDateFrame = !beforeDateFrame;
+                }
+                else
+                {
+                    checkIn = endDate.AddDays(offset);
+                    checkOut = checkIn.AddDays(days);
+                    offset++;
+                    beforeDateFrame = !beforeDateFrame;
+                }
+            }
+            return availableReservations;
+        }
+        private DateOnly FindStartingDates(ref DateOnly beginDate, ref DateOnly endDate, List<AccommodationReservation> existingReservations, int days)
+        {
+            try
+            {
+                beginDate = existingReservations.Min(r => r.CheckInDate).AddDays(-days);
+                endDate = existingReservations.Max(r => r.CheckOutDate);
+            }
+            catch
+            {
+                endDate = beginDate.AddDays(1);
+            }
+            return beginDate;           
+        }
+        private bool IsAvailable(DateOnly checkIn, DateOnly checkOut, List<AccommodationReservation> reservations)
+        {
+            if (checkIn < DateOnly.FromDateTime(DateTime.Now))
+                return false;
             foreach(var reservation in reservations)
             {
                 if (reservation.Overlap(checkIn, checkOut))
@@ -56,16 +104,22 @@ namespace InitialProject.Model.DAO
             }
             return true;
         }
-        public List<AccommodationReservation> FindExisting(Accommodation accommodation)
+        public List<AccommodationReservation> FindExisting(int accommodationId)
         {
             _reservations = _fileHandler.Load();
-            return _reservations.FindAll(a => a.Accommodation == accommodation);
+            return _reservations.FindAll(r => r.AccommodationId == accommodationId);
         }
         private AccommodationReservation CreateReservation(Accommodation accommodation, User guest, int days, DateOnly checkIn, DateOnly checkOut)
         {
             AccommodationReservation reservation = new AccommodationReservation(accommodation, guest, days, checkIn, checkOut);
-            reservation.Id = NextId();
             return reservation;
+        }
+        public void Save(AccommodationReservation reservation)
+        {
+            reservation.Id = NextId();
+            _reservations = _fileHandler.Load();
+            _reservations.Add(reservation);
+            _fileHandler.Save(_reservations);
         }
 
         public bool IsCompleted(AccommodationReservation accommodationReservation, int ownerId)

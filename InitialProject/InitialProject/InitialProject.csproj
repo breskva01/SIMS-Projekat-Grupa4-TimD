@@ -10,9 +10,16 @@
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\berlin.jpg" />
     <None Remove="Resources\Images\brvnara_tara.jpg" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\moscow.png" />
+    <None Remove="Resources\Images\novi_sad.jpg" />
+    <None Remove="Resources\Images\paris.png" />
+    <None Remove="Resources\Images\petrovaradin.png" />
+    <None Remove="Resources\Images\search.png" />
+    <None Remove="Resources\Images\vienna.jpeg" />
     <None Remove="Resources\Images\view.png" />
     <None Remove="Resources\Images\vila_slap.jpg" />
   </ItemGroup>
@@ -38,7 +45,14 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\apartman_liman.jpg" />
+    <Resource Include="Resources\Images\berlin.jpg" />
     <Resource Include="Resources\Images\brvnara_tara.jpg" />
+    <Resource Include="Resources\Images\moscow.png" />
+    <Resource Include="Resources\Images\novi_sad.jpg" />
+    <Resource Include="Resources\Images\paris.png" />
+    <Resource Include="Resources\Images\petrovaradin.png" />
+    <Content Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\vienna.jpeg" />
     <Resource Include="Resources\Images\vila_slap.jpg" />
   </ItemGroup>
 

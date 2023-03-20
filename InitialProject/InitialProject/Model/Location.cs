@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace InitialProject.Model
 {
     public class Location : ISerializable
-    {   
+    {
         public int Id { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
@@ -21,7 +21,7 @@ namespace InitialProject.Model
         }
         public void FromCSV(string[] values)
         {
-            Id = Convert.ToInt32(values[0]);
+            Id = int.Parse(values[0]);
             City = values[1];
             Country = values[2];
         }

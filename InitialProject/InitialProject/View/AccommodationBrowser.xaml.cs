@@ -113,7 +113,7 @@ namespace InitialProject.View
             TextBlock textBlock = (TextBlock)sender;
             string name = textBlock.Text;
             SelectedAccommodation = Accommodations.FirstOrDefault(a => a.Name == name);
-            AccommodationReservationWindow accommodationReservation = new AccommodationReservationWindow(_controller, LoggedInUser, SelectedAccommodation);
+            AccommodationReservationWindow accommodationReservation = new AccommodationReservationWindow(LoggedInUser, SelectedAccommodation);
             accommodationReservation.ShowDialog();
         }
     }

@@ -46,15 +46,19 @@ namespace InitialProject.Model.DAO
             }
             return filteredAccommodations;
         }
-        public bool CheckIfContainted(string keyWords, Accommodation accommodation)
+        private bool CheckIfContainted(string keyWords, Accommodation accommodation)
         {
-            /*if (accommodation.Name.ToLower().Contains(keyWords.ToLower()) || 
-                accommodation.City.ToLower().Contains(keyWords.ToLower()) ||
-                accommodation.Country.ToLower().Contains(keyWords.ToLower()))
+            string[] splitKeyWords = keyWords.Split(" ");
+            foreach (string keyWord in splitKeyWords)
             {
-                return true;
-            }*/
-            return false;
+                if (!(accommodation.Name.ToLower().Contains(keyWord.ToLower()) ||
+                    accommodation.City.ToLower().Contains(keyWord.ToLower()) ||
+                    accommodation.Country.ToLower().Contains(keyWord.ToLower())))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public Accommodation Save(Accommodation accommodation)
@@ -79,12 +83,12 @@ namespace InitialProject.Model.DAO
         public void Add(string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,
                         User owner, int ownerId)
         {
-            _accommodations = _storage.Load();
+            _accommodations = _fileHandler.Load();
             int accommodationId = NextId();
             Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, 
                                                             pictureURL, owner, ownerId);
             _accommodations.Add(accommodation);
-            _storage.Save(_accommodations);
+            _fileHandler.Save(_accommodations);
             NotifyObservers();
         }
 

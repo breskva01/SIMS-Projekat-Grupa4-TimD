@@ -44,5 +44,9 @@ namespace InitialProject.Controller
         {
             _reservationDAO.Subscribe(observer);
         }
+        public void Save(AccommodationReservation reservation)
+        {
+            _reservationDAO.Save(reservation);
+        }
     }
 }
