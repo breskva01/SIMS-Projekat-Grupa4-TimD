@@ -21,17 +21,19 @@ namespace InitialProject.Model
         public DateOnly CheckOutDate { get; set; }
         public DateOnly LastNotification { get; set; }
         public AccommodationReservation() { }
-        public AccommodationReservation(int id, int accommodationId, Accommodation accommodation, int guestId, User guest, int numberOfDays, DateOnly checkInDate, DateOnly checkOutDate, DateOnly lastNotification)
+        public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkInDate, DateOnly checkOutDate)
         {
-            Id = id;
-            AccommodationId = accommodationId;
+            AccommodationId = accommodation.Id;
             Accommodation = accommodation;
-            GuestId = guestId;
+            GuestId = guest.Id;
             Guest = guest;
             NumberOfDays = numberOfDays;
             CheckInDate = checkInDate;
             CheckOutDate = checkOutDate;
-            LastNotification = lastNotification;
+        }
+        public bool Overlap(DateOnly checkIn, DateOnly checkOut)
+        {
+            return CheckInDate < checkOut && checkIn < CheckOutDate;
         }
 
         public void FromCSV(string[] values)

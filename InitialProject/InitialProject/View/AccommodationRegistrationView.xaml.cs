@@ -135,7 +135,7 @@ namespace InitialProject.View
             set
             {
                 if (value != _pictureURL)
-                {
+    {
                     _pictureURL = value;
                     OnPropertyChanged();
                 }

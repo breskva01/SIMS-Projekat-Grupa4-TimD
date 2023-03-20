@@ -68,7 +68,7 @@ namespace InitialProject.Model.DAO
 
         public int NextId()
         {
-            _accommodations = _storage.Load();
+            _accommodations = _fileHandler.Load();
             if (_accommodations.Count < 1)
             {
                 return 1;

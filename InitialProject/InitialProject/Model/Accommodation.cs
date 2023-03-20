@@ -9,6 +9,7 @@ using System.Xml.Linq;
 
 namespace InitialProject.Model
 {
+    //Everything only used for filter purposes, no accommodation should be assigned this value
     public enum AccommodationType { Apartment, House, Cottage, Everything}
     public class Accommodation : ISerializable
     {
@@ -20,7 +21,6 @@ namespace InitialProject.Model
         public int MaximumGuests { get; set; }
         public int MinimumDays { get; set; }
         public int MinimumCancelationNotice { get; set; }
-        //verovatno treba promeniti i implementirati drugacije
         public string PictureURL { get; set; }
         public Accommodation() { }
         public Accommodation(int id, string name, string country, string city, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL)
