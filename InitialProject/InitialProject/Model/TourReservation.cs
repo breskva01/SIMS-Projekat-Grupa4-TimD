@@ -28,7 +28,6 @@ namespace InitialProject.Model
             GuestId = guestId;
             Guest = guest;
             NumberOfGuests = numberOfGuests;
-
         }
 
         public void FromCSV(string[] values)

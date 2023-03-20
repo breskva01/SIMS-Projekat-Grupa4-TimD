@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,6 +34,7 @@ namespace InitialProject.View
         private List<Location> locations;
         private readonly Storage<Location> locationStorage;
         private const string FilePath = "../../../Resources/Data/locations.csv";
+        private Regex numberValidate = new Regex(@"\D+");
 
 
         public ToursView(User user)
@@ -79,10 +81,17 @@ namespace InitialProject.View
 
         private int GetDuration()
         {
+            Match match = numberValidate.Match(tbDuration.Text);
+            if (match.Success)
+            {
+              MessageBox.Show("You cannot enter non-number character in the Duration box.");
+            }
+
             int duration = 0;
             try
             {
                 duration = int.Parse(tbDuration.Text);
+                
             }
             catch { };
             
@@ -104,7 +113,13 @@ namespace InitialProject.View
 
         private int GetNumberOfGuests()
         {
+            Match match = numberValidate.Match(tbNumberOfGuests.Text);
+            if (match.Success)
+            {
+                MessageBox.Show("You cannot enter non-number character in the Number of guests box.");
+            }
             int NumberOfGuests = 0;
+
             try
             {
                 NumberOfGuests = int.Parse(tbNumberOfGuests.Text);

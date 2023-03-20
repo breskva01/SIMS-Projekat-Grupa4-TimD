@@ -77,12 +77,12 @@ namespace InitialProject.Model.DAO
 
         public void Subscribe(IObserver observer)
         {
-            throw new NotImplementedException();
+            _observers.Add(observer);
         }
 
         public void Unsubscribe(IObserver observer)
         {
-            throw new NotImplementedException();
+            _observers.Remove(observer);
         }
 
         public void NotifyObservers()
@@ -91,7 +91,6 @@ namespace InitialProject.Model.DAO
             {
                 o.Update();
             }
-            //throw new NotImplementedException();
         }
     }
 }
