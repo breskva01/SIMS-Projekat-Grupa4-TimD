@@ -23,7 +23,7 @@ namespace InitialProject.View
     public partial class AccommodationRegistrationView : Window, INotifyPropertyChanged
     {
 
-        private List<Location> cities;
+        private List<Location> _cities;
         private readonly Storage<Location> _storage;
         private const string FilePath = "../../../Resources/Data/locations.csv";
 
@@ -35,10 +35,10 @@ namespace InitialProject.View
 
             // Assume citiesList is already initialized with data.
             _storage = new Storage<Location>(FilePath);
-            cities = _storage.Load();
+            _cities = _storage.Load();
 
             // Set the items source of the country combo box to the distinct list of countries.
-            countryComboBox.ItemsSource = cities.Select(c => c.Country).Distinct();
+            countryComboBox.ItemsSource = _cities.Select(c => c.Country).Distinct();
         }
 
         private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -47,7 +47,7 @@ namespace InitialProject.View
             string selectedCountry = (string)countryComboBox.SelectedValue;
 
             // Set the items source of the city combo box to the cities of the selected country.
-            cityComboBox.ItemsSource = cities.Where(c => c.Country == selectedCountry);
+            cityComboBox.ItemsSource = _cities.Where(c => c.Country == selectedCountry);
         }
 
         private void RegisterAccommodation_Click(object sender, RoutedEventArgs e)

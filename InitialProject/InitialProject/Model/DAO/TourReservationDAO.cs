@@ -22,7 +22,7 @@ namespace InitialProject.Model.DAO
 
         private const string TourFilePath = "../../../Resources/Data/tours.csv";
         private const string UserFilePath = "../../../Resources/Data/users.csv";
-        private const string ReservationFilePath = "../../../Resources/Data/tourreservations.csv";
+        private const string ReservationFilePath = "../../../Resources/Data/tourReservations.csv";
 
 
         public TourReservationDAO()

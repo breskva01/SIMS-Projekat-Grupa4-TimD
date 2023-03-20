@@ -39,9 +39,9 @@ namespace InitialProject.View
         private readonly Storage<KeyPoint> _storageKeyPoint;
         private readonly Storage<Location> _storageLocation;
 
-        private GuideTourListView tourListView;
+        private GuideTourListView _tourListView;
 
-        private int numberOfKeyPointsFromSelectedTour;
+        private int _numberOfKeyPointsFromSelectedTour;
 
         public TourLiveTrackingView(Tour tour, GuideTourListView guideTourListView)
         {
@@ -62,7 +62,7 @@ namespace InitialProject.View
 
             _keyPointsFromSelectedTour = new List<KeyPoint>();
 
-            tourListView = guideTourListView;
+            _tourListView = guideTourListView;
             
             // Adding KeyPoints to new list that contains only keyPoints from selected tour
             foreach(int keyPointId in _tour.KeyPointIds)
@@ -88,7 +88,7 @@ namespace InitialProject.View
                 }
             }
 
-            numberOfKeyPointsFromSelectedTour = _keyPointsFromSelectedTour.Count();
+            _numberOfKeyPointsFromSelectedTour = _keyPointsFromSelectedTour.Count();
             keyPointsDataGrid.ItemsSource = _keyPointsFromSelectedTour;
         }
 
@@ -96,9 +96,9 @@ namespace InitialProject.View
         private void StopTourClick(object sender, RoutedEventArgs e)
         {
             _tour.State = (TourState)2;
-            tourListView.NumberOfActiveTours = 0;
-            tourListView.selectedTour.State = _tour.State;
-            _controller.Update(tourListView.selectedTour);
+            _tourListView.NumberOfActiveTours = 0;
+            _tourListView.SelectedTour.State = _tour.State;
+            _controller.Update(_tourListView.SelectedTour);
             Close();
             
         }
@@ -107,13 +107,13 @@ namespace InitialProject.View
         {
             KeyPoint selectedKeyPoint = (KeyPoint)keyPointsDataGrid.SelectedItem;
             //selectedKeyPoint.Visited = true;
-            numberOfKeyPointsFromSelectedTour--;
-            if (numberOfKeyPointsFromSelectedTour == 0)
+            _numberOfKeyPointsFromSelectedTour--;
+            if (_numberOfKeyPointsFromSelectedTour == 0)
             {
                 _tour.State = (TourState)3;
-                tourListView.NumberOfActiveTours = 0;
-                tourListView.selectedTour.State = _tour.State;
-                _controller.Update(tourListView.selectedTour);
+                _tourListView.NumberOfActiveTours = 0;
+                _tourListView.SelectedTour.State = _tour.State;
+                _controller.Update(_tourListView.SelectedTour);
                 Close();
             }
             TourGuestsView tourGuestsView = new TourGuestsView();

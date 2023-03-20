@@ -27,8 +27,8 @@ namespace InitialProject.View
     /// </summary>
     public partial class TourCreationView : Window, INotifyPropertyChanged
     {
-        private List<Location> locations;
-        private List<KeyPoint> keyPoints;
+        private List<Location> _locations;
+        private List<KeyPoint> _keyPoints;
 
         private readonly Storage<Location> _storageLocation;
         private readonly Storage<KeyPoint> _storageKeyPoint;
@@ -38,8 +38,8 @@ namespace InitialProject.View
 
         private readonly TourController _tourController;
 
-        private List<KeyPoint> tourKeyPoints = new List<KeyPoint>();
-        private List<int> keyPointIds = new List<int>();
+        private List<KeyPoint> _tourKeyPoints = new List<KeyPoint>();
+        private List<int> _keyPointIds = new List<int>();
 
         private string _tourName;
         public new string TourName
@@ -171,14 +171,14 @@ namespace InitialProject.View
 
             _storageLocation= new Storage<Location>(FilePath);
             _storageKeyPoint = new Storage<KeyPoint>(FilePathKeyPoint);
-            keyPoints = _storageKeyPoint.Load();
-            locations = _storageLocation.Load();
+            _keyPoints = _storageKeyPoint.Load();
+            _locations = _storageLocation.Load();
          
 
             // Set the items source of the country combo box to the distinct list of countries.
-            countryComboBox.ItemsSource = locations.Select(c => c.Country).Distinct();
+            countryComboBox.ItemsSource = _locations.Select(c => c.Country).Distinct();
 
-            keyPointCity.ItemsSource = locations.Select(c => c.City).Distinct();
+            keyPointCity.ItemsSource = _locations.Select(c => c.City).Distinct();
 
             _tourController = new TourController();
         }
@@ -187,25 +187,25 @@ namespace InitialProject.View
 
         private void TourCreationClick(object sender, RoutedEventArgs e)
         {
-            if(tourKeyPoints.Count() > 1)
+            if(_tourKeyPoints.Count() > 1)
             {
                 Location Location = new Location();
                 Location.Country = Country;
                 Location.City = Town;
-                Location.Id = locations.Where(c => c.City == Town).Select(c => c.Id).FirstOrDefault();
+                Location.Id = _locations.Where(c => c.City == Town).Select(c => c.Id).FirstOrDefault();
 
                 int TourDuration = int.Parse(Duration);
                 int MaxGuests = int.Parse(MaximumGuests);
 
                 GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
 
-                foreach (KeyPoint ky in tourKeyPoints)
+                foreach (KeyPoint ky in _tourKeyPoints)
                 {
-                    keyPointIds.Add(ky.Id);
+                    _keyPointIds.Add(ky.Id);
                 }
                 Start = (DateTime)dateTimePicker.Value;
 
-                _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, tourKeyPoints, keyPointIds);
+                _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
                 MessageBox.Show(" Tour successfully created! ");
             }
             else
@@ -224,7 +224,7 @@ namespace InitialProject.View
             string selectedCountry = (string)countryComboBox.SelectedValue;
 
             // Set the items source of the city combo box to the cities of the selected country.
-            cityComboBox.ItemsSource = locations.Where(c => c.Country == selectedCountry);
+            cityComboBox.ItemsSource = _locations.Where(c => c.Country == selectedCountry);
         }
         private void cityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -235,7 +235,7 @@ namespace InitialProject.View
 
         private void keyPointCity_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            keyPointCity.ItemsSource = locations.Select(c => c.City).Distinct();
+            keyPointCity.ItemsSource = _locations.Select(c => c.City).Distinct();
         }
 
         private void keyPointCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -246,11 +246,11 @@ namespace InitialProject.View
                 List<KeyPoint> keyPointsShow = new List<KeyPoint>();
 
 
-                foreach (Location l in locations)
+                foreach (Location l in _locations)
                 {
                     if (city == l.City)
                     {
-                        foreach (KeyPoint ky in keyPoints)
+                        foreach (KeyPoint ky in _keyPoints)
                         {
                             if (ky.LocationId == l.Id)
                             {
@@ -265,9 +265,9 @@ namespace InitialProject.View
 
         private void AddAttractionClick(object sender, RoutedEventArgs e)
         {
-            KeyPoint keyPoint = keyPoints.Where(ky => ky.Place == keyPointPlace.SelectedValue.ToString()).FirstOrDefault();
+            KeyPoint keyPoint = _keyPoints.Where(ky => ky.Place == keyPointPlace.SelectedValue.ToString()).FirstOrDefault();
             
-            tourKeyPoints.Add(keyPoint);
+            _tourKeyPoints.Add(keyPoint);
 
             // Clearing comboboxes after adding one keyPoint
             keyPointCity.SelectedIndex = -1;

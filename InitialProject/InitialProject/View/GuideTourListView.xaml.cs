@@ -31,15 +31,15 @@ namespace InitialProject.View
 
         private readonly Storage<Location> _storageLocation;
 
-        private DateTime Today;
+        private DateTime _today;
 
         public int NumberOfActiveTours;
 
-        public Tour selectedTour;
+        public Tour SelectedTour;
 
         private readonly TourController _controller;
 
-        private List<string> cityCountry { get; set; }
+        private List<string> _cityCountry { get; set; }
         TourLiveTrackingView tourLiveTrackingView;
 
         public GuideTourListView(User user)
@@ -47,8 +47,8 @@ namespace InitialProject.View
             InitializeComponent();
             DataContext = this;
 
-            selectedTour = new Tour();
-            Today = DateTime.Now;
+            SelectedTour = new Tour();
+            _today = DateTime.Now;
 
             _toursToday = new List<Tour>();
             NumberOfActiveTours = 0;
@@ -72,7 +72,7 @@ namespace InitialProject.View
             // Checking which tours and happeing today and adding them to new list of tours
             foreach (Tour t in _tours)
             {
-                if (t.Start.Year == Today.Year && t.Start.Month == Today.Month && t.Start.Day == Today.Day)
+                if (t.Start.Year == _today.Year && t.Start.Month == _today.Month && t.Start.Day == _today.Day)
                 {
                     _toursToday.Add(t);
                 }
@@ -85,18 +85,18 @@ namespace InitialProject.View
             // Checking if there is any active tour
             if (NumberOfActiveTours == 0)
             {
-                selectedTour = (Tour)tourDataGrid.SelectedItem;
+                SelectedTour = (Tour)tourDataGrid.SelectedItem;
 
-                if (selectedTour.State == 0 || selectedTour.State == (TourState)1)
+                if (SelectedTour.State == 0 || SelectedTour.State == (TourState)1)
                 {
-                    if (selectedTour != null)
+                    if (SelectedTour != null)
                     {
-                        selectedTour.State = (TourState)1;
-                        _controller.Update(selectedTour);
+                        SelectedTour.State = (TourState)1;
+                        _controller.Update(SelectedTour);
                     }
                     NumberOfActiveTours++;
                     tourDataGrid.SelectedIndex = -1;
-                    TourLiveTrackingView tourLiveTrackingView = new TourLiveTrackingView(selectedTour, this);
+                    TourLiveTrackingView tourLiveTrackingView = new TourLiveTrackingView(SelectedTour, this);
                     tourLiveTrackingView.Show();
                 }
             }
