@@ -21,12 +21,13 @@ namespace InitialProject.Controller
         {
             return _tourDAO.GetAll();
         }
-        public Tour CreateTour(string Name, Location Location, string Description, GuideLanguage Language, int MaximumGuests, DateTime Start,int Duration, string PictureUrl) 
+        public Tour CreateTour(string Name, Location Location, string Description,GuideLanguage Language, int MaximumGuests, DateTime Start,int Duration, string PictureUrl, List<KeyPoint> ky, List<int> kyIds) 
         {
+            int LocationId = Location.Id;
             Tour Tour = new Tour();
             Tour.Name = Name;
             Tour.Location = Location;
-            Tour.LocationId = Location.Id;
+            Tour.LocationId = LocationId;
             Tour.Description = Description;
             Tour.Language = Language;
             Tour.MaximumGuests = MaximumGuests;
@@ -34,7 +35,13 @@ namespace InitialProject.Controller
             Tour.Duration = Duration;
             Tour.PictureURL = PictureUrl;
             Tour.CurrentNumberOfGuests = 0;
+            Tour.KeyPoints = ky;
+            Tour.KeyPointIds = kyIds;  
             return _tourDAO.Save(Tour);
+        }
+        public Tour Update(Tour tour)
+        {
+            return _tourDAO.Update(tour);
         }
 
         public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int NumberOfGuests)
