@@ -25,7 +25,6 @@ namespace InitialProject.Model.DAO
             _tourStorage = new Storage<Tour>(TourFilePath);
             _locationStorage = new Storage<Location>(LocationFilePath);
             _tours = _tourStorage.Load();
-            //_cities = _cityStorage.Load();
             _observers = new List<IObserver>(); 
         }
         public List<Tour> GetAll()

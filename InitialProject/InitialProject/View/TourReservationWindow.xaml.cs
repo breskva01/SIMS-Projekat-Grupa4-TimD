@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,7 +29,7 @@ namespace InitialProject.View
         public ObservableCollection<Tour> Tours { get; set; }
         private User loggedInUser;
         private readonly TourReservationController reservationController;
-
+        private Regex numberValidate = new Regex(@"\D+");
 
 
         public TourReservationWindow(Tour tour, User user)
@@ -49,6 +50,12 @@ namespace InitialProject.View
 
         private int GetNumberOfGuests()
         {
+            Match match = numberValidate.Match(tbNumberOfGuests.Text);
+            if (match.Success)
+            {
+                MessageBox.Show("You cannot enter non-number character in the Number of guests box.");
+            }
+
             int NumberOfGuests = 0;
             try
             {
