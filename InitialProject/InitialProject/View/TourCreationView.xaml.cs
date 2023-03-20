@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Printing;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,10 +28,18 @@ namespace InitialProject.View
     public partial class TourCreationView : Window, INotifyPropertyChanged
     {
         private List<Location> locations;
-        private readonly Storage<Location> _storage;
+        private List<KeyPoint> keyPoints;
+
+        private readonly Storage<Location> _storageLocation;
+        private readonly Storage<KeyPoint> _storageKeyPoint;
+
         private const string FilePath = "../../../Resources/Data/locations.csv";
+        private const string FilePathKeyPoint = "../../../Resources/Data/keyPoints.csv";
+
         private readonly TourController _tourController;
-        
+
+        private List<KeyPoint> tourKeyPoints = new List<KeyPoint>();
+        private List<int> keyPointIds = new List<int>();
 
         private string _tourName;
         public new string TourName
@@ -149,7 +158,7 @@ namespace InitialProject.View
                 }
             }
         }
-
+       
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -159,11 +168,17 @@ namespace InitialProject.View
         {
             InitializeComponent();
             DataContext = this;
-            _storage = new Storage<Location>(FilePath);
-            locations = _storage.Load();
+
+            _storageLocation= new Storage<Location>(FilePath);
+            _storageKeyPoint = new Storage<KeyPoint>(FilePathKeyPoint);
+            keyPoints = _storageKeyPoint.Load();
+            locations = _storageLocation.Load();
+         
 
             // Set the items source of the country combo box to the distinct list of countries.
-            countryComboBox.ItemsSource = locations.Select(l => l.Country).Distinct();
+            countryComboBox.ItemsSource = locations.Select(c => c.Country).Distinct();
+
+            keyPointCity.ItemsSource = locations.Select(c => c.City).Distinct();
 
             _tourController = new TourController();
         }
@@ -172,41 +187,92 @@ namespace InitialProject.View
 
         private void TourCreationClick(object sender, RoutedEventArgs e)
         {
-            Location Location = new Location();
-            Location.Id = locations.Where(l => l.City == Town).Select(l => l.Id).FirstOrDefault();
-            Location.Country = Country;
-            Location.City = Town;
-           
-            int TourDuration = int.Parse(Duration);
-            int MaxGuests = int.Parse(MaximumGuests);
-            GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
-            _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl);
-            Close();
+            if(tourKeyPoints.Count() > 1)
+            {
+                Location Location = new Location();
+                Location.Country = Country;
+                Location.City = Town;
+                Location.Id = locations.Where(c => c.City == Town).Select(c => c.Id).FirstOrDefault();
+
+                int TourDuration = int.Parse(Duration);
+                int MaxGuests = int.Parse(MaximumGuests);
+
+                GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
+
+                foreach (KeyPoint ky in tourKeyPoints)
+                {
+                    keyPointIds.Add(ky.Id);
+                }
+                Start = (DateTime)dateTimePicker.Value;
+
+                _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, tourKeyPoints, keyPointIds);
+                MessageBox.Show(" Tour successfully created! ");
+            }
+            else
+            {
+                MessageBox.Show(" There must be atleast two keypoints! ");
+            }
 
         }
         private void CancelButtonClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
-        private void ComboBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            var currentText = (sender as ComboBox).Text;
-
-            // Filter the items based on the current text
-            //var filteredItems = Locations.Where(l => l.StartsWith(currentText, StringComparison.OrdinalIgnoreCase)).ToList();
-
-            // Set the ItemsSource of the combobox to the filtered items
-            //(sender as ComboBox).ItemsSource = filteredItems;
-        }
-
         private void countryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Get the selected country.
             string selectedCountry = (string)countryComboBox.SelectedValue;
 
             // Set the items source of the city combo box to the cities of the selected country.
-            cityComboBox.ItemsSource = locations.Where(l => l.Country == selectedCountry);
+            cityComboBox.ItemsSource = locations.Where(c => c.Country == selectedCountry);
+        }
+        private void cityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string city = cityComboBox.SelectedValue.ToString();
+            keyPointCity.SelectedValue = city;
+
+        }
+
+        private void keyPointCity_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            keyPointCity.ItemsSource = locations.Select(c => c.City).Distinct();
+        }
+
+        private void keyPointCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (keyPointCity.SelectedIndex != -1)
+            {
+                string city = keyPointCity.SelectedValue.ToString();
+                List<KeyPoint> keyPointsShow = new List<KeyPoint>();
+
+
+                foreach (Location l in locations)
+                {
+                    if (city == l.City)
+                    {
+                        foreach (KeyPoint ky in keyPoints)
+                        {
+                            if (ky.LocationId == l.Id)
+                            {
+                                keyPointsShow.Add(ky);
+                            }
+                        }
+                    }
+                }
+                keyPointPlace.ItemsSource = keyPointsShow.Select(ky => ky.Place);
+            }
+        }
+
+        private void AddAttractionClick(object sender, RoutedEventArgs e)
+        {
+            KeyPoint keyPoint = keyPoints.Where(ky => ky.Place == keyPointPlace.SelectedValue.ToString()).FirstOrDefault();
+            
+            tourKeyPoints.Add(keyPoint);
+
+            // Clearing comboboxes after adding one keyPoint
+            keyPointCity.SelectedIndex = -1;
+            keyPointPlace.SelectedIndex = -1;
+
         }
     }
 }

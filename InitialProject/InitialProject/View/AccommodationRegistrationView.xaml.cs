@@ -25,7 +25,7 @@ namespace InitialProject.View
 
         private List<Location> cities;
         private readonly Storage<Location> _storage;
-        private const string FilePath = "../../../Resources/Data/cities.csv";
+        private const string FilePath = "../../../Resources/Data/locations.csv";
 
         
 
