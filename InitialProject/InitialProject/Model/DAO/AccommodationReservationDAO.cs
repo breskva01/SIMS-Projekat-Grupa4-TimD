@@ -66,6 +66,25 @@ namespace InitialProject.Model.DAO
             reservation.Id = NextId();
             return reservation;
         }
+
+        public bool IsCompleted(AccommodationReservation accommodationReservation)
+        {
+            return accommodationReservation.CheckOutDate < DateOnly.FromDateTime(DateTime.Now) && DateOnly.FromDateTime(DateTime.Now) < (accommodationReservation.CheckOutDate.AddDays(5));
+        }
+
+        public List<AccommodationReservation> FindCompletedReservations()
+        {
+            List<AccommodationReservation> completedReservations= new List<AccommodationReservation>();
+            foreach (AccommodationReservation accommodationReservation in _reservations)
+            {
+                if (IsCompleted(accommodationReservation))
+                {
+                    completedReservations.Add(accommodationReservation);
+                }
+            }
+            return completedReservations;
+        }
+
         public int NextId()
         {
             _reservations = _fileHandler.Load();

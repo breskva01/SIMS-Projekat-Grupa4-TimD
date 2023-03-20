@@ -21,8 +21,9 @@ namespace InitialProject.Controller
         {
             return _guestRatingDAO.GetAll();
         }
-        
-
-
+        public void RateGuest(int ownerId, int guestId, int hygiene, int respectsRules, string comment)
+        {
+            _guestRatingDAO.Add(ownerId, guestId, hygiene, respectsRules, comment);
+        }
     }
 }

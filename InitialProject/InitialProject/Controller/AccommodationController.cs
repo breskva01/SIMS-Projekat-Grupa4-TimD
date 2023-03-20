@@ -12,7 +12,6 @@ namespace InitialProject.Controller
     public class AccommodationController
     {
         private readonly AccommodationDAO _accommodationDAO;
-
         public AccommodationController()
         {
             _accommodationDAO = new AccommodationDAO();

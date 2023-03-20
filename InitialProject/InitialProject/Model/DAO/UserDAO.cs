@@ -23,5 +23,8 @@ namespace InitialProject.Model.DAO
             _users = _fileHandler.Load();
             return _users.FirstOrDefault(u => u.Username == username);
         }
+        public List<User> GetUsers() {
+            return _fileHandler.Load();
+        }
     }
 }

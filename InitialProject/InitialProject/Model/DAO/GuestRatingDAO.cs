@@ -34,8 +34,14 @@ namespace InitialProject.Model.DAO
             _storage.Save(_guestRatings);
             return guestRating;
         }
-
-
+        public void Add(int ownerId, int guestId, int hygiene, int respectsRules, string comment)
+        {
+            _guestRatings = _storage.Load();
+            GuestRating guestRating = new GuestRating(ownerId, guestId, hygiene, respectsRules, comment);
+            _guestRatings.Add(guestRating);
+            _storage.Save(_guestRatings);
+            NotifyObservers();
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

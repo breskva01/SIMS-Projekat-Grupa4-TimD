@@ -20,5 +20,9 @@ namespace InitialProject.Controller
         {
             return _userDAO.GetByUsername(username);
         }
+        public List<User> GetUsers()
+        {
+            return _userDAO.GetUsers();
+        }
     }
 }

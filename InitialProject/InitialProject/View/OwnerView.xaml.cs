@@ -41,8 +41,13 @@ namespace InitialProject.View
 
         private void ShowGuestRatingView_Click(object sender, RoutedEventArgs e)
         {
-            GuestRatingView guestRatingView = new GuestRatingView(_owner);
-            guestRatingView.Show();
+            AccommodationReservationsListView accommodationReservationsListView = new AccommodationReservationsListView(_owner);
+            accommodationReservationsListView.Show();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
