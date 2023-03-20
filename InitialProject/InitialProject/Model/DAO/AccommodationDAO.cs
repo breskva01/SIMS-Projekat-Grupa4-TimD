@@ -48,12 +48,12 @@ namespace InitialProject.Model.DAO
         }
         public bool CheckIfContainted(string keyWords, Accommodation accommodation)
         {
-            if (accommodation.Name.ToLower().Contains(keyWords.ToLower()) || 
+            /*if (accommodation.Name.ToLower().Contains(keyWords.ToLower()) || 
                 accommodation.City.ToLower().Contains(keyWords.ToLower()) ||
                 accommodation.Country.ToLower().Contains(keyWords.ToLower()))
             {
                 return true;
-            }
+            }*/
             return false;
         }
 
@@ -76,11 +76,14 @@ namespace InitialProject.Model.DAO
             return _accommodations.Max(a => a.Id) + 1;
         }
 
-        public void Add(string name, string country, string city, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL)
+        public void Add(string name, string country, string city, int locationId, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,
+                        User owner, int ownerId)
         {
             _accommodations = _storage.Load();
             int accommodationId = NextId();
-            Accommodation accommodation = new Accommodation(accommodationId, name, country, city, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL);
+            Location location = new Location(country, city);
+            Accommodation accommodation = new Accommodation(accommodationId, name, location, locationId, address, type, maximumGuests, minimumDays, minimumCancelationNotice, 
+                                                            pictureURL, owner, ownerId);
             _accommodations.Add(accommodation);
             _storage.Save(_accommodations);
             NotifyObservers();
