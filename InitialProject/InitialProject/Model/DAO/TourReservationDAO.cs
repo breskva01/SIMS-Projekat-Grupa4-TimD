@@ -43,18 +43,20 @@ namespace InitialProject.Model.DAO
         {
             _tours = _tourStorage.Load();
             _users = _userStorage.Load();
+            _reservations = _reservationStorage.Load();
+
             tourReservation.Id = NextId();
             tourReservation.Tour = _tours.FirstOrDefault(t => t.Id == tourReservation.TourId);
             tourReservation.Guest = _users.FirstOrDefault(u => u.Id == tourReservation.GuestId);
             tourReservation.Tour.CurrentNumberOfGuests += tourReservation.NumberOfGuests;
+
             _tourStorage.Save(_tours);
 
-
-
-            _reservations = _reservationStorage.Load();
             _reservations.Add(tourReservation);
             _reservationStorage.Save(_reservations);
+
             NotifyObservers();
+
             return tourReservation;
         }
         public int NextId()

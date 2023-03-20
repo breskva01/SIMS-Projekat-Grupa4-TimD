@@ -30,7 +30,6 @@ namespace InitialProject.View
         private const string FilePathLocation = "../../../Resources/Data/locations.csv";
 
         private readonly TourController _controller;
-        private readonly TourReservationController _reservationController;
 
         private List<KeyPoint> _keyPoints;
         private List<KeyPoint> _keyPointsFromSelectedTour;
@@ -51,7 +50,6 @@ namespace InitialProject.View
             _tour = new Tour();
             _tour = tour;
 
-            _reservationController = new TourReservationController();
             _controller = new TourController();
 
             _storageLocation = new Storage<Location>(FilePathLocation);

@@ -70,6 +70,7 @@ namespace InitialProject.Model.DAO
         {
             _tours = _tourStorage.Load();
             _locations = _locationStorage.Load();
+
             foreach (Tour t in _tours)
             {
                 t.Location = _locations.FirstOrDefault(l => l.Id == t.LocationId);
@@ -77,18 +78,24 @@ namespace InitialProject.Model.DAO
 
             List<Tour> filteredTours = new();
             foreach (Tour tour in _tours)
-            {
-                bool countryMatch = tour.Location.Country == country || country == "";
-                bool cityMatch = tour.Location.City == city || city =="";
-                bool durationMatch = tour.Duration == duration || duration == 0;
-                bool languageMatch = tour.Language == language || language == GuideLanguage.All;
-                bool numberOfGuestsMatch = (tour.MaximumGuests - tour.CurrentNumberOfGuests) >= numberOfGuests ||  numberOfGuests == 0;
-                if (countryMatch && cityMatch && durationMatch && languageMatch && numberOfGuestsMatch)
+            { 
+                if (MatchesFilters(tour, country, city, duration, language, numberOfGuests))
                 {
                     filteredTours.Add(tour);
                 }
             }
             return filteredTours;
+        }
+
+        bool MatchesFilters(Tour tour, string country, string city, int duration, GuideLanguage language, int numberOfGuests)
+        {
+            bool countryMatch = tour.Location.Country == country || country == "";
+            bool cityMatch = tour.Location.City == city || city == "";
+            bool durationMatch = tour.Duration == duration || duration == 0;
+            bool languageMatch = tour.Language == language || language == GuideLanguage.All;
+            bool numberOfGuestsMatch = (tour.MaximumGuests - tour.CurrentNumberOfGuests) >= numberOfGuests || numberOfGuests == 0;
+
+            return countryMatch && cityMatch && durationMatch && languageMatch && numberOfGuestsMatch;
         }
 
         public void Subscribe(IObserver observer)

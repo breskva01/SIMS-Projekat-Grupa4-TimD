@@ -33,7 +33,7 @@ namespace InitialProject.View
         private readonly Storage<Location> _storageLocation;
         private readonly Storage<KeyPoint> _storageKeyPoint;
 
-        private const string FilePath = "../../../Resources/Data/locations.csv";
+        private const string FilePathLocation = "../../../Resources/Data/locations.csv";
         private const string FilePathKeyPoint = "../../../Resources/Data/keyPoints.csv";
 
         private readonly TourController _tourController;
@@ -145,15 +145,15 @@ namespace InitialProject.View
                 }
             }
         }
-        private string _town;
-        public string Town
+        private string _city;
+        public string City
         {
-            get => _town;
+            get => _city;
             set
             {
-                if (value != _town)
+                if (value != _city)
                 {
-                    _town = value;
+                    _city = value;
                     OnPropertyChanged();
                 }
             }
@@ -169,7 +169,7 @@ namespace InitialProject.View
             InitializeComponent();
             DataContext = this;
 
-            _storageLocation= new Storage<Location>(FilePath);
+            _storageLocation= new Storage<Location>(FilePathLocation);
             _storageKeyPoint = new Storage<KeyPoint>(FilePathKeyPoint);
             _keyPoints = _storageKeyPoint.Load();
             _locations = _storageLocation.Load();
@@ -177,7 +177,6 @@ namespace InitialProject.View
 
             // Set the items source of the country combo box to the distinct list of countries.
             countryComboBox.ItemsSource = _locations.Select(c => c.Country).Distinct();
-
             keyPointCity.ItemsSource = _locations.Select(c => c.City).Distinct();
 
             _tourController = new TourController();
@@ -187,32 +186,28 @@ namespace InitialProject.View
 
         private void TourCreationClick(object sender, RoutedEventArgs e)
         {
-            if(_tourKeyPoints.Count() > 1)
-            {
-                Location Location = new Location();
-                Location.Country = Country;
-                Location.City = Town;
-                Location.Id = _locations.Where(c => c.City == Town).Select(c => c.Id).FirstOrDefault();
-
-                int TourDuration = int.Parse(Duration);
-                int MaxGuests = int.Parse(MaximumGuests);
-
-                GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
-
-                foreach (KeyPoint ky in _tourKeyPoints)
-                {
-                    _keyPointIds.Add(ky.Id);
-                }
-                Start = (DateTime)dateTimePicker.Value;
-
-                _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
-                MessageBox.Show(" Tour successfully created! ");
-            }
-            else
+            if(_tourKeyPoints.Count() <= 1)
             {
                 MessageBox.Show(" There must be atleast two keypoints! ");
+                return;
             }
+            Location Location = new Location();
+            Location.Country = Country;
+            Location.City = City;
+            Location.Id = _locations.Where(c => c.City == City).Select(c => c.Id).FirstOrDefault();
 
+            int TourDuration = int.Parse(Duration);
+            int MaxGuests = int.Parse(MaximumGuests);
+            GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
+
+            foreach (KeyPoint ky in _tourKeyPoints)
+            {
+                _keyPointIds.Add(ky.Id);
+            }
+            Start = (DateTime)dateTimePicker.Value;
+
+            _tourController.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
+            MessageBox.Show(" Tour successfully created! ");
         }
         private void CancelButtonClick(object sender, RoutedEventArgs e)
         {

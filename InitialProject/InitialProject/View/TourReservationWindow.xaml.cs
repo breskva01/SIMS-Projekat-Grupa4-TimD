@@ -25,32 +25,33 @@ namespace InitialProject.View
     /// </summary>
     public partial class TourReservationWindow : Window, INotifyPropertyChanged
     {
-        private Tour selectedTour;
+        private Tour _selectedTour;
         public ObservableCollection<Tour> Tours { get; set; }
-        private User loggedInUser;
-        private readonly TourReservationController reservationController;
-        private Regex numberValidate = new Regex(@"\D+");
+        private readonly TourReservationController _reservationController;
+
+        private User _loggedInUser;
+
+        private Regex _notNumber = new Regex(@"\D+");
 
 
         public TourReservationWindow(Tour tour, User user)
         {
             InitializeComponent();
-
             DataContext = this;
-            loggedInUser = user;
-            selectedTour = tour;
+
+            _loggedInUser = user;
+            _selectedTour = tour;
             
-            tbTourName.Text = selectedTour.Name;
-            tbTourDescription.Text = selectedTour.Description;
-            tbTourAvailableSpots.Text = (selectedTour.MaximumGuests - selectedTour.CurrentNumberOfGuests).ToString();
+            tbTourName.Text = _selectedTour.Name;
+            tbTourDescription.Text = _selectedTour.Description;
+            tbTourAvailableSpots.Text = (_selectedTour.MaximumGuests - _selectedTour.CurrentNumberOfGuests).ToString();
 
-            reservationController = new TourReservationController();
-
+            _reservationController = new TourReservationController();
         }
 
         private int GetNumberOfGuests()
         {
-            Match match = numberValidate.Match(tbNumberOfGuests.Text);
+            Match match = _notNumber.Match(tbNumberOfGuests.Text);
             if (match.Success)
             {
                 MessageBox.Show("You cannot enter non-number character in the Number of guests box.");
@@ -75,13 +76,13 @@ namespace InitialProject.View
                 return;
             }
 
-            if (numberOfGuests + selectedTour.CurrentNumberOfGuests > selectedTour.MaximumGuests)
+            if (numberOfGuests + _selectedTour.CurrentNumberOfGuests > _selectedTour.MaximumGuests)
             { 
                 MessageBox.Show("Unfortunately, there is not enough available spots for that many guests. Try lowering the guest number.");
                 return;
             }
 
-            TourReservation tourReservation = reservationController.CreateReservation(selectedTour.Id, loggedInUser.Id, numberOfGuests);
+            TourReservation tourReservation = _reservationController.CreateReservation(_selectedTour.Id, _loggedInUser.Id, numberOfGuests);
 
             Close();
             
