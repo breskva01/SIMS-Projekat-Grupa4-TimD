@@ -12,7 +12,6 @@ namespace InitialProject.Controller
     public class AccommodationController
     {
         private readonly AccommodationDAO _accommodationDAO;
-
         public AccommodationController()
         {
             _accommodationDAO = new AccommodationDAO();
@@ -25,6 +24,11 @@ namespace InitialProject.Controller
         public List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
         {
             return _accommodationDAO.GetFiltered(keyWords, type, guestNumber, numberOfDays);
+        }
+        public void RegisterAccommodation(string name, string country, string city, string address, AccommodationType type, int maximumGuests,
+            int minimumDays, int minimumCancelationNotice, string pictureURL, User user, int ownerId)
+        {
+            _accommodationDAO.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, user, ownerId);
         }
     }
 }

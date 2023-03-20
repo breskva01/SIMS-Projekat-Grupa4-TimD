@@ -11,7 +11,7 @@ namespace InitialProject.Model
         public User User { get; set; }
 
         public Comment() { }
-
+        
         public Comment(DateTime creationTime, string text, User user)
         {
             CreationTime = creationTime;

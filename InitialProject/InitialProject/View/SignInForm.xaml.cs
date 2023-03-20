@@ -4,11 +4,14 @@ using InitialProject.Forms;
 using InitialProject.Model;
 using InitialProject.Model.DAO;
 using InitialProject.Repository;
+using InitialProject.Storage;
 using InitialProject.View;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace InitialProject
 {
@@ -19,6 +22,12 @@ namespace InitialProject
     {
 
         private readonly UserController _userController;
+        private readonly AccommodationReservationController _reservationController;
+        private readonly UserRepository _repository;
+        private readonly Storage<Accommodation> _accommodationStorage;
+        private List<AccommodationReservation> _reservations;
+        private List<Accommodation> _accommodations;
+        private const string accommodationsFilePath = "../../../Resources/Data/accommodations.csv";
 
         private string _username;
         public string Username
@@ -46,11 +55,10 @@ namespace InitialProject
             InitializeComponent();
             DataContext = this;
             _userController = new UserController();
-            //Only to speed up testing
-            /*User user = _repository.GetByUsername("Zika");
-            AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
-            accommodationBrowser.Show();
-            Close();*/
+            _reservationController = new AccommodationReservationController();
+            _accommodationStorage = new Storage<Accommodation>(accommodationsFilePath);
+            _reservations = new List<AccommodationReservation>();
+            _accommodations = _accommodationStorage.Load();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -81,8 +89,22 @@ namespace InitialProject
                 // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
-                        AccommodationRegistrationView accommodationRegistrationView = new AccommodationRegistrationView(user);
-                        accommodationRegistrationView.Show();
+                        int unratedGuests = 0;
+                        _reservations = _reservationController.FindCompletedAndUnratedReservations(user.Id);
+                        foreach (AccommodationReservation res in _reservations)
+                        {
+                            if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
+                            {
+                                _reservationController.updateLastNotification(res);
+                                unratedGuests++;
+                            }
+                                
+                        }
+                        if (unratedGuests > 0)
+                            MessageBox.Show("You have " + unratedGuests.ToString() + " unrated guests!");
+
+                        OwnerView ownerView = new OwnerView(user);
+                        ownerView.Show();
                         break;
                     }
                 case UserType.Guest1:

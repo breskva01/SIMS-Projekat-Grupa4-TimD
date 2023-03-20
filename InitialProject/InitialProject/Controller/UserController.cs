@@ -20,5 +20,13 @@ namespace InitialProject.Controller
         {
             return _userDAO.GetByUsername(username);
         }
+        public List<User> GetUsers()
+        {
+            return _userDAO.GetUsers();
+        }
+        public void AddGuestRating(int id, GuestRating guestRating)
+        {
+            _userDAO.AddGuestRating(id, guestRating);
+        }
     }
 }
