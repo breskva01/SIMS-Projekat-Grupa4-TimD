@@ -23,17 +23,17 @@ namespace InitialProject.View
     /// </summary>
     public partial class AccommodationReservationWindow : Window
     {
-        private readonly AccommodationReservationController _reservationController;
+        private readonly AccommodationReservationController _controller;
         public Accommodation Accommodation { get; set; }
-        public User LoggedInUser { get; set; }
+        public User Guest { get; set; }
         public int Days { get; set; }
         public AccommodationReservationWindow(User user, Accommodation accommodation)
         {
             InitializeComponent();
             DataContext = this;
-            LoggedInUser = user;
+            Guest = user;
             Accommodation = accommodation;
-            _reservationController = new AccommodationReservationController();
+            _controller = new AccommodationReservationController();
 
             Height = SystemParameters.PrimaryScreenHeight * 0.5;
             Width = SystemParameters.PrimaryScreenWidth * 0.65;
@@ -49,8 +49,8 @@ namespace InitialProject.View
             {
                 DateTime startDate = (DateTime)startDatePicker.SelectedDate;
                 DateTime endDate = (DateTime)endDatePicker.SelectedDate;
-                List<AccommodationReservation> reservations = _reservationController.FindAvailable(startDate, endDate, Days, Accommodation, LoggedInUser);
-                AccommodationReservationDatePicker datePicker = new AccommodationReservationDatePicker(_reservationController, reservations);
+                List<AccommodationReservation> reservations = _controller.FindAvailable(startDate, endDate, Days, Accommodation, Guest);
+                AccommodationReservationDatePicker datePicker = new AccommodationReservationDatePicker(_controller, reservations);
                 datePicker.ShowDialog();
             }
             else

@@ -23,10 +23,8 @@ namespace InitialProject
 
         private readonly UserController _userController;
         private readonly AccommodationReservationController _reservationController;
-        private readonly UserRepository _repository;
         private readonly Storage<Accommodation> _accommodationStorage;
         private List<AccommodationReservation> _reservations;
-        private List<Accommodation> _accommodations;
         private const string accommodationsFilePath = "../../../Resources/Data/accommodations.csv";
 
         private string _username;
@@ -58,7 +56,6 @@ namespace InitialProject
             _reservationController = new AccommodationReservationController();
             _accommodationStorage = new Storage<Accommodation>(accommodationsFilePath);
             _reservations = new List<AccommodationReservation>();
-            _accommodations = _accommodationStorage.Load();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -84,13 +81,13 @@ namespace InitialProject
         }
         private void OpenAppropriateWindow(User user)
         {
-            switch (user.UserType)
+            switch (user.Type)
             {
                 // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
                         int unratedGuests = 0;
-                        _reservations = _reservationController.FindCompletedAndUnratedReservations(user.Id);
+                        _reservations = _reservationController.FindCompletedAndUnrated(user.Id);
                         foreach (AccommodationReservation res in _reservations)
                         {
                             if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)

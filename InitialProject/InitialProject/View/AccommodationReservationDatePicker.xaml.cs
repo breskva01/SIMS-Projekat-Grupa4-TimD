@@ -21,7 +21,7 @@ namespace InitialProject.View
     /// </summary>
     public partial class AccommodationReservationDatePicker : Window
     {
-        private readonly AccommodationReservationController _reservationController;
+        private readonly AccommodationReservationController _controller;
         public AccommodationReservation SelectedReservation { get; set; }
         public List<AccommodationReservation> Reservations { get; set; }
         public int GuestNumber { get; set; }
@@ -29,7 +29,7 @@ namespace InitialProject.View
         {
             InitializeComponent();
             DataContext = this;
-            _reservationController = controller;
+            _controller = controller;
 
             Height = SystemParameters.PrimaryScreenHeight * 0.55;
             Width = SystemParameters.PrimaryScreenWidth * 0.55;
@@ -47,7 +47,7 @@ namespace InitialProject.View
             else
             {
                 SelectedReservation.GuestNumber = GuestNumber;
-                _reservationController.Save(SelectedReservation);
+                _controller.Save(SelectedReservation);
                 MessageBox.Show("Rezervacija uspešno kreirana.");
                 Close();
             }

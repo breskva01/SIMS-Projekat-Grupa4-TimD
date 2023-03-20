@@ -11,7 +11,7 @@ namespace InitialProject.Model
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public UserType UserType { get; set; }
+        public UserType Type { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -24,7 +24,7 @@ namespace InitialProject.Model
         {
             Username = username;
             Password = password;
-            UserType = userType;
+            Type = userType;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
@@ -34,7 +34,7 @@ namespace InitialProject.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, UserType.ToString(), FirstName, LastName,
+            string[] csvValues = { Id.ToString(), Username, Password, Type.ToString(), FirstName, LastName,
                                    Email, PhoneNumber };
             return csvValues;
         }
@@ -44,7 +44,7 @@ namespace InitialProject.Model
             Id = Convert.ToInt32(values[0]);
             Username = values[1];
             Password = values[2];
-            UserType = (UserType)Enum.Parse(typeof(UserType), values[3]);
+            Type = (UserType)Enum.Parse(typeof(UserType), values[3]);
             FirstName = values[4];
             LastName = values[5];
             Email = values[6];

@@ -19,8 +19,8 @@
                 <DataGridTextColumn Header="Last Name" Binding="{Binding Guest.LastName}"/>
                 <DataGridTextColumn Header="Accommodation" Binding="{Binding Accommodation.Name}"/>
                 <DataGridTextColumn Header="NumberOfDays" Binding="{Binding NumberOfDays}"/>
-                <DataGridTextColumn Header="CheckInDate" Binding="{Binding CheckInDate}"/>
-                <DataGridTextColumn Width="*" Header="CheckOutDate" Binding="{Binding CheckOutDate}"/>
+                <DataGridTextColumn Header="CheckInDate" Binding="{Binding CheckIn}"/>
+                <DataGridTextColumn Width="*" Header="CheckOutDate" Binding="{Binding CheckOut}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="1" Width="450" Height="40">

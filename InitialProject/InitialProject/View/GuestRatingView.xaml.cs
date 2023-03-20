@@ -28,7 +28,6 @@ namespace InitialProject.View
         private readonly UserController _userController;
         private AccommodationReservation _selectedReservation;
         private readonly AccommodationReservationController _reservationController;
-        private const string FilePath = "../../../Resources/Data/guestRatings.csv";
 
         private string _hygiene;
         public string Hygiene

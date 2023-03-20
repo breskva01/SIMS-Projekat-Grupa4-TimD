@@ -28,9 +28,9 @@ namespace InitialProject.Controller
             DateOnly endDate = DateOnly.FromDateTime(endDateTime);
             return _reservationDAO.FindAvailable(beginDate, endDate, days, accommodation, guest);
         }
-        public List<AccommodationReservation> FindCompletedAndUnratedReservations(int ownerId)
+        public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId)
         {
-            return _reservationDAO.FindCompletedAndUnratedReservations(ownerId);
+            return _reservationDAO.FindCompletedAndUnrated(ownerId);
         }
         public void updateLastNotification(AccommodationReservation accommodationReservation)
         {

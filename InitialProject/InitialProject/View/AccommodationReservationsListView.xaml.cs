@@ -24,7 +24,7 @@ namespace InitialProject.View
     /// <summary>
     /// Interaction logic for AccommodationReservationsListView.xaml
     /// </summary>
-    public partial class AccommodationReservationsListView : Window, IObserver 
+    public partial class AccommodationReservationsListView : Window, IObserver, INotifyPropertyChanged
     {
         private readonly AccommodationReservationController _reservationController;
         private readonly AccommodationController _accommodationController;
@@ -33,6 +33,13 @@ namespace InitialProject.View
         public readonly Accommodation Accommodation;
         private List<Accommodation> _accommodations;
         private List<User> _users;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public ObservableCollection<AccommodationReservation> AccommodationReservations { get;  set; }
         public AccommodationReservation SelectedReservation { get; set; }
 
@@ -47,7 +54,7 @@ namespace InitialProject.View
             _userController = new UserController();
             _accommodations = _accommodationController.GetAll();
             _users = _userController.GetUsers();
-            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_reservationController.FindCompletedAndUnratedReservations(_owner.Id));
+            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_reservationController.FindCompletedAndUnrated(_owner.Id));
         }
 
         private void RateGuests_Click(object sender, RoutedEventArgs e)
@@ -76,7 +83,7 @@ namespace InitialProject.View
         private void UpdateReservations()
         {
             AccommodationReservations.Clear();
-            foreach (var reservation in _reservationController.FindCompletedAndUnratedReservations(_owner.Id))
+            foreach (var reservation in _reservationController.FindCompletedAndUnrated(_owner.Id))
             {
                 AccommodationReservations.Add(reservation);
             }

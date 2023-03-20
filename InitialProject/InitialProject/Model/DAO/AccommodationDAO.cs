@@ -35,18 +35,22 @@ namespace InitialProject.Model.DAO
 
             foreach (Accommodation accommodation in _accommodations)
             {
-                bool keyWordsMatch = CheckIfContainted(keyWords, accommodation);
-                bool typeMatch = accommodation.Type == type || type == AccommodationType.Everything;
-                bool maximumGestsMatch = accommodation.MaximumGuests >= guestNumber;
-                bool minimumDaysMatch = (accommodation.MinimumDays <= numberOfDays) || numberOfDays == 0;
-                if (keyWordsMatch && typeMatch && maximumGestsMatch && minimumDaysMatch)
+                if (MatchesFilters(accommodation, keyWords, type, guestNumber, numberOfDays))
                     {
                         filteredAccommodations.Add(accommodation);
                     }   
             }
             return filteredAccommodations;
         }
-        private bool CheckIfContainted(string keyWords, Accommodation accommodation)
+        private  bool MatchesFilters(Accommodation accommodation, string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
+        {
+            bool keyWordsMatch = Contains(keyWords, accommodation);
+            bool typeMatch = accommodation.Type == type || type == AccommodationType.Everything;
+            bool maximumGestsMatch = accommodation.MaximumGuests >= guestNumber;
+            bool minimumDaysMatch = (accommodation.MinimumDays <= numberOfDays) || numberOfDays == 0;
+            return keyWordsMatch && typeMatch && maximumGestsMatch && minimumDaysMatch;
+        }
+        private bool Contains(string keyWords, Accommodation accommodation)
         {
             string[] splitKeyWords = keyWords.Split(" ");
             foreach (string keyWord in splitKeyWords)

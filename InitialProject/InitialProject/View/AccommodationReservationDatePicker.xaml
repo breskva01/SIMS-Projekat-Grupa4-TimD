@@ -20,11 +20,11 @@
                 </TextBlock>
                 <TextBlock FontSize="14" FontWeight="Light" Margin="5">
                     <Run Text="Check in: "/>  
-                    <Run Text="{Binding CheckInDate, StringFormat='dd.MM.yyyy.'}" />
+                    <Run Text="{Binding CheckIn, StringFormat='dd.MM.yyyy.'}" />
                 </TextBlock>
                 <TextBlock FontSize="14" FontWeight="Light" Margin="5">
                     <Run Text="Check out: "/>  
-                    <Run Text="{Binding CheckOutDate, StringFormat='dd.MM.yyyy.'}" />
+                    <Run Text="{Binding CheckOut, StringFormat='dd.MM.yyyy.'}" />
                 </TextBlock>
                 <TextBlock FontSize="14" FontWeight="Light" Margin="5">
                     <Run Text="Maksimalan broj gostiju: "/>  

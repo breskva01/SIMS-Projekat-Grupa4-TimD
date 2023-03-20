@@ -30,10 +30,10 @@ namespace InitialProject.Model.DAO
         {
             List<AccommodationReservation> availableReservations = new List<AccommodationReservation>();
             List<AccommodationReservation> existingReservations = FindExisting(accommodation.Id);
-
             int numberOfReservations = 0;
             DateOnly checkIn = beginDate;
             DateOnly checkOut = beginDate.AddDays(days);
+
             while (numberOfReservations < 3 && checkOut <= endDate)
             {
                 if (IsAvailable(checkIn, checkOut, existingReservations)) 
@@ -84,8 +84,8 @@ namespace InitialProject.Model.DAO
         {
             try
             {
-                beginDate = existingReservations.Min(r => r.CheckInDate).AddDays(-days);
-                endDate = existingReservations.Max(r => r.CheckOutDate);
+                beginDate = existingReservations.Min(r => r.CheckIn).AddDays(-days);
+                endDate = existingReservations.Max(r => r.CheckOut);
             }
             catch
             {
@@ -99,7 +99,7 @@ namespace InitialProject.Model.DAO
                 return false;
             foreach(var reservation in reservations)
             {
-                if (reservation.Overlap(checkIn, checkOut))
+                if (reservation.Overlaps(checkIn, checkOut))
                     return false;
             }
             return true;
@@ -124,19 +124,19 @@ namespace InitialProject.Model.DAO
 
         public bool IsCompleted(AccommodationReservation accommodationReservation, int ownerId)
         {
-            return (accommodationReservation.CheckOutDate < DateOnly.FromDateTime(DateTime.Now)) 
-                    && (DateOnly.FromDateTime(DateTime.Now) < (accommodationReservation.CheckOutDate.AddDays(5))) 
+            return (accommodationReservation.CheckOut < DateOnly.FromDateTime(DateTime.Now)) 
+                    && (DateOnly.FromDateTime(DateTime.Now) < (accommodationReservation.CheckOut.AddDays(5))) 
                     && accommodationReservation.Accommodation.OwnerId == ownerId;
         }
 
-        public List<AccommodationReservation> FindCompletedAndUnratedReservations(int ownerId)
+        public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId)
         {
             List<AccommodationReservation> completedReservations= new List<AccommodationReservation>();
-            foreach (AccommodationReservation accommodationReservation in _reservations)
+            foreach (AccommodationReservation reservation in _reservations)
             {
-                if (IsCompleted(accommodationReservation, ownerId) && !accommodationReservation.IsGuestRated)
+                if (IsCompleted(reservation, ownerId) && !reservation.IsGuestRated)
                 {
-                    completedReservations.Add(accommodationReservation);
+                    completedReservations.Add(reservation);
                 }
             }
             return completedReservations;

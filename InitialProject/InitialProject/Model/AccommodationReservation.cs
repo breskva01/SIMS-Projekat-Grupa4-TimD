@@ -19,25 +19,25 @@ namespace InitialProject.Model
         public User Guest { get; set; }
         public int NumberOfDays { get; set; }
         public int GuestNumber { get; set; }
-        public DateOnly CheckInDate { get; set; }
-        public DateOnly CheckOutDate { get; set; }
+        public DateOnly CheckIn { get; set; }
+        public DateOnly CheckOut { get; set; }
         public DateOnly LastNotification { get; set; }
         public bool IsGuestRated { get; set; }
         public AccommodationReservation() { }
-        public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkInDate, DateOnly checkOutDate)
+        public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkIn, DateOnly checkOut)
         {
             AccommodationId = accommodation.Id;
             Accommodation = accommodation;
             GuestId = guest.Id;
             Guest = guest;
             NumberOfDays = numberOfDays;
-            CheckInDate = checkInDate;
-            CheckOutDate = checkOutDate;
+            CheckIn = checkIn;
+            CheckOut = checkOut;
             IsGuestRated = false;
         }
-        public bool Overlap(DateOnly checkIn, DateOnly checkOut)
+        public bool Overlaps(DateOnly checkIn, DateOnly checkOut)
         {
-            return CheckInDate < checkOut && checkIn < CheckOutDate;
+            return CheckIn < checkOut && checkIn < CheckOut;
         }
 
         public void FromCSV(string[] values)
@@ -47,8 +47,8 @@ namespace InitialProject.Model
             GuestId = int.Parse(values[2]);
             NumberOfDays = int.Parse(values[3]);
             GuestNumber = int.Parse(values[4]);
-            CheckInDate = DateOnly.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            CheckOutDate = DateOnly.ParseExact(values[6], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            CheckIn = DateOnly.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            CheckOut = DateOnly.ParseExact(values[6], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             LastNotification = DateOnly.ParseExact(values[7], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             IsGuestRated = bool.Parse(values[8]);
         }
@@ -56,7 +56,7 @@ namespace InitialProject.Model
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), AccommodationId.ToString(), GuestId.ToString(),
-                                    NumberOfDays.ToString(), GuestNumber.ToString(), CheckInDate.ToString("dd/MM/yyyy"), CheckOutDate.ToString("dd/MM/yyyy"),
+                                    NumberOfDays.ToString(), GuestNumber.ToString(), CheckIn.ToString("dd/MM/yyyy"), CheckOut.ToString("dd/MM/yyyy"),
                                     LastNotification.ToString("dd/MM/yyyy"), IsGuestRated.ToString()};
             return csvValues;
         }
