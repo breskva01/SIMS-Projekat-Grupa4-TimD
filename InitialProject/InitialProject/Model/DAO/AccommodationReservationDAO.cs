@@ -28,15 +28,25 @@ namespace InitialProject.Model.DAO
         }
         public List<AccommodationReservation> FindAvailable(DateOnly beginDate, DateOnly endDate, int days, Accommodation accommodation, User guest)
         {
+            var existingReservations = FindExisting(accommodation.Id);
+
+            var availableReservations = FindInsideDateFrame(beginDate, endDate, days, accommodation,
+                                                              guest, existingReservations);
+            if (availableReservations.Count == 0)
+                availableReservations = FindOutsideDateFrame(beginDate, endDate, days, accommodation,
+                                                             guest, existingReservations);
+            return availableReservations;
+        }
+        private List<AccommodationReservation> FindInsideDateFrame(DateOnly beginDate, DateOnly endDate, int days, Accommodation accommodation, User guest, List<AccommodationReservation> existingReservations)
+        {
             List<AccommodationReservation> availableReservations = new List<AccommodationReservation>();
-            List<AccommodationReservation> existingReservations = FindExisting(accommodation.Id);
-            int numberOfReservations = 0;
             DateOnly checkIn = beginDate;
             DateOnly checkOut = beginDate.AddDays(days);
+            int numberOfReservations = 0;
 
             while (numberOfReservations < 3 && checkOut <= endDate)
             {
-                if (IsAvailable(checkIn, checkOut, existingReservations)) 
+                if (IsAvailable(checkIn, checkOut, existingReservations))
                 {
                     availableReservations.Add(CreateReservation(accommodation, guest, days, checkIn, checkOut));
                     numberOfReservations++;
@@ -44,18 +54,16 @@ namespace InitialProject.Model.DAO
                 checkIn = checkIn.AddDays(1);
                 checkOut = checkOut.AddDays(1);
             }
-            if (numberOfReservations == 0)
-                availableReservations = FindOutsideDateFrame(existingReservations, beginDate, endDate, days, accommodation, guest);
             return availableReservations;
         }
-        private List<AccommodationReservation> FindOutsideDateFrame(List<AccommodationReservation> existingReservations, DateOnly beginDate, DateOnly endDate, int days, Accommodation accommodation, User guest)
+        private List<AccommodationReservation> FindOutsideDateFrame(DateOnly beginDate, DateOnly endDate, int days, Accommodation accommodation, User guest, List<AccommodationReservation> existingReservations)
         {
             List<AccommodationReservation> availableReservations = new List<AccommodationReservation>();
-            int numberOfReservations = 0;
-            int offset = 0;
-            bool beforeDateFrame = false;
             DateOnly checkIn = FindStartingDates(ref beginDate, ref endDate, existingReservations, days);
             DateOnly checkOut = checkIn.AddDays(days);
+            bool beforeDateFrame = false;
+            int offset = 0;
+            int numberOfReservations = 0;
 
             while (numberOfReservations < 3)
             {
@@ -84,8 +92,11 @@ namespace InitialProject.Model.DAO
         {
             try
             {
-                beginDate = existingReservations.Min(r => r.CheckIn).AddDays(-days);
-                endDate = existingReservations.Max(r => r.CheckOut);
+                var localBeginDate = beginDate;
+                var localEndDate = endDate;
+                var reservationsInsideTimeFrime = existingReservations.FindAll(r => r.CheckIn >= localBeginDate && r.CheckOut <= localEndDate);
+                beginDate = reservationsInsideTimeFrime.Min(r => r.CheckIn).AddDays(-days);
+                endDate = reservationsInsideTimeFrime.Max(r => r.CheckOut);
             }
             catch
             {
@@ -111,8 +122,7 @@ namespace InitialProject.Model.DAO
         }
         private AccommodationReservation CreateReservation(Accommodation accommodation, User guest, int days, DateOnly checkIn, DateOnly checkOut)
         {
-            AccommodationReservation reservation = new AccommodationReservation(accommodation, guest, days, checkIn, checkOut);
-            return reservation;
+            return new AccommodationReservation(accommodation, guest, days, checkIn, checkOut);
         }
         public void Save(AccommodationReservation reservation)
         {
