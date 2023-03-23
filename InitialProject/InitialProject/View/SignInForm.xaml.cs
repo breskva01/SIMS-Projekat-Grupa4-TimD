@@ -56,6 +56,12 @@ namespace InitialProject
             _reservationController = new AccommodationReservationController();
             _accommodationStorage = new Storage<Accommodation>(accommodationsFilePath);
             _reservations = new List<AccommodationReservation>();
+
+            //speed up
+            User user = _userController.GetByUsername("Zika");
+            AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
+            accommodationBrowser.Show();
+            Close();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
