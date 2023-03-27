@@ -21,7 +21,8 @@ namespace InitialProject.Controller
         {
             return _tourDAO.GetAll();
         }
-        public Tour CreateTour(string Name, Location Location, string Description,GuideLanguage Language, int MaximumGuests, DateTime Start,int Duration, string PictureUrl, List<KeyPoint> ky, List<int> kyIds) 
+        public Tour CreateTour(string Name, Location Location, string Description,GuideLanguage Language, 
+            int MaximumGuests, DateTime Start,int Duration, string PictureUrl, List<KeyPoint> ky, List<int> kyIds) 
         {
             int LocationId = Location.Id;
             Tour Tour = new Tour();

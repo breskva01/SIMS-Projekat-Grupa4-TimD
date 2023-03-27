@@ -24,7 +24,8 @@ namespace InitialProject.Model
         public DateOnly LastNotification { get; set; }
         public bool IsGuestRated { get; set; }
         public AccommodationReservation() { }
-        public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkIn, DateOnly checkOut)
+        public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, 
+            DateOnly checkIn, DateOnly checkOut)
         {
             AccommodationId = accommodation.Id;
             Accommodation = accommodation;

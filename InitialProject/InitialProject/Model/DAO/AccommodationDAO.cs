@@ -77,11 +77,7 @@ namespace InitialProject.Model.DAO
         public int NextId()
         {
             _accommodations = _storage.Load();
-            if (_accommodations.Count < 1)
-            {
-                return 1;
-            }
-            return _accommodations.Max(a => a.Id) + 1;
+            return _accommodations.Count < 1 ? 1 : _accommodations.Max(a => a.Id) + 1;
         }
 
         public void Add(string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,
@@ -89,7 +85,8 @@ namespace InitialProject.Model.DAO
         {
             _accommodations = _storage.Load();
             int accommodationId = NextId();
-            Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, 
+            Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address, 
+                type, maximumGuests, minimumDays, minimumCancelationNotice, 
                                                             pictureURL, owner, ownerId);
             _accommodations.Add(accommodation);
             _storage.Save(_accommodations);

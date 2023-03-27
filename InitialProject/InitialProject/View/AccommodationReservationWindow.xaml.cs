@@ -47,8 +47,8 @@ namespace InitialProject.View
                 MessageBox.Show($"Minimalani broj dana: {Accommodation.MinimumDays}");
             else if (startDatePicker.SelectedDate != null && endDatePicker.SelectedDate != null)
             {
-                DateTime startDate = (DateTime)startDatePicker.SelectedDate;
-                DateTime endDate = (DateTime)endDatePicker.SelectedDate;
+                DateTime startDate = (DateTime) startDatePicker.SelectedDate;
+                DateTime endDate = (DateTime) endDatePicker.SelectedDate;
                 List<AccommodationReservation> reservations = _controller.FindAvailable(startDate, endDate, Days, Accommodation, Guest);
                 AccommodationReservationDatePicker datePicker = new AccommodationReservationDatePicker(_controller, reservations);
                 datePicker.ShowDialog();
