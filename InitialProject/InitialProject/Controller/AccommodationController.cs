@@ -25,9 +25,30 @@ namespace InitialProject.Controller
         {
             return _accommodationDAO.GetFiltered(keyWords, type, guestNumber, numberOfDays);
         }
+<<<<<<< HEAD
         public void RegisterAccommodation(string name, string country, string city, string address, 
             AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, 
             string pictureURL, User user, int ownerId)
+=======
+        public List<Accommodation> SortByName(List<Accommodation> accommodations)
+        {
+            return _accommodationDAO.SortByName(accommodations);
+        }
+        public List<Accommodation> SortByLocation(List<Accommodation> accommodations)
+        {
+            return _accommodationDAO.SortByLocation(accommodations);
+        }
+        public List<Accommodation> SortByMaxGuestNumber(List<Accommodation> accommodations)
+        {
+            return _accommodationDAO.SortByMaxGuestNumber(accommodations);
+        }
+        public List<Accommodation> SortByMinDaysNumber(List<Accommodation> accommodations)
+        {
+            return _accommodationDAO.SortByMinDaysNumber(accommodations);
+        }
+        public void RegisterAccommodation(string name, string country, string city, string address, AccommodationType type, int maximumGuests,
+            int minimumDays, int minimumCancelationNotice, string pictureURL, User user, int ownerId)
+>>>>>>> 22cc134faaf8fa0afa4baa929d65ab693c19eb2d
         {
             _accommodationDAO.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, user, ownerId);
         }

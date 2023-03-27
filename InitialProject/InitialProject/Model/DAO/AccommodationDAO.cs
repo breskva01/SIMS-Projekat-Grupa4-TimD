@@ -47,7 +47,7 @@ namespace InitialProject.Model.DAO
             bool keyWordsMatch = Contains(keyWords, accommodation);
             bool typeMatch = accommodation.Type == type || type == AccommodationType.Everything;
             bool maximumGestsMatch = accommodation.MaximumGuests >= guestNumber;
-            bool minimumDaysMatch = (accommodation.MinimumDays <= numberOfDays) || numberOfDays == 0;
+            bool minimumDaysMatch = (accommodation.MinimumDays <= numberOfDays);
             return keyWordsMatch && typeMatch && maximumGestsMatch && minimumDaysMatch;
         }
         private bool Contains(string keyWords, Accommodation accommodation)
@@ -64,7 +64,24 @@ namespace InitialProject.Model.DAO
             }
             return true;
         }
-
+        public List<Accommodation> SortByName(List<Accommodation> accommodations)
+        {
+            return accommodations.OrderBy(a => a.Name).ToList();
+        }
+        public List<Accommodation> SortByLocation(List<Accommodation> accommodations)
+        {
+            return accommodations.OrderBy(a => a.Country)
+                                          .ThenBy(a => a.City)
+                                          .ToList();
+        }
+        public List<Accommodation> SortByMaxGuestNumber(List<Accommodation> accommodations)
+        {
+            return accommodations.OrderBy(a => a.MaximumGuests).ToList();
+        }
+        public List<Accommodation> SortByMinDaysNumber(List<Accommodation> accommodations)
+        {
+            return accommodations.OrderBy(a => a.MinimumDays).ToList();
+        }
         public Accommodation Save(Accommodation accommodation)
         {
             accommodation.Id = NextId();

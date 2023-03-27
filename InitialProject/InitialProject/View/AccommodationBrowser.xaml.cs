@@ -32,6 +32,32 @@ namespace InitialProject.View
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
         private readonly AccommodationController _controller;
+        private int _guestNumber;
+        public int GuestNumber
+        {
+            get { return _guestNumber; }
+            set
+            {
+                if(value != _guestNumber)
+                {
+                    _guestNumber = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private int _numberOfDays;
+        public int NumberOfDays
+        {
+            get { return _numberOfDays; }
+            set
+            {
+                if (value != _numberOfDays)
+                {
+                    _numberOfDays = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -44,6 +70,8 @@ namespace InitialProject.View
             LoggedInUser = user;
             _controller = new AccommodationController();
             Accommodations = new ObservableCollection<Accommodation>(_controller.GetAll());
+            GuestNumber = 1;
+            NumberOfDays = 1;
 
             Height = SystemParameters.PrimaryScreenHeight * 0.75;
             Width = SystemParameters.PrimaryScreenWidth * 0.75;
@@ -53,11 +81,11 @@ namespace InitialProject.View
         {
             string keyWords = SearchTextBox.Text;
             AccommodationType type = GetType();
-            int guestNumber = GetGuestNumber();
-            int numberOfDays = GetNumberOfDays();
+            ValidateGuestNumber();
+            ValidateNumberOfDays();
 
             Accommodations.Clear();
-            foreach (var accommodation in _controller.GetFiltered(keyWords, type, guestNumber, numberOfDays))
+            foreach (var accommodation in _controller.GetFiltered(keyWords, type, GuestNumber, NumberOfDays))
             {
                 Accommodations.Add(accommodation);
             }
@@ -76,30 +104,28 @@ namespace InitialProject.View
                     return AccommodationType.Cottage;
             }
         }
-        private int GetGuestNumber()
+        private void ValidateGuestNumber()
         {
-            int guestNumber = 0;
             try
             {
-                guestNumber = int.Parse(GuestNumberTextBox.Text);
-            } catch { };
-            return guestNumber;
+                GuestNumber = int.Parse(GuestNumberTextBox.Text);
+            } 
+            catch { GuestNumber = 1; }
         }
-        private int GetNumberOfDays()
-        {
-            int numberOfDays = 0;
+        private void ValidateNumberOfDays()
+        {           
             try
             {
-                numberOfDays = int.Parse(NumberOfDaysTextBox.Text);
-            } catch { };
-            return numberOfDays;
+                NumberOfDays = int.Parse(NumberOfDaysTextBox.Text);
+            } 
+            catch { NumberOfDays = 1; }
         }
 
         private void ResetFiltersClick(object sender, RoutedEventArgs e)
         {
             SearchTextBox.Clear();
-            GuestNumberTextBox.Clear();
-            NumberOfDaysTextBox.Clear();
+            GuestNumber = 1;
+            NumberOfDays = 1;
             TypeComboBox.SelectedIndex = 0;
             Accommodations.Clear();
             foreach (var accommodation in _controller.GetAll())
@@ -115,6 +141,78 @@ namespace InitialProject.View
             SelectedAccommodation = Accommodations.FirstOrDefault(a => a.Name == name);
             AccommodationReservationWindow accommodationReservation = new AccommodationReservationWindow(LoggedInUser, SelectedAccommodation);
             accommodationReservation.ShowDialog();
+        }
+
+        private void GuestNumberMinusClick(object sender, RoutedEventArgs e)
+        {
+            if (!int.TryParse(GuestNumberTextBox.Text, out _))
+                GuestNumber = 1;
+            else
+                GuestNumber--;
+        }
+
+        private void GuestNumberPlusClick(object sender, RoutedEventArgs e)
+        {
+            if (!int.TryParse(GuestNumberTextBox.Text, out _))
+                GuestNumber = 1;
+            else
+                GuestNumber++;
+        }
+
+        private void NumberOfDaysMinusClick(object sender, RoutedEventArgs e)
+        {
+            if (!int.TryParse(NumberOfDaysTextBox.Text, out _))
+                NumberOfDays = 1;
+            else
+                NumberOfDays--;
+        }
+
+        private void NumberOfDaysPlusClick(object sender, RoutedEventArgs e)
+        {
+            if (!int.TryParse(NumberOfDaysTextBox.Text, out _))
+                NumberOfDays = 1;
+            else
+                NumberOfDays++;
+        }
+
+        private void SortByNameClick(object sender, RoutedEventArgs e)
+        {
+            var sortedAccommodations = _controller.SortByName(new List<Accommodation>(Accommodations));
+            Accommodations.Clear();
+            foreach (var accommodation in sortedAccommodations)
+            {
+                Accommodations.Add(accommodation);
+            }
+        }
+
+        private void SortByMaxGuestNumberClick(object sender, RoutedEventArgs e)
+        {
+            var sortedAccommodations = _controller.SortByMaxGuestNumber(new List<Accommodation>(Accommodations));
+            Accommodations.Clear();
+            foreach (var accommodation in sortedAccommodations)
+            {
+                Accommodations.Add(accommodation);
+            }
+        }
+
+        private void SortByMinDaysNumberClick(object sender, RoutedEventArgs e)
+        {
+            var sortedAccommodations = _controller.SortByMinDaysNumber(new List<Accommodation>(Accommodations));
+            Accommodations.Clear();
+            foreach (var accommodation in sortedAccommodations)
+            {
+                Accommodations.Add(accommodation);
+            }
+        }
+
+        private void SortByLocationClick(object sender, RoutedEventArgs e)
+        {
+            var sortedAccommodations = _controller.SortByLocation(new List<Accommodation>(Accommodations));
+            Accommodations.Clear();
+            foreach (var accommodation in sortedAccommodations)
+            {
+                Accommodations.Add(accommodation);
+            }
         }
     }
 }
