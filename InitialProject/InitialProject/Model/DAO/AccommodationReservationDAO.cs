@@ -104,11 +104,11 @@ namespace InitialProject.Model.DAO
             }
             return beginDate;           
         }
-        private bool IsAvailable(DateOnly checkIn, DateOnly checkOut, List<AccommodationReservation> reservations)
+        private bool IsAvailable(DateOnly checkIn, DateOnly checkOut, List<AccommodationReservation> existingReservations)
         {
             if (checkIn < DateOnly.FromDateTime(DateTime.Now))
                 return false;
-            foreach(var reservation in reservations)
+            foreach(var reservation in existingReservations)
             {
                 if (reservation.Overlaps(checkIn, checkOut))
                     return false;
