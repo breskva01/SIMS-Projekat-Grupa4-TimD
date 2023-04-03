@@ -214,5 +214,12 @@ namespace InitialProject.View
                 Accommodations.Add(accommodation);
             }
         }
+
+        private void MyReservationsClick(object sender, RoutedEventArgs e)
+        {
+            MyAccommodationReservations window= new MyAccommodationReservations(LoggedInUser);
+            window.Show();
+            Close();
+        }
     }
 }
