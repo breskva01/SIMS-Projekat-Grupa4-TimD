@@ -22,6 +22,14 @@ namespace InitialProject.Controller
         {
             return _reservationDAO.GetAll();
         }
+        public List<AccommodationReservation> GetConfirmed(int guestId)
+        {
+            return _reservationDAO.GetConfirmed(guestId);
+        }
+        public void Cancel(int reservationId)
+        {
+            _reservationDAO.Cancel(reservationId);
+        }
         public List<AccommodationReservation> FindAvailable(DateTime beginDateTime, DateTime endDateTime, int days, Accommodation accommodation, User guest)
         {
             DateOnly beginDate = DateOnly.FromDateTime(beginDateTime);
