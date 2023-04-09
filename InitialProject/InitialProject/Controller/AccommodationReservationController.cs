@@ -1,11 +1,11 @@
-﻿using InitialProject.Model.DAO;
-using InitialProject.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InitialProject.Observer;
+using InitialProject.Domain.Model.DAO;
+using InitialProject.Domain.Model;
+using InitialProject.Application.Observer;
 
 namespace InitialProject.Controller
 {

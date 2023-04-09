@@ -1,0 +1,40 @@
+﻿<Window x:Class="InitialProject.WPF.Views.GuideUserIntefaceView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.WPF.Views"
+        mc:Ignorable="d"
+        Title="GuideUserIntefaceView" Height="768" Width="1024">
+    <Grid Margin="-8,0,8,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic" Margin="4,0,-11,0">
+            WELCOME TO GUIDE USER INTEFACE
+        </Label>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                To create new Tour press here
+            </Label>
+            <Button Grid.Column="1" Grid.Row="0" Click="CreateTourClick" Content="CREATE" Height="20" Width="60"/>
+            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                To see all tours press here
+            </Label>
+            <Button Grid.Column="1" Grid.Row="1" Click="TourTrackingClick" Content="TRACKING"  Height="20" Width="60"/>
+            <Button Click="AllToursClick"  Grid.Column="1" Content="All tours" HorizontalAlignment="Center" Margin="0,64,0,0" Grid.Row="2" VerticalAlignment="Top" Height="37" Width="60"/>
+        </Grid>
+    </Grid>
+</Window>

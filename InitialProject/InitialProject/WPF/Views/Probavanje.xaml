@@ -1,0 +1,28 @@
+﻿<Window x:Class="InitialProject.WPF.Views.Probavanje"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.WPF.Views"
+        mc:Ignorable="d"
+        Title="Probavanje" Height="768" Width="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+
+        </StackPanel>
+        <Button Background="White" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="40" Width="48">
+            <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="966,0,0,0" VerticalAlignment="Center" Height="40" Width="48">
+            <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\profile.png"></Image>
+        </Button>
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
+        <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\vienna.jpeg" Margin="431,29,431,499" Grid.Row="1"/>
+        <Label Content="WELCOME TO TRAVELBUDDY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Integer quis consequat ante, nec accumsan elit. Donec rutrum, nunc ultrices porttitor malesuada, ante nisi efficitur turpis, et pulvinar enim elit in sapien. Duis non tempor ligula. In hac habitasse platea dictumst. Vestibulum sodales nulla enim, et condimentum elit luctus in. Vivamus dui mauris, egestas sed nibh id, cursus imperdiet dolor. Morbi quis mattis quam. Donec et dui sodales, congue nisi fermentum, elementum ex. Maecenas vitae nisi non sapien commodo aliquet vitae et tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam eu elit et risus fermentum iaculis vel eu ligula. Mauris posuere dui eget blandit finibus. Donec tellus velit, maximus et scelerisque vel, ultrices a neque." VerticalAlignment="Top" Height="212" Width="656" FontSize="20"/>
+    </Grid>
+</Window>

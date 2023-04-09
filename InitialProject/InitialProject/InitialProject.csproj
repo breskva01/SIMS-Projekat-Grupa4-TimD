@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <RootNamespace>InitialProject</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -54,6 +55,12 @@
     <Content Include="Resources\Images\search.png" />
     <Resource Include="Resources\Images\vienna.jpeg" />
     <Resource Include="Resources\Images\vila_slap.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\RepositoryInterfaces\" />
+    <Folder Include="Applications\Services\" />
+    <Folder Include="WPF\ViewModels\" />
   </ItemGroup>
 
 </Project>
