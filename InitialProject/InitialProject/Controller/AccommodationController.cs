@@ -24,7 +24,7 @@ namespace InitialProject.Controller
         public List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
         {
             return _accommodationDAO.GetFiltered(keyWords, type, guestNumber, numberOfDays);
-        }
+        }    
         public List<Accommodation> SortByName(List<Accommodation> accommodations)
         {
             return _accommodationDAO.SortByName(accommodations);
