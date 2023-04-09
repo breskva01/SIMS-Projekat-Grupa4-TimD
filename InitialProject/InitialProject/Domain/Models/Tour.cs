@@ -8,7 +8,7 @@ using System.Xaml.Schema;
 using System.Xml.Linq;
 using InitialProject.Application.Serializer;
 
-namespace InitialProject.Domain.Model
+namespace InitialProject.Domain.Models
 {
     public enum GuideLanguage
     {

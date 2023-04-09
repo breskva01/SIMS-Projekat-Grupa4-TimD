@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Documents;
 
-namespace InitialProject.Domain.Model
+namespace InitialProject.Domain.Models
 {
     public enum UserType { Owner, Guest1, TourGuide, Guest2 };
     public class User : ISerializable

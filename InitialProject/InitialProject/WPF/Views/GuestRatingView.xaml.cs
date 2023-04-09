@@ -14,8 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using InitialProject.Controller;
-using InitialProject.Domain.Model;
-using InitialProject.Storage;
+using InitialProject.Domain.Models;
+using InitialProject.Application.Storage;
 
 namespace InitialProject.WPF.Views
 {

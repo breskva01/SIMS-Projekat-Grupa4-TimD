@@ -1,14 +1,14 @@
 ﻿using InitialProject.Application.Storage;
-using InitialProject.Observer;
-using InitialProject.Repositories.FileHandler;
-using InitialProject.Serializer;
+using InitialProject.Application.Observer;
+using InitialProject.Repositories.FileHandlers;
+using InitialProject.Application.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InitialProject.Domain.Model.DAO
+namespace InitialProject.Domain.Models.DAO
 {
     internal class UserDAO
     {

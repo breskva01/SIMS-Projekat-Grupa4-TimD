@@ -12,10 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using InitialProject.Controller;
-using InitialProject.Storage;
+using InitialProject.Application.Storage;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using InitialProject.Domain.Model;
+using InitialProject.Domain.Models;
 
 namespace InitialProject.WPF.Views
 {

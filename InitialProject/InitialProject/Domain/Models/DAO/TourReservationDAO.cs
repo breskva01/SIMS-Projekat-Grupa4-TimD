@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InitialProject.Domain.Model.DAO
+namespace InitialProject.Domain.Models.DAO
 {
     internal class TourReservationDAO : ISubject
     {

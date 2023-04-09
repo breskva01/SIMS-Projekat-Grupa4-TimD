@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InitialProject.Domain.Model;
-using InitialProject.Domain.Model.DAO;
+using InitialProject.Domain.Models;
+using InitialProject.Domain.Models.DAO;
 
 namespace InitialProject.Controller
 {

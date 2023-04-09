@@ -1,7 +1,7 @@
 ﻿using InitialProject.Controller;
-using InitialProject.FileHandler;
+using InitialProject.Repositories.FileHandlers;
 using InitialProject.Forms;
-using InitialProject.Model.DAO;
+using InitialProject.Domain.Models.DAO;
 using InitialProject.Repository;
 using InitialProject.WPF.Views;
 using System;
@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
-using InitialProject.Domain.Model;
+using InitialProject.Domain.Models;
 using InitialProject.Application.Storage;
 
 namespace InitialProject

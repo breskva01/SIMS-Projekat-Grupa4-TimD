@@ -1,4 +1,4 @@
-﻿using InitialProject.Domain.Model;
+﻿using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace InitialProject.WPF.Converter
+namespace InitialProject.WPF.Converters
 {
     public class AccommodationTypeConverter : IValueConverter
     {

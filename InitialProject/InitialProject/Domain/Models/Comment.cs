@@ -1,7 +1,7 @@
 ﻿using InitialProject.Application.Serializer;
 using System;
 
-namespace InitialProject.Domain.Model
+namespace InitialProject.Domain.Models
 {
     public class Comment : ISerializable
     {

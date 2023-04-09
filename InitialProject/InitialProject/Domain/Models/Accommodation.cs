@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace InitialProject.Domain.Model
+namespace InitialProject.Domain.Models
 {
     public enum AccommodationType { Apartment, House, Cottage, Everything }
     public class Accommodation : ISerializable

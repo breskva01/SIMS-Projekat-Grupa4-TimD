@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using InitialProject.Application.Observer;
 using InitialProject.Application.Storage;
-using InitialProject.Serializer;
+using InitialProject.Application.Serializer;
 
-namespace InitialProject.Domain.Model.DAO
+namespace InitialProject.Domain.Models.DAO
 {
     public class TourDAO : ISubject
     {

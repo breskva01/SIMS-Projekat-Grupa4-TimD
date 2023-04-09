@@ -1,14 +1,14 @@
 ﻿using InitialProject.Application.Observer;
 using InitialProject.Application.Storage;
 using InitialProject.Repositories.FileHandlers;
-using InitialProject.Applications.Serializer;
+using InitialProject.Application.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InitialProject.Domain.Model.DAO
+namespace InitialProject.Domain.Models.DAO
 {
     public class AccommodationDAO : ISubject
     {

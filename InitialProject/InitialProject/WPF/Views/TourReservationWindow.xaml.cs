@@ -1,6 +1,6 @@
 ﻿using InitialProject.Controller;
-using InitialProject.Domain.Model;
-using InitialProject.Storage;
+using InitialProject.Domain.Models;
+using InitialProject.Application.Storage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

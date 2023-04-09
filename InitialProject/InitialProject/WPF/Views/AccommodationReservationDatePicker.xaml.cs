@@ -1,5 +1,5 @@
 ﻿using InitialProject.Controller;
-using InitialProject.Domain.Model;
+using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

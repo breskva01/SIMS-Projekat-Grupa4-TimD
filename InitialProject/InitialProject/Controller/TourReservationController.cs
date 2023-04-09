@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InitialProject.Domain.Model.DAO;
-using InitialProject.Domain.Model;
+using InitialProject.Domain.Models.DAO;
+using InitialProject.Domain.Models;
 
 namespace InitialProject.Controller
 {

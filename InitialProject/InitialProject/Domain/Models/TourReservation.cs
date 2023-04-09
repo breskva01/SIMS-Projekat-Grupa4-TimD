@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
-namespace InitialProject.Domain.Model
+namespace InitialProject.Domain.Models
 {
     public class TourReservation : ISerializable
     {

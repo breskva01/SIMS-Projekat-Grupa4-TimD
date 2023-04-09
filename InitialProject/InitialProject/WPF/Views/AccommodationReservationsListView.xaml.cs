@@ -14,9 +14,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using InitialProject.FileHandler;
+using InitialProject.Repositories.FileHandlers;
 using System.Collections.ObjectModel;
-using InitialProject.Domain.Model;
+using InitialProject.Domain.Models;
 using InitialProject.Application.Observer;
 
 namespace InitialProject.WPF.Views

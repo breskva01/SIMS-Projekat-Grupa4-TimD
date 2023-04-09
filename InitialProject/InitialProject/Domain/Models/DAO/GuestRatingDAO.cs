@@ -1,13 +1,13 @@
 ﻿using InitialProject.Application.Observer;
 using InitialProject.Application.Storage;
-using InitialProject.FileHandler;
+using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InitialProject.Domain.Model.DAO
+namespace InitialProject.Domain.Models.DAO
 {
     public class GuestRatingDAO : ISubject
     {

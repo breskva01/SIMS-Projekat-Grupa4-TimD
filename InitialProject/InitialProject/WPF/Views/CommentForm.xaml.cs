@@ -1,4 +1,4 @@
-﻿using InitialProject.Domain.Model;
+﻿using InitialProject.Domain.Models;
 using InitialProject.Repository;
 using System;
 using System.ComponentModel;

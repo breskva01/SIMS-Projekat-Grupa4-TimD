@@ -1,5 +1,5 @@
-﻿using InitialProject.Domain.Model;
-using InitialProject.Domain.Model.DAO;
+﻿using InitialProject.Domain.Models;
+using InitialProject.Domain.Models.DAO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

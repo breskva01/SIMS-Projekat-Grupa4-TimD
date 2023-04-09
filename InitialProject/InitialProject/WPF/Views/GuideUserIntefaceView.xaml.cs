@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using InitialProject.WPF.Views;
-using InitialProject.Domain.Model;
+using InitialProject.Domain.Models;
 
 namespace InitialProject.WPF.Views
 {

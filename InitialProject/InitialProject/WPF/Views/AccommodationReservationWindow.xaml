@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.Views"
-        xmlns:converters="clr-namespace:InitialProject.Converter"
+        xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Rezervacija Smeštaja" Height="450" Width="800" WindowStartupLocation="CenterScreen"
