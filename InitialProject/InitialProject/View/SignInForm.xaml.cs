@@ -58,10 +58,11 @@ namespace InitialProject
             _reservations = new List<AccommodationReservation>();
 
             //speed up
+            /*
             User user = _userController.GetByUsername("Zika");
             AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
             accommodationBrowser.Show();
-            Close();
+            Close();*/
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -118,8 +119,13 @@ namespace InitialProject
                     }
                 case UserType.TourGuide:
                     {
+                       
                         GuideUserIntefaceView guideInteface = new GuideUserIntefaceView(user);
                         guideInteface.Show();
+                        /*
+                        Probavanje proba = new Probavanje(user);
+                        proba.Show();
+                        */
                         break;
                     }
                 case UserType.Guest2:

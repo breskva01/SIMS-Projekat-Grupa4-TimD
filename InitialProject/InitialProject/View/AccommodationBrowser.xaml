@@ -100,6 +100,6 @@
             </StackPanel>
         </StackPanel>
         <ListBox x:Name="accommodationList" DockPanel.Dock="Right" ItemTemplate="{StaticResource AccommodationTemplate}"
-                 ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}"/>
+                 ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}" Width="540"/>
     </DockPanel>
 </Window>
