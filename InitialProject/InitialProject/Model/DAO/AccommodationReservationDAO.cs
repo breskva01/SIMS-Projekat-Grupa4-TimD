@@ -26,6 +26,22 @@ namespace InitialProject.Model.DAO
         {
             return _fileHandler.Load();
         }
+        public List<AccommodationReservation> GetConfirmed(int guestId)
+        {
+            _reservations = _fileHandler.Load();
+            return _reservations.FindAll(r => r.GuestId == guestId && r.Status == AccommodationReservationStatus.Confirmed);
+        }
+        public bool Cancel(int reservationId)
+        {
+            _reservations = _fileHandler.Load();
+            var reservation = _reservations.Find(r => r.Id == reservationId);
+            if (!reservation.CanBeCancelled())
+                return false;
+            reservation.Status = AccommodationReservationStatus.Cancelled;
+            _fileHandler.Save(_reservations);
+            NotifyObservers();
+            return true;
+        }
         public List<AccommodationReservation> FindAvailable(DateOnly beginDate, DateOnly endDate, int days, Accommodation accommodation, User guest)
         {
             var existingReservations = FindExisting(accommodation.Id);
@@ -94,7 +110,8 @@ namespace InitialProject.Model.DAO
             {
                 var localBeginDate = beginDate;
                 var localEndDate = endDate;
-                var reservationsInsideTimeFrime = existingReservations.FindAll(r => r.CheckIn >= localBeginDate && r.CheckOut <= localEndDate);
+                var reservationsInsideTimeFrime = existingReservations.FindAll(r => r.CheckIn >= localBeginDate 
+                                                                               && r.CheckOut <= localEndDate);
                 beginDate = reservationsInsideTimeFrime.Min(r => r.CheckIn).AddDays(-days);
                 endDate = reservationsInsideTimeFrime.Max(r => r.CheckOut);
             }
@@ -118,11 +135,12 @@ namespace InitialProject.Model.DAO
         public List<AccommodationReservation> FindExisting(int accommodationId)
         {
             _reservations = _fileHandler.Load();
-            return _reservations.FindAll(r => r.AccommodationId == accommodationId);
+            return _reservations.FindAll(r => r.AccommodationId == accommodationId &&
+                                         r.Status == AccommodationReservationStatus.Confirmed);
         }
         private AccommodationReservation CreateReservation(Accommodation accommodation, User guest, int days, DateOnly checkIn, DateOnly checkOut)
         {
-            return new AccommodationReservation(accommodation, guest, days, checkIn, checkOut);
+            return new AccommodationReservation(accommodation, guest, days, checkIn, checkOut, AccommodationReservationStatus.Confirmed);
         }
         public void Save(AccommodationReservation reservation)
         {
