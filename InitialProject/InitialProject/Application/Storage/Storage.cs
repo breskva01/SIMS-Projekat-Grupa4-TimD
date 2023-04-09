@@ -1,11 +1,11 @@
-﻿using InitialProject.Applications.Serializer;
+﻿using InitialProject.Application.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InitialProject.Applications.Storage
+namespace InitialProject.Application.Storage
 {
     class Storage<T> where T : ISerializable, new()
     {
