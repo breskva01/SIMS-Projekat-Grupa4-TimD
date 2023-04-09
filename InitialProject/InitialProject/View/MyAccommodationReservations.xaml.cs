@@ -50,13 +50,21 @@ namespace InitialProject.View
         }
         public void Update()
         {
-            Reservations = new ObservableCollection<AccommodationReservation>
+            var reservations = new ObservableCollection<AccommodationReservation>
                                 (_controller.GetConfirmed(LoggedInUser.Id));
+            Reservations.Clear();
+            foreach (var r in reservations)
+                Reservations.Add(r);
         }
 
         private void CancelReservationClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Nije jos povezano.");
+            Button clickedButton = (Button)sender;
+            AccommodationReservation reservation = (AccommodationReservation)clickedButton.DataContext;
+            if (_controller.Cancel(reservation.Id))
+                MessageBox.Show("Rezervacija uspešno otkazana.");
+            else
+                MessageBox.Show("Rezervacija se ne može otkazati.");
         }
     }
 }

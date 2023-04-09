@@ -33,7 +33,7 @@
     <Grid>
         <ListBox ItemTemplate="{StaticResource ReservationsTemplate}"
                  ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}"
-                 SelectedItem="SelectedReservation"
+                 SelectedItem="{Binding SelectedReservation}"
                  SelectionMode="Single"/>
     </Grid>
 </Window>

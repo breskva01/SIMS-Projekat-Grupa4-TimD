@@ -26,9 +26,9 @@ namespace InitialProject.Controller
         {
             return _reservationDAO.GetConfirmed(guestId);
         }
-        public void Cancel(int reservationId)
+        public bool Cancel(int reservationId)
         {
-            _reservationDAO.Cancel(reservationId);
+            return _reservationDAO.Cancel(reservationId);
         }
         public List<AccommodationReservation> FindAvailable(DateTime beginDateTime, DateTime endDateTime, int days, Accommodation accommodation, User guest)
         {

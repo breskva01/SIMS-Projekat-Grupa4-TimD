@@ -43,6 +43,14 @@ namespace InitialProject.Model
         {
             return CheckIn < checkOut && checkIn < CheckOut;
         }
+        public bool CanBeCancelled()
+        {
+            DateOnly todaysDate = DateOnly.FromDateTime(DateTime.Now);
+            TimeSpan difference = CheckIn.ToDateTime(TimeOnly.MinValue) - 
+                                  todaysDate.ToDateTime(TimeOnly.MinValue);
+            int differenceInDays = (int)difference.TotalDays;
+            return differenceInDays >= Accommodation.MinimumCancelationNotice;
+        }
 
         public void FromCSV(string[] values)
         {

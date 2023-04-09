@@ -31,11 +31,16 @@ namespace InitialProject.Model.DAO
             _reservations = _fileHandler.Load();
             return _reservations.FindAll(r => r.GuestId == guestId && r.Status == AccommodationReservationStatus.Confirmed);
         }
-        public void Cancel(int reservationId)
+        public bool Cancel(int reservationId)
         {
             _reservations = _fileHandler.Load();
-            _reservations.Find(r => r.Id == reservationId).Status = AccommodationReservationStatus.Cancelled;
+            var reservation = _reservations.Find(r => r.Id == reservationId);
+            if (!reservation.CanBeCancelled())
+                return false;
+            reservation.Status = AccommodationReservationStatus.Cancelled;
             _fileHandler.Save(_reservations);
+            NotifyObservers();
+            return true;
         }
         public List<AccommodationReservation> FindAvailable(DateOnly beginDate, DateOnly endDate, int days, Accommodation accommodation, User guest)
         {
