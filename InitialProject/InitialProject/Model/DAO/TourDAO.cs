@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,6 +97,27 @@ namespace InitialProject.Model.DAO
             bool numberOfGuestsMatch = (tour.MaximumGuests - tour.CurrentNumberOfGuests) >= numberOfGuests || numberOfGuests == 0;
 
             return countryMatch && cityMatch && durationMatch && languageMatch && numberOfGuestsMatch;
+        }
+
+        public List<Tour> SortByName(List<Tour> tours)
+        {
+            return tours.OrderBy(t => t.Name).ToList();
+        }
+
+        public List<Tour> SortByLocation(List<Tour> tours)
+        {
+            return tours.OrderBy(t => t.Location.Country).ThenBy(t=>t.Location.City).ToList();
+                                          
+        }
+
+        public List<Tour> SortByDuration(List<Tour> tours)
+        {
+            return tours.OrderBy(t => t.Duration).ToList();
+        }
+
+        public List<Tour> SortByLanguage(List<Tour> tours)
+        {
+            return tours.OrderBy(t => t.Language).ToList();
         }
 
         public void Subscribe(IObserver observer)
