@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.View"
         mc:Ignorable="d"
-        Title="GuideUserIntefaceView" Height="300" Width="300">
+        Title="GuideUserIntefaceView" Height="768" Width="1024">
     <Grid Margin="-8,0,8,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -27,13 +27,14 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-               To create new Tour press here
+                To create new Tour press here
             </Label>
             <Button Grid.Column="1" Grid.Row="0" Click="CreateTourClick" Content="CREATE" Height="20" Width="60"/>
             <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 To see all tours press here
             </Label>
             <Button Grid.Column="1" Grid.Row="1" Click="TourTrackingClick" Content="TRACKING"  Height="20" Width="60"/>
+            <Button Click="AllToursClick"  Grid.Column="1" Content="All tours" HorizontalAlignment="Center" Margin="0,64,0,0" Grid.Row="2" VerticalAlignment="Top" Height="37" Width="60"/>
         </Grid>
     </Grid>
 </Window>

@@ -136,10 +136,9 @@ namespace InitialProject.View
 
         private void AccommodationNameClick(object sender, MouseButtonEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string name = textBlock.Text;
-            SelectedAccommodation = Accommodations.FirstOrDefault(a => a.Name == name);
-            AccommodationReservationWindow accommodationReservation = new AccommodationReservationWindow(LoggedInUser, SelectedAccommodation);
+            TextBlock clickedTextBlock = (TextBlock)sender;
+            Accommodation accommodation = (Accommodation)clickedTextBlock.DataContext;
+            AccommodationReservationWindow accommodationReservation = new AccommodationReservationWindow(LoggedInUser, accommodation);
             accommodationReservation.ShowDialog();
         }
 
@@ -213,6 +212,13 @@ namespace InitialProject.View
             {
                 Accommodations.Add(accommodation);
             }
+        }
+
+        private void MyReservationsClick(object sender, RoutedEventArgs e)
+        {
+            MyAccommodationReservations window= new MyAccommodationReservations(LoggedInUser);
+            window.Show();
+            Close();
         }
     }
 }

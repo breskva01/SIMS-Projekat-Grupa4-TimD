@@ -99,7 +99,11 @@
                 <Button Padding="2" FontSize="14" Margin="10" Click="SortByLocationClick">Lokaciji</Button>
             </StackPanel>
         </StackPanel>
+        <Grid DockPanel.Dock="Right">
+            <Button FontSize="16" Height="40" Click="MyReservationsClick" Margin="5"> 
+                Moje rezervacije</Button>
+        </Grid>
         <ListBox x:Name="accommodationList" DockPanel.Dock="Right" ItemTemplate="{StaticResource AccommodationTemplate}"
-                 ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}"/>
+                 ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}" Width="540"/>
     </DockPanel>
 </Window>
