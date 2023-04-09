@@ -190,6 +190,60 @@ namespace InitialProject.View
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        private void SortClick(object sender, RoutedEventArgs e)
+        {
+            spTourSort.Visibility = Visibility.Visible;
+        }
+
+        private void ApplySortClick(object sender, RoutedEventArgs e)
+        {
+            if (sortByNameCheckBox.IsChecked == true)
+            {
+                var sortedTours = _controller.SortByName(new List<Tour>(Tours));
+                Tours.Clear();
+                foreach (var tour in sortedTours)
+                {
+                    Tours.Add(tour);
+                    tour.Location = _locations.FirstOrDefault(l => l.Id == tour.LocationId);
+                }
+            }
+            else if (sortByLocationCheckBox.IsChecked == true)
+            {
+                // Call the sort by date method
+                var sortedTours = _controller.SortByLocation(new List<Tour>(Tours));
+                Tours.Clear();
+                foreach (var tour in sortedTours)
+                {
+                    Tours.Add(tour);
+                    tour.Location = _locations.FirstOrDefault(l => l.Id == tour.LocationId);
+                }
+            }
+            else if (sortByDurationCheckBox.IsChecked == true)
+            {
+                // Call the sort by size method
+                var sortedTours = _controller.SortByDuration(new List<Tour>(Tours));
+                Tours.Clear();
+                foreach (var tour in sortedTours)
+                {
+                    Tours.Add(tour);
+                    tour.Location = _locations.FirstOrDefault(l => l.Id == tour.LocationId);
+                }
+            }
+            else if (sortByLanguageCheckBox.IsChecked == true)
+            {
+                // Call the sort by size method
+                var sortedTours = _controller.SortByLanguage(new List<Tour>(Tours));
+                Tours.Clear();
+                foreach (var tour in sortedTours)
+                {
+                    Tours.Add(tour);
+                    tour.Location = _locations.FirstOrDefault(l => l.Id == tour.LocationId);
+                }
+            }
+            // Hide the sortOptionsPanel after sorting is applied
+            spTourSort.Visibility = Visibility.Collapsed;
+        }
+
         
     }
 }

@@ -58,10 +58,10 @@ namespace InitialProject
             _reservations = new List<AccommodationReservation>();
 
             //speed up
-            User user = _userController.GetByUsername("Zika");
-            AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
-            accommodationBrowser.Show();
-            Close();
+            //User user = _userController.GetByUsername("Zika");
+            //AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
+            //accommodationBrowser.Show();
+            //Close();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)

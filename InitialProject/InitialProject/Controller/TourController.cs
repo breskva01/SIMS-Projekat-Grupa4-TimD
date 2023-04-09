@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,23 @@ namespace InitialProject.Controller
         public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int NumberOfGuests)
         {
             return _tourDAO.GetFiltered(country, city, duration, language, NumberOfGuests);
+        }
+
+        public List<Tour> SortByName(List<Tour> tours)
+        {
+            return _tourDAO.SortByName(tours);
+        }
+        public List<Tour> SortByLocation(List<Tour> tours)
+        {
+            return _tourDAO.SortByLocation(tours);
+        }
+        public List<Tour> SortByDuration(List<Tour> tours)
+        {
+            return _tourDAO.SortByDuration(tours);
+        }
+        public List<Tour> SortByLanguage(List<Tour> tours)
+        {
+            return _tourDAO.SortByLanguage(tours);
         }
     }
 }
