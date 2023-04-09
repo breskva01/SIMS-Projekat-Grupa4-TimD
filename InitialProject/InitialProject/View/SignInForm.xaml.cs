@@ -1,9 +1,17 @@
-﻿using InitialProject.Forms;
+﻿using InitialProject.Controller;
+using InitialProject.FileHandler;
+using InitialProject.Forms;
 using InitialProject.Model;
+using InitialProject.Model.DAO;
 using InitialProject.Repository;
+using InitialProject.Storage;
+using InitialProject.View;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace InitialProject
 {
@@ -13,7 +21,11 @@ namespace InitialProject
     public partial class SignInForm : Window
     {
 
-        private readonly UserRepository _repository;
+        private readonly UserController _userController;
+        private readonly AccommodationReservationController _reservationController;
+        private readonly Storage<Accommodation> _accommodationStorage;
+        private List<AccommodationReservation> _reservations;
+        private const string accommodationsFilePath = "../../../Resources/Data/accommodations.csv";
 
         private string _username;
         public string Username
@@ -40,18 +52,27 @@ namespace InitialProject
         {
             InitializeComponent();
             DataContext = this;
-            _repository = new UserRepository();
+            _userController = new UserController();
+            _reservationController = new AccommodationReservationController();
+            _accommodationStorage = new Storage<Accommodation>(accommodationsFilePath);
+            _reservations = new List<AccommodationReservation>();
+
+            //speed up
+            /*
+            User user = _userController.GetByUsername("Zika");
+            AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
+            accommodationBrowser.Show();
+            Close();*/
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
-            User user = _repository.GetByUsername(Username);
+            User user = _userController.GetByUsername(Username);
             if (user != null)
             {
                 if(user.Password == txtPassword.Password)
                 {
-                    CommentsOverview commentsOverview = new CommentsOverview(user);
-                    commentsOverview.Show();
+                    OpenAppropriateWindow(user);
                     Close();
                 } 
                 else
@@ -64,6 +85,56 @@ namespace InitialProject
                 MessageBox.Show("Wrong username!");
             }
             
+        }
+        private void OpenAppropriateWindow(User user)
+        {
+            switch (user.Type)
+            {
+                // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
+                case UserType.Owner:
+                    {
+                        int unratedGuests = 0;
+                        _reservations = _reservationController.FindCompletedAndUnrated(user.Id);
+                        foreach (AccommodationReservation res in _reservations)
+                        {
+                            if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
+                            {
+                                _reservationController.updateLastNotification(res);
+                                unratedGuests++;
+                            }
+                                
+                        }
+                        if (unratedGuests > 0)
+                            MessageBox.Show("You have " + unratedGuests.ToString() + " unrated guests!");
+
+                        OwnerView ownerView = new OwnerView(user);
+                        ownerView.Show();
+                        break;
+                    }
+                case UserType.Guest1:
+                    {
+                        AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
+                        accommodationBrowser.Show();
+                        break;
+                    }
+                case UserType.TourGuide:
+                    {
+                       
+                        GuideUserIntefaceView guideInteface = new GuideUserIntefaceView(user);
+                        guideInteface.Show();
+                        /*
+                        Probavanje proba = new Probavanje(user);
+                        proba.Show();
+                        */
+                        break;
+                    }
+                case UserType.Guest2:
+                    {
+                        ToursView toursView = new ToursView(user);
+                        toursView.Show();
+                        break;
+                    }
+            }
         }
     }
 }
