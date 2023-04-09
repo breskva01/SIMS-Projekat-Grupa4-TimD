@@ -59,7 +59,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\RepositoryInterfaces\" />
-    <Folder Include="Applications\Services\" />
+    <Folder Include="Application\Services\" />
     <Folder Include="WPF\ViewModels\" />
   </ItemGroup>
 

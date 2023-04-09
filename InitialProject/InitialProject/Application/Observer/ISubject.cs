@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InitialProject.Applications.Observer
+namespace InitialProject.Application.Observer
 {
     interface ISubject
     {

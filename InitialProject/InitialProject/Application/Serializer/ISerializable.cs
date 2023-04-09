@@ -1,4 +1,4 @@
-﻿namespace InitialProject.Applications.Serializer
+﻿namespace InitialProject.Application.Serializer
 {
     public interface ISerializable
     {
