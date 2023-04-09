@@ -22,7 +22,8 @@ namespace InitialProject.Model
         None,
         Started,
         Interrupted,
-        Finished
+        Finished,
+        Canceled
     }
     public class Tour : ISerializable
     {

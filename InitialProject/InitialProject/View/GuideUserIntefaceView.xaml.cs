@@ -40,5 +40,11 @@ namespace InitialProject.View
             GuideTourListView guideTourList = new GuideTourListView(User);
             guideTourList.Show();
         }
+
+        private void AllToursClick(object sender, RoutedEventArgs e)
+        {
+            AllToursView allToursView = new AllToursView(User);
+            allToursView.Show();
+        }
     }
 }
