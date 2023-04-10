@@ -12,8 +12,6 @@ namespace InitialProject.Repositories.FileHandlers
     public class AccommodationReservationFileHandler
     {
         private const string _reservationsFilePath = "../../../Resources/Data/accommodationReservations.csv";
-        private const string _accommodationsFilePath = "../../../Resources/Data/accommodations.csv";
-        private const string _guestsFilePath = "../../../Resources/Data/users.csv";
         private readonly Serializer<AccommodationReservation> _serializer;
 
         public AccommodationReservationFileHandler()
@@ -30,7 +28,7 @@ namespace InitialProject.Repositories.FileHandlers
         }
         private void FillInAccommodations(List<AccommodationReservation> reservations)
         {
-            AccommodationFileHandler fileHandler = new AccommodationFileHandler();
+            var fileHandler = new AccommodationFileHandler();
             List<Accommodation> accommodations = fileHandler.Load();
             foreach (var reservation in reservations)
             {
@@ -39,8 +37,8 @@ namespace InitialProject.Repositories.FileHandlers
         }
         private void FillInGuests(List<AccommodationReservation> reservations)
         {
-            Storage<User> storage = new Storage<User>(_guestsFilePath);
-            List<User> guests = storage.Load();
+            var fileHandler = new UserFileHandler();
+            List<User> guests = fileHandler.Load();
             foreach (var reservation in reservations)
             {
                 reservation.Guest = guests.FirstOrDefault(g => g.Id == reservation.GuestId);
