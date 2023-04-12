@@ -113,8 +113,8 @@ namespace InitialProject
                     }
                 case UserType.Guest1:
                     {
-                        AccommodationBrowser accommodationBrowser = new AccommodationBrowser(user);
-                        accommodationBrowser.Show();
+                        var window = new AccommodationBrowserView(user);
+                        window.Show();
                         break;
                     }
                 case UserType.TourGuide:

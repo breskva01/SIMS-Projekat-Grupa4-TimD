@@ -19,6 +19,18 @@ namespace InitialProject.Application.Services
             _observers = new List<IObserver>();
             _repository = new AccommodationReservationRepository();
         }
+        public List<AccommodationReservation> GetAll()
+        {
+            return _repository.GetAll();
+        }
+        public AccommodationReservation GetById(int reservationId)
+        {
+            return _repository.GetById(reservationId);
+        }
+        public List<AccommodationReservation> GetConfirmed(int guestId)
+        {
+            return _repository.GetConfirmed(guestId);
+        }
         public bool Cancel(int reservationId)
         {
             var reservation = _repository.GetById(reservationId);

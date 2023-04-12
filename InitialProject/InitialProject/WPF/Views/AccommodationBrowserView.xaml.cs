@@ -26,7 +26,7 @@ namespace InitialProject.WPF.Views
     /// <summary>
     /// Interaction logic for AccommodationBrowser.xaml
     /// </summary>
-    public partial class AccommodationBrowser : Window, INotifyPropertyChanged
+    public partial class AccommodationBrowserView : Window, INotifyPropertyChanged
     {
         public User LoggedInUser { get; set; }
         public ObservableCollection<Accommodation> Accommodations { get; set; }
@@ -63,7 +63,7 @@ namespace InitialProject.WPF.Views
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public AccommodationBrowser(User user)
+        public AccommodationBrowserView(User user)
         {
             InitializeComponent();
             DataContext = this;
@@ -138,8 +138,8 @@ namespace InitialProject.WPF.Views
         {
             TextBlock clickedTextBlock = (TextBlock)sender;
             Accommodation accommodation = (Accommodation)clickedTextBlock.DataContext;
-            AccommodationReservationWindow accommodationReservation = new AccommodationReservationWindow(LoggedInUser, accommodation);
-            accommodationReservation.ShowDialog();
+            var window = new AccommodationReservationView(LoggedInUser, accommodation);
+            window.ShowDialog();
         }
 
         private void GuestNumberMinusClick(object sender, RoutedEventArgs e)
@@ -216,7 +216,7 @@ namespace InitialProject.WPF.Views
 
         private void MyReservationsClick(object sender, RoutedEventArgs e)
         {
-            MyAccommodationReservations window= new MyAccommodationReservations(LoggedInUser);
+            var window= new MyAccommodationReservationsView(LoggedInUser);
             window.Show();
             Close();
         }

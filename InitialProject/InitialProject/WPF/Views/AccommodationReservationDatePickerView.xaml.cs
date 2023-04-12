@@ -19,13 +19,13 @@ namespace InitialProject.WPF.Views
     /// <summary>
     /// Interaction logic for AccommodationReservationDatePicker.xaml
     /// </summary>
-    public partial class AccommodationReservationDatePicker : Window
+    public partial class AccommodationReservationDatePickerView : Window
     {
         private readonly AccommodationReservationController _controller;
         public AccommodationReservation SelectedReservation { get; set; }
         public List<AccommodationReservation> Reservations { get; set; }
         public int GuestNumber { get; set; }
-        public AccommodationReservationDatePicker(AccommodationReservationController controller, List<AccommodationReservation> reservations)
+        public AccommodationReservationDatePickerView(AccommodationReservationController controller, List<AccommodationReservation> reservations)
         {
             InitializeComponent();
             DataContext = this;

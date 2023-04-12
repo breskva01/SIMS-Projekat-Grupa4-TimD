@@ -41,7 +41,28 @@ namespace InitialProject.Domain.Models
             Owner = owner;
             OwnerId = ownerId;
         }
-
+        public bool MatchesFilters(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
+        {
+            bool keyWordsMatch = Contains(keyWords);
+            bool typeMatch = Type == type || type == AccommodationType.Everything;
+            bool maximumGestsMatch = MaximumGuests >= guestNumber;
+            bool minimumDaysMatch = MinimumDays <= numberOfDays;
+            return keyWordsMatch && typeMatch && maximumGestsMatch && minimumDaysMatch;
+        }
+        private bool Contains(string keyWords)
+        {
+            string[] splitKeyWords = keyWords.Split(" ");
+            foreach (string keyWord in splitKeyWords)
+            {
+                if (!(Name.ToLower().Contains(keyWord.ToLower()) ||
+                    City.ToLower().Contains(keyWord.ToLower()) ||
+                    Country.ToLower().Contains(keyWord.ToLower())))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);

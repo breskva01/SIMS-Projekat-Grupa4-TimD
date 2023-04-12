@@ -21,13 +21,13 @@ namespace InitialProject.WPF.Views
     /// <summary>
     /// Interaction logic for AccommodationReservation.xaml
     /// </summary>
-    public partial class AccommodationReservationWindow : Window
+    public partial class AccommodationReservationView : Window
     {
         private readonly AccommodationReservationController _controller;
         public Accommodation Accommodation { get; set; }
         public User Guest { get; set; }
         public int Days { get; set; }
-        public AccommodationReservationWindow(User user, Accommodation accommodation)
+        public AccommodationReservationView(User user, Accommodation accommodation)
         {
             InitializeComponent();
             DataContext = this;
@@ -50,8 +50,8 @@ namespace InitialProject.WPF.Views
                 DateTime startDate = (DateTime) startDatePicker.SelectedDate;
                 DateTime endDate = (DateTime) endDatePicker.SelectedDate;
                 List<AccommodationReservation> reservations = _controller.FindAvailable(startDate, endDate, Days, Accommodation, Guest);
-                AccommodationReservationDatePicker datePicker = new AccommodationReservationDatePicker(_controller, reservations);
-                datePicker.ShowDialog();
+                var window = new AccommodationReservationDatePickerView(_controller, reservations);
+                window.ShowDialog();
             }
             else
                 MessageBox.Show("Izaberite željeni opseg datuma");

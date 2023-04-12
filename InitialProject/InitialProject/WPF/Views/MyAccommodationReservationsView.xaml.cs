@@ -23,7 +23,7 @@ namespace InitialProject.WPF.Views
     /// <summary>
     /// Interaction logic for MyAccommodationReservations.xaml
     /// </summary>
-    public partial class MyAccommodationReservations : Window, INotifyPropertyChanged, IObserver
+    public partial class MyAccommodationReservationsView : Window, INotifyPropertyChanged, IObserver
     {
         public User LoggedInUser { get; set; }
         public ObservableCollection<AccommodationReservation> Reservations { get; set; }
@@ -35,7 +35,7 @@ namespace InitialProject.WPF.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public MyAccommodationReservations(User loggedInUser)
+        public MyAccommodationReservationsView(User loggedInUser)
         {
             InitializeComponent();
             DataContext = this;
