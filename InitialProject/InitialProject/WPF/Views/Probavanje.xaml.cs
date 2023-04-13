@@ -20,9 +20,18 @@ namespace InitialProject.WPF.Views
     /// </summary>
     public partial class Probavanje : Window
     {
+        User user { get; set; }
         public Probavanje(User user)
         {
             InitializeComponent();
+            DataContext = this;
+        }
+
+        private void CancelTourClick(object sender, RoutedEventArgs e)
+        {
+            AllToursView allToursView = new AllToursView(user);
+            this.Close();
+            allToursView.Show();
         }
     }
 }

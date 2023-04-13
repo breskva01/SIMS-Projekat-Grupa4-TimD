@@ -119,13 +119,13 @@ namespace InitialProject
                     }
                 case UserType.TourGuide:
                     {
-                       
+                       /*
                         GuideUserIntefaceView guideInteface = new GuideUserIntefaceView(user);
                         guideInteface.Show();
-                        /*
+                        */
                         Probavanje proba = new Probavanje(user);
                         proba.Show();
-                        */
+                       
                         break;
                     }
                 case UserType.Guest2:
