@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using System.Windows;
 using InitialProject.Application.Services;
+using InitialProject.Application.Commands;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -62,6 +63,18 @@ namespace InitialProject.WPF.ViewModels
             }
         }
         public int TypeSelectedIndex { get; set; }
+        public ICommand ApplyFiltersCommand;
+        public ICommand ResetFiltersCommand;
+        //public ICommand ShowReservationViewCommand;
+        //public Icommand ShowMyReservationsViewCommand;
+        public ICommand SortByNameCommand;
+        public ICommand SortByLocationCommand;
+        public ICommand SortByMaxGuestNumberCommand;
+        public ICommand SortByMinDaysNumberCommand;
+        public ICommand GuestNumberIncrementCommand;
+        public ICommand NumberOfDaysIncrementCommand;
+        public ICommand GuestNumberDecrementCommand => new DecrementCommand(DecrementGuestNumber, GuestNumber);  
+        public ICommand NumberOfDaysDecrementCommand => new DecrementCommand(DecrementNumberOfDays, NumberOfDays);
         public AccommodationBrowserViewModel(User user)
         {
             LoggedInUser = user;
@@ -69,11 +82,23 @@ namespace InitialProject.WPF.ViewModels
             Accommodations = new ObservableCollection<Accommodation>(_service.GetAll());
             GuestNumber = 1;
             NumberOfDays = 1;
+            InitializeCommands();
+        }
+        private void InitializeCommands()
+        {
+            ApplyFiltersCommand = new ExecuteMethodCommand(ApplyFilters);
+            ResetFiltersCommand = new ExecuteMethodCommand(ResetFilters);
+            SortByNameCommand = new SortAccommodationsCommand(SortAccommodations, "Name");
+            SortByLocationCommand = new SortAccommodationsCommand(SortAccommodations, "Location");
+            SortByMaxGuestNumberCommand = new SortAccommodationsCommand(SortAccommodations, "MaxGuestNumber");
+            SortByMinDaysNumberCommand = new SortAccommodationsCommand(SortAccommodations, "MinDaysNumber");
+            GuestNumberIncrementCommand = new ExecuteMethodCommand(IncrementGuestNumber);
+            NumberOfDaysIncrementCommand = new ExecuteMethodCommand(IncrementNumberOfDays);
         }
 
-        private void ApplyFiltersClick(object sender, RoutedEventArgs e)
+        private void ApplyFilters()
         {
-            AccommodationType type = GetType();
+            AccommodationType type = GetSelectedType();
 
             Accommodations.Clear();
             foreach (var accommodation in _service.GetFiltered(SearchText, type, GuestNumber, NumberOfDays))
@@ -81,7 +106,7 @@ namespace InitialProject.WPF.ViewModels
                 Accommodations.Add(accommodation);
             }
         }
-        private AccommodationType GetType()
+        private AccommodationType GetSelectedType()
         {
             switch (TypeSelectedIndex)
             {
@@ -95,7 +120,7 @@ namespace InitialProject.WPF.ViewModels
                     return AccommodationType.Cottage;
             }
         }
-        private void ResetFiltersClick(object sender, RoutedEventArgs e)
+        private void ResetFilters()
         {
             SearchText = "";
             GuestNumber = 1;
@@ -108,43 +133,34 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        private void AccommodationNameClick(object sender, MouseButtonEventArgs e)
+        private void ShowAccommodationReservationView()
         {
-            TextBlock clickedTextBlock = (TextBlock)sender;
-            Accommodation accommodation = (Accommodation)clickedTextBlock.DataContext;
-            var window = new AccommodationReservationView(LoggedInUser, accommodation);
-            window.ShowDialog();
+           
         }
 
-        private void GuestNumberMinusClick(object sender, RoutedEventArgs e)
+        private void DecrementGuestNumber()
         {
-            if (GuestNumber <= 1)
-                GuestNumber = 1;
-            else
-                GuestNumber--;
+            GuestNumber--;
         }
 
-        private void GuestNumberPlusClick(object sender, RoutedEventArgs e)
+        private void IncrementGuestNumber()
         {
             GuestNumber++;
         }
 
-        private void NumberOfDaysMinusClick(object sender, RoutedEventArgs e)
+        private void DecrementNumberOfDays()
         {
-            if (NumberOfDays <= 1)
-                NumberOfDays = 1;
-            else
-                NumberOfDays--;
+            NumberOfDays--;
         }
 
-        private void NumberOfDaysPlusClick(object sender, RoutedEventArgs e)
+        private void IncrementNumberOfDays()
         {
             NumberOfDays++;
         }
 
-        private void SortByNameClick(object sender, RoutedEventArgs e)
+        private void SortAccommodations(string criterium)
         {
-            var sortedAccommodations = _service.Sort(new List<Accommodation>(Accommodations), "Name");
+            var sortedAccommodations = _service.Sort(new List<Accommodation>(Accommodations), criterium);
             Accommodations.Clear();
             foreach (var accommodation in sortedAccommodations)
             {
@@ -152,40 +168,9 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        private void SortByMaxGuestNumberClick(object sender, RoutedEventArgs e)
+        private void ShowMyReservationsView()
         {
-            var sortedAccommodations = _service.Sort(new List<Accommodation>(Accommodations), "MaxGuestNumber");
-            Accommodations.Clear();
-            foreach (var accommodation in sortedAccommodations)
-            {
-                Accommodations.Add(accommodation);
-            }
-        }
-
-        private void SortByMinDaysNumberClick(object sender, RoutedEventArgs e)
-        {
-            var sortedAccommodations = _service.Sort(new List<Accommodation>(Accommodations), "MinDaysNumber");
-            Accommodations.Clear();
-            foreach (var accommodation in sortedAccommodations)
-            {
-                Accommodations.Add(accommodation);
-            }
-        }
-
-        private void SortByLocationClick(object sender, RoutedEventArgs e)
-        {
-            var sortedAccommodations = _service.Sort(new List<Accommodation>(Accommodations), "Location");
-            Accommodations.Clear();
-            foreach (var accommodation in sortedAccommodations)
-            {
-                Accommodations.Add(accommodation);
-            }
-        }
-
-        private void MyReservationsClick(object sender, RoutedEventArgs e)
-        {
-            var window = new MyAccommodationReservationsView(LoggedInUser);
-            window.Show();
+            
         }
     }
 }

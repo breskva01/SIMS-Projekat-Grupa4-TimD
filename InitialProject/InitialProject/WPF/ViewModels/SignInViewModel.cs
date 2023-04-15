@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,7 +17,7 @@ namespace InitialProject.WPF.ViewModels
     public class SignInViewModel : ViewModelBase
     {
         private readonly UserService _service;
-        public string Password { private get; set; }
+        public SecureString Password { get; set; }
         private string _username;
         public string Username
         {
@@ -40,7 +41,7 @@ namespace InitialProject.WPF.ViewModels
             User user = _service.GetByUsername(Username);
             if (user != null)
             {
-                if (user.Password == Password)
+                if (user.Password.Equals(Password))
                 {
                     OpenAppropriateWindow(user);
                 }
