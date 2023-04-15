@@ -27,13 +27,17 @@ namespace InitialProject.WPF.ViewModels
         public ICommand SortCommand { get; }
         public ICommand ApplySortCommand { get; }
         public ICommand MakeReservationCommand { get; }
+        private readonly NavigationStore _navigationStore;
+        private User _user;
 
 
-        public TourBrowserViewModel(NavigationService tourReservationNavigationService)
+        public TourBrowserViewModel(NavigationStore navigationStore, User user)
         {
             _tours = new ObservableCollection<TourViewModel>();
+            _navigationStore = navigationStore;
+            _user = user;
 
-            MakeReservationCommand = new NavigateCommand(tourReservationNavigationService);
+            //MakeReservationCommand = new NavigateCommand(tourReservationNavigationService);
 
             //UpdateTours();
         }

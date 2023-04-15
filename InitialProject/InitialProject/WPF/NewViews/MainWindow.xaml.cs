@@ -22,6 +22,8 @@ namespace InitialProject.WPF.NewViews
         public MainWindow()
         {
             InitializeComponent();
+            Height = SystemParameters.PrimaryScreenHeight * 0.75;
+            Width = SystemParameters.PrimaryScreenWidth * 0.75;
         }
     }
 }

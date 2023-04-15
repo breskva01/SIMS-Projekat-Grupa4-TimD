@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="780" Width="840">
+        Title="TravelBuddy" Height="780" Width="840" WindowStartupLocation="CenterScreen">
     <Grid Margin="20 10" MaxWidth="840">
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:TourBrowserViewModel}">
@@ -19,8 +19,11 @@
             <DataTemplate DataType="{x:Type vms:SignInViewModel}">
                 <views:SignInView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationBrowserViewModel}">
+                <views:AccommodationBrowserView />
+            </DataTemplate>
         </Grid.Resources>
 
-        <ContentControl Content="{Binding CurrentViewModel}" />
+        <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

@@ -18,15 +18,13 @@ namespace InitialProject
     public partial class App : System.Windows.Application
     {
         private readonly NavigationStore _navigationStore;
-        private readonly ViewModelService _viewModelService;
         public App()
         {
             _navigationStore = new NavigationStore();
-            _viewModelService = new ViewModelService(_navigationStore);
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = _viewModelService.CreateSignInViewModel();
+            _navigationStore.CurrentViewModel = new SignInViewModel(_navigationStore);
             MainWindow = new MainWindow()
             {
                 DataContext = new MainWindowViewModel(_navigationStore)

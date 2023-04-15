@@ -37,26 +37,27 @@ namespace InitialProject.WPF.ViewModels
         }
 
         public ICommand SignInCommand { get; }
-        public ICommand Guest2NavigateCommand { get; }
+        public ICommand Guest2NavigateCommand => 
+            new NavigateCommand(new NavigationService(_navigationStore, CreateGuest2VM()));
         public ICommand Guest1NavigateCommand { get; }
-        public SignInViewModel(NavigationStore navigationStore, Func<ViewModelBase> createViewModelGuest2)
+        private readonly NavigationStore _navigationStore;
+        private User _user;
+        public SignInViewModel(NavigationStore navigationStore)
         {
 
             _userService = new UserService();       
             SignInCommand = new SignInCommand(SignIn);
-            //Guest1NavigateCommand = new NavigateCommand(new NavigationService(navigationStore, createViewModelGuest1));
-            Guest2NavigateCommand = new NavigateCommand(new NavigationService(navigationStore, createViewModelGuest2));
-
+            _navigationStore = navigationStore;
         }
 
         private void SignIn(String password)
         {
-            User user = _userService.GetByUsername(Username);
-            if (user != null)
+            _user = _userService.GetByUsername(Username);
+            if (_user != null)
             {
-                if (user.Password.Equals(password))
+                if (_user.Password.Equals(password))
                 {
-                    OpenAppropriateWindow(user);
+                    OpenAppropriateWindow(_user);
                 }
                 else
                 {
@@ -73,7 +74,6 @@ namespace InitialProject.WPF.ViewModels
         {
             switch (user.Type)
             {
-                // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
 
@@ -94,6 +94,10 @@ namespace InitialProject.WPF.ViewModels
                         break;
                     }
             }
+        }
+        private TourBrowserViewModel CreateGuest2VM()
+        {
+            return new TourBrowserViewModel(_navigationStore, _user);
         }
 
     }

@@ -11,15 +11,15 @@ namespace InitialProject.Application.Services
     public class NavigationService
     {
         private readonly NavigationStore _navigationStore;
-        private readonly Func<ViewModelBase> _createViewModel;
-        public NavigationService(NavigationStore navigationStore, Func<ViewModelBase> createViewModel)
+        private readonly ViewModelBase _viewModel;
+        public NavigationService(NavigationStore navigationStore, ViewModelBase viewModel)
         {
             _navigationStore = navigationStore;
-            _createViewModel = createViewModel;
+            _viewModel = viewModel;
         }
         public void Navigate()
         {
-            _navigationStore.CurrentViewModel = _createViewModel();
+            _navigationStore.CurrentViewModel = _viewModel;
         }
     }
 }

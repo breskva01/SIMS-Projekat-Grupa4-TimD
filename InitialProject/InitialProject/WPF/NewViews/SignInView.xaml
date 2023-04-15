@@ -5,11 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
         xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
-        mc:Ignorable="d"
-        Height="250" Width="450">
-    <UserControl.Resources>
-        <converters:SecurePasswordConverter x:Key="SecurePasswordConverter" />
-    </UserControl.Resources>
+        mc:Ignorable="d" Height="250" Width="450">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -30,12 +26,12 @@
 
             <Label Grid.Row="0" Grid.Column="0" Height="30">Username:</Label>
             <Label Grid.Row="1" Grid.Column="0" Height="30">Password:</Label>
-            <TextBox Grid.Row="0" Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}" 
-                     Grid.Column="1" Height="25" TextWrapping="Wrap" VerticalAlignment="Center"/>
-            <PasswordBox x:Name="pbPassword" />
+            <TextBox Grid.Row="0" Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="25" TextWrapping="Wrap" VerticalAlignment="Center"/>
+            <PasswordBox x:Name="pbPassword" Grid.Row="1" Grid.Column="1" Height="25" VerticalAlignment="Center"/>
         </Grid>
 
-        <Button Command ="{Binding SignInCommand}" CommandParameter="{Binding ElementName=pbPassword}"  Grid.Row="2" Content="Sign in" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="60"/>
+        <Button Grid.Row="2" Content="Sign in" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="60"
+                Command ="{Binding SignInCommand}" CommandParameter="{Binding ElementName=pbPassword}"/>
 
     </Grid>
 </UserControl>
