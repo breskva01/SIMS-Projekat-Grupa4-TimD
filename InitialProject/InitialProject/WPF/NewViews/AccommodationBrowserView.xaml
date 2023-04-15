@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.AccommodationBrowserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+        mc:Ignorable="d"
+        Height="450" Width="800">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="#f7f7f2"/>
+        </Style>
+        <DataTemplate x:Key="AccommodationTemplate">
+            <StackPanel Margin="7" Orientation="Horizontal" >
+                <Image Source="{Binding PictureURL}" Width="180" Height="180" />
+                <StackPanel VerticalAlignment="Top" Margin="30" Orientation="Vertical">
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0 0 0 5">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextDecorations" Value="None"/>
+                                <Setter Property="Foreground" Value="#3283a8" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="TextDecorations" Value="Underline" />
+                                        <Setter Property="Foreground" Value="#deb93e" />
+                                        <Setter Property="Cursor" Value="Hand" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock FontSize="14" FontWeight="Light">
+                        <Run Text="{Binding Country}"/> -
+                        <Run Text="{Binding City}" />
+                    </TextBlock>
+                    <TextBlock FontSize="14" FontWeight="Light">
+                        Maksimalan broj ljudi: 
+                        <Run Text="{Binding MaximumGuests}" />
+                    </TextBlock>
+                    <TextBlock FontSize="14" FontWeight="Light">
+                        Minimalno dana: 
+                        <Run Text="{Binding MinimumDays}" />
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Left" MinWidth="150">
+            <TextBlock Margin="10,30,10,15" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18">Filteri</TextBlock>
+            <TextBlock FontSize="14" Margin="0,10,0,3" HorizontalAlignment="Center">Ključne reči</TextBlock>
+            <TextBox Padding="2"  FontSize="14" Margin="10,3,10,10" MaxHeight="30"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock FontSize="14" Margin="0,10,0,3" HorizontalAlignment="Center">Tip smeštaja</TextBlock>
+            <ComboBox HorizontalContentAlignment="Center" Padding="3" FontSize="14" Margin="10,3,10,10"
+                      SelectedIndex="{Binding TypeSelectedIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ComboBoxItem IsSelected="True" Content="Sve"/>
+                <ComboBoxItem Content="Kuća"/>
+                <ComboBoxItem Content="Apartman"/>
+                <ComboBoxItem Content="Koliba"/>
+            </ComboBox>
+            <TextBlock FontSize="14" Margin="0,10,0,3" HorizontalAlignment="Center">Broj gostiju</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <RepeatButton Interval="150" Delay="500" Content="-" Margin="10,3,5,10" Width="20" 
+                              />
+                <TextBox x:Name="GuestNumberTextBox" Grid.Column="1" Padding="2" FontSize="14" Margin="5,3,5,10"
+                         HorizontalContentAlignment="Center" Text="{Binding Path=GuestNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                <RepeatButton Interval="150" Delay="500" Grid.Column="2" Content="+" Margin="5,3,5,10" Width="20" 
+                              />
+            </Grid>
+            <TextBlock FontSize="14" Margin="0,10,0,3" HorizontalAlignment="Center">Broj dana</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <RepeatButton Interval="150" Delay="500" Content="-" Margin="10,3,5,10" Width="20" 
+                              />
+                <TextBox Grid.Column="1" Padding="2" FontSize="14" Margin="5,3,5,10" Name ="NumberOfDaysTextBox"
+                         HorizontalContentAlignment="Center" Text="{Binding Path=NumberOfDays, UpdateSourceTrigger=PropertyChanged}"/>
+                <RepeatButton Interval="150" Delay="500" Grid.Column="2" Content="+" Margin="5,3,5,10" Width="20" 
+                              />
+            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Button Padding="2" FontSize="14" Margin="10,10,5,10" MaxHeight="30" >Primeni filtere</Button>
+                <Button Padding="2" FontSize="14" Margin="5,10" MaxHeight="30">Resetuj filtere</Button>
+            </StackPanel>
+            <TextBlock Margin="0 10" FontSize="14" HorizontalAlignment="Center">Sortiraj po:</TextBlock>
+            <StackPanel Orientation="Vertical">
+                <Button Padding="2" FontSize="14" Margin="10" 
+                        Command="{Binding SortByNameCommand}">Imenu</Button>
+                <Button Padding="2" FontSize="14" Margin="10"
+                        Command="{Binding SortByLocationCommand}">Maksimalnom broju gostiju</Button>
+                <Button Padding="2" FontSize="14" Margin="10"
+                        Command="{Binding SortByMaxGuestNumberCommand}">Minimalnom broju dana</Button>
+                <Button Padding="2" FontSize="14" Margin="10"
+                        Command="{Binding SortByMinDaysNumberCommand}">Lokaciji</Button>
+            </StackPanel>
+        </StackPanel>
+        <Grid DockPanel.Dock="Right">
+            <Button FontSize="16" Height="40" Margin="5">
+                Moje rezervacije</Button>
+        </Grid>
+        <ListBox DockPanel.Dock="Right" ItemTemplate="{StaticResource AccommodationTemplate}"
+                 ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}" Width="540"/>
+    </DockPanel>
+</UserControl>
