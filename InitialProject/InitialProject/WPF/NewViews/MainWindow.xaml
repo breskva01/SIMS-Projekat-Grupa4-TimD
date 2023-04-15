@@ -5,9 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
         xmlns:views="clr-namespace:InitialProject.WPF.NewViews" 
+        xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
         mc:Ignorable="d"
         Title="TravelBuddy" Height="780" Width="840">
     <Grid Margin="20 10" MaxWidth="840">
-        <views:TourCreateView DataContext="{Binding CurrentViewModel}" />
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:TourBrowserViewModel}">
+                <views:TourBrowserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourReservationViewModel}">
+                <views:TourReservationView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:SignInViewModel}">
+                <views:SignInView />
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

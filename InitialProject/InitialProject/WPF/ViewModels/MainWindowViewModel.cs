@@ -1,4 +1,5 @@
-﻿using InitialProject.Domain.Models;
+﻿using InitialProject.Application.Stores;
+using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,18 @@ namespace InitialProject.WPF.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ViewModelBase CurrentViewModel { get; }
-        public MainWindowViewModel()
+        private readonly NavigationStore _navigationStore;
+        
+        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
+        public MainWindowViewModel(NavigationStore navigationStore)
         {
-            CurrentViewModel = new TourCreationViewModel();
+            _navigationStore = navigationStore;
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }
