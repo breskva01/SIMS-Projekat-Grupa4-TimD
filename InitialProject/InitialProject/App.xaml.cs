@@ -18,13 +18,15 @@ namespace InitialProject
     public partial class App : System.Windows.Application
     {
         private readonly NavigationStore _navigationStore;
+        private readonly ViewModelService _viewModelService;
         public App()
         {
             _navigationStore = new NavigationStore();
+            _viewModelService = new ViewModelService(_navigationStore);
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateTourBrowserViewModel();
+            _navigationStore.CurrentViewModel = _viewModelService.CreateSignInViewModel();
             MainWindow = new MainWindow()
             {
                 DataContext = new MainWindowViewModel(_navigationStore)
@@ -34,15 +36,6 @@ namespace InitialProject
             base.OnStartup(e);
         }
 
-        private TourReservationViewModel CreateTourReservationViewModel()
-        {
-            return new TourReservationViewModel(new NavigationService(_navigationStore, CreateTourBrowserViewModel));
-        }
-
-        private TourBrowserViewModel CreateTourBrowserViewModel()
-        {
-            return new TourBrowserViewModel(new NavigationService(_navigationStore, CreateTourReservationViewModel));
-        }
 
     }
 }

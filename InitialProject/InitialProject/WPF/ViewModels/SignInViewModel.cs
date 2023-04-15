@@ -1,5 +1,7 @@
-﻿using InitialProject.Application.Services;
+﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Services;
 using InitialProject.Application.Storage;
+using InitialProject.Application.Stores;
 using InitialProject.Controller;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
@@ -11,12 +13,14 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
-        private readonly UserService _service;
+        private readonly UserService _userService;
+        
         public SecureString Password { get; set; }
         private string _username;
         public string Username
@@ -31,17 +35,26 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        public SignInViewModel()
+
+        public ICommand SignInCommand { get; }
+        public ICommand Guest2NavigateCommand { get; }
+        public ICommand Guest1NavigateCommand { get; }
+        public SignInViewModel(NavigationStore navigationStore, Func<ViewModelBase> createViewModelGuest2)
         {
-            _service = new UserService();         
+
+            _userService = new UserService();       
+            SignInCommand = new SignInCommand(SignIn);
+            //Guest1NavigateCommand = new NavigateCommand(new NavigationService(navigationStore, createViewModelGuest1));
+            Guest2NavigateCommand = new NavigateCommand(new NavigationService(navigationStore, createViewModelGuest2));
+
         }
 
-        private void SignIn(object sender, RoutedEventArgs e)
+        private void SignIn(String password)
         {
-            User user = _service.GetByUsername(Username);
+            User user = _userService.GetByUsername(Username);
             if (user != null)
             {
-                if (user.Password.Equals(Password))
+                if (user.Password.Equals(password))
                 {
                     OpenAppropriateWindow(user);
                 }
@@ -63,10 +76,12 @@ namespace InitialProject.WPF.ViewModels
                 // TO DO: otvoriti odgovarajuce prozore za svaki tip korisnika
                 case UserType.Owner:
                     {
+
                         break;
                     }
                 case UserType.Guest1:
                     {
+                        //Guest1NavigateCommand.Execute(null);
                         break;
                     }
                 case UserType.TourGuide:
@@ -75,6 +90,7 @@ namespace InitialProject.WPF.ViewModels
                     }
                 case UserType.Guest2:
                     {
+                        Guest2NavigateCommand.Execute(null);
                         break;
                     }
             }
