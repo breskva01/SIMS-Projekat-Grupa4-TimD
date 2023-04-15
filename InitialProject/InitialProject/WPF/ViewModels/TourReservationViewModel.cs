@@ -1,4 +1,7 @@
-﻿using InitialProject.WPF.NewViews;
+﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Services;
+using InitialProject.Application.Stores;
+using InitialProject.WPF.NewViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,6 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourReservationViewModel : ViewModelBase
     {
-        public TourViewModel SelectedTour;
 
         private string _numberOfGuests;
         public  string NumberOfGuests
@@ -29,9 +31,10 @@ namespace InitialProject.WPF.ViewModels
         public ICommand ReserveCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public TourReservationViewModel(TourViewModel tour)
+        public TourReservationViewModel(NavigationService tourBrowserNavigationService)
         {
-            SelectedTour = tour;
+            ReserveCommand = new MakeReservationCommand(this, tourBrowserNavigationService);
+            CancelCommand = new NavigateCommand(tourBrowserNavigationService);
         }
 
     }

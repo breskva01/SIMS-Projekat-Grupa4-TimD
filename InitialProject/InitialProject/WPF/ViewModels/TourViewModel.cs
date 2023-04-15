@@ -10,6 +10,7 @@ namespace InitialProject.WPF.ViewModels
     public class TourViewModel : ViewModelBase
     {
         private readonly Tour _tour;
+        public string Id => _tour.Id.ToString();
         public string PictureURL => _tour.PictureURL;
         public string Name => _tour.Name;
         public string Country => _tour.Location?.Country;

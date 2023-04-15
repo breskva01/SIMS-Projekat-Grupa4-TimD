@@ -4,23 +4,24 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using InitialProject.Application.Commands;
+using InitialProject.Application.Services;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.WPF.ViewModels;
 
 namespace InitialProject.WPF.ViewModels
 {
     public class TourBrowserViewModel : ViewModelBase
     {
         private readonly ObservableCollection<TourViewModel> _tours;
+        public TourViewModel SelectedTour { get; set; }
+
         
         public ObservableCollection<TourViewModel> Tours => _tours;
-        public TourBrowserViewModel()
-        {
-            MakeReservationCommand = new MakeReservationCommand();
-            _tours = new ObservableCollection<TourViewModel>();
-            _tours.Add(new TourViewModel(new Tour(5, "Tura Londonom", 34, "wow tura", GuideLanguage.English, 40, DateTime.Now, 3, "../../Resources/Images/moscow.png", 0, new List<KeyPoint>())));
-        }
+
         public ICommand ApplyFilterCommand { get; }
         public ICommand ResetCommand { get; }
         public ICommand SortCommand { get; }
@@ -28,5 +29,18 @@ namespace InitialProject.WPF.ViewModels
         public ICommand MakeReservationCommand { get; }
 
 
+        public TourBrowserViewModel(NavigationService tourReservationNavigationService)
+        {
+            _tours = new ObservableCollection<TourViewModel>();
+
+            MakeReservationCommand = new NavigateCommand(tourReservationNavigationService);
+
+            //UpdateTours();
+        }
+
+        //private void UpdateTours()
+        //{
+        //    throw new NotImplementedException();
+       // }
     }
 }
