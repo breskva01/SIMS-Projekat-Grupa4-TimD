@@ -12,7 +12,7 @@ namespace InitialProject.WPF.ViewModels
         public ViewModelBase CurrentViewModel { get; }
         public MainWindowViewModel()
         {
-            CurrentViewModel = new TourBrowserViewModel();
+            CurrentViewModel = new TourCreationViewModel();
         }
     }
 }

@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="TravelBuddy" Height="780" Width="840">
     <Grid Margin="20 10" MaxWidth="840">
-        <views:TourBrowserView DataContext="{Binding CurrentViewModel}"/>
+        <views:TourCreateView DataContext="{Binding CurrentViewModel}" />
     </Grid>
 </Window>
