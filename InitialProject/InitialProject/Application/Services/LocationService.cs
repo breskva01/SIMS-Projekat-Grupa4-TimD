@@ -22,6 +22,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetAll();
         }
+        public int GetLocationId(string city, string country)
+        {
+            return _repository.GetLocationId(city, country);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

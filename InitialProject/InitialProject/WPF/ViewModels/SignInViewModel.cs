@@ -39,6 +39,8 @@ namespace InitialProject.WPF.ViewModels
         public ICommand SignInCommand { get; }
         public ICommand Guest2NavigateCommand => 
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuest2VM()));
+        public ICommand OwnerNavigateCommand =>
+            new NavigateCommand(new NavigationService(_navigationStore, CreateOwnerVM()));
         public ICommand Guest1NavigateCommand { get; }
         private readonly NavigationStore _navigationStore;
         private User _user;
@@ -76,7 +78,7 @@ namespace InitialProject.WPF.ViewModels
             {
                 case UserType.Owner:
                     {
-
+                        OwnerNavigateCommand.Execute(null);
                         break;
                     }
                 case UserType.Guest1:
@@ -99,6 +101,9 @@ namespace InitialProject.WPF.ViewModels
         {
             return new TourBrowserViewModel(_navigationStore, _user);
         }
-
+        private AccommodationRegistrationViewModel CreateOwnerVM()
+        {
+            return new AccommodationRegistrationViewModel(_navigationStore, _user);
+        }
     }
 }

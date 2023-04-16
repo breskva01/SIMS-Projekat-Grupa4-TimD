@@ -19,6 +19,9 @@
             <DataTemplate DataType="{x:Type vms:SignInViewModel}">
                 <views:SignInView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationRegistrationViewModel}">
+                <views:AccommodationRegistrationView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:AccommodationBrowserViewModel}">
                 <views:AccommodationBrowserView />
             </DataTemplate>

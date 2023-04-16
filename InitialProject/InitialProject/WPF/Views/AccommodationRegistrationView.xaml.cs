@@ -206,7 +206,6 @@ namespace InitialProject.WPF.Views
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         public int GetLocationId()
         {
             int LocationId;
@@ -217,6 +216,5 @@ namespace InitialProject.WPF.Views
             }
             return -1;
         }
-
     }
 }
