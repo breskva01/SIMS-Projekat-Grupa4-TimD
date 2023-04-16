@@ -14,12 +14,14 @@ using System.Windows.Media.Media3D;
 using System.Windows;
 using InitialProject.Application.Services;
 using InitialProject.Application.Commands;
+using InitialProject.Application.Stores;
 
 namespace InitialProject.WPF.ViewModels
 {
     public class AccommodationBrowserViewModel : ViewModelBase
     {
-        private readonly User LoggedInUser;
+        private readonly User _loggedInUser;
+        private readonly NavigationStore _navigationStore;
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
         private readonly AccommodationService _service;
@@ -32,6 +34,20 @@ namespace InitialProject.WPF.ViewModels
                 if (value != _guestNumber)
                 {
                     _guestNumber = value;
+                    CanDecrementGuestNumber = value > 1;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private bool _canDecrementGuestNumber;
+        public bool CanDecrementGuestNumber
+        {
+            get => _canDecrementGuestNumber;
+            set
+            {
+                if (_canDecrementGuestNumber != value)
+                {
+                    _canDecrementGuestNumber = value;
                     OnPropertyChanged();
                 }
             }
@@ -45,6 +61,20 @@ namespace InitialProject.WPF.ViewModels
                 if (value != _numberOfDays)
                 {
                     _numberOfDays = value;
+                    CanDecrementNumberOfDays = value > 1;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private bool _canDecrementNumberOfDays;
+        public bool CanDecrementNumberOfDays
+        {
+            get => _canDecrementNumberOfDays;
+            set
+            {
+                if (_canDecrementNumberOfDays != value)
+                {
+                    _canDecrementNumberOfDays = value;
                     OnPropertyChanged();
                 }
             }
@@ -63,29 +93,26 @@ namespace InitialProject.WPF.ViewModels
             }
         }
         public int TypeSelectedIndex { get; set; }
-        public ICommand ApplyFiltersCommand;
-        public ICommand ResetFiltersCommand;
-        //public ICommand ShowReservationViewCommand;
-        //public Icommand ShowMyReservationsViewCommand;
-        public ICommand SortByNameCommand;
-        public ICommand SortByLocationCommand;
-        public ICommand SortByMaxGuestNumberCommand;
-        public ICommand SortByMinDaysNumberCommand;
-        public ICommand GuestNumberIncrementCommand;
-        public ICommand NumberOfDaysIncrementCommand;
-        public ICommand GuestNumberDecrementCommand => new DecrementCommand(DecrementGuestNumber, GuestNumber);  
-        public ICommand NumberOfDaysDecrementCommand => new DecrementCommand(DecrementNumberOfDays, NumberOfDays);
-        public AccommodationBrowserViewModel(User user)
+        public ICommand ApplyFiltersCommand { get; }
+        public ICommand ResetFiltersCommand { get; }
+        public ICommand ShowReservationViewCommand { get; }
+        public ICommand ShowMyReservationsViewCommand { get; }
+        public ICommand SortByNameCommand { get; }
+        public ICommand SortByLocationCommand { get; }
+        public ICommand SortByMaxGuestNumberCommand { get; }
+        public ICommand SortByMinDaysNumberCommand { get; }
+        public ICommand GuestNumberIncrementCommand { get; }
+        public ICommand NumberOfDaysIncrementCommand { get; }
+        public ICommand GuestNumberDecrementCommand { get; }
+        public ICommand NumberOfDaysDecrementCommand { get; }
+        public AccommodationBrowserViewModel(NavigationStore navigationStore ,User user)
         {
-            LoggedInUser = user;
+            _loggedInUser = user;
+            _navigationStore = navigationStore;
             _service = new AccommodationService();
             Accommodations = new ObservableCollection<Accommodation>(_service.GetAll());
             GuestNumber = 1;
             NumberOfDays = 1;
-            InitializeCommands();
-        }
-        private void InitializeCommands()
-        {
             ApplyFiltersCommand = new ExecuteMethodCommand(ApplyFilters);
             ResetFiltersCommand = new ExecuteMethodCommand(ResetFilters);
             SortByNameCommand = new SortAccommodationsCommand(SortAccommodations, "Name");
@@ -94,8 +121,11 @@ namespace InitialProject.WPF.ViewModels
             SortByMinDaysNumberCommand = new SortAccommodationsCommand(SortAccommodations, "MinDaysNumber");
             GuestNumberIncrementCommand = new ExecuteMethodCommand(IncrementGuestNumber);
             NumberOfDaysIncrementCommand = new ExecuteMethodCommand(IncrementNumberOfDays);
+            GuestNumberDecrementCommand = new DecrementCommand(DecrementGuestNumber);
+            NumberOfDaysDecrementCommand = new DecrementCommand(DecrementNumberOfDays);
+            ShowReservationViewCommand = new AccommodationClickCommand(ShowAccommodationReservationView);
+            ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
         }
-
         private void ApplyFilters()
         {
             AccommodationType type = GetSelectedType();
@@ -133,9 +163,13 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        private void ShowAccommodationReservationView()
+        private void ShowAccommodationReservationView(Accommodation accommodation)
         {
-           
+            var viewModel = new AccommodationReservationViewModel(_navigationStore, _loggedInUser, accommodation);
+            var reserveAccommodationNavigateCommand = new NavigateCommand
+                (new NavigationService(_navigationStore, viewModel));
+
+            reserveAccommodationNavigateCommand.Execute(null);
         }
 
         private void DecrementGuestNumber()
@@ -170,7 +204,9 @@ namespace InitialProject.WPF.ViewModels
 
         private void ShowMyReservationsView()
         {
-            
+            var viewModel = new MyAccommodationReservationsViewModel(_navigationStore, _loggedInUser);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigateCommand.Execute(null);
         }
     }
 }

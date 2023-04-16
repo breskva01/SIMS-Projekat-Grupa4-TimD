@@ -19,6 +19,10 @@ namespace InitialProject.Application.Services
             _observers = new List<IObserver>();
             _repository = new AccommodationReservationRepository();
         }
+        public void Save(AccommodationReservation accommodationReservation)
+        {
+            _repository.Save(accommodationReservation);
+        }
         public List<AccommodationReservation> GetAll()
         {
             return _repository.GetAll();
