@@ -1,5 +1,7 @@
 ﻿using InitialProject.Application.Observer;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using InitialProject.Repositories.FileHandlers;
 using System;
@@ -13,11 +15,11 @@ namespace InitialProject.Application.Services
     public class AccommodationReservationService : ISubject
     {
         private readonly List<IObserver> _observers;
-        private readonly AccommodationReservationRepository _repository;
+        private readonly IAccommodationReservationRepository _repository;
         public AccommodationReservationService()
         {
             _observers = new List<IObserver>();
-            _repository = new AccommodationReservationRepository();
+            _repository = RepositoryStore.GetIAccommodationReservationRepository;
         }
         public void Save(AccommodationReservation accommodationReservation)
         {
