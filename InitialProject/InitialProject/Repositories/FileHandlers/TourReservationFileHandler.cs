@@ -21,5 +21,10 @@ namespace InitialProject.Repositories.FileHandlers
         {
             return _serializer.FromCSV(_tourReservationsFilePath);
         }
+
+        public void Save(List<TourReservation> list)
+        {
+            _serializer.ToCSV(_tourReservationsFilePath, list);
+        }
     }
 }
