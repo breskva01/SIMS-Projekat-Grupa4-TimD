@@ -26,6 +26,16 @@ namespace InitialProject.Application.Services
         {
             return _repository.Get(id);
         }
+        public TourReservation CreateReservation(int tourId, int guestId, int numberOfGuests)
+        {
+            TourReservation reservation = new()
+            {
+                TourId = tourId,
+                GuestId = guestId,
+                NumberOfGuests = numberOfGuests
+            };
+            return _repository.Save(reservation);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

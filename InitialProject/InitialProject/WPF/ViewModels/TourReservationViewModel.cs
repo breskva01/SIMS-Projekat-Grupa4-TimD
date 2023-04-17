@@ -19,6 +19,7 @@ namespace InitialProject.WPF.ViewModels
         public Tour SelectedTour { get; set; }
         public string AvailableSpots { get; set; }
         private readonly NavigationStore _navigationStore;
+        private readonly TourReservationService _tourReservationService;
 
         private string _numberOfGuests;
         public  string NumberOfGuests
@@ -56,6 +57,7 @@ namespace InitialProject.WPF.ViewModels
         public TourReservationViewModel(NavigationStore navigationStore, User user, Tour tour)
         {
             _navigationStore = navigationStore;
+            _tourReservationService = new TourReservationService();
             _user = user;
             SelectedTour = tour;
             AvailableSpots = (SelectedTour.MaximumGuests - SelectedTour.CurrentNumberOfGuests).ToString();
@@ -85,7 +87,7 @@ namespace InitialProject.WPF.ViewModels
                 return;
             }
 
-            //TourReservation tourReservation = _reservationService.CreateReservation(SelectedTour.Id, _user.Id, numberOfGuests);
+            TourReservation tourReservation = _tourReservationService.CreateReservation(SelectedTour.Id, _user.Id, numberOfGuests);
 
             ShowTourBrowserView();
         }
