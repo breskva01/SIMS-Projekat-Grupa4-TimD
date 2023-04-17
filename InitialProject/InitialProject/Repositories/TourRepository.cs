@@ -29,11 +29,11 @@ namespace InitialProject.Repositories
 
         public Tour Update(Tour tour)
         {
-            _tours = _fileHandler.Load();
+            _tours = _tourFileHandler.Load();
             Tour updated = _tours.Find(t => t.Id == tour.Id);
             _tours.Remove(updated);
             _tours.Add(tour);
-            _fileHandler.Save(_tours);
+            _tourFileHandler.Save(_tours);
             return tour;
         }
         public Tour Save(Tour tour)
@@ -47,7 +47,7 @@ namespace InitialProject.Repositories
 
         public int NextId()
         {
-            _tours = _fileHandler.Load();
+            _tours = _tourFileHandler.Load();
             if (_tours.Count < 1)
             {
                 return 1;
