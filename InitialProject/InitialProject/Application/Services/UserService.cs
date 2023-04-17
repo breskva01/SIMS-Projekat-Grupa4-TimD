@@ -1,5 +1,7 @@
 ﻿using InitialProject.Application.Observer;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using InitialProject.Repository;
 using System;
@@ -12,10 +14,10 @@ namespace InitialProject.Application.Services
 {
     public class UserService
     {
-        private readonly UserRepository _repository;
+        private readonly IUserRepository _repository;
         public UserService()
         {
-            _repository = new UserRepository();
+            _repository = RepositoryStore.GetIUserRepository;
         }
         public User GetByUsername(string username)
         {

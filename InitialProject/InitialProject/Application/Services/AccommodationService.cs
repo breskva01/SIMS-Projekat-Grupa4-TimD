@@ -1,7 +1,8 @@
 ﻿using InitialProject.Application.Observer;
 using InitialProject.Application.Storage;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
-using InitialProject.Domain.Models.DAO;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using InitialProject.Repository;
 using System;
@@ -15,11 +16,11 @@ namespace InitialProject.Application.Services
     public class AccommodationService : ISubject
     {
         private readonly List<IObserver> _observers;
-        private readonly AccommodationRepository _repository;
+        private readonly IAccommodationRepository _repository;
         public AccommodationService()
         {
             _observers = new List<IObserver>();
-            _repository = new AccommodationRepository();
+            _repository = RepositoryStore.GetIAccommodationRepository;
         }
         public List<Accommodation> GetAll()
         {

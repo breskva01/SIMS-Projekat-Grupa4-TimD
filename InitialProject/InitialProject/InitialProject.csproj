@@ -57,8 +57,4 @@
     <Resource Include="Resources\Images\vila_slap.jpg" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\RepositoryInterfaces\" />
-  </ItemGroup>
-
 </Project>

@@ -1,6 +1,7 @@
 ﻿using InitialProject.Application.Serializer;
 using InitialProject.Application.Storage;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Repository
 {
-    class AccommodationRepository
+    public class AccommodationRepository : IAccommodationRepository
     {
         private readonly AccommodationFileHandler _fileHandler;
         private List<Accommodation> _accommodations;
@@ -35,7 +36,7 @@ namespace InitialProject.Repository
             return accommodation;
         }
 
-        public int NextId()
+        private int NextId()
         {
             _accommodations = _fileHandler.Load();
             return _accommodations?.Max(r => r.Id) + 1 ?? 0;
