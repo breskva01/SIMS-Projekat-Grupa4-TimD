@@ -1,0 +1,57 @@
+﻿using InitialProject.Application.Observer;
+using InitialProject.Domain.Models;
+using InitialProject.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InitialProject.Application.Services
+{
+    public class TourReservationService
+    {
+        private readonly List<IObserver> _observers;
+        private readonly TourReservationRepository _repository;
+        public TourReservationService()
+        {
+            _observers = new List<IObserver>();
+            _repository = new TourReservationRepository();
+        }
+        public List<TourReservation> GetAll()
+        {
+            return _repository.GetAll();
+        }
+        public TourReservation Get(int id)
+        {
+            return _repository.Get(id);
+        }
+        public TourReservation CreateReservation(int tourId, int guestId, int numberOfGuests)
+        {
+            TourReservation reservation = new()
+            {
+                TourId = tourId,
+                GuestId = guestId,
+                NumberOfGuests = numberOfGuests
+            };
+            return _repository.Save(reservation);
+        }
+        public void Subscribe(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void Unsubscribe(IObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public void NotifyObservers()
+        {
+            foreach (var observer in _observers)
+            {
+                observer.Update();
+            }
+        }
+    }
+}
