@@ -121,8 +121,8 @@ namespace InitialProject.WPF.ViewModels
             SortByMinDaysNumberCommand = new SortAccommodationsCommand(SortAccommodations, "MinDaysNumber");
             GuestNumberIncrementCommand = new ExecuteMethodCommand(IncrementGuestNumber);
             NumberOfDaysIncrementCommand = new ExecuteMethodCommand(IncrementNumberOfDays);
-            GuestNumberDecrementCommand = new DecrementCommand(DecrementGuestNumber);
-            NumberOfDaysDecrementCommand = new DecrementCommand(DecrementNumberOfDays);
+            GuestNumberDecrementCommand = new ExecuteMethodCommand(DecrementGuestNumber);
+            NumberOfDaysDecrementCommand = new ExecuteMethodCommand(DecrementNumberOfDays);
             ShowReservationViewCommand = new AccommodationClickCommand(ShowAccommodationReservationView);
             ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
         }
