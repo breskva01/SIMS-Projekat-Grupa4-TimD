@@ -13,24 +13,18 @@ namespace InitialProject.Application.Commands
     public class MakeReservationCommand : CommandBase
 
     {
-        private readonly TourReservationViewModel _tourReservationViewModel;
-        private readonly NavigationService tourBrowserNavigationService;
-        public MakeReservationCommand(TourReservationViewModel tourReservationViewModel, NavigationService tourBrowserNavigationService) 
+        private readonly Action<Tour> _execute;
+
+        public MakeReservationCommand(Action<Tour> execute)
         {
-            _tourReservationViewModel = tourReservationViewModel;
-
-            this.tourBrowserNavigationService = tourBrowserNavigationService;
-            _tourReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
+            _execute = execute;
         }
-
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Execute(object? parameter)
         {
-            tourBrowserNavigationService.Navigate();
+            if (parameter is Tour tour)
+            {
+                _execute(tour);
+            }
         }
     }
 }

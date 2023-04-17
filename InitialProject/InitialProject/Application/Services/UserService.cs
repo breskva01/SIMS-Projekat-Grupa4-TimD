@@ -4,7 +4,6 @@ using InitialProject.Domain.Models;
 using InitialProject.Domain.Models.DAO;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
-using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,7 @@ namespace InitialProject.Application.Services
 {
     public class UserService
     {
-        private readonly IUserRepository _repository;
+       private readonly IUserRepository _repository;
         public UserService()
         {
             _repository = RepositoryStore.GetIUserRepository;
@@ -24,9 +23,9 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetByUsername(username);
         }
-        public List<User> GetUsers()
+        public List<User> GetAll()
         {
-            return _repository.GetUsers();
+            return _repository.GetAll();
         }
     }
 }

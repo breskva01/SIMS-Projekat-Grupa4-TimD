@@ -1,5 +1,6 @@
 ﻿using InitialProject.Application.Commands;
 using InitialProject.Application.Services;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourCreationViewModel : ViewModelBase
     {
+
+        private readonly NavigationStore _navigationStore;
+        private User _user;
+
         public ObservableCollection<Location> Locations { get; set; }
         public ObservableCollection<KeyPoint> KeyPoints { get; set; }
 
@@ -281,17 +286,17 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
-        public ICommand ConfirmCommand { get; }
+        public ICommand ConfirmCommand;
         public ICommand CancelCommand { get; }
         public ICommand AddKeyPointCommand { get; } 
 
-        public TourCreationViewModel()
+        public TourCreationViewModel(NavigationStore navigationStore, User user)
         {
             tourService = new TourService();    
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
             
-            ConfirmCommand = new CreateTourCommand(this);
+           // ConfirmCommand = new CreateTourCommand(this);
             AddKeyPointCommand = new AddKeyPointCommand(this);
 
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
@@ -301,6 +306,14 @@ namespace InitialProject.WPF.ViewModels
             KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
 
             Start = new DateTime(2022, 1, 1, 00, 5, 00);
+
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
+            ConfirmCommand = new ExecuteMethodCommand(CreateTour);
+
         }
         public void CreateTour()
         {

@@ -23,5 +23,33 @@ namespace InitialProject.Repositories
         {
             return _fileHandler.Load();
         }
+        /*
+        public KeyPoint Update(KeyPoint keyPoint)
+        {
+            _keyPoints = _fileHandler.Load();
+            KeyPoint updated = _keyPoints.Find(k => k.Id == keyPoint.Id);
+            _keyPoints.Remove(updated);
+            _keyPoints.Add(keyPoint);
+            _fileHandler.Save(_keyPoints);
+            return keyPoint;
+        }
+        public KeyPoint Save(KeyPoint keyPoint)
+        {
+            keyPoint.Id = NextId();
+            _keyPoints = _fileHandler.Load();
+            _keyPoints.Add(keyPoint);
+            _fileHandler.Save(_keyPoints);
+            return keyPoint;
+        }
+        public int NextId()
+        {
+            _keyPoints = _fileHandler.Load();
+            if (_keyPoints.Count < 1)
+            {
+                return 1;
+            }
+            return _keyPoints.Max(t => t.Id) + 1;
+        }
+        */
     }
 }

@@ -24,5 +24,10 @@ namespace InitialProject.Repositories
         {
             return _fileHandler.Load();
         }
+        public Location Get(int id)
+        {
+            return _locations.Find(x => x.Id == id);
+        }
+
     }
 }

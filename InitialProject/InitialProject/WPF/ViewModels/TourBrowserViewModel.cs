@@ -20,8 +20,8 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourBrowserViewModel : ViewModelBase
     {
-        private readonly ObservableCollection<Tour> _tours;
-        public ObservableCollection<Tour> Tours => _tours;
+        //private readonly ObservableCollection<Tour> _tours;
+        public ObservableCollection<Tour> Tours { get; set; }
         public Tour SelectedTour { get; set; }
 
         public ObservableCollection<Location> Locations { get; set; }
@@ -169,13 +169,10 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        public ICommand FilterCommand { get; set; }
-        public ICommand ResetCommand { get; set; }
-        public ICommand SortCommand { get; set; }
+        public ICommand FilterCommand { get; }
+        public ICommand ResetCommand { get;  }
+        public ICommand SortCommand { get;  }
         public ICommand MakeReservationCommand { get; }
-
-        public ICommand TourReservationNavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, CreateTourReservationViewModel()));
 
         public TourBrowserViewModel(NavigationStore navigationStore, User user)
         {
@@ -186,7 +183,7 @@ namespace InitialProject.WPF.ViewModels
             _tourService = new TourService();
             _locationService = new LocationService();
 
-            _tours = new ObservableCollection<Tour>(_tourService.GetAll());
+            Tours = new ObservableCollection<Tour>(_tourService.GetAll());
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             foreach (Tour t in Tours)
             {
@@ -194,24 +191,46 @@ namespace InitialProject.WPF.ViewModels
             }
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
 
-            InitializeCommands();
+            FilterCommand = new ExecuteMethodCommand(ApplyFilter);
+            ResetCommand = new ExecuteMethodCommand(ResetFilter);
+            SortCommand = new ExecuteMethodCommand(ApplySort);
+            MakeReservationCommand = new MakeReservationCommand(ShowTourReservationView);
+            //InitializeCommands();
 
             //MakeReservationCommand = new NavigateCommand(tourReservationNavigationService);
 
             //UpdateTours();
         }
 
-        private void InitializeCommands()
+        private void ShowTourReservationView(Tour tour)
         {
-            FilterCommand = new ExecuteMethodCommand(ApplyFilter);
-            ResetCommand = new ExecuteMethodCommand(ResetFilter);
-            SortCommand = new ExecuteMethodCommand(ApplySort);
+            if (tour.CurrentNumberOfGuests == tour.MaximumGuests)
+            {
+                MessageBox.Show("Unfortunately, the tour that you are interested in is fully booked. On the previous window you can take a look at other tours that are located in the same location.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                Tours.Clear();
+                foreach (var t in _tourService.GetFiltered(tour.Location.Country, tour.Location.City, 0, GuideLanguage.All, 1))
+                {
+                    t.Location = Locations.FirstOrDefault(l => l.Id == tour.LocationId);
+                    Tours.Add(t);
+                }
+
+                return;
+            }
+
+            var viewModel = new TourReservationViewModel(_navigationStore, _user, tour);
+            var reserveTourNavigateCommand = new NavigateCommand
+                (new NavigationService(_navigationStore, viewModel));
+
+            reserveTourNavigateCommand.Execute(null);
         }
 
-        private TourReservationViewModel CreateTourReservationViewModel()
-        {
-            return new TourReservationViewModel(_navigationStore, _user, SelectedTour);
-        }
+        // private void InitializeCommands()
+        // {
+        //    FilterCommand = new ExecuteMethodCommand(ApplyFilter);
+        //    ResetCommand = new ExecuteMethodCommand(ResetFilter);
+        //     SortCommand = new ExecuteMethodCommand(ApplySort);
+        //  }
 
         private void ApplyFilter()
         {
@@ -251,7 +270,9 @@ namespace InitialProject.WPF.ViewModels
             {
                 numberOfGuests = int.Parse(NumberOfGuests);
             }
-            catch { };
+            catch { 
+                MessageBox.Show("You entered a non-number value for number of guests.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            };
 
             return numberOfGuests;
         }
@@ -264,7 +285,9 @@ namespace InitialProject.WPF.ViewModels
             {
                 duration = int.Parse(Duration);
             }
-            catch { };
+            catch {
+                MessageBox.Show("You entered a non-number value for duration.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            };
 
             return duration;
         }

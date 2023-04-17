@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
         xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
-        mc:Ignorable="d" Height="250" Width="450">
+        mc:Ignorable="d" Height="600" Width="1024">
     <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="150"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="500"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="1" Grid.Column="0" Width="300" Height="100">
