@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="780" Width="840" WindowStartupLocation="CenterScreen">
+        Title="TravelBuddy" Height="600" Width="840" WindowStartupLocation="CenterScreen">
     <Grid Margin="20 10" MaxWidth="840">
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:TourBrowserViewModel}">
