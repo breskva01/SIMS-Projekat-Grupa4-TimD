@@ -41,6 +41,7 @@ namespace InitialProject.Domain.Models
         public List<int> KeyPointIds { get; set; }
         public TourState State { get; set; }
         public int CurrentKeyPoint { get; set; }
+        public int NumberOfArrivedGeusts { get; set; }
 
         public Tour()
         {
@@ -53,9 +54,10 @@ namespace InitialProject.Domain.Models
             State = TourState.None;
             CurrentNumberOfGuests = 0;
             CurrentKeyPoint = 0;
+            NumberOfArrivedGeusts = 0;
         }
 
-        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky, int currentKeyPoint)
+        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky, int currentKeyPoint, int numberOfArrivedGuests)
         {
             Id = id;
             Name = name;
@@ -69,6 +71,7 @@ namespace InitialProject.Domain.Models
             CurrentNumberOfGuests = currentNumberOfGuests;
             KeyPoints = ky;
             CurrentKeyPoint = currentKeyPoint;
+            NumberOfArrivedGeusts = numberOfArrivedGuests;
         }
 
         public void FromCSV(string[] values)

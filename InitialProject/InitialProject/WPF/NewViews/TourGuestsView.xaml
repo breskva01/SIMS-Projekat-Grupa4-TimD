@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <DataGrid Width="700" Margin="50,25,50,63" ItemsSource="{Binding Guests}" AutoGenerateColumns="False">
+        <DataGrid Width="700" Margin="50,25,50,63" ItemsSource="{Binding Guests}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGuest}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
