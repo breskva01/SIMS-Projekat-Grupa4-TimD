@@ -173,6 +173,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand ResetCommand { get;  }
         public ICommand SortCommand { get;  }
         public ICommand MakeReservationCommand { get; }
+        public ICommand MenuCommand { get; }
 
         public TourBrowserViewModel(NavigationStore navigationStore, User user)
         {
@@ -195,11 +196,15 @@ namespace InitialProject.WPF.ViewModels
             ResetCommand = new ExecuteMethodCommand(ResetFilter);
             SortCommand = new ExecuteMethodCommand(ApplySort);
             MakeReservationCommand = new MakeReservationCommand(ShowTourReservationView);
-            //InitializeCommands();
+            MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
+            
+        }
 
-            //MakeReservationCommand = new NavigateCommand(tourReservationNavigationService);
-
-            //UpdateTours();
+        private void ShowGuest2MenuView()
+        {
+            Guest2MenuViewModel guest2MenuViewModel = new Guest2MenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guest2MenuViewModel));
+            navigate.Execute(null);
         }
 
         private void ShowTourReservationView(Tour tour)
@@ -224,13 +229,6 @@ namespace InitialProject.WPF.ViewModels
 
             reserveTourNavigateCommand.Execute(null);
         }
-
-        // private void InitializeCommands()
-        // {
-        //    FilterCommand = new ExecuteMethodCommand(ApplyFilter);
-        //    ResetCommand = new ExecuteMethodCommand(ResetFilter);
-        //     SortCommand = new ExecuteMethodCommand(ApplySort);
-        //  }
 
         private void ApplyFilter()
         {
@@ -259,7 +257,6 @@ namespace InitialProject.WPF.ViewModels
                 default:
                     return GuideLanguage.English;
             }
-
         }
 
         private int GetNumberOfGuests()
@@ -307,7 +304,6 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
-
         private void ApplySort()
         {
             if (IsSortNameChecked)
@@ -322,7 +318,6 @@ namespace InitialProject.WPF.ViewModels
             }
             else if (IsSortLocationChecked)
             {
-                // Call the sort by date method
                 var sortedTours = _tourService.SortByLocation(new List<Tour>(Tours));
                 Tours.Clear();
                 foreach (var tour in sortedTours)
@@ -333,7 +328,6 @@ namespace InitialProject.WPF.ViewModels
             }
             else if (IsSortDurationChecked)
             {
-                // Call the sort by size method
                 var sortedTours = _tourService.SortByDuration(new List<Tour>(Tours));
                 Tours.Clear();
                 foreach (var tour in sortedTours)
@@ -344,7 +338,6 @@ namespace InitialProject.WPF.ViewModels
             }
             else if (IsSortLanguageChecked)
             {
-                // Call the sort by size method
                 var sortedTours = _tourService.SortByLanguage(new List<Tour>(Tours));
                 Tours.Clear();
                 foreach (var tour in sortedTours)
@@ -353,12 +346,8 @@ namespace InitialProject.WPF.ViewModels
                     tour.Location = Locations.FirstOrDefault(l => l.Id == tour.LocationId);
                 }
             }
-            // Hide the sortOptionsPanel after sorting is applied
+
         }
 
-        //private void UpdateTours()
-        //{
-        //    throw new NotImplementedException();
-        // }
     }
 }

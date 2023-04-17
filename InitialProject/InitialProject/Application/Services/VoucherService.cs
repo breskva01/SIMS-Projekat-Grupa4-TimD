@@ -37,6 +37,11 @@ namespace InitialProject.Application.Services
         {
             return _repository.FilterUnused(vouchers);
         }
+
+        public List<Voucher> FilterUnexpired(List<Voucher> vouchers)
+        {
+            return _repository.FilterUnexpired(vouchers);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

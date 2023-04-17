@@ -105,9 +105,9 @@ namespace InitialProject.WPF.ViewModels
         {
             return new AccommodationBrowserViewModel(_navigationStore, _user);
         }
-        private TourBrowserViewModel CreateGuest2VM()
+        private Guest2MenuViewModel CreateGuest2VM()
         {
-            return new TourBrowserViewModel(_navigationStore, _user);
+            return new Guest2MenuViewModel(_navigationStore, _user);
         }
         /*
         private TourCreationViewModel CreateGuideVM()

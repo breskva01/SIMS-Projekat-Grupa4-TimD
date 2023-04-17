@@ -65,23 +65,34 @@ namespace InitialProject.Repositories
         public Voucher GetById(int voucherId)
         {
             _vouchers = _voucherFileHandler.Load();
-            List<Voucher> validVouchers = new List<Voucher>();
             foreach (Voucher voucher in _vouchers)
             {
                 //CheckVoucherExpiration(voucher);
                 if (IsExpired(voucher)) { 
                     voucher.State = VoucherState.Expired;
                     Update(voucher);
-                    continue;
                 }
-                validVouchers.Add(voucher);
             }
-            return _vouchers.Find(v => v.Id == voucherId);
+            List<Voucher> updatedVouchers = _voucherFileHandler.Load();
+            return updatedVouchers.Find(v => v.Id == voucherId);
+        }
+
+        public List<Voucher> FilterUnexpired(List<Voucher> vouchers)
+        {
+            List<Voucher> filteredVouchers = new List<Voucher>();
+            foreach (Voucher voucher in vouchers)
+            {
+                //CheckVoucherExpiration(voucher);
+                if (!IsExpired(voucher))
+                {
+                    filteredVouchers.Add(voucher);
+                }
+            }
+            return filteredVouchers;
         }
 
         public List<Voucher> FilterUnused(List<Voucher> vouchers)
         {
-
             List<Voucher> filteredVouchers = new List<Voucher>();
             foreach (Voucher v in vouchers)
             {
@@ -91,7 +102,6 @@ namespace InitialProject.Repositories
                 }
             }
             return filteredVouchers;
-
         }
 
         public bool IsExpired(Voucher voucher)
