@@ -39,11 +39,11 @@ namespace InitialProject.WPF.ViewModels
         public ICommand SignInCommand { get; }
         public ICommand Guest2NavigateCommand => 
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuest2VM()));
-       /* public ICommand Guest1NavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, CreateAccommodationBrowserViewModel()));*/
+        public ICommand Guest1NavigateCommand =>
+            new NavigateCommand(new NavigationService(_navigationStore, CreateAccommodationBrowserViewModel()));
         public ICommand GuideNavigateCommand =>
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuideVM()));
-        public ICommand Guest1NavigateCommand { get; }
+        //public ICommand Guest1NavigateCommand { get; }
 
         private readonly NavigationStore _navigationStore;
         private User _user;

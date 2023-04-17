@@ -10,5 +10,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
     public interface IUserRepository
     {
         User GetByUsername(string username);
+        List<User> GetAll();
     }
 }
