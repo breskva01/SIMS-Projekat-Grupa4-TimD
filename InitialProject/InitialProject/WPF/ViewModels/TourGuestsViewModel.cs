@@ -21,19 +21,41 @@ namespace InitialProject.WPF.ViewModels
 
         public IEnumerable<User> Guests => _guests;
 
+        private User _selectedGuest;
+        public User SelectedGuest
+        {
+            get { return _selectedGuest; }
+            set
+            {
+                _selectedGuest = value;
+                OnPropertyChanged(nameof(SelectedGuest));
+                GuestSelected();
 
-
+            }
+        }
+        private void GuestSelected()
+        {
+            foreach (TourReservation res in _tourReservations)
+            {
+                if(res.GuestId == SelectedGuest.Id)
+                {
+                    _tour.NumberOfArrivedGeusts += res.NumberOfGuests;
+                }
+            }
+        }
 
         private readonly NavigationStore _navigationStore;
         private User _user;
+        private Tour _tour;
 
-        public TourGuestsViewModel(NavigationStore navigationStore, User user)
+        public TourGuestsViewModel(NavigationStore navigationStore, User user, Tour tour)
         {
             _navigationStore = navigationStore;
             _user = user;
             _tourReservationService = new TourReservationService();
             _userService = new UserService();
             _guests = new ObservableCollection<User>();
+            _tour = tour;
 
             _tourReservations = new ObservableCollection<TourReservation>(_tourReservationService.GetAll());
             _users = new ObservableCollection<User>(_userService.GetAll());
@@ -44,6 +66,7 @@ namespace InitialProject.WPF.ViewModels
                 {
                     if (res.GuestId == u.Id && !_guests.Contains(u))
                     {
+                        
                         _guests.Add(u);
                     }
 
