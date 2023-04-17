@@ -37,7 +37,7 @@ namespace InitialProject.Domain.Models
             GuestId = Convert.ToInt32(values[2]);
             NumberOfGuests = Convert.ToInt32(values[3]);
         }
-
+        
         public string[] ToCSV()
         {
             string[] csvValues =

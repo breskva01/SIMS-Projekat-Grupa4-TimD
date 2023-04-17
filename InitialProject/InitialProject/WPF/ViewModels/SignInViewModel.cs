@@ -39,7 +39,10 @@ namespace InitialProject.WPF.ViewModels
         public ICommand SignInCommand { get; }
         public ICommand Guest2NavigateCommand => 
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuest2VM()));
+        public ICommand GuideNavigateCommand =>
+            new NavigateCommand(new NavigationService(_navigationStore, CreateGuideVM()));
         public ICommand Guest1NavigateCommand { get; }
+
         private readonly NavigationStore _navigationStore;
         private User _user;
         public SignInViewModel(NavigationStore navigationStore)
@@ -86,6 +89,7 @@ namespace InitialProject.WPF.ViewModels
                     }
                 case UserType.TourGuide:
                     {
+                        GuideNavigateCommand.Execute(null);
                         break;
                     }
                 case UserType.Guest2:
@@ -99,6 +103,22 @@ namespace InitialProject.WPF.ViewModels
         {
             return new TourBrowserViewModel(_navigationStore, _user);
         }
+        /*
+        private TourCreationViewModel CreateGuideVM()
+        {
+            return new TourCreationViewModel(_navigationStore, _user);
+        }
+        */
+        private ToursTodayViewModel CreateGuideVM()
+        {
+            return new ToursTodayViewModel(_navigationStore, _user);
+        }
+        /*
+        private AllToursViewModel CreateGuideVM()
+        {
+            return new AllToursViewModel(_navigationStore, _user);
+        }*/
+
 
     }
 }

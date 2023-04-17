@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Application.Services
 {
-    public class LocationService
+    public class TourReservationService
     {
         private readonly List<IObserver> _observers;
-        private readonly LocationRepository _repository;
-        public LocationService()
+        private readonly TourReservationRepository _repository;
+        public TourReservationService()
         {
             _observers = new List<IObserver>();
-            _repository = new LocationRepository();
+            _repository = new TourReservationRepository();
         }
-        public List<Location> GetAll()
+        public List<TourReservation> GetAll()
         {
             return _repository.GetAll();
         }
-        public Location Get(int id)
+        public TourReservation Get(int id)
         {
             return _repository.Get(id);
         }
@@ -30,7 +30,7 @@ namespace InitialProject.Application.Services
         {
             _observers.Add(observer);
         }
-       
+
         public void Unsubscribe(IObserver observer)
         {
             _observers.Remove(observer);

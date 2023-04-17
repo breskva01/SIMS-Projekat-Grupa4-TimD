@@ -21,5 +21,9 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetByUsername(username);
         }
+        public List<User> GetAll()
+        {
+            return _repository.GetAll();
+        }
     }
 }

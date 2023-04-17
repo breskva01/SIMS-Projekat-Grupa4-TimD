@@ -10,22 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace InitialProject.WPF.NewViews
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml
+    /// Interaction logic for AllToursView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AllToursView : UserControl
     {
-        public MainWindow()
+        public AllToursView()
         {
             InitializeComponent();
-            /*
-            Height = SystemParameters.PrimaryScreenHeight * 0.75;
-            Width = SystemParameters.PrimaryScreenWidth * 0.75;
-            */
         }
     }
 }

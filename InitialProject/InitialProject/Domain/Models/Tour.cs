@@ -40,6 +40,8 @@ namespace InitialProject.Domain.Models
         public List<KeyPoint> KeyPoints { get; set; }
         public List<int> KeyPointIds { get; set; }
         public TourState State { get; set; }
+        public int CurrentKeyPoint { get; set; }
+
         public Tour()
         {
             Name = string.Empty;
@@ -49,9 +51,11 @@ namespace InitialProject.Domain.Models
             KeyPoints = new List<KeyPoint>();
             KeyPointIds = new List<int>();
             State = TourState.None;
+            CurrentNumberOfGuests = 0;
+            CurrentKeyPoint = 0;
         }
 
-        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky)
+        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky, int currentKeyPoint)
         {
             Id = id;
             Name = name;
@@ -64,6 +68,7 @@ namespace InitialProject.Domain.Models
             PictureURL = pictureURL;
             CurrentNumberOfGuests = currentNumberOfGuests;
             KeyPoints = ky;
+            CurrentKeyPoint = currentKeyPoint;
         }
 
         public void FromCSV(string[] values)
@@ -87,6 +92,7 @@ namespace InitialProject.Domain.Models
                 KeyPointIds.Add(Convert.ToInt32(keyPoint));
             }
             State = (TourState)Enum.Parse(typeof(TourState), values[11]);
+            CurrentKeyPoint = Convert.ToInt32(values[12]);
 
         }
         public string[] ToCSV()
@@ -109,7 +115,8 @@ namespace InitialProject.Domain.Models
                 PictureURL.ToString(),
                 CurrentNumberOfGuests.ToString(),
                 keyPointIds,
-                State.ToString()
+                State.ToString(),
+                CurrentKeyPoint.ToString()
             };
             return csvValues;
         }

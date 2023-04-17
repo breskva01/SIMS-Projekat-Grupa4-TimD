@@ -24,6 +24,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetAll();
         }
+        public Tour Update(Tour tour)
+        {
+            return _repository.Update(tour);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);
