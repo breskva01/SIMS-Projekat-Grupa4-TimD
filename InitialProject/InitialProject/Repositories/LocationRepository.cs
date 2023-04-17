@@ -24,15 +24,5 @@ namespace InitialProject.Repositories
         {
             return _fileHandler.Load();
         }
-        public int GetLocationId(string city, string country)
-        {
-            int LocationId;
-            foreach (Location l in _locations)
-            {
-                if (city == l.City && country == l.Country)
-                    return LocationId = l.Id;
-            }
-            return -1;
-        }
     }
 }

@@ -1,34 +1,32 @@
-﻿using System;
+﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Services;
+using InitialProject.Application.Stores;
+using InitialProject.Controller;
+using InitialProject.Domain.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using InitialProject.Controller;
-using InitialProject.Domain.Models;
-using InitialProject.Application.Storage;
-using System.Windows.Media.Animation;
 
-namespace InitialProject.WPF.Views
+namespace InitialProject.WPF.ViewModels
 {
-    /// <summary>
-    /// Interaction logic for GuestRatingView.xaml
-    /// </summary>
-    public partial class GuestRatingView : Window, INotifyPropertyChanged
+    public class GuestRatingViewModel: ViewModelBase
     {
-        private readonly GuestRatingController _guestRatingController;
-        private readonly UserController _userController;
-        private AccommodationReservation _selectedReservation;
-        private readonly AccommodationReservationController _reservationController;
+        private readonly AccommodationReservationService _accommodationReservationService;
+        private readonly AccommodationService _accommodationService;
+        private readonly UserService _userService;
+        private readonly GuestRatingService _guestRatingService;
+        private readonly User _owner;
+        public readonly Accommodation Accommodation;
+        private List<Accommodation> _accommodations;
+        private List<User> _users;
+        public ObservableCollection<AccommodationReservation> AccommodationReservations { get; set; }
+        public AccommodationReservation SelectedReservation { get; set; }
 
         private string _hygiene;
         public string Hygiene
@@ -113,7 +111,7 @@ namespace InitialProject.WPF.Views
         public string Comment
         {
             get => _comment;
-            set 
+            set
             {
                 if (value != _comment)
                 {
@@ -122,35 +120,34 @@ namespace InitialProject.WPF.Views
                 }
             }
         }
-        public GuestRatingView(AccommodationReservation SelectedReservation)
+        public GuestRatingViewModel(NavigationStore navigationStore, User user)
         {
-            InitializeComponent();
-            DataContext = this;
-            _selectedReservation = SelectedReservation;
-            _userController= new UserController();
-            _guestRatingController= new GuestRatingController();
-            _reservationController = new AccommodationReservationController();
+            _accommodationReservationService = new AccommodationReservationService();
+            _accommodationService = new AccommodationService();
+            _guestRatingService = new GuestRatingService();
+            _accommodations = _accommodationService.GetAll();
+            _owner = user;
+            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_owner.Id));
+            InitializeCommands();
+        }
+        
+        public ICommand RateGuestCommand { get; set; }
+
+        private void InitializeCommands()
+        {
+            RateGuestCommand = new ExecuteMethodCommand(RateGuest);
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void RateGuest()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            int ownerId = SelectedReservation.Accommodation.OwnerId;
+            int guestId = SelectedReservation.GuestId;
+            GuestRating guestRating = _guestRatingService.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), int.Parse(Communication), int.Parse(Timeliness), int.Parse(NoiseLevel), int.Parse(OverallExperience), Comment);
+            _accommodationReservationService.updateRatingStatus(SelectedReservation);
+            AccommodationReservations.Remove(SelectedReservation);
         }
 
-        private void RateGuest_Click(object sender, RoutedEventArgs e)
-        {
-            int ownerId = _selectedReservation.Accommodation.OwnerId;
-            int guestId = _selectedReservation.GuestId;
-            GuestRating guestRating = _guestRatingController.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), int.Parse(Communication), int.Parse(Timeliness), int.Parse(NoiseLevel), int.Parse(OverallExperience), Comment);
-            _reservationController.updateRatingStatus(_selectedReservation);
-            //_userController.AddGuestRating(guestId, guestRating);
-            Close();
-        }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+
     }
 }

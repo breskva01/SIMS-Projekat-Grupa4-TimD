@@ -199,7 +199,6 @@ namespace InitialProject.WPF.ViewModels
             int maximumGuests = int.Parse(MaximumGuests);
             int minimumDays = int.Parse(MinimumDays);
             int minimumCancellationNotice = int.Parse(MinimumCancellationNotice);
-            int LocationId = _locationService.GetLocationId(SelectedCity, SelectedCountry);
             _accommodationService.RegisterAccommodation(AccommodationName, SelectedCountry, SelectedCity, Address, Type, maximumGuests, minimumDays, minimumCancellationNotice, 
                 PictureURL, _loggedInUser, _loggedInUser.Id);
             AccommodationName = null;

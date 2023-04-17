@@ -34,10 +34,10 @@ namespace InitialProject.Domain.Models.DAO
             _storage.Save(_guestRatings);
             return guestRating;
         }
-        public GuestRating Add(int ownerId, int guestId, int hygiene, int respectsRules, string comment)
+        public GuestRating Add(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperience, string comment)
         {
             _guestRatings = _storage.Load();
-            GuestRating guestRating = new GuestRating(ownerId, guestId, hygiene, respectsRules, comment);
+            GuestRating guestRating = new GuestRating(ownerId, guestId, hygiene, respectsRules, communication, timeliness, noiseLevel, overallExperience, comment);
             _guestRatings.Add(guestRating);
             _storage.Save(_guestRatings);
             NotifyObservers();

@@ -117,6 +117,18 @@ namespace InitialProject.Application.Services
         {
             return new AccommodationReservation(accommodation, guest, days, checkIn, checkOut, AccommodationReservationStatus.Confirmed);
         }
+        public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId)
+        {
+            return _repository.FindCompletedAndUnrated(ownerId);
+        }
+        public void updateLastNotification(AccommodationReservation accommodationReservation)
+        {
+            _repository.updateLastNotification(accommodationReservation);
+        }
+        public void updateRatingStatus(AccommodationReservation accommodationReservation)
+        {
+            _repository.updateRatingStatus(accommodationReservation);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

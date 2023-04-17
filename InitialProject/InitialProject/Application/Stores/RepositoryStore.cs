@@ -14,6 +14,7 @@ namespace InitialProject.Application.Stores
         private static UserRepository _userRepository;
         private static AccommodationRepository _accommodationRepository;
         private static AccommodationReservationRepository _accommodationReservationRepository;
+        private static GuestRatingRepository _guestRatingRepository;
 
         public static IUserRepository GetIUserRepository
         {
@@ -48,6 +49,17 @@ namespace InitialProject.Application.Stores
                     _accommodationReservationRepository = new AccommodationReservationRepository();
                 }
                 return _accommodationReservationRepository;
+            }
+        }
+        public static IGuestRatingRepository GetIGuestRatingRepository
+        {
+            get
+            {
+                if (_guestRatingRepository == null)
+                {
+                    _guestRatingRepository = new GuestRatingRepository();
+                }
+                return _guestRatingRepository;
             }
         }
     }

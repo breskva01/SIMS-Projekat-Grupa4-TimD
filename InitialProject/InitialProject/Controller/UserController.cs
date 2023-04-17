@@ -24,9 +24,9 @@ namespace InitialProject.Controller
         {
             return _userDAO.GetUsers();
         }
-        public void AddGuestRating(int id, GuestRating guestRating)
+        /*public void AddGuestRating(int id, GuestRating guestRating)
         {
             _userDAO.AddGuestRating(id, guestRating);
-        }
+        }*/
     }
 }

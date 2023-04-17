@@ -1,6 +1,7 @@
 ﻿using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.Models.DAO;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using InitialProject.Repository;
@@ -22,6 +23,10 @@ namespace InitialProject.Application.Services
         public User GetByUsername(string username)
         {
             return _repository.GetByUsername(username);
+        }
+        public List<User> GetUsers()
+        {
+            return _repository.GetUsers();
         }
     }
 }

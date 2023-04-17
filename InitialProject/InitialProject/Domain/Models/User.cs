@@ -16,7 +16,6 @@ namespace InitialProject.Domain.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public List<GuestRating> Ratings { get; set; }
 
         public User() { }
 
@@ -29,7 +28,6 @@ namespace InitialProject.Domain.Models
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
-            Ratings = new List<GuestRating>();
         }
 
         public string[] ToCSV()

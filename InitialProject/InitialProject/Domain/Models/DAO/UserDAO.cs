@@ -29,7 +29,7 @@ namespace InitialProject.Domain.Models.DAO
         {
             return _fileHandler.Load();
         }
-        public void AddGuestRating(int id, GuestRating guestRating)
+       /* public void AddGuestRating(int id, GuestRating guestRating)
         {
             List<GuestRating> guestRatings = new List<GuestRating>();
             _users = _fileHandler.Load();
@@ -41,6 +41,6 @@ namespace InitialProject.Domain.Models.DAO
                     u.Ratings = guestRatings;
                 }
             }
-        }
+        }*/
     }
 }

@@ -20,7 +20,9 @@ namespace InitialProject.WPF.ViewModels
     public class SignInViewModel : ViewModelBase
     {
         private readonly UserService _userService;
-        
+        private readonly AccommodationReservationService _reservationService;
+        private List<AccommodationReservation> _reservations;
+
         public SecureString Password { get; set; }
         private string _username;
         public string Username
@@ -42,8 +44,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand Guest1NavigateCommand =>
             new NavigateCommand(new NavigationService(_navigationStore, CreateAccommodationBrowserViewModel()));
         public ICommand OwnerNavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, CreateOwnerVM()));
-        public ICommand Guest1NavigateCommand { get; }
+            new NavigateCommand(new NavigationService(_navigationStore, GuestRatingVM()));
         private readonly NavigationStore _navigationStore;
         private User _user;
         public SignInViewModel(NavigationStore navigationStore)
@@ -51,6 +52,7 @@ namespace InitialProject.WPF.ViewModels
 
             _userService = new UserService();       
             SignInCommand = new SignInCommand(SignIn);
+            _reservationService = new AccommodationReservationService();
             _navigationStore = navigationStore;
         }
 
@@ -80,6 +82,22 @@ namespace InitialProject.WPF.ViewModels
             {
                 case UserType.Owner:
                     {
+                        int UnratedGuests = 0;
+                        bool IsNotified = true;
+                        _reservations = _reservationService.FindCompletedAndUnrated(user.Id);
+                        foreach (AccommodationReservation res in _reservations)
+                        {
+                            if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
+                            {
+                                _reservationService.updateLastNotification(res);
+                                UnratedGuests++;
+                                IsNotified= false;
+                            }
+
+                        }
+                        if (UnratedGuests > 0 && !IsNotified)
+                            MessageBox.Show("You have " + UnratedGuests.ToString() + " unrated guests!");
+
                         OwnerNavigateCommand.Execute(null);
                         break;
                     }
@@ -110,6 +128,10 @@ namespace InitialProject.WPF.ViewModels
         private AccommodationRegistrationViewModel CreateOwnerVM()
         {
             return new AccommodationRegistrationViewModel(_navigationStore, _user);
+        }
+        private GuestRatingViewModel GuestRatingVM()
+        {
+            return new GuestRatingViewModel(_navigationStore, _user);
         }
     }
 }

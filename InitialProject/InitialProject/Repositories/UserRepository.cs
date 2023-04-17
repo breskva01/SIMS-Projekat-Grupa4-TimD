@@ -24,5 +24,9 @@ namespace InitialProject.Repository
             _users = _fileHandler.Load();
             return _users.FirstOrDefault(u => u.Username == username);
         }
+        public List<User> GetUsers()
+        {
+            return _fileHandler.Load();
+        }
     }
 }
