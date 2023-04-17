@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using InitialProject.Application.Serializer;
 
 namespace InitialProject.Domain.Models
@@ -33,14 +35,32 @@ namespace InitialProject.Domain.Models
             ExpirationDate = expiration;
             State = VoucherState.Unused;
         }
+
+        public Voucher(Voucher voucher)
+        {
+            Id = voucher.Id;
+            Name = voucher.Name;
+            ExpirationDate = voucher.ExpirationDate;
+            State = voucher.State;
+        }
         public void FromCSV(string[] values)
         {
-            throw new NotImplementedException();
+            Id = Convert.ToInt32(values[0]);
+            Name = values[1];
+            ExpirationDate = DateOnly.Parse(values[2]);
+            State = (VoucherState)Enum.Parse(typeof(VoucherState),values[3]);
         }
 
         public string[] ToCSV()
         {
-            throw new NotImplementedException();
+            string[] csvValues =
+            {
+                Id.ToString(),
+                Name,
+                ExpirationDate.ToString(),
+                State.ToString()
+            };
+            return csvValues;
         }
     }
 }

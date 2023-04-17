@@ -52,6 +52,7 @@ namespace InitialProject.WPF.ViewModels
         }
 
         public ICommand ReserveCommand { get; }
+        public ICommand UseVoucherCommand { get; }
         public ICommand CancelCommand { get; }
 
         public TourReservationViewModel(NavigationStore navigationStore, User user, Tour tour)
@@ -63,7 +64,15 @@ namespace InitialProject.WPF.ViewModels
             AvailableSpots = (SelectedTour.MaximumGuests - SelectedTour.CurrentNumberOfGuests).ToString();
             CancelCommand = new ExecuteMethodCommand(ShowTourBrowserView);
             ReserveCommand = new ExecuteMethodCommand(MakeReservation);
+            UseVoucherCommand = new ExecuteMethodCommand(ShowVoucherView);
             //CancelCommand = new NavigateCommand(tourBrowserNavigationService);
+        }
+
+        private void ShowVoucherView()
+        {
+            VoucherBrowserViewModel voucherBrowserViewModel = new VoucherBrowserViewModel(_navigationStore, _user, SelectedTour, GetNumberOfGuests());
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, voucherBrowserViewModel));
+            navigate.Execute(null);
         }
 
         private void ShowTourBrowserView()

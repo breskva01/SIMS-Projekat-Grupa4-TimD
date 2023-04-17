@@ -20,6 +20,7 @@
 
         </StackPanel>
         <Button Content="Reserve" Command="{Binding ReserveCommand}" HorizontalAlignment="Left" Height="20" Margin="490,299,0,0" VerticalAlignment="Top" Width="104" />
+        <Button Content="Use Voucher" Command="{Binding UseVoucherCommand}" HorizontalAlignment="Left" Height="20" Margin="353,299,0,0" VerticalAlignment="Top" Width="104" />
         <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Left" Height="18" Margin="226,300,0,0" VerticalAlignment="Top" Width="104" />
     </Grid>
 </UserControl>

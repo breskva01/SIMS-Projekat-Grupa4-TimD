@@ -27,6 +27,7 @@ namespace InitialProject.WPF.ViewModels
         private LocationService _locationService;
         private TourService _tourService;
         private TourReservationService _tourReservationService;
+        private VoucherService _voucherService; 
 
         public ICommand CancelTourCommand { get; set; }
 
@@ -50,6 +51,8 @@ namespace InitialProject.WPF.ViewModels
         private List<TourReservation> _tourReservations;
         private UserService _userService;
 
+        public ICommand CreateVoucherNavigateCommand =>
+   new NavigateCommand(new NavigationService(_navigationStore, CreateVoucher()));
 
         public AllToursViewModel(NavigationStore navigationStore, User user)
         {
@@ -57,6 +60,8 @@ namespace InitialProject.WPF.ViewModels
 
             _navigationStore = navigationStore;
             _user = user;
+
+            _voucherService = new VoucherService();
             _tourService = new TourService();
             _locationService = new LocationService();
             _userService = new UserService();
@@ -131,10 +136,14 @@ namespace InitialProject.WPF.ViewModels
                         }
                     }
 
-                    foreach(User guest in _guests)
+                    CreateVoucherNavigateCommand.Execute(null);
+
+                    /*
+                    foreach (User guest in _guests)
                     {
-                       
+                        guest.VouchersIds.Add();
                     }
+                    */
 
 
                     _tourService.Update(SelectedTour);
@@ -146,5 +155,12 @@ namespace InitialProject.WPF.ViewModels
             MessageBox.Show("It's too late to cancel this tour.");
             return;
         }
+        
+        private VoucherCreationViewModel CreateVoucher()
+        {
+            return new VoucherCreationViewModel(_navigationStore, _user, _guests);
+
+        }
+        
     }
 }
