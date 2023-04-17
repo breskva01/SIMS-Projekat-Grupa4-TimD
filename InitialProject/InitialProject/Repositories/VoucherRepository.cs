@@ -2,9 +2,11 @@
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace InitialProject.Repositories
 {
@@ -59,5 +61,52 @@ namespace InitialProject.Repositories
             _vouchers.Remove(founded);
             _voucherFileHandler.Save(_vouchers);
         }
+
+        public Voucher GetById(int voucherId)
+        {
+            _vouchers = _voucherFileHandler.Load();
+            List<Voucher> validVouchers = new List<Voucher>();
+            foreach (Voucher voucher in _vouchers)
+            {
+                //CheckVoucherExpiration(voucher);
+                if (IsExpired(voucher)) { 
+                    voucher.State = VoucherState.Expired;
+                    Update(voucher);
+                    continue;
+                }
+                validVouchers.Add(voucher);
+            }
+            return _vouchers.Find(v => v.Id == voucherId);
+        }
+
+        public List<Voucher> FilterUnused(List<Voucher> vouchers)
+        {
+
+            List<Voucher> filteredVouchers = new List<Voucher>();
+            foreach (Voucher v in vouchers)
+            {
+                if (MatchesUnusedFilter(v))
+                {
+                    filteredVouchers.Add(v);
+                }
+            }
+            return filteredVouchers;
+
+        }
+
+        public bool IsExpired(Voucher voucher)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
+
+            return today.CompareTo(voucher.ExpirationDate) > 0;
+
+        }
+
+        public bool MatchesUnusedFilter(Voucher voucher)
+        {
+            return voucher.State == VoucherState.Unused;
+
+        }
+
     }
 }

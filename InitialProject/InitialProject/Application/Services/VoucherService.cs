@@ -3,9 +3,11 @@ using InitialProject.Domain.Models;
 using InitialProject.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace InitialProject.Application.Services
 {
@@ -25,6 +27,15 @@ namespace InitialProject.Application.Services
         public Voucher Update(Voucher voucher)
         {
             return _repository.Update(voucher);
+        }
+        public Voucher GetById(int voucherId)
+        {
+            return _repository.GetById(voucherId);
+        }
+
+        public List<Voucher> FilterUnused(List<Voucher> vouchers)
+        {
+            return _repository.FilterUnused(vouchers);
         }
         public void Subscribe(IObserver observer)
         {

@@ -16,6 +16,9 @@
             <DataTemplate DataType="{x:Type vms:TourReservationViewModel}">
                 <views:TourReservationView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:VoucherBrowserViewModel}">
+                <views:VoucherBrowserView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:SignInViewModel}">
                 <views:SignInView />
             </DataTemplate>
