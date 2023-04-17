@@ -13,10 +13,15 @@ namespace InitialProject.Application.Services
     {
         private readonly List<IObserver> _observers;
         private readonly TourReservationRepository _repository;
+        private List<TourReservation> _reservations;
+        private readonly TourService _tourService;
+        
         public TourReservationService()
         {
             _observers = new List<IObserver>();
             _repository = new TourReservationRepository();
+            _reservations = new List<TourReservation>();
+            _tourService = new TourService();
         }
         public List<TourReservation> GetAll()
         {
@@ -35,6 +40,31 @@ namespace InitialProject.Application.Services
                 NumberOfGuests = numberOfGuests
             };
             return _repository.Save(reservation);
+        }
+
+        public List<TourReservation> getActivePendingReservations(int userId)
+        {
+            _reservations = _repository.GetAll();
+            //uzmi sve rezervacije koje odgovaraju korinikovom ID
+
+            //od tih rezervacija uzmi samo one koje imaju Pending status
+
+            //od tih rezervacija uzmi one koje imaju aktivnu turu u sebi
+            //List<TourReservation> reservations = new();
+            //foreach(TourReservation reservation in _reservations)
+            //{
+            //    if(_tourService.GetById(reservation.TourId).State == TourState.Started)
+              //  {
+             //       if (reservation.Presence == Presence.Pending)
+                 //   {
+                 //       reservations.Add(reservation);
+                 //   }
+               // }
+            //}
+           // return reservations;
+           throw new NotImplementedException();
+
+
         }
         public void Subscribe(IObserver observer)
         {
