@@ -1,12 +1,13 @@
 ﻿using InitialProject.Application.Serializer;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace InitialProject.Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly UserFileHandler _fileHandler;
 

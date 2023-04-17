@@ -51,6 +51,26 @@ namespace InitialProject.Application.Services
             Tour.KeyPointIds = kyIds;
             return _repository.Save(Tour);
         }
+        public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int NumberOfGuests)
+        {
+            return _repository.GetFiltered(country, city, duration, language, NumberOfGuests);
+        }
+        public List<Tour> SortByName(List<Tour> tours)
+        {
+            return _repository.SortByName(tours);
+        }
+        public List<Tour> SortByLocation(List<Tour> tours)
+        {
+            return _repository.SortByLocation(tours);
+        }
+        public List<Tour> SortByDuration(List<Tour> tours)
+        {
+            return _repository.SortByDuration(tours);
+        }
+        public List<Tour> SortByLanguage(List<Tour> tours)
+        {
+            return _repository.SortByLanguage(tours);
+        }
 
 
         public void Unsubscribe(IObserver observer)
