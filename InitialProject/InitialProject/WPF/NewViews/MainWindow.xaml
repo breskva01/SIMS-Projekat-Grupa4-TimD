@@ -7,8 +7,8 @@
         xmlns:views="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="600" Width="840" WindowStartupLocation="CenterScreen">
-    <Grid Margin="20 10" MaxWidth="840">
+        Title="TravelBuddy" Height="768" Width="1024" >
+    <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:TourBrowserViewModel}">
                 <views:TourBrowserView />
@@ -30,6 +30,21 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:MyAccommodationReservationsViewModel}">
                 <views:MyAccommodationReservationsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ToursTodayViewModel}">
+                <views:ToursTodayView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourCreationViewModel}">
+                <views:TourCreateView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AllToursViewModel}">
+                <views:AllToursView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourLiveTrackingViewModel}">
+                <views:TourLiveTrackingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourGuestsViewModel}">
+                <views:TourGuestsView />
             </DataTemplate>
         </Grid.Resources>
 

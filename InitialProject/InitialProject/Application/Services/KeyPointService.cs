@@ -26,7 +26,12 @@ namespace InitialProject.Application.Services
         {
             _observers.Add(observer);
         }
-
+        /*
+        public KeyPoint Update(KeyPoint keyPoint)
+        {
+            return _repository.Update(keyPoint);
+        }
+        */
         public void Unsubscribe(IObserver observer)
         {
             _observers.Remove(observer);

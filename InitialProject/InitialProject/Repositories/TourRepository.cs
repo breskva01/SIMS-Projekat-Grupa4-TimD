@@ -27,6 +27,15 @@ namespace InitialProject.Repositories
             return _tourFileHandler.Load();
         }
 
+        public Tour Update(Tour tour)
+        {
+            _tours = _tourFileHandler.Load();
+            Tour updated = _tours.Find(t => t.Id == tour.Id);
+            _tours.Remove(updated);
+            _tours.Add(tour);
+            _tourFileHandler.Save(_tours);
+            return tour;
+        }
         public Tour Save(Tour tour)
         {
             tour.Id = NextId();
@@ -39,7 +48,11 @@ namespace InitialProject.Repositories
         public int NextId()
         {
             _tours = _tourFileHandler.Load();
-            return _tours?.Max(r => r.Id) + 1 ?? 0;
+            if (_tours.Count < 1)
+            {
+                return 1;
+            }
+            return _tours.Max(t => t.Id) + 1;
         }
 
         public void Delete(Tour tour)
