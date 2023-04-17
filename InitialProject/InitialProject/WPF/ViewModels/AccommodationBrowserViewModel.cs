@@ -105,6 +105,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand NumberOfDaysIncrementCommand { get; }
         public ICommand GuestNumberDecrementCommand { get; }
         public ICommand NumberOfDaysDecrementCommand { get; }
+        private string _lastSortingCriterium;
         public AccommodationBrowserViewModel(NavigationStore navigationStore ,User user)
         {
             _loggedInUser = user;
@@ -194,7 +195,14 @@ namespace InitialProject.WPF.ViewModels
 
         private void SortAccommodations(string criterium)
         {
-            var sortedAccommodations = _service.Sort(new List<Accommodation>(Accommodations), criterium);
+            List<Accommodation> sortedAccommodations;
+            if (_lastSortingCriterium == criterium)
+                 sortedAccommodations = new List<Accommodation>(Accommodations.Reverse());
+            else
+            {
+                sortedAccommodations = _service.Sort(new List<Accommodation>(Accommodations), criterium);
+                _lastSortingCriterium = criterium;
+            }          
             Accommodations.Clear();
             foreach (var accommodation in sortedAccommodations)
             {
