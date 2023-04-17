@@ -64,7 +64,7 @@ namespace InitialProject.WPF.ViewModels
             AvailableSpots = (SelectedTour.MaximumGuests - SelectedTour.CurrentNumberOfGuests).ToString();
             CancelCommand = new ExecuteMethodCommand(ShowTourBrowserView);
             ReserveCommand = new ExecuteMethodCommand(MakeReservation);
-            UseVoucherCommand = new ExecuteMethodCommand(ShowVoucherView);
+            UseVoucherCommand = new ReserveWithVoucherCommand(ShowVoucherView, this);
             //CancelCommand = new NavigateCommand(tourBrowserNavigationService);
         }
 
