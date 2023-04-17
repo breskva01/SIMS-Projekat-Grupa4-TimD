@@ -20,7 +20,9 @@ namespace InitialProject.WPF.ViewModels
     public class SignInViewModel : ViewModelBase
     {
         private readonly UserService _userService;
-        
+        private readonly TourService _tourService;
+        private readonly TourReservationService _tourReservationService;
+
         public SecureString Password { get; set; }
         private string _username;
         public string Username
@@ -51,6 +53,8 @@ namespace InitialProject.WPF.ViewModels
         {
 
             _userService = new UserService();       
+            _tourService = new TourService();
+            _tourReservationService = new TourReservationService();
             SignInCommand = new SignInCommand(SignIn);
             _navigationStore = navigationStore;
         }
@@ -107,6 +111,12 @@ namespace InitialProject.WPF.ViewModels
         }
         private Guest2MenuViewModel CreateGuest2VM()
         {
+            /*
+            if (_tourReservationService.getActivePendingReservations(_user.Id).Count() > 0)
+            {
+
+            }
+            */
             return new Guest2MenuViewModel(_navigationStore, _user);
         }
         /*

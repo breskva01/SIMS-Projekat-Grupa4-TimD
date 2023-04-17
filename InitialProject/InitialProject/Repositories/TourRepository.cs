@@ -63,6 +63,12 @@ namespace InitialProject.Repositories
             _tourFileHandler.Save(_tours);
         }
 
+        public Tour GetById(int tourId)
+        {
+            _tours = _tourFileHandler.Load();
+            return _tours.Find(v => v.Id == tourId);
+        }
+
         public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int numberOfGuests)
         {
             _tours = _tourFileHandler.Load();
