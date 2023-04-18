@@ -14,18 +14,23 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" BorderThickness="2" BorderBrush="Black" CornerRadius="10" Padding="10">
-            <Grid>
-                <Rectangle Fill="LightGray" Width="500" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="Hey there," HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,140,0,0"/>
-                <TextBlock Text="Looks like the tour that you signed for has started:" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,162,0,0"/>
-                <TextBlock Text="Are you present?" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,209,0,0"/>
-                <TextBlock FontSize="16" Text="{Binding TourName}" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,183,0,0"/>
+        <Border Grid.Row="0" BorderThickness="2" BorderBrush="Black" CornerRadius="10" Padding="10" Margin="150,0,150,0">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Hey there," HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,30,0,0" FontSize="20"/>
+                <TextBlock Grid.Row="1" Text="Looks like the tour that you signed for has started:" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,30,0,0" FontSize="20" />
+                <TextBlock Grid.Row="3" Text="Are you present?" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="20" Margin="0,0,0,15"/>
+                <TextBlock Grid.Row="2" FontWeight="Bold" FontSize="40" Text="{Binding TourName}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,40,0,40"/>
             </Grid>
         </Border>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
-            <Button Command="{Binding YesCommand}" Content="Yes" Margin="10" Width="100"/>
-            <Button Command="{Binding NoCommand}" Content="No" Margin="10" Width="100"/>
+            <Button Command="{Binding YesCommand}" Content="Yes" Margin="10" Width="100" FontSize="20"/>
+            <Button Command="{Binding NoCommand}" Content="No" Margin="10" Width="100" FontSize="20"/>
         </StackPanel>
 
     </Grid>
