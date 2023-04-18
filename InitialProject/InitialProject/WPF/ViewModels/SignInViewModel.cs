@@ -14,13 +14,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace InitialProject.WPF.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
         private readonly UserService _userService;
-        
+        private readonly TourService _tourService;
+        private readonly TourReservationService _tourReservationService;
+
         public SecureString Password { get; set; }
         private string _username;
         public string Username
@@ -51,6 +54,8 @@ namespace InitialProject.WPF.ViewModels
         {
 
             _userService = new UserService();       
+            _tourService = new TourService();
+            _tourReservationService = new TourReservationService();
             SignInCommand = new SignInCommand(SignIn);
             _navigationStore = navigationStore;
         }
@@ -105,8 +110,12 @@ namespace InitialProject.WPF.ViewModels
         {
             return new AccommodationBrowserViewModel(_navigationStore, _user);
         }
-        private Guest2MenuViewModel CreateGuest2VM()
+        private ViewModelBase CreateGuest2VM()
         {
+            if (_tourReservationService.getActivePendingReservations(_user.Id).Any())
+            {
+                return new PresenceConfirmationViewModel(_navigationStore, _user);
+            }
             return new Guest2MenuViewModel(_navigationStore, _user);
         }
         /*

@@ -13,10 +13,15 @@ namespace InitialProject.Application.Services
     {
         private readonly List<IObserver> _observers;
         private readonly TourReservationRepository _repository;
+        private List<TourReservation> _reservations;
+        private readonly TourService _tourService;
+        
         public TourReservationService()
         {
             _observers = new List<IObserver>();
             _repository = new TourReservationRepository();
+            _reservations = new List<TourReservation>();
+            _tourService = new TourService();
         }
         public List<TourReservation> GetAll()
         {
@@ -35,6 +40,72 @@ namespace InitialProject.Application.Services
                 NumberOfGuests = numberOfGuests
             };
             return _repository.Save(reservation);
+        }
+        public TourReservation Update(TourReservation reservation)
+        {
+            return _repository.Update(reservation);
+        }
+
+        public List<TourReservation> getActivePresentReservations(int userId)
+        {
+            List<TourReservation> activePresentReservations = new();
+            _reservations = GetByUserId(userId);
+            //uzmi sve rezervacije koje odgovaraju korinikovom ID
+
+            _reservations = GetPresentReservations(_reservations);
+            //od tih rezervacija uzmi samo one koje imaju Pending status
+
+            foreach (TourReservation tr in _reservations)
+            {
+                if (IsActive(tr))
+                {
+                    activePresentReservations.Add(tr);
+                }
+            }
+            //od tih rezervacija uzmi one koje imaju aktivnu turu u sebi
+
+            return activePresentReservations;
+        }
+
+        public List<TourReservation> getActivePendingReservations(int userId)
+        {
+            List<TourReservation> activePendingReservations = new();
+            _reservations = GetByUserId(userId);
+            //uzmi sve rezervacije koje odgovaraju korinikovom ID
+
+            _reservations = GetPendingReservations(_reservations);
+            //od tih rezervacija uzmi samo one koje imaju Pending status
+
+            foreach(TourReservation tr in _reservations)
+            {
+                if (IsActive(tr))
+                {
+                    activePendingReservations.Add(tr);
+                }
+            }
+            //od tih rezervacija uzmi one koje imaju aktivnu turu u sebi
+
+            return activePendingReservations;
+        }
+
+        public bool IsActive(TourReservation reservation)
+        {
+            return _tourService.IsActive(reservation.TourId);
+        }
+
+        private List<TourReservation> GetPresentReservations(List<TourReservation> reservations)
+        {
+            return _repository.GetPresentReservations(reservations);
+        }
+
+        private List<TourReservation> GetPendingReservations(List<TourReservation> reservations)
+        {
+            return _repository.GetPendingReservations(reservations);
+        }
+
+        public List<TourReservation> GetByUserId(int userId)
+        {
+            return _repository.GetByUserId(userId);
         }
         public void Subscribe(IObserver observer)
         {

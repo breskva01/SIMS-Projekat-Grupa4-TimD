@@ -26,6 +26,11 @@ namespace InitialProject.Application.Services
         {
             _observers.Add(observer);
         }
+
+        public KeyPoint GetById(int id)
+        {
+            return _repository.GetById(id);
+        }
         /*
         public KeyPoint Update(KeyPoint keyPoint)
         {
