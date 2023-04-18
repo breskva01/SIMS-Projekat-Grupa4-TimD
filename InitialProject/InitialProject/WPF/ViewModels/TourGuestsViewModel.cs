@@ -16,6 +16,7 @@ namespace InitialProject.WPF.ViewModels
     {
         private TourReservationService _tourReservationService;
         private UserService _userService;
+        private TourService _tourService;
 
         private readonly ObservableCollection<TourReservation> _tourReservations;
         private readonly ObservableCollection<User> _users;
@@ -43,6 +44,7 @@ namespace InitialProject.WPF.ViewModels
                 if(res.GuestId == SelectedGuest.Id && res.TourId == _tour.Id)
                 {
                     _tour.NumberOfArrivedGeusts += res.NumberOfGuests;
+                    _tourService.Update(_tour);
                     res.Presence = Presence.Pending;
                     res.ArrivedAtKeyPoint = _tour.CurrentKeyPoint;
                     _tourReservationService.Update(res);
@@ -65,6 +67,7 @@ new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
             _user = user;
             _tourReservationService = new TourReservationService();
             _userService = new UserService();
+            _tourService = new TourService();
             _guests = new ObservableCollection<User>();
             _tour = tour;
 
@@ -75,7 +78,7 @@ new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
             {
                 foreach (User u in _users)
                 {
-                    if (res.GuestId == u.Id && !_guests.Contains(u) && res.Presence == Presence.Absent)
+                    if (res.GuestId == u.Id && !_guests.Contains(u) && res.Presence == Presence.Absent && res.TourId == tour.Id)
                     {
                         _guests.Add(u);
                     }

@@ -121,5 +121,64 @@ namespace InitialProject.Repositories
         {
             return tours.OrderBy(t => t.Language).ToList();
         }
+        public Tour GetMostVisited(String selectedYear)
+        {
+            List<Tour> tours = new List<Tour>();
+            Tour mostVisited = new Tour();
+
+            if (selectedYear == "All time")
+            {
+                tours = _tourFileHandler.Load();
+                mostVisited = tours[0];
+                foreach (Tour tour in tours)
+                {
+                    if (tour.NumberOfArrivedGeusts > mostVisited.NumberOfArrivedGeusts && tour.State == TourState.Finished)
+                    {
+                        mostVisited = tour;
+                    }
+                }
+                return mostVisited;
+            }
+            tours = GetToursByYear(selectedYear);
+            mostVisited = tours[0];
+            foreach (Tour tour in tours)
+            {
+                if (tour.NumberOfArrivedGeusts > mostVisited.NumberOfArrivedGeusts)
+                {
+                    mostVisited = tour;
+                }
+            }
+            return mostVisited;
+
+
+        }
+        public List<Tour> GetToursByYear(String year)
+        {
+            List<Tour> tours = new List<Tour>();
+            tours = _tourFileHandler.Load();
+            List<Tour> filtered = new List<Tour>();
+            foreach(Tour tour in tours)
+            {
+                if(tour.Start.Year.ToString() == year)
+                {
+                    filtered.Add(tour);
+                }
+            }
+            return filtered;
+
+        }
+        public List<string> GetAvailableYears()
+        {
+            List<string> years = new List<string>();
+            List<Tour> tours = _tourFileHandler.Load();
+            foreach(Tour tour in tours)
+            {
+                if(!years.Contains(tour.Start.Year.ToString()))
+                {
+                    years.Add(tour.Start.Year.ToString());
+                }
+            }
+            return years;
+        }
     }
 }

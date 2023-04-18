@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.TourStatsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding MostVisited}"  Grid.Row="0" Width="800" Margin="112,145,112,73" BorderBrush="Black" BorderThickness="2" d:ItemsSource="{d:SampleData ItemCount=1}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding PictureURL}" Width="150" Height="150"/>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"/>
+                            <TextBlock>
+                                <Run Text="{Binding Location.Country}" FontSize="20"/> -
+                                <Run Text="{Binding Location.City}" FontSize="20" />
+                            </TextBlock>
+                            <TextBlock>
+                                 <TextBlock FontSize="20">Tour Duration : </TextBlock> 
+                                <Run Text="{Binding Duration}" FontSize="20"/>
+                                 h
+                            </TextBlock>
+                            <TextBlock>
+                                <TextBlock FontSize="20">Language: </TextBlock>
+                                <Run Text="{Binding Language}" FontSize="20"/>
+                            </TextBlock>
+                            <TextBlock>
+                                 <TextBlock FontSize="20">Spaces filled : </TextBlock>
+                                <Run Text="{Binding CurrentNumberOfGuests}" FontSize="20"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ComboBox  ItemsSource="{Binding AvaiableYears}" SelectedItem="{Binding SelectedYear}"  Grid.Row="0" HorizontalAlignment="Center" Margin="0,46,0,0" VerticalAlignment="Top" Width="152" Height="41"/>
+        <DataGrid Grid.Row="1" Margin="100">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="City" Binding="{Binding Location.City}"/>
+                <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Language" Binding="{Binding Language}"/>
+                <DataGridTextColumn Header="Maximum guests" Binding="{Binding MaximumGuests}"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Start}"/>
+                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

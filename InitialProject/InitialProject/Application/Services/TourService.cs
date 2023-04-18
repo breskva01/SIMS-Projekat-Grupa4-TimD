@@ -91,5 +91,13 @@ namespace InitialProject.Application.Services
                 observer.Update();
             }
         }
+        public Tour GetMostVisited(String selectedYear)
+        {
+            return _repository.GetMostVisited(selectedYear);
+        }
+        public List<string> GetAvailableYears()
+        {
+            return _repository.GetAvailableYears();
+        }
     }
 }
