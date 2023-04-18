@@ -41,6 +41,53 @@ namespace InitialProject.Repositories
             return _tourReservations.Find(x => x.Id == id);
         }
 
+        public TourReservation Update(TourReservation reservation)
+        {
+            _tourReservations = _tourReservationFileHandler.Load();
+            TourReservation updated = _tourReservations.Find(t => t.Id == reservation.Id);
+            _tourReservations.Remove(updated);
+            _tourReservations.Add(reservation);
+            _tourReservationFileHandler.Save(_tourReservations);
+            return reservation;
+        }
+
+        public List<TourReservation> GetPresentReservations(List<TourReservation> reservations)
+        {
+            List<TourReservation> presentReservations = new List<TourReservation>();
+            foreach (TourReservation tr in reservations)
+            {
+                if (tr.Presence == Presence.Present)
+                    presentReservations.Add(tr);
+            }
+            return presentReservations;
+
+        }
+
+        public List<TourReservation> GetPendingReservations(List<TourReservation> reservations)
+        {
+            List<TourReservation> pendingReservations = new List<TourReservation>();
+            foreach (TourReservation tr in reservations)
+            {
+                if (tr.Presence == Presence.Pending)
+                    pendingReservations.Add(tr);
+            }
+            return pendingReservations;
+
+        }
+
+        public List<TourReservation> GetByUserId(int userId)
+        {
+            _tourReservations = _tourReservationFileHandler.Load();
+            List<TourReservation> reservations = new List<TourReservation>();
+            foreach(TourReservation tr in _tourReservations)
+            {
+                if(tr.GuestId == userId) 
+                    reservations.Add(tr);
+            }
+            return reservations;
+
+        }
+
         public TourReservation Save(TourReservation tourReservation)
         {
             _tours = _tourFileHandler.Load();

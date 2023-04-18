@@ -41,30 +41,71 @@ namespace InitialProject.Application.Services
             };
             return _repository.Save(reservation);
         }
+        public TourReservation Update(TourReservation reservation)
+        {
+            return _repository.Update(reservation);
+        }
+
+        public List<TourReservation> getActivePresentReservations(int userId)
+        {
+            List<TourReservation> activePresentReservations = new();
+            _reservations = GetByUserId(userId);
+            //uzmi sve rezervacije koje odgovaraju korinikovom ID
+
+            _reservations = GetPresentReservations(_reservations);
+            //od tih rezervacija uzmi samo one koje imaju Pending status
+
+            foreach (TourReservation tr in _reservations)
+            {
+                if (IsActive(tr))
+                {
+                    activePresentReservations.Add(tr);
+                }
+            }
+            //od tih rezervacija uzmi one koje imaju aktivnu turu u sebi
+
+            return activePresentReservations;
+        }
 
         public List<TourReservation> getActivePendingReservations(int userId)
         {
-            _reservations = _repository.GetAll();
+            List<TourReservation> activePendingReservations = new();
+            _reservations = GetByUserId(userId);
             //uzmi sve rezervacije koje odgovaraju korinikovom ID
 
+            _reservations = GetPendingReservations(_reservations);
             //od tih rezervacija uzmi samo one koje imaju Pending status
 
+            foreach(TourReservation tr in _reservations)
+            {
+                if (IsActive(tr))
+                {
+                    activePendingReservations.Add(tr);
+                }
+            }
             //od tih rezervacija uzmi one koje imaju aktivnu turu u sebi
-            //List<TourReservation> reservations = new();
-            //foreach(TourReservation reservation in _reservations)
-            //{
-            //    if(_tourService.GetById(reservation.TourId).State == TourState.Started)
-              //  {
-             //       if (reservation.Presence == Presence.Pending)
-                 //   {
-                 //       reservations.Add(reservation);
-                 //   }
-               // }
-            //}
-           // return reservations;
-           throw new NotImplementedException();
 
+            return activePendingReservations;
+        }
 
+        public bool IsActive(TourReservation reservation)
+        {
+            return _tourService.IsActive(reservation.TourId);
+        }
+
+        private List<TourReservation> GetPresentReservations(List<TourReservation> reservations)
+        {
+            return _repository.GetPresentReservations(reservations);
+        }
+
+        private List<TourReservation> GetPendingReservations(List<TourReservation> reservations)
+        {
+            return _repository.GetPendingReservations(reservations);
+        }
+
+        public List<TourReservation> GetByUserId(int userId)
+        {
+            return _repository.GetByUserId(userId);
         }
         public void Subscribe(IObserver observer)
         {

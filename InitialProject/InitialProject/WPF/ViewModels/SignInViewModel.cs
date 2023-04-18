@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -109,14 +110,12 @@ namespace InitialProject.WPF.ViewModels
         {
             return new AccommodationBrowserViewModel(_navigationStore, _user);
         }
-        private Guest2MenuViewModel CreateGuest2VM()
+        private ViewModelBase CreateGuest2VM()
         {
-            /*
-            if (_tourReservationService.getActivePendingReservations(_user.Id).Count() > 0)
+            if (_tourReservationService.getActivePendingReservations(_user.Id).Any())
             {
-
+                return new PresenceConfirmationViewModel(_navigationStore, _user);
             }
-            */
             return new Guest2MenuViewModel(_navigationStore, _user);
         }
         /*
