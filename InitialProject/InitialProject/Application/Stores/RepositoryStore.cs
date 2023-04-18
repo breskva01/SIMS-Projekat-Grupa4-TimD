@@ -15,7 +15,19 @@ namespace InitialProject.Application.Stores
         private static IAccommodationRepository _accommodationRepository;
         private static IAccommodationReservationRepository _accommodationReservationRepository;
         private static IAccommodationRatingRepository _accommodationRatingRepository;
+        private static IAccommodationReservationCancellationNotificationRepository _accommodationReservationCancellationNotificationRepository;
 
+        public static IAccommodationReservationCancellationNotificationRepository GetIAccommodationReservationCancellationNotificationRepository
+        {
+            get
+            {
+                if (_accommodationReservationCancellationNotificationRepository == null)
+                {
+                    _accommodationReservationCancellationNotificationRepository = new AccommodationReservationCancellationNotificationRepository();
+                }
+                return _accommodationReservationCancellationNotificationRepository;
+            }
+        }
         public static IUserRepository GetIUserRepository
         {
             get

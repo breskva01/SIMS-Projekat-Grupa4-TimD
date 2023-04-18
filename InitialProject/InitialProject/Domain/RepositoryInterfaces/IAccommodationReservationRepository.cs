@@ -11,6 +11,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
     {
         List<AccommodationReservation> GetAll();
         AccommodationReservation GetById(int reservationId);
+        List<AccommodationReservation> GetAllNewlyCancelled(int ownerId);
         List<AccommodationReservation> GetConfirmed(int guestId);
         List<AccommodationReservation> GetEgligibleForRating(int guestId);
         List<AccommodationReservation> GetExisting(int accommodationId);
