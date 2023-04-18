@@ -11,10 +11,23 @@ namespace InitialProject.Application.Stores
 {
     public class RepositoryStore
     {
-        private static UserRepository _userRepository;
-        private static AccommodationRepository _accommodationRepository;
-        private static AccommodationReservationRepository _accommodationReservationRepository;
+        private static IUserRepository _userRepository;
+        private static IAccommodationRepository _accommodationRepository;
+        private static IAccommodationReservationRepository _accommodationReservationRepository;
+        private static IAccommodationRatingRepository _accommodationRatingRepository;
+        private static IAccommodationReservationCancellationNotificationRepository _accommodationReservationCancellationNotificationRepository;
 
+        public static IAccommodationReservationCancellationNotificationRepository GetIAccommodationReservationCancellationNotificationRepository
+        {
+            get
+            {
+                if (_accommodationReservationCancellationNotificationRepository == null)
+                {
+                    _accommodationReservationCancellationNotificationRepository = new AccommodationReservationCancellationNotificationRepository();
+                }
+                return _accommodationReservationCancellationNotificationRepository;
+            }
+        }
         public static IUserRepository GetIUserRepository
         {
             get
@@ -48,6 +61,17 @@ namespace InitialProject.Application.Stores
                     _accommodationReservationRepository = new AccommodationReservationRepository();
                 }
                 return _accommodationReservationRepository;
+            }
+        }
+        public static IAccommodationRatingRepository GetIAccommodationRatingRepository
+        {
+            get
+            {
+                if (_accommodationRatingRepository == null)
+                {
+                    _accommodationRatingRepository = new AccommodationRatingRepository();
+                }
+                return _accommodationRatingRepository;
             }
         }
     }

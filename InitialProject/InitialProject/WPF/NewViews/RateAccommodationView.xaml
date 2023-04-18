@@ -22,27 +22,33 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Margin="10">
+        <StackPanel Orientation="Horizontal">
+            <Button Height="40" Margin="5" Padding="2"
+                    Command="{Binding ShowRatingsViewCommand}"
+                    Content="Neocenjeni smeštaji"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Margin="10">
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Lokacija:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding LocationRating}"/>
+                <Slider Value="{Binding Location}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Higijena:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding HygeneRating}"/>
+                <Slider Value="{Binding Hygiene}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Prijatnost:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding PleasantnessRating}"/>
+                <Slider Value="{Binding Pleasantness}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Korektnost:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding FairnessRating}"/>
+                <Slider Value="{Binding Fairness}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Lokacija:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding ParkingRating}"/>
+                <TextBlock Text="Dostupnost parkinga:" Width="150" VerticalAlignment="Center"/>
+                <Slider Value="{Binding Parking}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Dodatni komentar:" Width="150" VerticalAlignment="Top"/>
@@ -52,7 +58,14 @@
                          Padding="2"
                          Text="{Binding Comment}"/>
             </StackPanel>
+            <Button Grid.Row="2" Content="Dodaj slike" 
+                HorizontalAlignment="Left" Margin="10" 
+                Padding="10 5" Width="120"
+                Command="{Binding UploadImagesCommand}"/>
         </StackPanel>
-        <Button Grid.Row="1" Content="Oceni smeštaj" HorizontalAlignment="Left" Margin="10" Padding="10 5" Width="120" />
+        <Button Grid.Row="2" Content="Potvrdi ocenu" 
+                HorizontalAlignment="Left" Margin="10" 
+                Padding="10 5" Width="120"
+                Command="{Binding RateReservationCommand}"/>
     </Grid>
 </UserControl>
