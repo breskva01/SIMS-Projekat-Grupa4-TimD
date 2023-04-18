@@ -128,6 +128,10 @@ namespace InitialProject.Application.Services
         {
             _observers.Add(observer);
         }
+        public List<TourReservation> GetPresentByTourId(int id)
+        {
+            return _repository.GetPresentByTourId(id);
+        }
 
         public void Unsubscribe(IObserver observer)
         {

@@ -5,6 +5,7 @@ using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,15 +50,6 @@ namespace InitialProject.Repositories
             return _tourReservations.Find(x => x.Id == id);
         }
 
-        public TourReservation Update(TourReservation reservation)
-        {
-            _tourReservations = _tourReservationFileHandler.Load();
-            TourReservation updated = _tourReservations.Find(t => t.Id == reservation.Id);
-            _tourReservations.Remove(updated);
-            _tourReservations.Add(reservation);
-            _tourReservationFileHandler.Save(_tourReservations);
-            return reservation;
-        }
 
         public List<TourReservation> GetPresentReservations(List<TourReservation> reservations)
         {
@@ -151,6 +143,19 @@ namespace InitialProject.Repositories
                 return 1;
             }
             return _tourReservations.Max(r => r.Id) + 1;
+        }
+        public List<TourReservation> GetPresentByTourId(int id)
+        {
+            _tourReservations = _tourReservationFileHandler.Load();
+            List<TourReservation> filteredReservations = new List<TourReservation>(); 
+            foreach(TourReservation tourReservation in _tourReservations)
+            {
+                if(tourReservation.TourId == id && tourReservation.Presence == Presence.Present)
+                {
+                    filteredReservations.Add(tourReservation);  
+                }
+            }
+            return filteredReservations;
         }
     }
 }

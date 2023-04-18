@@ -83,7 +83,7 @@ namespace InitialProject.Domain.Models
             Description = values[3];
             Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[4]);
             MaximumGuests = Convert.ToInt32(values[5]);
-            Start = DateTime.ParseExact(values[6], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
+            Start = DateTime.Parse(values[6]);
             Duration = Convert.ToInt32(values[7]);
             PictureURL = values[8];
             CurrentNumberOfGuests = Convert.ToInt32(values[9]);

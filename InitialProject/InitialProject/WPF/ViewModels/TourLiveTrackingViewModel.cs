@@ -18,20 +18,25 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourLiveTrackingViewModel : ViewModelBase
     {
+        private readonly NavigationStore _navigationStore;
+        private User _user;
+
         public ObservableCollection<Location> Locations { get; set; }
-        private LocationService _locationService;
         public ObservableCollection<KeyPoint> KeyPoints { get; set; }
 
+        private List<TourReservation> tourReservations { get; set; }
+
+        private KeyPointService _keyPointService;
         private TourService _tourService;
+        private LocationService _locationService;
+        private TourReservationService _tourReservationService;
 
         private readonly ObservableCollection<KeyPointViewModel> _keyPointsFromSelectedTour;
         public IEnumerable<KeyPointViewModel> KeyPointsFromSelectedTour => _keyPointsFromSelectedTour;
         
         private Tour _tour;
-        private KeyPointService _keyPointService;
-
+       
         private int _numberOfKeyPointsFromSelectedTour;
-
 
         private KeyPointViewModel _selectedKeyPoint;
         public KeyPointViewModel SelectedKeyPoint
@@ -44,10 +49,6 @@ namespace InitialProject.WPF.ViewModels
 
             }
         }
-
-
-        private readonly NavigationStore _navigationStore;
-        private User _user;
 
         public ICommand KeyPointReachedCommand { get; set; }
         public ICommand StopTourCommand { get; set; }
@@ -65,7 +66,9 @@ namespace InitialProject.WPF.ViewModels
 
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
+            _tourReservationService = new TourReservationService();
 
+            tourReservations = new List<TourReservation>();
 
             _keyPointsFromSelectedTour = new ObservableCollection<KeyPointViewModel>();
 
@@ -133,6 +136,13 @@ namespace InitialProject.WPF.ViewModels
             if (++index== _keyPointsFromSelectedTour.Count())
             {
                 _tour.State = TourState.Finished;
+                tourReservations = _tourReservationService.GetPresentByTourId(_tour.Id);
+                foreach(TourReservation tourReservation in tourReservations)
+                {
+                    tourReservation.RatingId = 0;
+                    _tourReservationService.Update(tourReservation);
+                }
+                
                 _tourService.Update(_tour);
                 GuestAtTourNavigateCommand.Execute(null);
                 return;
