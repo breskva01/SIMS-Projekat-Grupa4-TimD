@@ -75,6 +75,19 @@ namespace InitialProject.Repositories
 
         }
 
+        public List<TourReservation> GetRateableReservations(List<TourReservation> reservations)
+        {
+            List<TourReservation> rateableReservations = new List<TourReservation>();
+            foreach (TourReservation tr in reservations)
+            {
+                if(tr.RatingId == 0)
+                {
+                    rateableReservations.Add(tr);
+                }
+            }
+            return rateableReservations;
+        }
+
         public List<TourReservation> GetByUserId(int userId)
         {
             _tourReservations = _tourReservationFileHandler.Load();

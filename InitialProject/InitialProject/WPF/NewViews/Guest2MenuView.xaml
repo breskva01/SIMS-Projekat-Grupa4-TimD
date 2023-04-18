@@ -21,6 +21,7 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command="{Binding TrackingCommand}" Content="Tour live tracking" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand" />
+            <Button Command="{Binding RatingCommand}" Content="Tour rating" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -31,6 +31,18 @@ namespace InitialProject.Application.Services
         {
             return _repository.Get(id);
         }
+
+        public List<TourReservation> GetUnrated(int userId) {
+            _reservations = GetByUserId(userId);
+            _reservations = GetRateableReservations(_reservations);
+            return _reservations;
+        }
+
+        public List<TourReservation> GetRateableReservations(List<TourReservation> reservations)
+        {
+           return _repository.GetRateableReservations(reservations);
+        }
+
         public TourReservation CreateReservation(int tourId, int guestId, int numberOfGuests)
         {
             TourReservation reservation = new()

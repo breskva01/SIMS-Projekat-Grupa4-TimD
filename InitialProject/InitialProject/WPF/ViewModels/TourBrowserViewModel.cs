@@ -195,7 +195,7 @@ namespace InitialProject.WPF.ViewModels
             FilterCommand = new ExecuteMethodCommand(ApplyFilter);
             ResetCommand = new ExecuteMethodCommand(ResetFilter);
             SortCommand = new ExecuteMethodCommand(ApplySort);
-            MakeReservationCommand = new MakeReservationCommand(ShowTourReservationView);
+            MakeReservationCommand = new TourClickCommand(ShowTourReservationView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
             
         }
