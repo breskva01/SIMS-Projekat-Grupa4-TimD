@@ -19,10 +19,11 @@ namespace InitialProject.Domain.Models
         public string PhoneNumber { get; set; }
         public List<GuestRating> Ratings { get; set; }
         public List<int> VouchersIds { get; set; }
+        public int Age { get; set; }
 
         public User() { }
 
-        public User(string username, string password, UserType userType, string firstName, string lastName, string email, string phoneNumber)
+        public User(string username, string password, UserType userType, string firstName, string lastName, string email, string phoneNumber, int age)
         {
             Username = username;
             Password = password;
@@ -33,6 +34,7 @@ namespace InitialProject.Domain.Models
             PhoneNumber = phoneNumber;
             Ratings = new List<GuestRating>();
             VouchersIds = new List<int>();
+            Age = age;
         }
 
         public string[] ToCSV()
@@ -43,7 +45,7 @@ namespace InitialProject.Domain.Models
                 voucherIds += vId.ToString() + ",";
             }
             string[] csvValues = { Id.ToString(), Username, Password, Type.ToString(), FirstName, LastName,
-                                   Email, PhoneNumber, voucherIds};
+                                   Email, PhoneNumber , Age.ToString(), voucherIds};
             return csvValues;
         }
 
@@ -58,7 +60,8 @@ namespace InitialProject.Domain.Models
             LastName = values[5];
             Email = values[6];
             PhoneNumber = values[7];
-            string vouchers = values[8];
+            Age = Convert.ToInt32(values[8]);
+            string vouchers = values[9];
             string[] splitVouchers = vouchers.Split(',');
             splitVouchers = splitVouchers.SkipLast(1).ToArray();
             VouchersIds = new List<int>();

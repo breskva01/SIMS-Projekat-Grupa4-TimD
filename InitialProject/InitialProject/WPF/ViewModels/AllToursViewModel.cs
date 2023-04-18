@@ -26,6 +26,8 @@ namespace InitialProject.WPF.ViewModels
 
         private LocationService _locationService;
         private TourService _tourService;
+        private TourReservationService _tourReservationService;
+        private VoucherService _voucherService; 
 
         public ICommand CancelTourCommand { get; set; }
 
@@ -43,16 +45,37 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
+        private List<User> _users;
+        private List<int> _guestIds;
+        private List<User> _guests;
+        private List<TourReservation> _tourReservations;
+        private UserService _userService;
+
+        public ICommand CreateVoucherNavigateCommand =>
+   new NavigateCommand(new NavigationService(_navigationStore, CreateVoucher()));
+
         public AllToursViewModel(NavigationStore navigationStore, User user)
         {
             _toursShow = new ObservableCollection<Tour>();
 
             _navigationStore = navigationStore;
             _user = user;
+
+            _voucherService = new VoucherService();
             _tourService = new TourService();
             _locationService = new LocationService();
+            _userService = new UserService();
+            _tourReservationService = new TourReservationService();
+
+            _guestIds = new List<int>();
+            _guests = new List<User>();
+
+            _tourReservations = new List<TourReservation>(_tourReservationService.GetAll());
             _tours = new ObservableCollection<Tour>(_tourService.GetAll());
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
+            _users = new List<User>(_userService.GetAll());
+
+
 
             foreach (Tour t in _tours)
             {
@@ -92,6 +115,37 @@ namespace InitialProject.WPF.ViewModels
                 if (SelectedTour.State == TourState.None)
                 {
                     SelectedTour.State = TourState.Canceled;
+
+                    foreach (TourReservation tourReservation in _tourReservations)
+                    {
+                        if (tourReservation.TourId == SelectedTour.Id)
+                        {
+                            _guestIds.Add(tourReservation.GuestId);
+                        }
+                    }
+
+                    foreach (int id in _guestIds)
+                    {
+                        foreach (User u in _users)
+                        {
+                            if (id == u.Id && !_guests.Contains(u))
+                            {
+                                _guests.Add(u);
+                            }
+
+                        }
+                    }
+
+                    CreateVoucherNavigateCommand.Execute(null);
+
+                    /*
+                    foreach (User guest in _guests)
+                    {
+                        guest.VouchersIds.Add();
+                    }
+                    */
+
+
                     _tourService.Update(SelectedTour);
 
                     _toursShow.Remove(SelectedTour);
@@ -101,5 +155,12 @@ namespace InitialProject.WPF.ViewModels
             MessageBox.Show("It's too late to cancel this tour.");
             return;
         }
+        
+        private VoucherCreationViewModel CreateVoucher()
+        {
+            return new VoucherCreationViewModel(_navigationStore, _user, _guests);
+
+        }
+        
     }
 }

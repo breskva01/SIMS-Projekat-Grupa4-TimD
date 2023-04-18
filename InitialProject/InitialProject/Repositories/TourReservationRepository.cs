@@ -5,6 +5,7 @@ using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,15 @@ namespace InitialProject.Repositories
         private readonly TourFileHandler _tourFileHandler;
         private readonly TourReservationFileHandler _tourReservationFileHandler;
         
-        
+        public TourReservation Update(TourReservation tourReservation)
+        {
+            _tourReservations = _tourReservationFileHandler.Load();
+            TourReservation updated = _tourReservations.Find(t => t.Id == tourReservation.Id);
+            _tourReservations.Remove(updated);
+            _tourReservations.Add(tourReservation);
+            _tourReservationFileHandler.Save(_tourReservations);
+            return tourReservation;
+        }
 
         public TourReservationRepository()
         {
@@ -41,15 +50,6 @@ namespace InitialProject.Repositories
             return _tourReservations.Find(x => x.Id == id);
         }
 
-        public TourReservation Update(TourReservation reservation)
-        {
-            _tourReservations = _tourReservationFileHandler.Load();
-            TourReservation updated = _tourReservations.Find(t => t.Id == reservation.Id);
-            _tourReservations.Remove(updated);
-            _tourReservations.Add(reservation);
-            _tourReservationFileHandler.Save(_tourReservations);
-            return reservation;
-        }
 
         public List<TourReservation> GetPresentReservations(List<TourReservation> reservations)
         {
@@ -156,6 +156,39 @@ namespace InitialProject.Repositories
                 return 1;
             }
             return _tourReservations.Max(r => r.Id) + 1;
+        }
+        public List<TourReservation> GetPresentByTourId(int id)
+        {
+            _tourReservations = _tourReservationFileHandler.Load();
+            List<TourReservation> filteredReservations = new List<TourReservation>(); 
+            foreach(TourReservation tourReservation in _tourReservations)
+            {
+                if(tourReservation.TourId == id && tourReservation.Presence == Presence.Present)
+                {
+                    filteredReservations.Add(tourReservation);  
+                }
+            }
+            return filteredReservations;
+        }
+        public string GetVoucherPercentage(int id)
+        {
+            int withVoucher = 0;
+            int reservationCount = 0;
+            _tourReservations = _tourReservationFileHandler.Load();
+
+            foreach (TourReservation tourReservation in _tourReservations)
+            {
+                if(tourReservation.TourId == id)
+                {
+                    reservationCount++;
+                    if (tourReservation.UsedVoucher == true)
+                    {
+                        withVoucher++;
+                    }
+                    
+                }
+            }
+            return Math.Round((double)withVoucher / reservationCount * 100, 2).ToString();
         }
     }
 }
