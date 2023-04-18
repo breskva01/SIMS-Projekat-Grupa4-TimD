@@ -48,7 +48,7 @@ namespace InitialProject.WPF.ViewModels
                     res.Presence = Presence.Pending;
                     res.ArrivedAtKeyPoint = _tour.CurrentKeyPoint;
                     _tourReservationService.Update(res);
-                    BackNavigateCommand.Execute(null);
+                    //BackNavigateCommand.Execute(null);
                 }
             }
         }

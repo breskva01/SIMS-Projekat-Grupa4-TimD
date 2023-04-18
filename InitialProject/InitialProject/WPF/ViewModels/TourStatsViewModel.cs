@@ -33,8 +33,44 @@ namespace InitialProject.WPF.ViewModels
             {
                 _selectedYear = value;
                 OnPropertyChanged(nameof(SelectedYear));
-                ComboBoxSelectionChanged();
+                YearsSelectionChanged();
 
+            }
+        }
+
+        private string _selectedTourName;
+        public string SelectedTourName
+        {
+            get { return _selectedTourName; }
+            set
+            {
+                _selectedTourName = value;
+                OnPropertyChanged(nameof(SelectedTourName));
+                NamesSelectionChanged();
+
+            }
+        }
+
+        private string _allGuests;
+        public string AllGuests
+        {
+            get { return _allGuests; }
+            set
+            {
+                _allGuests = value;
+                OnPropertyChanged(nameof(AllGuests));
+
+            }
+        }
+
+        private List<string> _tourNames;
+        public List<string> TourNames
+        {
+            get { return _tourNames; }
+            set
+            {
+                _tourNames = value;
+                OnPropertyChanged(nameof(TourNames));
             }
         }
 
@@ -49,10 +85,11 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        private void ComboBoxSelectionChanged()
+        private void YearsSelectionChanged()
         {
             _tours.Clear();
             tour = _tourService.GetMostVisited(SelectedYear);
+            /*
             foreach (Tour t in _tours)
             {
                 foreach (Location l in Locations)
@@ -61,11 +98,63 @@ namespace InitialProject.WPF.ViewModels
                         t.Location = l;
                 }
             }
+            */
+            foreach (Location l in Locations)
+            {
+                if (tour.LocationId == l.Id)
+                    tour.Location = l;
+            }
             _tours.Add(tour);
+        }
+        
+        private string _minorGuests;
+        public string MinorGuests
+        {
+            get { return _minorGuests; }
+            set
+            {
+                _minorGuests = value;
+                OnPropertyChanged(nameof(MinorGuests));
+
+            }
+        }
+
+        private string _middleAgeGuests;
+        public string MiddleAgeGuests
+        {
+            get { return _middleAgeGuests; }
+            set
+            {
+                _middleAgeGuests = value;
+                OnPropertyChanged(nameof(MiddleAgeGuests));
+
+            }
+        }
+        private string _olderGuests;
+        public string OlderGuests
+        {
+            get { return _olderGuests; }
+            set
+            {
+                _olderGuests = value;
+                OnPropertyChanged(nameof(OlderGuests));
+
+            }
         }
 
 
-    public TourStatsViewModel(NavigationStore navigationStore, User user)
+        private void NamesSelectionChanged()
+        {
+            Tour tour = new Tour();
+            tour = _tourService.GetByName(SelectedTourName);
+            AllGuests = tour.NumberOfArrivedGeusts.ToString();
+            MinorGuests = _tourService.GetNumberOfGuestBelow18(tour);
+            MiddleAgeGuests = _tourService.GetNumberOfMiddleAgeGuests(tour);
+            OlderGuests = _tourService.GetNumberOfOlderGuests(tour);
+        }
+
+
+        public TourStatsViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
             _user = user;
@@ -76,6 +165,11 @@ namespace InitialProject.WPF.ViewModels
 
             tour = new Tour();
             _avaiableYears = new List<string>();
+            _tourNames = new List<string>();
+
+            AllGuests = string.Empty;
+
+            _tourNames = _tourService.GetFinishedTourNames();
             _avaiableYears = _tourService.GetAvailableYears();
             _avaiableYears.Add("All time");
 

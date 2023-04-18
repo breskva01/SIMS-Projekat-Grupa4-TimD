@@ -3,6 +3,7 @@ using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace InitialProject.Repositories
     {
         private readonly TourFileHandler _tourFileHandler;
         private readonly LocationFileHandler _locationFileHandler;
+        private readonly UserFileHandler _userFileHandler;
+        private readonly TourReservationFileHandler _tourReservationFileHandler;
         private List<Tour> _tours;
         private List<Location> _locations;
 
@@ -19,6 +22,8 @@ namespace InitialProject.Repositories
         {
             _tourFileHandler = new TourFileHandler();
             _locationFileHandler = new LocationFileHandler();
+            _userFileHandler = new UserFileHandler();
+            _tourReservationFileHandler = new TourReservationFileHandler();
             _tours = _tourFileHandler.Load();
         }
 
@@ -179,6 +184,86 @@ namespace InitialProject.Repositories
                 }
             }
             return years;
+        }
+        public List<string> GetFinishedTourNames()
+        {
+            List<Tour> tours = _tourFileHandler.Load();
+            List<string> names = new List<string>();
+            foreach(Tour tour in tours)
+            {
+                if(tour.State == TourState.Finished)
+                {
+                    names.Add(tour.Name);
+                }
+            }
+            return names;
+        }
+        public Tour GetByName(String name)
+        {
+            List<Tour> tours = _tourFileHandler.Load();
+            foreach (Tour tour in tours)
+            {
+                if(tour.Name == name)
+                {
+                    return tour;
+                    break;
+                }
+            }
+            return null;
+        }
+        public string GetNumberOfGuestBelow18(Tour tour)
+        {
+            int number = 0;
+            List<User> guests = _userFileHandler.Load();
+            List<TourReservation> reservations = _tourReservationFileHandler.Load();
+
+            foreach (TourReservation tourReservation in reservations)
+            {
+                foreach( User guest in guests)
+                {
+                    if(tourReservation.GuestId == guest.Id && tourReservation.TourId == tour.Id && guest.Age < 18)
+                    {
+                        number += tourReservation.NumberOfGuests;
+                    }
+                }
+            }
+            return number.ToString();
+        }
+        public string GetNumberOfMiddleAgeGuests(Tour tour)
+        {
+            int number = 0;
+            List<User> guests = _userFileHandler.Load();
+            List<TourReservation> reservations = _tourReservationFileHandler.Load();
+
+            foreach (TourReservation tourReservation in reservations)
+            {
+                foreach (User guest in guests)
+                {
+                    if (tourReservation.GuestId == guest.Id && tourReservation.TourId == tour.Id && guest.Age >= 18 && guest.Age < 50)
+                    {
+                        number += tourReservation.NumberOfGuests;
+                    }
+                }
+            }
+            return number.ToString();
+        }
+        public string GetNumberOfOlderGuests(Tour tour)
+        {
+            int number = 0;
+            List<User> guests = _userFileHandler.Load();
+            List<TourReservation> reservations = _tourReservationFileHandler.Load();
+
+            foreach (TourReservation tourReservation in reservations)
+            {
+                foreach (User guest in guests)
+                {
+                    if (tourReservation.GuestId == guest.Id && tourReservation.TourId == tour.Id && guest.Age > 50)
+                    {
+                        number += tourReservation.NumberOfGuests;
+                    }
+                }
+            }
+            return number.ToString();
         }
     }
 }

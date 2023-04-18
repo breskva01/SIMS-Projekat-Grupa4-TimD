@@ -134,12 +134,22 @@ namespace InitialProject.WPF.ViewModels
         private AllToursViewModel CreateGuideVM()
         {
             return new AllToursViewModel(_navigationStore, _user);
-        }*/
+        }
+        
+        private ToursTodayViewModel CreateGuideVM()
+        {
+            return new ToursTodayViewModel(_navigationStore, _user);
+        }
+        */
         private TourStatsViewModel CreateGuideVM()
         {
             return new TourStatsViewModel(_navigationStore, _user);
         }
-
+        /*
+        private ToursTodayViewModel CreateGuideVM()
+        {
+            return new ToursTodayViewModel(_navigationStore, _user);
+        }*/
 
     }
 }
