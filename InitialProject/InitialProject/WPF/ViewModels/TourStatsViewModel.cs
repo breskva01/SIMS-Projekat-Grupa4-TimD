@@ -24,6 +24,8 @@ namespace InitialProject.WPF.ViewModels
         public IEnumerable<Tour> MostVisited => _tours;
 
         private TourService _tourService;
+        private TourReservationService _tourReservationService;
+
 
         private string _selectedYear;
         public string SelectedYear
@@ -89,16 +91,7 @@ namespace InitialProject.WPF.ViewModels
         {
             _tours.Clear();
             tour = _tourService.GetMostVisited(SelectedYear);
-            /*
-            foreach (Tour t in _tours)
-            {
-                foreach (Location l in Locations)
-                {
-                    if (t.LocationId == l.Id)
-                        t.Location = l;
-                }
-            }
-            */
+
             foreach (Location l in Locations)
             {
                 if (tour.LocationId == l.Id)
@@ -130,6 +123,30 @@ namespace InitialProject.WPF.ViewModels
 
             }
         }
+        private string _withVoucher;
+        public string WithVoucher
+        {
+            get { return _withVoucher; }
+            set
+            {
+                _withVoucher = value;
+                OnPropertyChanged(nameof(WithVoucher));
+
+            }
+        }
+
+        private string _withoutVoucher;
+        public string WithoutVoucher
+        {
+            get { return _withoutVoucher; }
+            set
+            {
+                _withoutVoucher = value;
+                OnPropertyChanged(nameof(WithoutVoucher));
+
+            }
+        }
+
         private string _olderGuests;
         public string OlderGuests
         {
@@ -151,6 +168,11 @@ namespace InitialProject.WPF.ViewModels
             MinorGuests = _tourService.GetNumberOfGuestBelow18(tour);
             MiddleAgeGuests = _tourService.GetNumberOfMiddleAgeGuests(tour);
             OlderGuests = _tourService.GetNumberOfOlderGuests(tour);
+            WithVoucher = _tourReservationService.GetVoucherPercentage(tour.Id);
+            WithoutVoucher = (100 - int.Parse(WithVoucher)).ToString();
+            WithVoucher += "%";
+            WithoutVoucher += "%";
+
         }
 
 
@@ -161,6 +183,7 @@ namespace InitialProject.WPF.ViewModels
             _tours = new ObservableCollection<Tour>();
 
             _tourService = new TourService();
+            _tourReservationService = new TourReservationService();
             _locationService = new LocationService();
 
             tour = new Tour();

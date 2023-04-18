@@ -157,5 +157,25 @@ namespace InitialProject.Repositories
             }
             return filteredReservations;
         }
+        public string GetVoucherPercentage(int id)
+        {
+            int withVoucher = 0;
+            int reservationCount = 0;
+            _tourReservations = _tourReservationFileHandler.Load();
+
+            foreach (TourReservation tourReservation in _tourReservations)
+            {
+                if(tourReservation.TourId == id)
+                {
+                    reservationCount++;
+                    if (tourReservation.UsedVoucher == true)
+                    {
+                        withVoucher++;
+                    }
+                    
+                }
+            }
+            return Math.Round((double)withVoucher / reservationCount * 100, 2).ToString();
+        }
     }
 }
