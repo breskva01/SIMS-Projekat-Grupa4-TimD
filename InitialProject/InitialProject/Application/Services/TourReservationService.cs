@@ -43,13 +43,14 @@ namespace InitialProject.Application.Services
            return _repository.GetRateableReservations(reservations);
         }
 
-        public TourReservation CreateReservation(int tourId, int guestId, int numberOfGuests)
+        public TourReservation CreateReservation(int tourId, int guestId, int numberOfGuests, bool usedVoucher)
         {
             TourReservation reservation = new()
             {
                 TourId = tourId,
                 GuestId = guestId,
-                NumberOfGuests = numberOfGuests
+                NumberOfGuests = numberOfGuests,
+                UsedVoucher = usedVoucher
             };
             return _repository.Save(reservation);
         }
