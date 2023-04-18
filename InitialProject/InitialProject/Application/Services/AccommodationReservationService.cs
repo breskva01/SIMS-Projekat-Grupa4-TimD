@@ -33,16 +33,22 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetById(reservationId);
         }
+        public List<AccommodationReservation> GetEgligibleForRating(int guestId)
+        {
+            return _repository.GetEgligibleForRating(guestId);
+        }
         public List<AccommodationReservation> GetConfirmed(int guestId)
         {
             return _repository.GetConfirmed(guestId);
         }
-        public bool Cancel(int reservationId)
+        public bool Cancel(int reservationId, int ownerId)
         {
             var reservation = _repository.GetById(reservationId);
             if (!reservation.CanBeCancelled())
                 return false;
             _repository.Cancel(reservationId);
+            RepositoryStore.GetIAccommodationReservationCancellationNotificationRepository.Save(
+                new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
             return true;
         }

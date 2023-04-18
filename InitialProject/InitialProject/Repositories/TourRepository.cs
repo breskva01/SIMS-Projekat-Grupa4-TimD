@@ -68,6 +68,11 @@ namespace InitialProject.Repositories
             _tourFileHandler.Save(_tours);
         }
 
+        public bool IsActive(int tourId)
+        {
+            return GetById(tourId).State == TourState.Started;
+        }
+
         public Tour GetById(int tourId)
         {
             _tours = _tourFileHandler.Load();

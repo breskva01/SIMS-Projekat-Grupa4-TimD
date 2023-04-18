@@ -23,6 +23,12 @@ namespace InitialProject.Repositories
         {
             return _fileHandler.Load();
         }
+
+        public KeyPoint GetById(int id)
+        {
+            _keyPoints = _fileHandler.Load();
+            return _keyPoints.Find(k => k.Id == id);
+        }
         /*
         public KeyPoint Update(KeyPoint keyPoint)
         {

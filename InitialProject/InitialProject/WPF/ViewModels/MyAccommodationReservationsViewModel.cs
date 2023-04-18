@@ -25,6 +25,8 @@ namespace InitialProject.WPF.ViewModels
         private readonly AccommodationReservationService _service;
         private readonly NavigationStore _navigationStore;
         public ICommand CancelReservationCommand { get; }
+        public ICommand MoveReservationCommand { get; }
+        public ICommand ShowAccommodationBrowserViewCommand { get; }
         public MyAccommodationReservationsViewModel(NavigationStore navigationStore, User loggedInUser)
         {
             _navigationStore = navigationStore;
@@ -34,13 +36,26 @@ namespace InitialProject.WPF.ViewModels
                                 (_service.GetConfirmed(_loggedInUser.Id));
             _service.Subscribe(this);
             CancelReservationCommand = new AccommodationReservationClickCommand(CancelReservation);
+            MoveReservationCommand = new AccommodationReservationClickCommand(MoveReservation);
+            ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
         }
         private void CancelReservation(AccommodationReservation reservation)
         {
-            if (_service.Cancel(reservation.Id))
-                MessageBox.Show("Rezervacija uspešno otkazana.");
-            else
-                MessageBox.Show("Rezervacija se ne može otkazati.");
+            MessageBoxResult result = MessageBox.Show
+                ("Da li ste sigurni da želite da otkažete rezervaciju?", "Potvrda otkazivanja",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                if (_service.Cancel(reservation.Id, reservation.Accommodation.OwnerId))
+                    MessageBox.Show("Rezervacija uspešno otkazana.");
+                else
+                    MessageBox.Show("Rezervacija se ne može otkazati.");
+            }
+        }
+
+        private void MoveReservation(AccommodationReservation reservation)
+        { 
+            MessageBox.Show("Kling!!.");
         }
         public void Update()
         {
@@ -49,6 +64,12 @@ namespace InitialProject.WPF.ViewModels
             Reservations.Clear();
             foreach (var r in reservations)
                 Reservations.Add(r);
+        }
+        private void ShowAccommodationBrowserView()
+        {
+            var viewModel = new AccommodationBrowserViewModel(_navigationStore, _loggedInUser);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigateCommand.Execute(null);
         }
     }
 }

@@ -26,12 +26,14 @@ namespace InitialProject.Domain.Models
         public int NumberOfGuests { get; set; }
         public Presence Presence { get; set; }
         public int ArrivedAtKeyPoint { get; set; }
+        public int RatingId { get; set; }
 
         public TourReservation() {
             Presence = Presence.Absent;
             ArrivedAtKeyPoint = 0;
+            RatingId = -1; //Guest wasn't present on the tour || Tour hasn't finnished
         }
-        public TourReservation(int id, int tourId, Tour tour, int guestId, User guest, int numberOfGuests, Presence presence, int arrivedAtKeyPoint)
+        public TourReservation(int id, int tourId, Tour tour, int guestId, User guest, int numberOfGuests, Presence presence, int arrivedAtKeyPoint, int ratingId)
         {
             Id = id;
             TourId = tourId;
@@ -41,6 +43,7 @@ namespace InitialProject.Domain.Models
             NumberOfGuests = numberOfGuests;
             Presence = presence;
             ArrivedAtKeyPoint = arrivedAtKeyPoint;
+            RatingId = ratingId;
         }
 
         public void FromCSV(string[] values)
@@ -51,6 +54,7 @@ namespace InitialProject.Domain.Models
             NumberOfGuests = Convert.ToInt32(values[3]);
             Presence = (Presence)Enum.Parse(typeof(Presence), values[4]);
             ArrivedAtKeyPoint = Convert.ToInt32(values[5]);
+            RatingId = Convert.ToInt32(values[6]);
 
         }
         
@@ -63,7 +67,8 @@ namespace InitialProject.Domain.Models
                 GuestId.ToString(),
                 NumberOfGuests.ToString(),
                 Presence.ToString(),
-                ArrivedAtKeyPoint.ToString()
+                ArrivedAtKeyPoint.ToString(),
+                RatingId.ToString()
             };
             return csvValues;
         }

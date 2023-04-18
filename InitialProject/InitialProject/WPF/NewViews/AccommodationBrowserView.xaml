@@ -59,7 +59,10 @@
             <Button Height="40" Margin="5 0" Padding="2"
                     Command="{Binding ShowMyReservationsViewCommand}"
                     Content="Moje rezervacije"/>
-            
+            <Button Height="40" Margin="5 0" Padding="2"
+                    Command="{Binding ShowRatingsViewCommand}"
+                    Content="Neocenjeni smeštaji"/>
+
         </StackPanel>
         <StackPanel Orientation="Vertical" DockPanel.Dock="Left" >
             <TextBlock Margin="10,30,10,15" HorizontalAlignment="Center"
@@ -84,12 +87,12 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <RepeatButton Interval="150" Delay="500" Content="-" Margin="10,3,5,10" Width="20" 
+                <RepeatButton Interval="100" Delay="500" Content="-" Margin="10,3,5,10" Width="20" 
                               Command="{Binding GuestNumberDecrementCommand}"
                               IsEnabled="{Binding CanDecrementGuestNumber}"/>
                 <TextBox x:Name="GuestNumberTextBox" Grid.Column="1" Padding="2" Margin="5,3,5,10"
                          HorizontalContentAlignment="Center" Text="{Binding Path=GuestNumber, UpdateSourceTrigger=PropertyChanged}"/>
-                <RepeatButton Interval="150" Delay="500" Grid.Column="2" Content="+" Margin="5,3,5,10" Width="20" 
+                <RepeatButton Interval="100" Delay="500" Grid.Column="2" Content="+" Margin="5,3,5,10" Width="20" 
                               Command="{Binding GuestNumberIncrementCommand}"/>
             </Grid>
             <TextBlock Margin="0,10,0,3" HorizontalAlignment="Center">Broj dana</TextBlock>
@@ -99,12 +102,12 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <RepeatButton Interval="150" Delay="500" Content="-" Margin="10,3,5,10" Width="20" 
+                <RepeatButton Interval="100" Delay="500" Content="-" Margin="10,3,5,10" Width="20" 
                               Command="{Binding NumberOfDaysDecrementCommand}"
                               IsEnabled="{Binding CanDecrementNumberOfDays}"/>
                 <TextBox Grid.Column="1" Padding="2" Margin="5,3,5,10" Name ="NumberOfDaysTextBox"
                          HorizontalContentAlignment="Center" Text="{Binding Path=NumberOfDays, UpdateSourceTrigger=PropertyChanged}"/>
-                <RepeatButton Interval="150" Delay="500" Grid.Column="2" Content="+" Margin="5,3,5,10" Width="20" 
+                <RepeatButton Interval="100" Delay="500" Grid.Column="2" Content="+" Margin="5,3,5,10" Width="20" 
                               Command="{Binding NumberOfDaysIncrementCommand}"/>
             </Grid>
             <StackPanel Orientation="Horizontal">

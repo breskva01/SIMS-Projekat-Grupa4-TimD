@@ -52,6 +52,11 @@ namespace InitialProject.Application.Services
             return _repository.Save(Tour);
         }
 
+        public bool IsActive(int tourId)
+        {
+            return _repository.IsActive(tourId);
+        }
+
         public Tour GetById(int tourId)
         {
             return _repository.GetById(tourId);
