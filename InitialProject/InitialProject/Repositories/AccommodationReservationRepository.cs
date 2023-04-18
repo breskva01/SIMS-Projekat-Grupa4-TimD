@@ -30,8 +30,9 @@ namespace InitialProject.Repositories
         public List<AccommodationReservation> GetConfirmed(int guestId)
         {
             _reservations = _fileHandler.Load();
-            return _reservations.FindAll(r => r.GuestId == guestId &&
+            var existingReservations = _reservations.FindAll(r => r.GuestId == guestId &&
                                          r.Status == AccommodationReservationStatus.Confirmed);
+            return existingReservations.OrderBy(r => r.CheckIn).ToList();
         }
         public List<AccommodationReservation> GetExisting(int accommodationId)
         {
@@ -64,6 +65,24 @@ namespace InitialProject.Repositories
             _reservations = _fileHandler.Load();
             return _reservations?.Max(r => r.Id) + 1 ?? 0;
             //return _reservations.Count == 0 ? 0 : _reservations.Max(r => r.Id) + 1;
+        }
+
+        public List<AccommodationReservation> GetEgligibleForRating(int guestId)
+        {
+            _reservations = _fileHandler.Load();
+            DateOnly fiveDaysAgo = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
+            var egligibleReservations = _reservations.FindAll(r => r.GuestId == guestId &&
+                                         r.Status == AccommodationReservationStatus.Finished &&
+                                         r.IsOwnerRated == false &&
+                                         r.CheckOut >= fiveDaysAgo);
+            return egligibleReservations.OrderBy(r => r.CheckIn).ToList();
+        }
+
+        public void MarkOwnerAsRated(int reservationId)
+        {
+            var reservation = GetById(reservationId);
+            reservation.IsOwnerRated = true;
+            _fileHandler.Save(_reservations);
         }
     }
 }

@@ -12,9 +12,11 @@ namespace InitialProject.Domain.RepositoryInterfaces
         List<AccommodationReservation> GetAll();
         AccommodationReservation GetById(int reservationId);
         List<AccommodationReservation> GetConfirmed(int guestId);
+        List<AccommodationReservation> GetEgligibleForRating(int guestId);
         List<AccommodationReservation> GetExisting(int accommodationId);
         List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate);
         void Cancel(int reservationId);
         void Save(AccommodationReservation reservation);
+        void MarkOwnerAsRated(int reservationId);
     }
 }
