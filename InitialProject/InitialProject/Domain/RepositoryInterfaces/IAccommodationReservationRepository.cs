@@ -12,6 +12,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         List<AccommodationReservation> GetAll();
         AccommodationReservation GetById(int reservationId);
         List<AccommodationReservation> GetConfirmed(int guestId);
+        List<AccommodationReservation> GetEgligibleForRating(int guestId);
         List<AccommodationReservation> GetExisting(int accommodationId);
         List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate);
         public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId);
@@ -19,5 +20,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public void updateRatingStatus(AccommodationReservation accommodationReservation);
         void Cancel(int reservationId);
         void Save(AccommodationReservation reservation);
+        void MarkOwnerAsRated(int reservationId);
     }
 }

@@ -51,6 +51,17 @@ namespace InitialProject.Application.Services
             Tour.KeyPointIds = kyIds;
             return _repository.Save(Tour);
         }
+
+        public bool IsActive(int tourId)
+        {
+            return _repository.IsActive(tourId);
+        }
+
+        public Tour GetById(int tourId)
+        {
+            return _repository.GetById(tourId);
+        }
+
         public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int NumberOfGuests)
         {
             return _repository.GetFiltered(country, city, duration, language, NumberOfGuests);

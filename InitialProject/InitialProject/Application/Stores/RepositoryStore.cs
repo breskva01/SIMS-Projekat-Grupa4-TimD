@@ -11,10 +11,10 @@ namespace InitialProject.Application.Stores
 {
     public class RepositoryStore
     {
-        private static UserRepository _userRepository;
-        private static AccommodationRepository _accommodationRepository;
-        private static AccommodationReservationRepository _accommodationReservationRepository;
-        private static GuestRatingRepository _guestRatingRepository;
+        private static IUserRepository _userRepository;
+        private static IAccommodationRepository _accommodationRepository;
+        private static IAccommodationReservationRepository _accommodationReservationRepository;
+        private static IAccommodationRatingRepository _accommodationRatingRepository;
 
         public static IUserRepository GetIUserRepository
         {
@@ -49,6 +49,17 @@ namespace InitialProject.Application.Stores
                     _accommodationReservationRepository = new AccommodationReservationRepository();
                 }
                 return _accommodationReservationRepository;
+            }
+        }
+        public static IAccommodationRatingRepository GetIAccommodationRatingRepository
+        {
+            get
+            {
+                if (_accommodationRatingRepository == null)
+                {
+                    _accommodationRatingRepository = new AccommodationRatingRepository();
+                }
+                return _accommodationRatingRepository;
             }
         }
         public static IGuestRatingRepository GetIGuestRatingRepository
