@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="TravelBuddy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="64" Foreground="#007ACC" FontFamily="Segoe UI"/>
@@ -22,6 +23,9 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command="{Binding TrackingCommand}" Content="Tour live tracking" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand" />
             <Button Command="{Binding RatingCommand}" Content="Tour rating" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
+            <Button Command="{Binding SignOutCommand}" Content="Sign out" Background="#FF632305" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand" />
         </StackPanel>
     </Grid>
 </UserControl>

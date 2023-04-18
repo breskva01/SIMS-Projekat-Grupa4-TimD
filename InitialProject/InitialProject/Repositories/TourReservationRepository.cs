@@ -75,6 +75,19 @@ namespace InitialProject.Repositories
 
         }
 
+        public List<TourReservation> GetDuplicateReservations(List<TourReservation> reservations, int tourId)
+        {
+            List<TourReservation> duplicateReservations = new List<TourReservation>();
+            foreach(TourReservation tr in reservations)
+            {
+                if(tr.TourId == tourId)
+                {
+                    duplicateReservations.Add(tr);
+                }
+            }
+            return duplicateReservations;
+        }
+
         public List<TourReservation> GetRateableReservations(List<TourReservation> reservations)
         {
             List<TourReservation> rateableReservations = new List<TourReservation>();

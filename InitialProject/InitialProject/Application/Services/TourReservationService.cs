@@ -101,6 +101,14 @@ namespace InitialProject.Application.Services
             return activePendingReservations;
         }
 
+        public List<TourReservation> getDuplicateReservations(int userId,int tourId)
+        {
+            _reservations = getActivePendingReservations(userId);
+            _reservations = _repository.GetDuplicateReservations(_reservations, tourId);
+            return _reservations;
+
+        }
+
         public bool IsActive(TourReservation reservation)
         {
             return _tourService.IsActive(reservation.TourId);

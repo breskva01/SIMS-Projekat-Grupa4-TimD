@@ -16,6 +16,7 @@ namespace InitialProject.WPF.ViewModels
     public class PresenceConfirmationViewModel : ViewModelBase
     {
         private User _user;
+        private Tour _tour;
         private readonly NavigationStore _navigationStore;
         private TourReservation pendingReservation;
         private readonly TourReservationService _tourReservationService;
@@ -33,7 +34,8 @@ namespace InitialProject.WPF.ViewModels
             _tourService = new TourService();
 
             pendingReservation = _tourReservationService.getActivePendingReservations(_user.Id).FirstOrDefault();
-            TourName = _tourService.GetById(pendingReservation.TourId).Name;
+            _tour = _tourService.GetById(pendingReservation.TourId);
+            TourName = _tour.Name;
 
             YesCommand = new ExecuteMethodCommand(ConfirmPresence);
             NoCommand = new ExecuteMethodCommand(DenyPresence);
@@ -61,8 +63,19 @@ namespace InitialProject.WPF.ViewModels
 
         private void ConfirmPresence()
         {
-            pendingReservation.Presence = Presence.Present;
-            _tourReservationService.Update(pendingReservation);
+            List<TourReservation> duplicateReservations = _tourReservationService.getDuplicateReservations(_user.Id, _tour.Id);
+            foreach(TourReservation tr in duplicateReservations)
+            {
+                tr.Presence = Presence.Present;
+                _tour.NumberOfArrivedGeusts += tr.NumberOfGuests;
+                _tourReservationService.Update(tr);
+            }
+            _tourService.Update(_tour);
+            //pendingReservation.Presence = Presence.Present;
+            //List<TourReservation> otherReservations = _tourReservationService.GetByUserAndTourId(_user.Id, _tour.Id);
+            
+            //_tourReservationService.Update(pendingReservation);
+
 
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, DefineNextView()));
             navigate.Execute(null);
