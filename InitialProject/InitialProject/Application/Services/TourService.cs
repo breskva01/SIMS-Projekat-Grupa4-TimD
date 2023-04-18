@@ -96,5 +96,35 @@ namespace InitialProject.Application.Services
                 observer.Update();
             }
         }
+        public Tour GetMostVisited(String selectedYear)
+        {
+            return _repository.GetMostVisited(selectedYear);
+        }
+        public List<string> GetAvailableYears()
+        {
+            return _repository.GetAvailableYears();
+        }
+        public List<string> GetFinishedTourNames()
+        {
+            return _repository.GetFinishedTourNames();
+        }
+        public Tour GetByName(String name)
+        {
+            return _repository.GetByName(name);
+        }
+        
+        public string GetNumberOfGuestBelow18(Tour tour)
+        {
+            return _repository.GetNumberOfGuestBelow18(tour);
+        }
+        public string GetNumberOfMiddleAgeGuests(Tour tour)
+        {
+            return _repository.GetNumberOfMiddleAgeGuests(tour);
+        }
+        public string GetNumberOfOlderGuests(Tour tour)
+        {
+            return _repository.GetNumberOfOlderGuests(tour);
+        }
+
     }
 }

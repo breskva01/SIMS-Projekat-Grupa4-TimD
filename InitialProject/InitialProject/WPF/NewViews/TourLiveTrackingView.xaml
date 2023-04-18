@@ -16,5 +16,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Command="{Binding KeyPointReachedCommand}" Content="Reached" HorizontalAlignment="Left" Margin="652,406,0,0" VerticalAlignment="Top" Height="30" Width="69"/>
+        <Button Command="{Binding StopTourCommand}"  Content="Stop Tour" HorizontalAlignment="Left" Margin="106,406,0,0" VerticalAlignment="Top" Height="30" Width="63"/>
     </Grid>
 </UserControl>

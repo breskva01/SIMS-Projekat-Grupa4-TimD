@@ -96,7 +96,7 @@ namespace InitialProject.WPF.ViewModels
                 return;
             }
 
-            TourReservation tourReservation = _tourReservationService.CreateReservation(SelectedTour.Id, _user.Id, numberOfGuests);
+            TourReservation tourReservation = _tourReservationService.CreateReservation(SelectedTour.Id, _user.Id, numberOfGuests, false);
 
             ShowTourBrowserView();
         }

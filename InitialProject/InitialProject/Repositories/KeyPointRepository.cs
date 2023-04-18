@@ -57,5 +57,6 @@ namespace InitialProject.Repositories
             return _keyPoints.Max(t => t.Id) + 1;
         }
         */
+        
     }
 }

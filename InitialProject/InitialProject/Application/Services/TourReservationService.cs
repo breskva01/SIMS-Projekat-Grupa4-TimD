@@ -31,13 +31,26 @@ namespace InitialProject.Application.Services
         {
             return _repository.Get(id);
         }
-        public TourReservation CreateReservation(int tourId, int guestId, int numberOfGuests)
+
+        public List<TourReservation> GetUnrated(int userId) {
+            _reservations = GetByUserId(userId);
+            _reservations = GetRateableReservations(_reservations);
+            return _reservations;
+        }
+
+        public List<TourReservation> GetRateableReservations(List<TourReservation> reservations)
+        {
+           return _repository.GetRateableReservations(reservations);
+        }
+
+        public TourReservation CreateReservation(int tourId, int guestId, int numberOfGuests, bool usedVoucher)
         {
             TourReservation reservation = new()
             {
                 TourId = tourId,
                 GuestId = guestId,
-                NumberOfGuests = numberOfGuests
+                NumberOfGuests = numberOfGuests,
+                UsedVoucher = usedVoucher
             };
             return _repository.Save(reservation);
         }
@@ -107,9 +120,22 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetByUserId(userId);
         }
+
+        public List<TourReservation> GetByUserAndTourId(int userId, int tourId)
+        {
+            return _repository.GetByUserAndTourId(userId, tourId);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);
+        }
+        public List<TourReservation> GetPresentByTourId(int id)
+        {
+            return _repository.GetPresentByTourId(id);
+        }
+        public string GetVoucherPercentage(int id)
+        {
+            return _repository.GetVoucherPercentage(id);
         }
 
         public void Unsubscribe(IObserver observer)

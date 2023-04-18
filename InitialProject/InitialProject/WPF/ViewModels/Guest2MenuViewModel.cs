@@ -20,6 +20,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand MyVouchersCommand { get; }
         public ICommand TourBrowserCommand { get; }
         public ICommand TrackingCommand { get; }
+        public ICommand RatingCommand { get; }
         public Guest2MenuViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
@@ -28,7 +29,16 @@ namespace InitialProject.WPF.ViewModels
             MyVouchersCommand = new ExecuteMethodCommand(ShowMyVouchersView);
             TourBrowserCommand = new ExecuteMethodCommand(ShowTourBrowserView);
             TrackingCommand = new TourTrackingCommand(ShowTourTrackingView, user);
+            RatingCommand = new TourRatingCommand(ShowTourRatingView, user);
 
+        }
+
+        private void ShowTourRatingView()
+        {
+            TourRatingViewModel tourRatingViewModel= new TourRatingViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourRatingViewModel));
+
+            navigate.Execute(null);
         }
 
         private void ShowTourTrackingView()

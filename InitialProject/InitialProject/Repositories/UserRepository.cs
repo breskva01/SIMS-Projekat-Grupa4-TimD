@@ -28,5 +28,14 @@ namespace InitialProject.Repository
         {
             return _fileHandler.Load();
         }
+        public User Update(User user)
+        {
+            _users = _fileHandler.Load();
+            User updated = _users.Find(t => t.Id == user.Id);
+            _users.Remove(updated);
+            _users.Add(user);
+            _fileHandler.Save(_users);
+            return user;
+        }
     }
 }

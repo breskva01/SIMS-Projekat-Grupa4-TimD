@@ -10,6 +10,12 @@
         Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:RateTourViewModel}">
+                <views:RateTourView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourRatingViewModel}">
+                <views:TourRatingView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:PresenceConfirmationViewModel}">
                 <views:PresenceConfirmationView />
             </DataTemplate>
@@ -60,6 +66,12 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:TourGuestsViewModel}">
                 <views:TourGuestsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:VoucherCreationViewModel}">
+                <views:VoucherCreationView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourStatsViewModel}">
+                <views:TourStatsView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:AccommodationRatingViewModel}">
                 <views:AccommodationRatingView />
