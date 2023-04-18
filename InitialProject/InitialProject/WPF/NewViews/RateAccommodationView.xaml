@@ -58,6 +58,10 @@
                          Padding="2"
                          Text="{Binding Comment}"/>
             </StackPanel>
+            <Button Grid.Row="2" Content="Dodaj slike" 
+                HorizontalAlignment="Left" Margin="10" 
+                Padding="10 5" Width="120"
+                Command="{Binding UploadImagesCommand}"/>
         </StackPanel>
         <Button Grid.Row="2" Content="Potvrdi ocenu" 
                 HorizontalAlignment="Left" Margin="10" 

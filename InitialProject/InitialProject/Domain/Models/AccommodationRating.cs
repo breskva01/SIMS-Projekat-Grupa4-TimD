@@ -17,11 +17,14 @@ namespace InitialProject.Domain.Models
         public int Fairness { get; set; }
         public int Parking { get; set; }
         public string Comment { get; set; }
+        public List<string> PictureURLs { get; set; }
         public AccommodationRating() 
         {
             Comment = "";
+            PictureURLs = new List<string>();
         }
-        public AccommodationRating(AccommodationReservation reservation, int location, int hygiene, int pleasantness, int fairness, int parking, string comment)
+        public AccommodationRating(AccommodationReservation reservation, int location, int hygiene, 
+            int pleasantness, int fairness, int parking, string comment, List<string> pictureURLs)
         {
             ReservationId = reservation.Id;
             Reservation = reservation;
@@ -31,6 +34,7 @@ namespace InitialProject.Domain.Models
             Fairness = fairness;
             Parking = parking;
             Comment = comment;
+            PictureURLs = pictureURLs;
         }
         public void FromCSV(string[] values)
         {
@@ -41,10 +45,12 @@ namespace InitialProject.Domain.Models
             Fairness = int.Parse(values[4]);
             Parking = int.Parse(values[5]);
             Comment = values[6];
+            PictureURLs = new List<string>(values[7].Split(','));
         }
 
         public string[] ToCSV()
         {
+            string pictureURLs = string.Join(",", PictureURLs);
             string[] csvValues =
             {
                 ReservationId.ToString(),
@@ -53,7 +59,8 @@ namespace InitialProject.Domain.Models
                 Pleasantness.ToString(),
                 Fairness.ToString(),
                 Parking.ToString(),
-                Comment
+                Comment,
+                pictureURLs
             };
             return csvValues;
         }

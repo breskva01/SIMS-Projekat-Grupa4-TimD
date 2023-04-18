@@ -32,10 +32,10 @@ namespace InitialProject.Application.Services
             return _repository.GetEgligibleForDisplay(ownerId);
         }
         public void Save(AccommodationReservation reservation, int location, int hygiene, int pleasantness,
-                         int fairness, int parking, string comment)
+                         int fairness, int parking, string comment, List<string> pictureURLs)
         {
             var rating = new AccommodationRating(reservation, location, hygiene, pleasantness, fairness,
-                                                 parking, comment);
+                                                 parking, comment, pictureURLs);
             _repository.Save(rating);
             RepositoryStore.GetIAccommodationReservationRepository.MarkOwnerAsRated(reservation.Id);
         }
