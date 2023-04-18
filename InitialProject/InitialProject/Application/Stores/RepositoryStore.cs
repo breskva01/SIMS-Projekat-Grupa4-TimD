@@ -15,6 +15,7 @@ namespace InitialProject.Application.Stores
         private static IAccommodationRepository _accommodationRepository;
         private static IAccommodationReservationRepository _accommodationReservationRepository;
         private static IAccommodationRatingRepository _accommodationRatingRepository;
+        private static IGuestRatingRepository _guestRatingRepository;
 
         public static IUserRepository GetIUserRepository
         {

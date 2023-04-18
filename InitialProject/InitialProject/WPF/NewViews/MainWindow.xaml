@@ -70,6 +70,9 @@
             <DataTemplate DataType="{x:Type vms:RateAccommodationViewModel}">
                 <views:RateAccommodationView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerRatingsViewModel}">
+                <views:OwnerRatingsView />
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="{Binding CurrentViewModel}" />

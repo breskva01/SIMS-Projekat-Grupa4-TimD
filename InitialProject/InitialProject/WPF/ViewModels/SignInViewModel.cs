@@ -52,7 +52,7 @@ namespace InitialProject.WPF.ViewModels
         //public ICommand Guest1NavigateCommand { get; }
 
         public ICommand OwnerNavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, GuestRatingVM()));
+            new NavigateCommand(new NavigationService(_navigationStore, OwnerRatingsVM()));
         private readonly NavigationStore _navigationStore;
         private User _user;
         public SignInViewModel(NavigationStore navigationStore)
@@ -164,6 +164,10 @@ namespace InitialProject.WPF.ViewModels
         private GuestRatingViewModel GuestRatingVM()
         {
             return new GuestRatingViewModel(_navigationStore, _user);
+        }
+        private OwnerRatingsViewModel OwnerRatingsVM()
+        {
+            return new OwnerRatingsViewModel(_navigationStore, _user);
         }
     }
 }
