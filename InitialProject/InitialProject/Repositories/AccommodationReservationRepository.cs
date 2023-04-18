@@ -77,5 +77,12 @@ namespace InitialProject.Repositories
                                          r.CheckOut >= fiveDaysAgo);
             return egligibleReservations.OrderBy(r => r.CheckIn).ToList();
         }
+
+        public void MarkOwnerAsRated(int reservationId)
+        {
+            var reservation = GetById(reservationId);
+            reservation.IsOwnerRated = true;
+            _fileHandler.Save(_reservations);
+        }
     }
 }

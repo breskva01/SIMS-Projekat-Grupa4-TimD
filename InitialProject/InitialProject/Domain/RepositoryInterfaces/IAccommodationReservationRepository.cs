@@ -17,5 +17,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate);
         void Cancel(int reservationId);
         void Save(AccommodationReservation reservation);
+        void MarkOwnerAsRated(int reservationId);
     }
 }
