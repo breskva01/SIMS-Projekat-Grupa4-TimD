@@ -33,15 +33,17 @@ namespace InitialProject.WPF.ViewModels
             _tourService = new TourService();
             _locationService = new LocationService();
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
-            UnratedTours = new ObservableCollection<Tour>();
+            List<Tour> Tours = new List<Tour>();
 
             List<TourReservation> unratedReservations = _tourReservationService.GetUnrated(user.Id);
             foreach(TourReservation tr in unratedReservations)
             {
                 Tour tour = _tourService.GetById(tr.TourId);
                 tour.Location = Locations.FirstOrDefault(l => l.Id == tour.LocationId);
-                UnratedTours.Add(tour);
+                Tours.Add(tour);
             }
+            UnratedTours = new ObservableCollection<Tour>(Tours.DistinctBy(t => t.Id));
+
 
 
             RateTourCommand = new TourClickCommand(ShowRateTourView);
