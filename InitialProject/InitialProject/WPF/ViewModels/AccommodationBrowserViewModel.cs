@@ -97,6 +97,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand ResetFiltersCommand { get; }
         public ICommand ShowReservationViewCommand { get; }
         public ICommand ShowMyReservationsViewCommand { get; }
+        public ICommand ShowRatingsViewCommand { get; }
         public ICommand SortByNameCommand { get; }
         public ICommand SortByLocationCommand { get; }
         public ICommand SortByMaxGuestNumberCommand { get; }
@@ -126,6 +127,7 @@ namespace InitialProject.WPF.ViewModels
             NumberOfDaysDecrementCommand = new ExecuteMethodCommand(DecrementNumberOfDays);
             ShowReservationViewCommand = new AccommodationClickCommand(ShowAccommodationReservationView);
             ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
+            ShowRatingsViewCommand = new ExecuteMethodCommand(ShowRatingsView);
         }
         private void ApplyFilters()
         {
@@ -213,6 +215,12 @@ namespace InitialProject.WPF.ViewModels
         private void ShowMyReservationsView()
         {
             var viewModel = new MyAccommodationReservationsViewModel(_navigationStore, _loggedInUser);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigateCommand.Execute(null);
+        }
+        private void ShowRatingsView()
+        {
+            var viewModel = new AccommodationRatingViewModel(_navigationStore, _loggedInUser);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
         }

@@ -33,6 +33,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetById(reservationId);
         }
+        public List<AccommodationReservation> GetEgligibleForRating(int guestId)
+        {
+            return _repository.GetEgligibleForRating(guestId);
+        }
         public List<AccommodationReservation> GetConfirmed(int guestId)
         {
             return _repository.GetConfirmed(guestId);

@@ -24,6 +24,7 @@ namespace InitialProject.Domain.Models
         public DateOnly CheckOut { get; set; }
         public DateOnly LastNotification { get; set; }
         public bool IsGuestRated { get; set; }
+        public bool IsOwnerRated { get; set; }
         public AccommodationReservationStatus Status { get; set; }
         public AccommodationReservation() { }
         public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkIn,
@@ -37,6 +38,7 @@ namespace InitialProject.Domain.Models
             CheckIn = checkIn;
             CheckOut = checkOut;
             IsGuestRated = false;
+            IsOwnerRated = false;
             Status = status;
         }
         public bool Overlaps(DateOnly checkIn, DateOnly checkOut)
@@ -63,14 +65,19 @@ namespace InitialProject.Domain.Models
             CheckOut = DateOnly.ParseExact(values[6], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             LastNotification = DateOnly.ParseExact(values[7], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             IsGuestRated = bool.Parse(values[8]);
-            Status = (AccommodationReservationStatus)Enum.Parse(typeof(AccommodationReservationStatus), values[9]);
+            IsOwnerRated = bool.Parse(values[9]);
+            Status = (AccommodationReservationStatus)Enum.Parse(typeof(AccommodationReservationStatus), values[10]);
+            if (CheckOut <= DateOnly.FromDateTime(DateTime.Now) && Status == AccommodationReservationStatus.Confirmed)
+            {
+                Status = AccommodationReservationStatus.Finished;
+            }
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), AccommodationId.ToString(), GuestId.ToString(),
                                     NumberOfDays.ToString(), GuestNumber.ToString(), CheckIn.ToString("dd/MM/yyyy"), CheckOut.ToString("dd/MM/yyyy"),
-                                    LastNotification.ToString("dd/MM/yyyy"), IsGuestRated.ToString(), Status.ToString()};
+                                    LastNotification.ToString("dd/MM/yyyy"), IsGuestRated.ToString(), IsOwnerRated.ToString(), Status.ToString()};
             return csvValues;
         }
     }

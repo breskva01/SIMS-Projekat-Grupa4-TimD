@@ -59,7 +59,10 @@
             <Button Height="40" Margin="5 0" Padding="2"
                     Command="{Binding ShowMyReservationsViewCommand}"
                     Content="Moje rezervacije"/>
-            
+            <Button Height="40" Margin="5 0" Padding="2"
+                    Command="{Binding ShowRatingsViewCommand}"
+                    Content="Neocenjeni smeštaji"/>
+
         </StackPanel>
         <StackPanel Orientation="Vertical" DockPanel.Dock="Left" >
             <TextBlock Margin="10,30,10,15" HorizontalAlignment="Center"
