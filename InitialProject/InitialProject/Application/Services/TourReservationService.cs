@@ -119,6 +119,11 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetByUserId(userId);
         }
+
+        public List<TourReservation> GetByUserAndTourId(int userId, int tourId)
+        {
+            return _repository.GetByUserAndTourId(userId, tourId);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

@@ -1,5 +1,4 @@
-﻿using InitialProject.Domain;
-using InitialProject.Domain.Models;
+﻿using InitialProject.Domain.Models;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;

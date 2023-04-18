@@ -101,6 +101,19 @@ namespace InitialProject.Repositories
 
         }
 
+        public List<TourReservation> GetByUserAndTourId(int userId, int tourId)
+        {
+            _tourReservations = GetByUserId(userId);
+            List<TourReservation> reservations = new List<TourReservation>();
+            foreach (TourReservation tr in _tourReservations)
+            {
+                if (tr.TourId == tourId)
+                    reservations.Add(tr);
+            }
+            return reservations;
+
+        }
+
         public TourReservation Save(TourReservation tourReservation)
         {
             _tours = _tourFileHandler.Load();

@@ -1,12 +1,11 @@
 ﻿using InitialProject.Application.Serializer;
-using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InitialProject.Domain  
+namespace InitialProject.Domain.Models
 {
     public class TourRating : ISerializable
     {
@@ -18,7 +17,8 @@ namespace InitialProject.Domain
         public int TourContent { get; set; }
         public string Comment { get; set; }
         public List<string> PictureURLs { get; set; }
-        public TourRating() { 
+        public TourRating()
+        {
             Comment = string.Empty;
             PictureURLs = new List<string>();
         }
