@@ -134,7 +134,7 @@ namespace InitialProject.WPF.ViewModels
         }
         private TourGuestsViewModel ShowTourGuests()
         {
-            return new TourGuestsViewModel(_navigationStore, _user);
+            return new TourGuestsViewModel(_navigationStore, _user, _tour);
 
         }
 
