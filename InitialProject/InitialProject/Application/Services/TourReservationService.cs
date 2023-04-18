@@ -63,8 +63,10 @@ namespace InitialProject.Application.Services
             //}
            // return reservations;
            throw new NotImplementedException();
-
-
+        }
+        public TourReservation Update(TourReservation tourReservation)
+        {
+            return _repository.Update(tourReservation);
         }
         public void Subscribe(IObserver observer)
         {

@@ -22,7 +22,15 @@ namespace InitialProject.Repositories
         private readonly TourFileHandler _tourFileHandler;
         private readonly TourReservationFileHandler _tourReservationFileHandler;
         
-        
+        public TourReservation Update(TourReservation tourReservation)
+        {
+            _tourReservations = _tourReservationFileHandler.Load();
+            TourReservation updated = _tourReservations.Find(t => t.Id == tourReservation.Id);
+            _tourReservations.Remove(updated);
+            _tourReservations.Add(tourReservation);
+            _tourReservationFileHandler.Save(_tourReservations);
+            return tourReservation;
+        }
 
         public TourReservationRepository()
         {
