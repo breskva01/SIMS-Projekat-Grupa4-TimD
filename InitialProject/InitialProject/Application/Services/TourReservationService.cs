@@ -141,6 +141,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetPresentByTourId(id);
         }
+        public List<TourReservation> GetRatedByTourId(int id)
+        {
+            return _repository.GetRatedByTourId(id);
+        }
         public string GetVoucherPercentage(int id)
         {
             return _repository.GetVoucherPercentage(id);

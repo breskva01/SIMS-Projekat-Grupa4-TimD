@@ -30,5 +30,9 @@ namespace InitialProject.Application.Services
         {
             return _repository.Update(user);
         }
+        public User GetById(int id)
+        {
+            return _repository.GetById(id);
+        }
     }
 }
