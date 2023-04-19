@@ -86,6 +86,9 @@
                     Command="{Binding NewNotificationsCommand}"
                     Content="Nova obaveštenja"
                     IsEnabled="{Binding AnyNotifications}"/>
+            <Button Height="40" Margin="5 0" Padding="2"
+                    Command="{Binding SignOutCommand}"
+                    Content="Odjavi se"/>
 
         </StackPanel>
         <StackPanel Orientation="Vertical" DockPanel.Dock="Left" >

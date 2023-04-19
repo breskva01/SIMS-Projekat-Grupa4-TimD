@@ -119,6 +119,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand GuestNumberDecrementCommand { get; }
         public ICommand NumberOfDaysDecrementCommand { get; }
         public ICommand NewNotificationsCommand { get; }
+        public ICommand SignOutCommand { get; }
         private string _lastSortingCriterium;
         public AccommodationBrowserViewModel(NavigationStore navigationStore ,User user)
         {
@@ -143,6 +144,7 @@ namespace InitialProject.WPF.ViewModels
             ShowRatingsViewCommand = new ExecuteMethodCommand(ShowRatingsView);
             ShowRequestsViewCommand = new ExecuteMethodCommand(ShowRequestsView);
             NewNotificationsCommand = new ExecuteMethodCommand(NotificationsPrompt);
+            SignOutCommand = new ExecuteMethodCommand(ShowSignInView);
 
             CheckForNotifications();
         }
@@ -266,6 +268,12 @@ namespace InitialProject.WPF.ViewModels
         private void ShowRequestsView()
         {
             var viewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _loggedInUser);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigateCommand.Execute(null);
+        }
+        private void ShowSignInView()
+        {
+            var viewModel = new SignInViewModel(_navigationStore);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
         }
