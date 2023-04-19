@@ -54,7 +54,7 @@ namespace InitialProject.Repositories
         }
         public void Cancel(int reservationId)
         {
-            var reservation = GetById(reservationId);         
+            var reservation = GetById(reservationId);
             reservation.Status = AccommodationReservationStatus.Cancelled;
             _fileHandler.Save(_reservations);
         }
@@ -139,6 +139,38 @@ namespace InitialProject.Repositories
                 )
             );
             return cancelledReservatons;
+        }
+        public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly NewCheckOut)
+        {
+            _reservations = _fileHandler.Load();
+            AccommodationReservation reservation = new AccommodationReservation();
+            AccommodationReservation newReservation = new AccommodationReservation();
+            reservation = _reservations.Find(r => r.Id == reservationId);
+            newReservation = reservation;
+            newReservation.CheckIn = newCheckIn;
+            newReservation.CheckOut = NewCheckOut;
+            _reservations.Remove(reservation);
+            _reservations.Add(newReservation);
+            _fileHandler.Save(_reservations);
+        }
+
+        public string CheckAvailability(int accomodationId, DateOnly checkIn, DateOnly checkOut)
+        {
+            _reservations = _fileHandler.Load();
+            foreach (AccommodationReservation res in _reservations)
+            {
+                var AccommodationIsUnavailable = (checkIn > res.CheckIn 
+                    || checkIn < res.CheckOut 
+                    || checkOut > res.CheckIn 
+                    || checkOut < res.CheckOut) 
+                    && accomodationId == res.AccommodationId;
+
+                if (AccommodationIsUnavailable)
+                {
+                    return "Unavailable";
+                }
+            }
+            return "Available";
         }
 
         public void Subscribe(IObserver observer)

@@ -18,6 +18,7 @@ namespace InitialProject.WPF.ViewModels
     public class GuestRatingViewModel: ViewModelBase
     {
         private readonly AccommodationReservationService _accommodationReservationService;
+        private readonly NavigationStore _navigationStore;
         private readonly AccommodationService _accommodationService;
         private readonly UserService _userService;
         private readonly GuestRatingService _guestRatingService;
@@ -125,6 +126,7 @@ namespace InitialProject.WPF.ViewModels
             _accommodationReservationService = new AccommodationReservationService();
             _accommodationService = new AccommodationService();
             _guestRatingService = new GuestRatingService();
+            _navigationStore = navigationStore;
             _accommodations = _accommodationService.GetAll();
             _owner = user;
             AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_owner.Id));
@@ -132,10 +134,13 @@ namespace InitialProject.WPF.ViewModels
         }
         
         public ICommand RateGuestCommand { get; set; }
-
+        public ICommand BackCommand { get; set; }
+        public ICommand BackNavigateCommand =>
+new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
         private void InitializeCommands()
         {
             RateGuestCommand = new ExecuteMethodCommand(RateGuest);
+            BackCommand = new ExecuteMethodCommand(Back);
         }
 
         private void RateGuest()
@@ -146,7 +151,14 @@ namespace InitialProject.WPF.ViewModels
             _accommodationReservationService.updateRatingStatus(SelectedReservation);
             AccommodationReservations.Remove(SelectedReservation);
         }
-
+        private void Back()
+        {
+            BackNavigateCommand.Execute(null);
+        }
+        private OwnerViewModel GoBack()
+        {
+            return new OwnerViewModel(_navigationStore, _owner);
+        }
 
 
     }

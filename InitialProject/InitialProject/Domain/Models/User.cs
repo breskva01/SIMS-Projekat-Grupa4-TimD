@@ -24,7 +24,7 @@ namespace InitialProject.Domain.Models
 
         public User() { }
 
-        public User(string username, string password, UserType userType, string firstName, string lastName, string email, string phoneNumber, int age)
+        public User(string username, string password, UserType userType, string firstName, string lastName, string email, string phoneNumber, int age, bool superOwner)
         {
             Username = username;
             Password = password;

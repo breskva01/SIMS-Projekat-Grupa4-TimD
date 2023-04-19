@@ -127,6 +127,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.FindCompletedAndUnrated(ownerId);
         }
+        public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly newCheckout)
+        {
+            _repository.MoveReservation(reservationId, newCheckIn, newCheckout);
+        }
         public void updateLastNotification(AccommodationReservation accommodationReservation)
         {
             _repository.updateLastNotification(accommodationReservation);
@@ -134,6 +138,10 @@ namespace InitialProject.Application.Services
         public void updateRatingStatus(AccommodationReservation accommodationReservation)
         {
             _repository.updateRatingStatus(accommodationReservation);
+        }
+        public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut)
+        {
+            return _repository.CheckAvailability(accommodationId ,checkIn, checkOut);
         }
         public void Subscribe(IObserver observer)
         {

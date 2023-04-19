@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Metrics;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
@@ -177,7 +179,10 @@ namespace InitialProject.WPF.ViewModels
             Cities = Locations.Where(l => l.Country == SelectedCountry).Select(l => l.City).ToList();
         }
 
+        public ICommand BackCommand { get; set; }
         public ICommand RegisterAccommodationCommand { get; set; }
+        public ICommand BackNavigateCommand =>
+new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
 
         public AccommodationRegistrationViewModel(NavigationStore navigationStore ,User user) 
         {
@@ -193,6 +198,7 @@ namespace InitialProject.WPF.ViewModels
         private void InitializeCommands() 
         {
             RegisterAccommodationCommand = new ExecuteMethodCommand(RegisterAccommodation);
+            BackCommand = new ExecuteMethodCommand(Back);
         }
         private void RegisterAccommodation() 
         {
@@ -209,6 +215,14 @@ namespace InitialProject.WPF.ViewModels
             MinimumDays = "1";
             MinimumCancellationNotice = "1";
             PictureURL = null;
+        }
+        private void Back()
+        {
+            BackNavigateCommand.Execute(null);
+        }
+        private OwnerViewModel GoBack()
+        {
+            return new OwnerViewModel(_navigationStore, _loggedInUser);
         }
     }
 }

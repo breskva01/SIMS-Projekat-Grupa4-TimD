@@ -4,6 +4,7 @@ using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,18 @@ namespace InitialProject.Application.Services
         public List<AccommodationReservationMoveRequest> GetByGuestId(int guestId)
         {
             return _repository.GetByGuestId(guestId);
+        }
+        public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId)
+        {
+            return _repository.GetPendingRequestsByOwnerId(ownerId);
+        }
+        public void ApproveRequest(int reservationId)
+        {
+            _repository.ApproveRequest(reservationId);
+        }
+        public void DenyRequest(int reservationId, string comment)
+        {
+            _repository.DenyRequest(reservationId, comment);
         }
         public void Save(AccommodationReservation reservation, DateOnly requestedCheckIn, DateOnly requestedCheckOut)
         {

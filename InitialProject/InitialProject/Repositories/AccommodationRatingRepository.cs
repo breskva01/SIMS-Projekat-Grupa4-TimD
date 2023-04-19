@@ -51,34 +51,35 @@ namespace InitialProject.Repositories
             _ratings = _fileHandler.Load();
             _ratings.Add(rating);
             _fileHandler.Save(_ratings);
-            double averageRating = CalculateAverageOwnerRating(rating);
-            UpdateSuperOwnerStatus(rating.Reservation.Accommodation.OwnerId, averageRating);
+            double[] totalAverageRating = CalculateTotalAverageOwnerRating(rating);
+            UpdateSuperOwnerStatus(rating.Reservation.Accommodation.OwnerId, totalAverageRating);
         }
-        public double CalculateAverageOwnerRating(AccommodationRating rating)
+        private double[] CalculateTotalAverageOwnerRating(AccommodationRating rating)
         {
             int[] ratings = { rating.Location, rating.Hygiene, rating.Pleasantness, rating.Fairness, rating.Parking };
             double averageRating = ratings.Average();
-            return averageRating;
+            int OwnerRatingsCount = 1;
+            double[] totalAverageRating = new double[2];
+
+            foreach (AccommodationRating ar in _ratings)
+            {
+                double[] previousAverageRatings = { ar.Location, ar.Hygiene, ar.Pleasantness, ar.Fairness, ar.Parking };
+                averageRating += previousAverageRatings.Average();
+                OwnerRatingsCount++;
+            }
+
+            totalAverageRating[0] = averageRating / OwnerRatingsCount;
+            totalAverageRating[1] = OwnerRatingsCount;
+            return totalAverageRating;
         }
-        public void UpdateSuperOwnerStatus(int ownerId, double averageRating)
+        public void UpdateSuperOwnerStatus(int ownerId, double[] totalAverageRating)
         {
             User newOwner = new User();
             _users = _userFileHandler.Load();
             _ratings = GetByOwnerId(ownerId);
             User owner = _users.Find(o => o.Id == ownerId);
-            int OwnerRatingsCount = 1;
-            double totalAverageRating;
-            AccommodationReservation accommodationReservation = new AccommodationReservation();
-
-            foreach (AccommodationRating ar in _ratings)
-            {
-                double[] rating = { ar.Location, ar.Hygiene, ar.Pleasantness, ar.Fairness, ar.Parking };
-                averageRating += rating.Average();
-                OwnerRatingsCount++;
-            }
-
-            totalAverageRating = averageRating / OwnerRatingsCount;
-            owner.SuperOwner = (totalAverageRating >= 4.5 && OwnerRatingsCount >= 2) ? true : false;  
+            double OwnerRatingsCount = totalAverageRating[1];
+            owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 2) ? true : false;  
 
             newOwner = owner;
             _users.Remove(owner);

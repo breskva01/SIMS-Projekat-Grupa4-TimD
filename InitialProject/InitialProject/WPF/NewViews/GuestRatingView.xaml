@@ -32,7 +32,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Height="40" Width="95" Grid.Column="1" Content="Back" FontSize="18" Margin="0,62,0,-62"/>
+                <Button Height="40" Width="95" Grid.Column="1" Content="Back" Command="{Binding BackCommand}" FontSize="18" Margin="0,62,0,-62"/>
             </Grid>
         </Grid>
         <Grid Width="530" Grid.Column="1" >

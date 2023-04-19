@@ -22,5 +22,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         void Cancel(int reservationId);
         void Save(AccommodationReservation reservation);
         void MarkOwnerAsRated(int reservationId);
+        public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly newCheckout);
+        public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut);
     }
 }

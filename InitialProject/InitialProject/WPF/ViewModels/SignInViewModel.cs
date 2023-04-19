@@ -52,7 +52,7 @@ namespace InitialProject.WPF.ViewModels
         //public ICommand Guest1NavigateCommand { get; }
 
         public ICommand OwnerNavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, OwnerRatingsVM()));
+            new NavigateCommand(new NavigationService(_navigationStore, OwnerVM()));
         private readonly NavigationStore _navigationStore;
         private User _user;
         public SignInViewModel(NavigationStore navigationStore)
@@ -140,40 +140,38 @@ namespace InitialProject.WPF.ViewModels
             }
             return new Guest2MenuViewModel(_navigationStore, _user);
         }
+
+        /* private TourCreationViewModel CreateGuideVM()
+         {
+             return new TourCreationViewModel(_navigationStore, _user);
+         }
+
+
+         private ToursTodayViewModel CreateGuideVM()
+         {
+             return new ToursTodayViewModel(_navigationStore, _user);
+         }
+
+         private AllToursViewModel CreateGuideVM()
+         {
+             return new AllToursViewModel(_navigationStore, _user);
+         }
+
+         private ToursTodayViewModel CreateGuideVM()
+         {
+             return new ToursTodayViewModel(_navigationStore, _user);
+         }
+
+         private TourStatsViewModel CreateGuideVM()
+         {
+             return new TourStatsViewModel(_navigationStore, _user);
+         }
+         */
+        private TourStatsViewModel CreateGuideVM()
+        {
+            return new TourStatsViewModel(_navigationStore, _user);
+        }
         /*
-        private TourCreationViewModel CreateGuideVM()
-        {
-            return new TourCreationViewModel(_navigationStore, _user);
-        }
-        
-        
-        private ToursTodayViewModel CreateGuideVM()
-        {
-            return new ToursTodayViewModel(_navigationStore, _user);
-        }
-        
-        private AllToursViewModel CreateGuideVM()
-        {
-            return new AllToursViewModel(_navigationStore, _user);
-        }
-        
-        private ToursTodayViewModel CreateGuideVM()
-        {
-            return new ToursTodayViewModel(_navigationStore, _user);
-        }
-        
-        private TourStatsViewModel CreateGuideVM()
-        {
-            return new TourStatsViewModel(_navigationStore, _user);
-        }
-        */
-        private TourStatsViewModel CreateGuideVM()
-        {
-            return new TourStatsViewModel(_navigationStore, _user);
-        }
-        }*/
-
-
         private AccommodationRegistrationViewModel CreateOwnerVM()
         {
             return new AccommodationRegistrationViewModel(_navigationStore, _user);
@@ -185,6 +183,14 @@ namespace InitialProject.WPF.ViewModels
         private OwnerRatingsViewModel OwnerRatingsVM()
         {
             return new OwnerRatingsViewModel(_navigationStore, _user);
+        }
+        private ReservationMoveRequestsViewModel ReservationMoveRequestsVM()
+        {
+            return new ReservationMoveRequestsViewModel(_navigationStore, _user);
+        }*/
+        private OwnerViewModel OwnerVM()
+        {
+            return new OwnerViewModel(_navigationStore, _user);
         }
     }
 }

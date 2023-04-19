@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignWidth="800" Height="708">
     <Grid RenderTransformOrigin="0.492,0.511">
         <Grid.RowDefinitions>
             <RowDefinition Height="580"></RowDefinition>
@@ -72,10 +71,11 @@
             </TextBox>
         </Grid>
         <WrapPanel Grid.Row="1" Grid.Column="0" FlowDirection="RightToLeft">
-            <Button Content="Odustani" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
-                 FontSize="18"/>
-            <Button Content="Potvrdi" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
-                Command="{Binding RegisterAccommodationCommand}" FontSize="18"/>
+            <Button Content="Confirm" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                 Command="{Binding RegisterAccommodationCommand}" FontSize="18"/>
+            <Button Content="Cancel" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                Command="{Binding BackCommand}" FontSize="18"/>
+            
         </WrapPanel>
     </Grid>
 </UserControl>
