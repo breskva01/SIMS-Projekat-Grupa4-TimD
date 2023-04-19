@@ -36,7 +36,6 @@ namespace InitialProject.WPF.ViewModels
             Vouchers = new ObservableCollection<Voucher>(_voucherService.FilterUnexpired(vouchers));
 
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
-
         }
 
         private void ShowGuest2MenuView()
