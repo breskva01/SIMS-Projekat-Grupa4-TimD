@@ -14,27 +14,44 @@
             <StackPanel Margin="7" Orientation="Horizontal" >
                 <Image Source="{Binding PictureURL}" Width="180" Height="180" />
                 <StackPanel VerticalAlignment="Top" Margin="30" Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0 0 0 5">
-                        <TextBlock.InputBindings>
-                            <MouseBinding MouseAction="LeftClick"
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0 0 0 5">
+                            <TextBlock.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
                                           Command="{Binding DataContext.ShowReservationViewCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
                                           CommandParameter="{Binding}"/>
-                        </TextBlock.InputBindings>
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="TextDecorations" Value="None"/>
-                                <Setter Property="Foreground" Value="#3283a8" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="TextDecorations" Value="Underline" />
-                                        <Setter Property="Foreground" Value="#deb93e" />
-                                        <Setter Property="Cursor" Value="Hand" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                            </TextBlock.InputBindings>
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextDecorations" Value="None"/>
+                                    <Setter Property="Foreground" Value="#3283a8" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="TextDecorations" Value="Underline" />
+                                            <Setter Property="Foreground" Value="#deb93e" />
+                                            <Setter Property="Cursor" Value="Hand" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text=" " FontSize="20" />
+                        <TextBlock FontSize="20">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Owner.SuperOwner}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="ToolTip" Value="Super vlasnik"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                            *
+                        </TextBlock>
+                    </StackPanel>
                     <TextBlock FontWeight="Light">
                         <Run Text="{Binding Country}"/> -
                         <Run Text="{Binding City}" />

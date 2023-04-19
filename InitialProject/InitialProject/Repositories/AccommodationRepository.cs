@@ -27,6 +27,7 @@ namespace InitialProject.Repository
             _accommodations = _fileHandler.Load();
             var users = RepositoryStore.GetIUserRepository.GetAll();
             _accommodations.ForEach(a => a.Owner = users.Find(u => u.Id == a.OwnerId));
+            _accommodations.OrderByDescending(a => a.Owner.SuperOwner);
             return _accommodations;
         }
 
