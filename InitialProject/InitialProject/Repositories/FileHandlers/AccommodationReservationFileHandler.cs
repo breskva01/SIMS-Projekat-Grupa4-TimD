@@ -22,18 +22,8 @@ namespace InitialProject.Repositories.FileHandlers
         public List<AccommodationReservation> Load()
         {
             var reservations = _serializer.FromCSV(_reservationsFilePath);
-            FillInAccommodations(reservations);
             FillInGuests(reservations);
             return reservations;
-        }
-        private void FillInAccommodations(List<AccommodationReservation> reservations)
-        {
-            var fileHandler = new AccommodationFileHandler();
-            List<Accommodation> accommodations = fileHandler.Load();
-            foreach (var reservation in reservations)
-            {
-                reservation.Accommodation = accommodations.FirstOrDefault(a => a.Id == reservation.AccommodationId);
-            }
         }
         private void FillInGuests(List<AccommodationReservation> reservations)
         {

@@ -98,6 +98,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand ShowReservationViewCommand { get; }
         public ICommand ShowMyReservationsViewCommand { get; }
         public ICommand ShowRatingsViewCommand { get; }
+        public ICommand ShowRequestsViewCommand { get; }
         public ICommand SortByNameCommand { get; }
         public ICommand SortByLocationCommand { get; }
         public ICommand SortByMaxGuestNumberCommand { get; }
@@ -128,6 +129,7 @@ namespace InitialProject.WPF.ViewModels
             ShowReservationViewCommand = new AccommodationClickCommand(ShowAccommodationReservationView);
             ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
             ShowRatingsViewCommand = new ExecuteMethodCommand(ShowRatingsView);
+            ShowRequestsViewCommand = new ExecuteMethodCommand(ShowRequestsView);
         }
         private void ApplyFilters()
         {
@@ -221,6 +223,12 @@ namespace InitialProject.WPF.ViewModels
         private void ShowRatingsView()
         {
             var viewModel = new AccommodationRatingViewModel(_navigationStore, _loggedInUser);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigateCommand.Execute(null);
+        }
+        private void ShowRequestsView()
+        {
+            var viewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _loggedInUser);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
         }
