@@ -34,7 +34,6 @@ namespace InitialProject.Repositories.FileHandlers
                 reservation.Guest = guests.FirstOrDefault(g => g.Id == reservation.GuestId);
             }
         }
-
         public void Save(List<AccommodationReservation> reservations)
         {
             _serializer.ToCSV(_reservationsFilePath, reservations);

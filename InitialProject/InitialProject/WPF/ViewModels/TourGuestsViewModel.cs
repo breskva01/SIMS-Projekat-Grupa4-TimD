@@ -82,10 +82,8 @@ new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
                     {
                         _guests.Add(u);
                     }
-
                 }
             }
-
             BackCommand = new ExecuteMethodCommand(Back);
 
         }

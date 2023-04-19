@@ -1,4 +1,5 @@
 ﻿using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Repositories
 {
-    class TourRepository
+    public class TourRepository : ITourRepository
     {
         private readonly TourFileHandler _tourFileHandler;
         private readonly LocationFileHandler _locationFileHandler;
@@ -31,7 +32,24 @@ namespace InitialProject.Repositories
         {
             return _tourFileHandler.Load();
         }
-
+        public Tour GetById(int tourId)
+        {
+            _tours = _tourFileHandler.Load();
+            return _tours.Find(v => v.Id == tourId);
+        }
+        public Tour GetByName(String name)
+        {
+            List<Tour> tours = _tourFileHandler.Load();
+            foreach (Tour tour in tours)
+            {
+                if (tour.Name == name)
+                {
+                    return tour;
+                    break;
+                }
+            }
+            return null;
+        }
         public Tour Update(Tour tour)
         {
             _tours = _tourFileHandler.Load();
@@ -41,6 +59,13 @@ namespace InitialProject.Repositories
             _tourFileHandler.Save(_tours);
             return tour;
         }
+        public void Delete(Tour tour)
+        {
+            _tours = _tourFileHandler.Load();
+            Tour founded = _tours.Find(a => a.Id == tour.Id);
+            _tours.Remove(founded);
+            _tourFileHandler.Save(_tours);
+        }
         public Tour Save(Tour tour)
         {
             tour.Id = NextId();
@@ -49,7 +74,6 @@ namespace InitialProject.Repositories
             _tourFileHandler.Save(_tours);
             return tour;
         }
-
         public int NextId()
         {
             _tours = _tourFileHandler.Load();
@@ -59,26 +83,10 @@ namespace InitialProject.Repositories
             }
             return _tours.Max(t => t.Id) + 1;
         }
-
-        public void Delete(Tour tour)
-        {
-            _tours = _tourFileHandler.Load();
-            Tour founded = _tours.Find(a => a.Id == tour.Id);
-            _tours.Remove(founded);
-            _tourFileHandler.Save(_tours);
-        }
-
         public bool IsActive(int tourId)
         {
             return GetById(tourId).State == TourState.Started;
         }
-
-        public Tour GetById(int tourId)
-        {
-            _tours = _tourFileHandler.Load();
-            return _tours.Find(v => v.Id == tourId);
-        }
-
         public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int numberOfGuests)
         {
             _tours = _tourFileHandler.Load();
@@ -99,8 +107,7 @@ namespace InitialProject.Repositories
             }
             return filteredTours;
         }
-
-        bool MatchesFilters(Tour tour, string country, string city, int duration, GuideLanguage language, int numberOfGuests)
+        public bool MatchesFilters(Tour tour, string country, string city, int duration, GuideLanguage language, int numberOfGuests)
         {
             bool countryMatch = tour.Location.Country == country || country == "";
             bool cityMatch = tour.Location.City == city || city == "";
@@ -110,23 +117,19 @@ namespace InitialProject.Repositories
 
             return countryMatch && cityMatch && durationMatch && languageMatch && numberOfGuestsMatch;
         }
-
         public List<Tour> SortByName(List<Tour> tours)
         {
             return tours.OrderBy(t => t.Name).ToList();
         }
-
         public List<Tour> SortByLocation(List<Tour> tours)
         {
             return tours.OrderBy(t => t.Location.Country).ThenBy(t => t.Location.City).ToList();
 
         }
-
         public List<Tour> SortByDuration(List<Tour> tours)
         {
             return tours.OrderBy(t => t.Duration).ToList();
         }
-
         public List<Tour> SortByLanguage(List<Tour> tours)
         {
             return tours.OrderBy(t => t.Language).ToList();
@@ -159,8 +162,6 @@ namespace InitialProject.Repositories
                 }
             }
             return mostVisited;
-
-
         }
         public List<Tour> GetToursByYear(String year)
         {
@@ -175,7 +176,6 @@ namespace InitialProject.Repositories
                 }
             }
             return filtered;
-
         }
         public List<string> GetAvailableYears()
         {
@@ -202,19 +202,6 @@ namespace InitialProject.Repositories
                 }
             }
             return names;
-        }
-        public Tour GetByName(String name)
-        {
-            List<Tour> tours = _tourFileHandler.Load();
-            foreach (Tour tour in tours)
-            {
-                if(tour.Name == name)
-                {
-                    return tour;
-                    break;
-                }
-            }
-            return null;
         }
         public string GetNumberOfGuestBelow18(Tour tour)
         {
@@ -269,6 +256,19 @@ namespace InitialProject.Repositories
                 }
             }
             return number.ToString();
+        }
+        public List<Tour> GetFinishedTours()
+        {
+            _tours = _tourFileHandler.Load();
+            List<Tour> filterdTours = new List<Tour>();
+            foreach(Tour tour in _tours)
+            {
+                if(tour.State == TourState.Finished)
+                {
+                    filterdTours.Add(tour);
+                }
+            }
+            return filterdTours;
         }
     }
 }

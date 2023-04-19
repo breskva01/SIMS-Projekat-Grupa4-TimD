@@ -17,13 +17,17 @@ namespace InitialProject.Domain.Models
         public int TourContent { get; set; }
         public string Comment { get; set; }
         public List<string> PictureURLs { get; set; }
+        public bool IsValid { get; set; }
+
         public TourRating()
         {
             Comment = string.Empty;
             PictureURLs = new List<string>();
+            IsValid = true;
         }
 
-        public TourRating(int guideKnowledge, int guideLanguage, int tourInteresting, int tourInformative, int tourContent, string comment, List<string> pictureURLs)
+        public TourRating(int guideKnowledge, int guideLanguage, int tourInteresting, int tourInformative,
+            int tourContent, string comment, List<string> pictureURLs)
         {
             GuideKnowledge = guideKnowledge;
             GuideLanguage = guideLanguage;
@@ -43,7 +47,8 @@ namespace InitialProject.Domain.Models
             TourInformative = int.Parse(values[4]);
             TourContent = int.Parse(values[5]);
             Comment = values[6];
-            PictureURLs = new List<string>(values[7].Split(','));
+            IsValid = Convert.ToBoolean(values[7]);
+            PictureURLs = new List<string>(values[8].Split(','));
         }
 
         public string[] ToCSV()
@@ -58,6 +63,7 @@ namespace InitialProject.Domain.Models
                 TourInformative.ToString(),
                 TourContent.ToString(),
                 Comment,
+                IsValid.ToString(),
                 pictureURLs
             };
             return csvValues;

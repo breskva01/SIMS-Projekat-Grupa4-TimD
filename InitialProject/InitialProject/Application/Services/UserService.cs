@@ -13,7 +13,8 @@ namespace InitialProject.Application.Services
 {
     public class UserService
     {
-       private readonly IUserRepository _repository;
+        private readonly IUserRepository _repository;
+
         public UserService()
         {
             _repository = RepositoryStore.GetIUserRepository;
@@ -29,6 +30,10 @@ namespace InitialProject.Application.Services
         public User Update(User user)
         {
             return _repository.Update(user);
+        }
+        public User GetById(int id)
+        {
+            return _repository.GetById(id);
         }
     }
 }

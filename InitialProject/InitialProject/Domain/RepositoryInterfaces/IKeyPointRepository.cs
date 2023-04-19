@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IUserRepository
+    public interface IKeyPointRepository
     {
-        User GetByUsername(string username);
-        List<User> GetAll();
-        User Update(User user);
-        User GetById(int id);
+        public List<KeyPoint> GetAll();
+        public KeyPoint GetById(int id);
     }
 }

@@ -64,6 +64,7 @@
                     Margin="20, 5, 20, 5" Content="Cancel" Command="{Binding CancelCommand}"></Button>
             <Button IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Margin="20, 5, 20, 5" Content="Confirm" Command="{Binding ConfirmCommand}" ></Button>
+            <Button Content="Back" Height="20" Width="39"  Command="{Binding BackCommand}"/>
         </WrapPanel>
     </Grid>
 </UserControl>
