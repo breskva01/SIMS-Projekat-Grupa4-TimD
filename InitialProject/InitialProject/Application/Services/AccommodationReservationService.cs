@@ -41,12 +41,14 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetConfirmed(guestId);
         }
-        public bool Cancel(int reservationId)
+        public bool Cancel(int reservationId, int ownerId)
         {
             var reservation = _repository.GetById(reservationId);
             if (!reservation.CanBeCancelled())
                 return false;
             _repository.Cancel(reservationId);
+            RepositoryStore.GetIAccommodationReservationCancellationNotificationRepository.Save(
+                new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
             return true;
         }

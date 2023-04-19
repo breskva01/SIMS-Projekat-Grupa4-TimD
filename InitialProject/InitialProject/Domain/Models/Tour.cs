@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,7 +83,7 @@ namespace InitialProject.Domain.Models
             Description = values[3];
             Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[4]);
             MaximumGuests = Convert.ToInt32(values[5]);
-            Start = DateTime.Parse(values[6]);
+            Start = DateTime.ParseExact(values[6], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             Duration = Convert.ToInt32(values[7]);
             PictureURL = values[8];
             CurrentNumberOfGuests = Convert.ToInt32(values[9]);
@@ -113,7 +114,7 @@ namespace InitialProject.Domain.Models
                 Description,
                 Language.ToString(),
                 MaximumGuests.ToString(),
-                Start.ToString(),
+                Start.ToString("dd.MM.yyyy. HH:mm:ss"),
                 Duration.ToString(),
                 PictureURL.ToString(),
                 CurrentNumberOfGuests.ToString(),

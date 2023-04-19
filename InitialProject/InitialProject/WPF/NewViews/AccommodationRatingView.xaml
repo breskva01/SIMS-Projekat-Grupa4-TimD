@@ -41,7 +41,7 @@
 
             <Button Height="40" Margin="5 0" Padding="4 2"
                     Command="{Binding ShowAccommodationBrowserViewCommand}"
-                    Content="Pretraga rezervacija"/>
+                    Content="Pretraga smeštaja"/>
 
         </StackPanel>
         <ListBox ItemTemplate="{StaticResource ReservationsTemplate}"

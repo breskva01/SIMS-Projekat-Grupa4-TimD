@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Stores;
+using InitialProject.Application.Observer;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
@@ -123,6 +124,20 @@ namespace InitialProject.Repositories
             var reservation = GetById(reservationId);
             reservation.IsOwnerRated = true;
             _fileHandler.Save(_reservations);
+        }
+
+        public List<AccommodationReservation> GetAllNewlyCancelled(int ownerId)
+        {
+            _reservations = _fileHandler.Load();
+            var notifactions = RepositoryStore.GetIAccommodationReservationCancellationNotificationRepository.
+                                               GetByOwnerId(ownerId);
+            var cancelledReservatons = new List<AccommodationReservation>();
+            notifactions.ForEach(n =>
+                cancelledReservatons.Add(
+                    _reservations.Find(r => r.Id == n.ReservationId)
+                )
+            );
+            return cancelledReservatons;
         }
 
         public void Subscribe(IObserver observer)
