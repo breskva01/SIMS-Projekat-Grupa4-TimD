@@ -23,14 +23,16 @@ namespace InitialProject.WPF.ViewModels
         public int Days { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public ICommand Command { get; }
+        public ICommand FindAvailableReservationsCommand { get; }
+        public ICommand ShowAccommodationBrowserViewCommand { get; }
         public AccommodationReservationViewModel(NavigationStore navigationStore ,User user, Accommodation accommodation)
         {
             _navigationStore = navigationStore;
             Guest = user;
             Accommodation = accommodation;
             _service = new AccommodationReservationService();
-            Command = new ExecuteMethodCommand(GetAvailableReservations);
+            FindAvailableReservationsCommand = new ExecuteMethodCommand(GetAvailableReservations);
+            ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
         }
 
         private void GetAvailableReservations()
@@ -44,19 +46,25 @@ namespace InitialProject.WPF.ViewModels
                 DateOnly startDate = DateOnly.FromDateTime(StartDate);
                 DateOnly endDate = DateOnly.FromDateTime(EndDate);
                 List<AccommodationReservation> reservations = _service.GetAvailable(startDate, endDate, Days, Accommodation, Guest);
-                CreateDatePickerViewModel(reservations);
+                ShowDatePickerView(reservations);
                 
             }
             else
                 MessageBox.Show("Izaberite željeni opseg datuma");
         }
-        private void CreateDatePickerViewModel(List<AccommodationReservation> reservations)
+        private void ShowDatePickerView(List<AccommodationReservation> reservations)
         {
             var viewModel = new AccommodationReservationDatePickerViewModel(_navigationStore, reservations);
-            var datePickerNavigateCommand = new NavigateCommand
+            var navigateCommand = new NavigateCommand
                 (new NavigationService(_navigationStore, viewModel));
 
-            datePickerNavigateCommand.Execute(null);
+            navigateCommand.Execute(null);
+        }
+        private void ShowAccommodationBrowserView()
+        {
+            var viewModel = new AccommodationBrowserViewModel(_navigationStore, Guest);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigateCommand.Execute(null);
         }
     }
 }

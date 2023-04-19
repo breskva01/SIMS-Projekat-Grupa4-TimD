@@ -58,8 +58,7 @@
                     </TextBlock>
                 </StackPanel>
                 <Button Content="Prikaži komentar"
-                        Height="Auto"
-                        Width="Auto"
+                        Height="30"
                         Padding="2"
                         Margin="10"
                         Command="{Binding DataContext.ShowCommentViewCommand, 

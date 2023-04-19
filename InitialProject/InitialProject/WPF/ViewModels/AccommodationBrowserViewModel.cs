@@ -208,10 +208,10 @@ namespace InitialProject.WPF.ViewModels
         private void ShowAccommodationReservationView(Accommodation accommodation)
         {
             var viewModel = new AccommodationReservationViewModel(_navigationStore, _loggedInUser, accommodation);
-            var reserveAccommodationNavigateCommand = new NavigateCommand
+            var navigateCommand = new NavigateCommand
                 (new NavigationService(_navigationStore, viewModel));
 
-            reserveAccommodationNavigateCommand.Execute(null);
+            navigateCommand.Execute(null);
         }
 
         private void DecrementGuestNumber()

@@ -51,6 +51,8 @@ namespace InitialProject.Domain.Models
         }
         private bool Contains(string keyWords)
         {
+            if (string.IsNullOrEmpty(keyWords))
+                return true;
             string[] splitKeyWords = keyWords.Split(" ");
             foreach (string keyWord in splitKeyWords)
             {

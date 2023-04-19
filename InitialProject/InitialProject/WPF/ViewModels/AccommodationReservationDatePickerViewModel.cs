@@ -22,12 +22,14 @@ namespace InitialProject.WPF.ViewModels
         public List<AccommodationReservation> Reservations { get; set; }
         public int GuestNumber { get; set; }
         public ICommand ReserveCommand { get; }
+        public ICommand ShowReservationViewCommand { get; }
         public AccommodationReservationDatePickerViewModel(NavigationStore navigationStore, List<AccommodationReservation> reservations)
         {
             _navigationStore = navigationStore;
             _service = new AccommodationReservationService();
             Reservations = reservations;
             ReserveCommand = new ExecuteMethodCommand(ReserveAccommodation);
+            ShowReservationViewCommand = new ExecuteMethodCommand(ShowAccommodationReservationView);
         }
 
         private void ReserveAccommodation()
@@ -43,12 +45,21 @@ namespace InitialProject.WPF.ViewModels
                 SelectedReservation.GuestNumber = GuestNumber;
                 _service.Save(SelectedReservation);
                 MessageBox.Show("Rezervacija uspešno kreirana.");
-                NavigateToAccommodationBrowser();
+                ShowAccommodationBrowserView();
             }
         }
-        private void NavigateToAccommodationBrowser()
+        private void ShowAccommodationBrowserView()
         {
             var viewModel = new AccommodationBrowserViewModel(_navigationStore, SelectedReservation.Guest);
+            var navigateCommand = new NavigateCommand
+                (new NavigationService(_navigationStore, viewModel));
+
+            navigateCommand.Execute(null);
+        }
+        private void ShowAccommodationReservationView()
+        {
+            var viewModel = new AccommodationReservationViewModel(_navigationStore, 
+                Reservations[0].Guest, Reservations[0].Accommodation);
             var navigateCommand = new NavigateCommand
                 (new NavigationService(_navigationStore, viewModel));
 

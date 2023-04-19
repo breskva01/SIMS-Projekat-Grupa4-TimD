@@ -53,6 +53,8 @@
             <TextBox FontSize="14" Padding="3" MinWidth="100" Text="{Binding Path=GuestNumber, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Margin="5 0" FontSize="14" Padding="3" Content="Rezerviši"
                     Command="{Binding ReserveCommand}"/>
+            <Button Margin="5 0" FontSize="14" Padding="3" Content="Nazad" 
+                    Command="{Binding ShowReservationViewCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
