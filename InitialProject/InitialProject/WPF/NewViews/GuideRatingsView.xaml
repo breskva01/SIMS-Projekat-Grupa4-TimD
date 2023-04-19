@@ -44,6 +44,7 @@
         </DataGrid>
         <Button Grid.Column="1" Grid.Row="0" Height="50" Width="200" Content="Choose" FontSize="30" Command="{Binding ChooseTourCommand}"></Button>
         <Button Grid.Column="1" Grid.Row="2" Height="50" Width="200" Content="Report" FontSize="30" Command="{Binding ReportGuestRatingCommand}"></Button>
+        <Button Grid.Column="1" Content="Back" HorizontalAlignment="Center" Margin="0,278,0,0" Grid.Row="2" VerticalAlignment="Top" Height="38" Width="91" FontSize="20"  Command="{Binding BackCommand}"/>
 
     </Grid>
 </UserControl>

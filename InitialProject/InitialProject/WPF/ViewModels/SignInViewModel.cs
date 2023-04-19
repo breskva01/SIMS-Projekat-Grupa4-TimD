@@ -138,10 +138,15 @@ namespace InitialProject.WPF.ViewModels
         {
             return new TourStatsViewModel(_navigationStore, _user);
         }
-        */
+        
         private GuideRatingsViewModel CreateGuideVM()
         {
             return new GuideRatingsViewModel(_navigationStore, _user);
+        }
+        */
+        private GuideMenuViewModel CreateGuideVM()
+        {
+            return new GuideMenuViewModel(_navigationStore, _user);
         }
     }
 }

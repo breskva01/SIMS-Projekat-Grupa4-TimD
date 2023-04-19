@@ -24,5 +24,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Start Tour" HorizontalAlignment="Left" Margin="686,346,0,0" Grid.Row="1" VerticalAlignment="Top" Height="44" Width="94" FontSize="20" Command="{Binding StartTourCommand}"/>
+        <Button Content="Back" HorizontalAlignment="Left" Margin="37,346,0,0" Grid.Row="1" VerticalAlignment="Top" Height="42" Width="87" FontSize="20"  Command="{Binding BackCommand}"/>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Services;
+﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -175,6 +177,7 @@ namespace InitialProject.WPF.ViewModels
 
         }
 
+        public ICommand BackCommand { get; set; }
 
         public TourStatsViewModel(NavigationStore navigationStore, User user)
         {
@@ -198,8 +201,19 @@ namespace InitialProject.WPF.ViewModels
 
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
 
-
-            
+            InitializeCommands();
         }
+        private void InitializeCommands()
+        { 
+            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+
+        }
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
+        }
+
     }
 }
