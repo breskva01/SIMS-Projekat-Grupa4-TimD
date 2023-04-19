@@ -19,6 +19,15 @@ namespace InitialProject.WPF.ViewModels
 {
     public class VoucherCreationViewModel : ViewModelBase
     {
+        private readonly NavigationStore _navigationStore;
+        private User _user;
+
+        private List<User> _guests;
+
+        private VoucherService _voucherService;
+        private UserService _userService;
+
+        private DateOnly _expiration;
 
         private string _name;
         public string Name
@@ -34,38 +43,35 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        private readonly NavigationStore _navigationStore;
-        private User _user;
-
         public ICommand BackNavigateCommand =>
-new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
+           new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
 
         public ICommand CreateVoucherCommand { get; set; }
-
-        private List<User> _guests;
-
-        private VoucherService _voucherService;
-        private UserService _userService;
-
-        private DateOnly Expiration;
-
 
         public VoucherCreationViewModel(NavigationStore navigationStore, User user, List<User> guests)
         {
             _navigationStore = navigationStore;
             _user = user;
             _guests = guests;
+
             _voucherService = new VoucherService();
             _userService = new UserService();
-            DateTime dateTime = DateTime.Now;
-            Expiration = new DateOnly(dateTime.Year, dateTime.Month, dateTime.Day);
 
+            DateTime dateTime = DateTime.Now;
+            _expiration = new DateOnly(dateTime.Year, dateTime.Month, dateTime.Day);
+
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
             CreateVoucherCommand = new ExecuteMethodCommand(CreateVoucher);
         }
+
         private void CreateVoucher()
         {
-            Expiration = Expiration.AddYears(1);
-            Voucher voucher = _voucherService.CreateVoucher(Name, Expiration);
+            _expiration = _expiration.AddYears(1);
+            Voucher voucher = _voucherService.CreateVoucher(Name, _expiration);
             foreach (User guest in _guests)
             {
                 guest.VouchersIds.Add(voucher.Id);
