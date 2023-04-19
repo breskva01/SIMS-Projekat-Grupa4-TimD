@@ -65,6 +65,10 @@
             <Button Height="40" Margin="5 0" Padding="2"
                     Command="{Binding ShowRequestsViewCommand}"
                     Content="Moji zahtevi"/>
+            <Button Height="40" Margin="5 0" Padding="2"
+                    Command="{Binding NewNotificationsCommand}"
+                    Content="Nova obaveštenja"
+                    IsEnabled="{Binding AnyNotifications}"/>
 
         </StackPanel>
         <StackPanel Orientation="Vertical" DockPanel.Dock="Left" >

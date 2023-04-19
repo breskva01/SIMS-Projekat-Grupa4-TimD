@@ -92,6 +92,19 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
+        private bool _anyNotifications;
+        public bool AnyNotifications
+        {
+            get => _anyNotifications;
+            set
+            {
+                if (_anyNotifications != value)
+                {
+                    _anyNotifications = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public int TypeSelectedIndex { get; set; }
         public ICommand ApplyFiltersCommand { get; }
         public ICommand ResetFiltersCommand { get; }
@@ -107,6 +120,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand NumberOfDaysIncrementCommand { get; }
         public ICommand GuestNumberDecrementCommand { get; }
         public ICommand NumberOfDaysDecrementCommand { get; }
+        public ICommand NewNotificationsCommand { get; }
         private string _lastSortingCriterium;
         public AccommodationBrowserViewModel(NavigationStore navigationStore ,User user)
         {
@@ -130,6 +144,29 @@ namespace InitialProject.WPF.ViewModels
             ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
             ShowRatingsViewCommand = new ExecuteMethodCommand(ShowRatingsView);
             ShowRequestsViewCommand = new ExecuteMethodCommand(ShowRequestsView);
+            NewNotificationsCommand = new ExecuteMethodCommand(NotificationsPrompt);
+
+            CheckForNotifications();
+        }
+        private void CheckForNotifications()
+        {
+            var requestService = new AccommodationReservationRequestService();
+            if (requestService.GetAllNewlyAnswered(_loggedInUser.Id).Count > 0)
+            {
+                AnyNotifications = true;
+            }
+            else
+                AnyNotifications = false;
+        }
+        private void NotificationsPrompt()
+        {
+            MessageBoxResult result = MessageBox.Show(
+                   "Stiglo je jedan ili više novih odgovora na vaše zahteve," +
+                   "da li želite da ih pogledate?",
+                   "Obaveštenje", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+                ShowRequestsView();
         }
         private void ApplyFilters()
         {

@@ -53,6 +53,7 @@ namespace InitialProject.Repositories
         {
             _requests.FindAll(request => request.Reservation.GuestId == guestId)
                      .ForEach(request => request.GuestNotified = true);
+            _fileHandler.Save(_requests);
         }
         public void Save(AccommodationReservationMoveRequest request)
         {

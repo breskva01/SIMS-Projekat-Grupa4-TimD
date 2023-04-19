@@ -12,10 +12,10 @@
                 <Image Source="{Binding Reservation.Accommodation.PictureURL}" Width="180" Height="180" />
                 <StackPanel VerticalAlignment="Top" Margin="30" Orientation="Vertical">
                     <TextBlock Text="{Binding Reservation.Accommodation.Name}" FontWeight="Bold" FontSize="16" Margin="0 0 0 5">
-                        <Run FontWeight="Light" Text=" - "/>
-                        <Run FontWeight="Light" Text="{Binding Reservation.Accommodation.Country}"/>
-                        <Run FontWeight="Light" Text=","/>
-                        <Run FontWeight="Light" Text="{Binding Reservation.Accommodation.City}" />
+                        <Run Text=" - "/>
+                        <Run Text="{Binding Reservation.Accommodation.Country}"/>
+                        <Run Text=","/>
+                        <Run Text="{Binding Reservation.Accommodation.City}" />
                     </TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Reservation.Accommodation.Owner.FirstName}"/>

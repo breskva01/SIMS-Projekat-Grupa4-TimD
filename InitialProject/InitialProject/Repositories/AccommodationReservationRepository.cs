@@ -35,7 +35,7 @@ namespace InitialProject.Repositories
         }
         public List<AccommodationReservation> GetConfirmed(int guestId)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             var existingReservations = _reservations.FindAll(r => r.GuestId == guestId &&
                                          r.Status == AccommodationReservationStatus.Confirmed);
             return existingReservations.OrderBy(r => r.CheckIn).ToList();
