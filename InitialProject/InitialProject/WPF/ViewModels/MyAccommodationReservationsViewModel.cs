@@ -22,7 +22,8 @@ namespace InitialProject.WPF.ViewModels
     {
         private readonly User _loggedInUser;
         public ObservableCollection<AccommodationReservation> Reservations { get; set; }
-        private readonly AccommodationReservationService _service;
+        private readonly AccommodationReservationService _reservationService;
+        private readonly AccommodationReservationRequestService _requestService;
         private readonly NavigationStore _navigationStore;
         public ICommand CancelReservationCommand { get; }
         public ICommand MoveReservationCommand { get; }
@@ -31,10 +32,11 @@ namespace InitialProject.WPF.ViewModels
         {
             _navigationStore = navigationStore;
             _loggedInUser = loggedInUser;
-            _service = new AccommodationReservationService();
+            _reservationService = new AccommodationReservationService();
+            _requestService = new AccommodationReservationRequestService();
             Reservations = new ObservableCollection<AccommodationReservation>
-                                (_service.GetConfirmed(_loggedInUser.Id));
-            _service.Subscribe(this);
+                                (_reservationService.GetConfirmed(_loggedInUser.Id));
+            _reservationService.Subscribe(this);
             CancelReservationCommand = new AccommodationReservationClickCommand(CancelReservation);
             MoveReservationCommand = new AccommodationReservationClickCommand(MoveReservation);
             ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
@@ -46,7 +48,7 @@ namespace InitialProject.WPF.ViewModels
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                if (_service.Cancel(reservation.Id, reservation.Accommodation.OwnerId))
+                if (_reservationService.Cancel(reservation.Id, reservation.Accommodation.OwnerId))
                     MessageBox.Show("Rezervacija uspešno otkazana.");
                 else
                     MessageBox.Show("Rezervacija se ne može otkazati.");
@@ -55,12 +57,15 @@ namespace InitialProject.WPF.ViewModels
 
         private void MoveReservation(AccommodationReservation reservation)
         { 
-            MessageBox.Show("Kling!!.");
+            if (_requestService.HasPendingMoveRequest(reservation.Id))
+                MessageBox.Show("Već postoji zahtev za pomeranje ove rezervacije.");
+            else
+                ShowAccommodationReservationMoveRequestView(reservation);
         }
         public void Update()
         {
             var reservations = new ObservableCollection<AccommodationReservation>
-                                (_service.GetConfirmed(_loggedInUser.Id));
+                                (_reservationService.GetConfirmed(_loggedInUser.Id));
             Reservations.Clear();
             foreach (var r in reservations)
                 Reservations.Add(r);
@@ -68,6 +73,12 @@ namespace InitialProject.WPF.ViewModels
         private void ShowAccommodationBrowserView()
         {
             var viewModel = new AccommodationBrowserViewModel(_navigationStore, _loggedInUser);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigateCommand.Execute(null);
+        }
+        private void ShowAccommodationReservationMoveRequestView(AccommodationReservation reservation)
+        {
+            var viewModel = new AccommodationReservationMoveRequestViewModel(_navigationStore, reservation);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
         }

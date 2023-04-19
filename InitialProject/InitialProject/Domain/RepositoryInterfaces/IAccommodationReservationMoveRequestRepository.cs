@@ -12,6 +12,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         List<AccommodationReservationMoveRequest> GetAll();
         List<AccommodationReservationMoveRequest> GetByOwnerId(int ownerId);
         List<AccommodationReservationMoveRequest> GetByGuestId(int guestId);
+        List<AccommodationReservationMoveRequest> GetAllNewlyAnswered(int guestId);
         void Save(AccommodationReservationMoveRequest request);
     }
 

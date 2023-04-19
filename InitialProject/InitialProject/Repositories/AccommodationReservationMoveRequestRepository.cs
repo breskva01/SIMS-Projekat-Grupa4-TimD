@@ -40,6 +40,20 @@ namespace InitialProject.Repositories
             GetAll();
             return _requests.FindAll(r => r.Reservation.GuestId == guestId);
         }
+        public List<AccommodationReservationMoveRequest> GetAllNewlyAnswered(int guestId)
+        {
+            GetAll();
+            var answeredRequests = _requests.FindAll(r => r.Reservation.GuestId == guestId &&
+                                          r.Status != ReservationMoveRequestStatus.Pending &&
+                                          r.GuestNotified == false);
+            UpdateGuestNotifiedField(guestId);
+            return answeredRequests;
+        }
+        private void UpdateGuestNotifiedField(int guestId)
+        {
+            _requests.FindAll(request => request.Reservation.GuestId == guestId)
+                     .ForEach(request => request.GuestNotified = true);
+        }
         public void Save(AccommodationReservationMoveRequest request)
         {
             GetAll();
