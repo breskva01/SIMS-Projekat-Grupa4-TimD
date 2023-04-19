@@ -18,7 +18,7 @@ namespace InitialProject.WPF.ViewModels
         private User _user;
         private Tour _tour;
         private readonly NavigationStore _navigationStore;
-        private TourReservation pendingReservation;
+        private TourReservation _pendingReservation;
         private readonly TourReservationService _tourReservationService;
         private readonly TourService _tourService;
         public string TourName { get; set; }
@@ -33,8 +33,8 @@ namespace InitialProject.WPF.ViewModels
             _tourReservationService = new TourReservationService();
             _tourService = new TourService();
 
-            pendingReservation = _tourReservationService.GetActivePending(_user.Id).FirstOrDefault();
-            _tour = _tourService.GetById(pendingReservation.TourId);
+            _pendingReservation = _tourReservationService.GetActivePending(_user.Id).FirstOrDefault();
+            _tour = _tourService.GetById(_pendingReservation.TourId);
             TourName = _tour.Name;
 
             YesCommand = new ExecuteMethodCommand(ConfirmPresence);
@@ -53,9 +53,9 @@ namespace InitialProject.WPF.ViewModels
 
         private void DenyPresence()
         {
-            pendingReservation.Presence = Presence.Absent;
-            pendingReservation.ArrivedAtKeyPoint = 0;
-            _tourReservationService.Update(pendingReservation);
+            _pendingReservation.Presence = Presence.Absent;
+            _pendingReservation.ArrivedAtKeyPoint = 0;
+            _tourReservationService.Update(_pendingReservation);
 
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, DefineNextView()));
             navigate.Execute(null);
@@ -71,11 +71,6 @@ namespace InitialProject.WPF.ViewModels
                 _tourReservationService.Update(tr);
             }
             _tourService.Update(_tour);
-            //pendingReservation.Presence = Presence.Present;
-            //List<TourReservation> otherReservations = _tourReservationService.GetByUserAndTourId(_user.Id, _tour.Id);
-            
-            //_tourReservationService.Update(pendingReservation);
-
 
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, DefineNextView()));
             navigate.Execute(null);

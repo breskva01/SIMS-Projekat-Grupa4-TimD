@@ -43,16 +43,8 @@ namespace InitialProject.WPF.ViewModels
             }
             Vouchers = new ObservableCollection<Voucher>(_voucherService.FilterUnused(vouchers));
 
-            CancelCommand = new ExecuteMethodCommand(ShowTourReservationView);
             ReserveCommand = new UseVoucherCommand(MakeReservation);
-
-        }
-
-        private void ShowTourReservationView()
-        {
-            TourReservationViewModel tourReservationViewModel = new TourReservationViewModel(_navigationStore, _user, SelectedTour);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourReservationViewModel));
-            navigate.Execute(null);
+            CancelCommand = new ExecuteMethodCommand(ShowTourReservationView);
         }
 
         private void ShowTourBrowserView()
@@ -64,12 +56,18 @@ namespace InitialProject.WPF.ViewModels
 
         private void MakeReservation(Voucher voucher)
         {
-
             TourReservation tourReservation = _tourReservationService.CreateReservation(SelectedTour.Id, _user.Id, NumberOfGuests, true);
             voucher.State = VoucherState.Used;
             _voucherService.Update(voucher);
 
             ShowTourBrowserView();
+        }
+
+        private void ShowTourReservationView()
+        {
+            TourReservationViewModel tourReservationViewModel = new TourReservationViewModel(_navigationStore, _user, SelectedTour);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourReservationViewModel));
+            navigate.Execute(null);
         }
     }
 }

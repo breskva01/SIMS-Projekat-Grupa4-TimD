@@ -20,7 +20,6 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourBrowserViewModel : ViewModelBase
     {
-        //private readonly ObservableCollection<Tour> _tours;
         public ObservableCollection<Tour> Tours { get; set; }
         public Tour SelectedTour { get; set; }
 
@@ -179,16 +178,20 @@ namespace InitialProject.WPF.ViewModels
         {
             _navigationStore = navigationStore;
             _user = user;
-
-            //Tours = new ObservableCollection<Tour>(_tourService.GetAll());
             _tourService = new TourService();
             _locationService = new LocationService();
+            _selectedCountry = "";
+            _selectedCity = "";
+            _duration = "0";
+            _selectedLanguageIndex = 0;
+            _numberOfGuests = "0";
 
-            Tours = new ObservableCollection<Tour>(_tourService.GetAll());
+            Tours = new ObservableCollection<Tour>();
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
-            foreach (Tour t in Tours)
+            foreach (var t in _tourService.GetAll())
             {
                 t.Location = Locations.FirstOrDefault(l => l.Id == t.LocationId);
+                Tours.Add(t);
             }
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
 
@@ -197,7 +200,6 @@ namespace InitialProject.WPF.ViewModels
             SortCommand = new ExecuteMethodCommand(ApplySort);
             MakeReservationCommand = new TourClickCommand(ShowTourReservationView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
-            
         }
 
         private void ShowGuest2MenuView()
@@ -211,7 +213,8 @@ namespace InitialProject.WPF.ViewModels
         {
             if (tour.CurrentNumberOfGuests == tour.MaximumGuests)
             {
-                MessageBox.Show("Unfortunately, the tour that you are interested in is fully booked. On the previous window you can take a look at other tours that are located in the same location.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Unfortunately, the tour that you are interested in is fully booked. " +
+                    "On the previous window you can take a look at other tours that are located in the same location.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 Tours.Clear();
                 foreach (var t in _tourService.GetFiltered(tour.Location.Country, tour.Location.City, 0, GuideLanguage.All, 1))
@@ -302,7 +305,6 @@ namespace InitialProject.WPF.ViewModels
                 tour.Location = Locations.FirstOrDefault(l => l.Id == tour.LocationId);
                 Tours.Add(tour);
             }
-
         }
         private void ApplySort()
         {
