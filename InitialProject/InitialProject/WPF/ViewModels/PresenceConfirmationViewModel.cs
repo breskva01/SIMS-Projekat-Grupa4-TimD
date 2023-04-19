@@ -33,7 +33,7 @@ namespace InitialProject.WPF.ViewModels
             _tourReservationService = new TourReservationService();
             _tourService = new TourService();
 
-            pendingReservation = _tourReservationService.getActivePendingReservations(_user.Id).FirstOrDefault();
+            pendingReservation = _tourReservationService.GetActivePending(_user.Id).FirstOrDefault();
             _tour = _tourService.GetById(pendingReservation.TourId);
             TourName = _tour.Name;
 
@@ -44,7 +44,7 @@ namespace InitialProject.WPF.ViewModels
 
         ViewModelBase DefineNextView()
         {
-            if (_tourReservationService.getActivePendingReservations(_user.Id).Any())
+            if (_tourReservationService.GetActivePending(_user.Id).Any())
             {
                 return new PresenceConfirmationViewModel(_navigationStore, _user);
             }
@@ -63,7 +63,7 @@ namespace InitialProject.WPF.ViewModels
 
         private void ConfirmPresence()
         {
-            List<TourReservation> duplicateReservations = _tourReservationService.getDuplicateReservations(_user.Id, _tour.Id);
+            List<TourReservation> duplicateReservations = _tourReservationService.GetDuplicates(_user.Id, _tour.Id);
             foreach(TourReservation tr in duplicateReservations)
             {
                 tr.Presence = Presence.Present;

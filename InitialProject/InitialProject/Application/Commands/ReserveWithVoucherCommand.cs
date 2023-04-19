@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Application.Commands
 {
-    class ReserveWithVoucherCommand : CommandBase
+    public class ReserveWithVoucherCommand : CommandBase
     {
         private readonly Action _execute;
         private readonly TourReservationViewModel _tourReservationViewModel;
@@ -21,7 +21,7 @@ namespace InitialProject.Application.Commands
             _tourReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
-        
+
         public override bool CanExecute(object? parameter)
         {
             return !string.IsNullOrEmpty(_tourReservationViewModel.NumberOfGuests) && base.CanExecute(parameter);
@@ -32,11 +32,10 @@ namespace InitialProject.Application.Commands
         }
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(TourReservationViewModel.NumberOfGuests))
+            if (e.PropertyName == nameof(TourReservationViewModel.NumberOfGuests))
             {
                 OnCanExecuteChanged(null);
             }
         }
-
     }
 }

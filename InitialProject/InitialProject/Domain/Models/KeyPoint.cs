@@ -17,8 +17,6 @@ namespace InitialProject.Domain.Models
         public string Place { get; set; }
         public bool Reached { get; set; } 
 
-
-
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
@@ -26,7 +24,6 @@ namespace InitialProject.Domain.Models
             Place = values[2];
             //Reached = bool.Parse(values[3]);
         }
-
         public string[] ToCSV()
         {
             string[] csvValues =

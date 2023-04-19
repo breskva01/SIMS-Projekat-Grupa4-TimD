@@ -13,7 +13,8 @@ namespace InitialProject.Application.Services
 {
     public class UserService
     {
-       private readonly IUserRepository _repository;
+        private readonly IUserRepository _repository;
+
         public UserService()
         {
             _repository = RepositoryStore.GetIUserRepository;

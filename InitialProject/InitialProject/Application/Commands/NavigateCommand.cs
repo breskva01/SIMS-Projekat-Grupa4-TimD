@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Application.Commands
 {
-    class NavigateCommand : CommandBase
+    public class NavigateCommand : CommandBase
     {
         private readonly NavigationService _navigationService;
         public NavigateCommand(NavigationService navigationService)
@@ -21,7 +21,5 @@ namespace InitialProject.Application.Commands
         {
             _navigationService.Navigate();
         }
-
-
     }
 }

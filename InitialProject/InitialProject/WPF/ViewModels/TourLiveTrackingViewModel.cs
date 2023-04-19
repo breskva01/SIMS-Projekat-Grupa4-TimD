@@ -93,7 +93,7 @@ namespace InitialProject.WPF.ViewModels
             
             foreach (KeyPointViewModel keyPoint in _keyPointsFromSelectedTour)
             {
-                keyPoint.Location = _locationService.Get(keyPoint.LocationId);
+                keyPoint.Location = _locationService.GetById(keyPoint.LocationId);
             }
 
             if(_tour.CurrentKeyPoint == 0)
