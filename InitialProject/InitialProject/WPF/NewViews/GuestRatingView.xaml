@@ -1,0 +1,117 @@
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.GuestRatingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="750" d:DesignWidth="1280">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DataGrid Grid.Row="0" x:Name="reservationsDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  ItemsSource="{Binding Path=AccommodationReservations, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Path=SelectedReservation, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="First Name" Binding="{Binding Guest.FirstName}"/>
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding Guest.LastName}"/>
+                    <DataGridTextColumn Header="Accommodation" Binding="{Binding Accommodation.Name}"/>
+                    <DataGridTextColumn Header="NumberOfDays" Binding="{Binding NumberOfDays}"/>
+                    <DataGridTextColumn Header="CheckInDate" Binding="{Binding CheckIn}"/>
+                    <DataGridTextColumn Width="*" Header="CheckOutDate" Binding="{Binding CheckOut}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="1" Width="450" Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Height="40" Width="95" Grid.Column="1" Content="Back" Command="{Binding BackCommand}" FontSize="18" Margin="0,62,0,-62"/>
+            </Grid>
+        </Grid>
+        <Grid Width="530" Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="350"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Height=" 350" Width="530">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Height="35" Width="185" FontSize="18">Hygiene</Label>
+                <Label Grid.Row="1" Height="35" Width="185" FontSize="18">Respects rules</Label>
+                <Label Grid.Row="2" Height="35" Width="185" FontSize="18">Communication</Label>
+                <Label Grid.Row="3" Height="35" Width="185" FontSize="18">Timeliness</Label>
+                <Label Grid.Row="4" Height="35" Width="185" FontSize="18">Noise level</Label>
+                <Label Grid.Row="5" Height="35" Width="185" FontSize="18">Overall experince</Label>
+                <Label Grid.Row="6" Height="35" Width="185" FontSize="18">Additional comments</Label>
+                <ComboBox Height="35" Width="55" Grid.Row="0" Grid.Column="1" Text="{Binding Path=Hygiene, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Height="35" Width="55" Grid.Row="1" Grid.Column="1" Text="{Binding Path=RespectsRules, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Height="35" Width="55" Grid.Row="2" Grid.Column="1" Text="{Binding Path=Communication, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Height="35" Width="55" Grid.Row="3" Grid.Column="1" Text="{Binding Path=Timeliness, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Height="35" Width="55" Grid.Row="4" Grid.Column="1" Text="{Binding Path=NoiseLevel, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Height="35" Width="55" Grid.Row="5" Grid.Column="1" Text="{Binding Path=OverallExperience, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+                <TextBox Width="345" Grid.Row="6" Grid.Column="1" FontSize="14" Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}">
+                </TextBox>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Height="40" Width="95" Content="Rate guest" Command="{Binding RateGuestCommand}" FontSize="18" Grid.ColumnSpan="2" Margin="198,30,198,30"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

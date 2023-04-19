@@ -123,6 +123,26 @@ namespace InitialProject.Application.Services
         {
             return new AccommodationReservation(accommodation, guest, days, checkIn, checkOut, AccommodationReservationStatus.Confirmed);
         }
+        public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId)
+        {
+            return _repository.FindCompletedAndUnrated(ownerId);
+        }
+        public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly newCheckout)
+        {
+            _repository.MoveReservation(reservationId, newCheckIn, newCheckout);
+        }
+        public void updateLastNotification(AccommodationReservation accommodationReservation)
+        {
+            _repository.updateLastNotification(accommodationReservation);
+        }
+        public void updateRatingStatus(AccommodationReservation accommodationReservation)
+        {
+            _repository.updateRatingStatus(accommodationReservation);
+        }
+        public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut)
+        {
+            return _repository.CheckAvailability(accommodationId ,checkIn, checkOut);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

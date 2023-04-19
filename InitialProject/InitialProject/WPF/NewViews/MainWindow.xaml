@@ -40,6 +40,9 @@
             <DataTemplate DataType="{x:Type vms:SignInViewModel}">
                 <views:SignInView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationRegistrationViewModel}">
+                <views:AccommodationRegistrationView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:AccommodationBrowserViewModel}">
                 <views:AccommodationBrowserView />
             </DataTemplate>
@@ -49,8 +52,8 @@
             <DataTemplate DataType="{x:Type vms:AccommodationReservationDatePickerViewModel}">
                 <views:AccommodationReservationDatePickerView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:MyAccommodationReservationsViewModel}">
-                <views:MyAccommodationReservationsView />
+            <DataTemplate DataType="{x:Type vms:GuestRatingViewModel}">
+                <views:GuestRatingView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:ToursTodayViewModel}">
                 <views:ToursTodayView />
@@ -93,6 +96,15 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:GuideMenuViewModel}">
                 <views:GuideMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerRatingsViewModel}">
+                <views:OwnerRatingsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ReservationMoveRequestsViewModel}">
+                <views:ReservationsMoveRequestsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerViewModel}">
+                <views:OwnerView />
             </DataTemplate>
         </Grid.Resources>
 

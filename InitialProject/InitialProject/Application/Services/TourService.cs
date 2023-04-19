@@ -1,7 +1,6 @@
 ﻿using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
-using InitialProject.Domain.Models.DAO;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using InitialProject.Repository;

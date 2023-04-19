@@ -23,6 +23,7 @@ namespace InitialProject.Application.Stores
         private static IVoucherRepository _voucherRepository;
         private static ILocationRepository _locationRepository;
         private static IKeyPointRepository _keyPointRepository;
+        private static IGuestRatingRepository _guestRatingRepository;
 
         public static IAccommodationReservationMoveRequestRepository GetIAccommodationReservationMoveRequestRepository
         {
@@ -162,6 +163,17 @@ namespace InitialProject.Application.Stores
                     _keyPointRepository = new KeyPointRepository();
                 }
                 return _keyPointRepository;
+            }
+        }
+        public static IGuestRatingRepository GetIGuestRatingRepository
+        {
+            get
+            {
+                if (_guestRatingRepository == null)
+                {
+                    _guestRatingRepository = new GuestRatingRepository();
+                }
+                return _guestRatingRepository;
             }
         }
     }

@@ -13,11 +13,15 @@ namespace InitialProject.Repositories
     public class AccommodationReservationMoveRequestRepository : IAccommodationReservationMoveRequestRepository
     {
         private readonly AccommodationReservationMoveRequestFileHandler _fileHandler;
+        private readonly AccommodationReservationFileHandler _reservationFileHandler;
         private List<AccommodationReservationMoveRequest> _requests;
+        private List<AccommodationReservation> _reservations;
+
 
         public AccommodationReservationMoveRequestRepository()
         {
             _fileHandler = new AccommodationReservationMoveRequestFileHandler();
+            _reservationFileHandler= new AccommodationReservationFileHandler();
             _requests = _fileHandler.Load();
         }
         public List<AccommodationReservationMoveRequest> GetAll()
@@ -54,6 +58,31 @@ namespace InitialProject.Repositories
             _requests.FindAll(request => request.Reservation.GuestId == guestId &&
                                          request.Status != ReservationMoveRequestStatus.Pending)
                      .ForEach(request => request.GuestNotified = true);
+            _fileHandler.Save(_requests);
+        }
+        public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId)
+        {
+            GetAll();
+            return _requests.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId && r.Status == ReservationMoveRequestStatus.Pending);
+        }
+        public void ApproveRequest(int reservationId)
+        {
+            GetAll();
+            AccommodationReservationMoveRequest request = _requests.Find(r => r.ReservationId == reservationId);
+            AccommodationReservationMoveRequest newRequest = request;
+            newRequest.Status = ReservationMoveRequestStatus.Accepted;
+            _requests.Remove(request);
+            _requests.Add(newRequest);
+            _fileHandler.Save(_requests);
+        }
+        public void DenyRequest(int reservationId, string comment)
+        {
+            AccommodationReservationMoveRequest request = _requests.Find(r => r.ReservationId == reservationId);
+            AccommodationReservationMoveRequest newRequest = request;
+            newRequest.Status = ReservationMoveRequestStatus.Declined;
+            newRequest.Comment = comment;
+            _requests.Remove(request);
+            _requests.Add(newRequest);
             _fileHandler.Save(_requests);
         }
         public void Save(AccommodationReservationMoveRequest request)
