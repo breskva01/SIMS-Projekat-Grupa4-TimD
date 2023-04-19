@@ -1,2 +1,6 @@
-2|1|4|4|Absent|0
-1|1|4|2|Present|4
+4|1|7|5|Pending|5|-1|False
+2|1|5|3|Pending|4|-1|True
+3|1|6|7|Pending|4|-1|True
+1|1|4|10|Present|5|1|False
+5|2|4|10|Present|5|1|False
+6|1|4|2|Absent|0|-1|True

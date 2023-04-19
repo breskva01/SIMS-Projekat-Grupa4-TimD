@@ -65,7 +65,7 @@ namespace InitialProject.WPF.ViewModels
         private void MakeReservation(Voucher voucher)
         {
 
-            TourReservation tourReservation = _tourReservationService.CreateReservation(SelectedTour.Id, _user.Id, NumberOfGuests);
+            TourReservation tourReservation = _tourReservationService.CreateReservation(SelectedTour.Id, _user.Id, NumberOfGuests, true);
             voucher.State = VoucherState.Used;
             _voucherService.Update(voucher);
 

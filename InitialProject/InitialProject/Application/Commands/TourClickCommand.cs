@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Application.Commands
 {
-    public class MakeReservationCommand : CommandBase
+    public class TourClickCommand : CommandBase
 
     {
         private readonly Action<Tour> _execute;
 
-        public MakeReservationCommand(Action<Tour> execute)
+        public TourClickCommand(Action<Tour> execute)
         {
             _execute = execute;
         }

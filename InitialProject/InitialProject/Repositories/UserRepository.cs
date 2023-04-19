@@ -34,34 +34,14 @@ namespace InitialProject.Repository
         {
             return _fileHandler.Load();
         }
-        /*public void UpdateSuperOwnerStatus(int ownerId, double averageRating) 
+        public User Update(User user)
         {
-            User newOwner = new User();
             _users = _fileHandler.Load();
-            _ratings = _accommmodationRatingRepository.GetByOwnerId(ownerId);
-            User owner = _users.Find(o => o.Id == ownerId);
-            int OwnerRatingsCount = 1;
-            double totalAverageRating;
-            AccommodationReservation accommodationReservation = new AccommodationReservation();
-
-            foreach (AccommodationRating ar in _ratings)
-            {
-                    int[] rating = {ar.Location, ar.Hygiene, ar.Pleasantness, ar.Fairness, ar.Parking };
-                    averageRating += rating.Average();
-                    OwnerRatingsCount++;
-            }
-
-            totalAverageRating = averageRating / OwnerRatingsCount;
-            if (averageRating >= 4.5 && OwnerRatingsCount >= 2)
-                owner.SuperOwner = true;
-            else
-            {
-                owner.SuperOwner = false;
-            }
-            newOwner = owner;
-            _users.Remove(owner);
-            _users.Add(newOwner);
+            User updated = _users.Find(t => t.Id == user.Id);
+            _users.Remove(updated);
+            _users.Add(user);
             _fileHandler.Save(_users);
-        }*/
+            return user;
+        }
     }
 }

@@ -97,6 +97,7 @@ namespace InitialProject.Domain.Models
             }
             State = (TourState)Enum.Parse(typeof(TourState), values[11]);
             CurrentKeyPoint = Convert.ToInt32(values[12]);
+            NumberOfArrivedGeusts = Convert.ToInt32(values[13]);
 
         }
         public string[] ToCSV()
@@ -120,7 +121,8 @@ namespace InitialProject.Domain.Models
                 CurrentNumberOfGuests.ToString(),
                 keyPointIds,
                 State.ToString(),
-                CurrentKeyPoint.ToString()
+                CurrentKeyPoint.ToString(),
+                NumberOfArrivedGeusts.ToString()
             };
             return csvValues;
         }

@@ -27,5 +27,9 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetAll();
         }
+        public User Update(User user)
+        {
+            return _repository.Update(user);
+        }
     }
 }

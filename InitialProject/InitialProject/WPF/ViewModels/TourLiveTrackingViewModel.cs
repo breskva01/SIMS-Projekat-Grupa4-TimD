@@ -18,20 +18,25 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourLiveTrackingViewModel : ViewModelBase
     {
+        private readonly NavigationStore _navigationStore;
+        private User _user;
+
         public ObservableCollection<Location> Locations { get; set; }
-        private LocationService _locationService;
         public ObservableCollection<KeyPoint> KeyPoints { get; set; }
 
+        private List<TourReservation> tourReservations { get; set; }
+
+        private KeyPointService _keyPointService;
         private TourService _tourService;
+        private LocationService _locationService;
+        private TourReservationService _tourReservationService;
 
         private readonly ObservableCollection<KeyPointViewModel> _keyPointsFromSelectedTour;
         public IEnumerable<KeyPointViewModel> KeyPointsFromSelectedTour => _keyPointsFromSelectedTour;
         
         private Tour _tour;
-        private KeyPointService _keyPointService;
-
+       
         private int _numberOfKeyPointsFromSelectedTour;
-
 
         private KeyPointViewModel _selectedKeyPoint;
         public KeyPointViewModel SelectedKeyPoint
@@ -45,11 +50,9 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-
-        private readonly NavigationStore _navigationStore;
-        private User _user;
-
         public ICommand KeyPointReachedCommand { get; set; }
+        public ICommand StopTourCommand { get; set; }
+
 
         public TourLiveTrackingViewModel(NavigationStore navigationStore, User user, Tour tour) 
         {
@@ -63,7 +66,9 @@ namespace InitialProject.WPF.ViewModels
 
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
+            _tourReservationService = new TourReservationService();
 
+            tourReservations = new List<TourReservation>();
 
             _keyPointsFromSelectedTour = new ObservableCollection<KeyPointViewModel>();
 
@@ -91,12 +96,17 @@ namespace InitialProject.WPF.ViewModels
                 keyPoint.Location = _locationService.Get(keyPoint.LocationId);
             }
 
-            _keyPointsFromSelectedTour[0].IsReached = true;
+            if(_tour.CurrentKeyPoint == 0)
+            {
+                _keyPointsFromSelectedTour[0].IsReached = true;
+                _tour.CurrentKeyPoint = _keyPointsFromSelectedTour[0].KeyPointId;
+                _tourService.Update(_tour);
+            }
             int index = _keyPointsFromSelectedTour.IndexOf(_keyPointsFromSelectedTour.FirstOrDefault(l => l.KeyPointId == _tour.CurrentKeyPoint));
 
             for (int i = 0; i <= index; i++)
             {
-               _keyPointsFromSelectedTour[i].IsReached = true;
+                _keyPointsFromSelectedTour[i].IsReached = true;
             }
 
             _numberOfKeyPointsFromSelectedTour = 1;
@@ -107,22 +117,32 @@ namespace InitialProject.WPF.ViewModels
         private void InitializeCommands()
         {
             KeyPointReachedCommand = new ExecuteMethodCommand(KeyPointReached);
+            StopTourCommand = new ExecuteMethodCommand(StopTour);
         }
        
         public ICommand GuestAtTourNavigateCommand =>
            new NavigateCommand(new NavigationService(_navigationStore, ShowTourGuests()));
 
+        public ICommand BackNavigationCommand =>
+           new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
+
         private void KeyPointReached()
         {
             SelectedKeyPoint.IsReached = true;
-            
-            
+             
             _tour.CurrentKeyPoint = SelectedKeyPoint.KeyPointId;
             int index = _keyPointsFromSelectedTour.IndexOf(_keyPointsFromSelectedTour.FirstOrDefault(l => l.KeyPointId == _tour.CurrentKeyPoint));
 
             if (++index== _keyPointsFromSelectedTour.Count())
             {
                 _tour.State = TourState.Finished;
+                tourReservations = _tourReservationService.GetPresentByTourId(_tour.Id);
+                foreach(TourReservation tourReservation in tourReservations)
+                {
+                    tourReservation.RatingId = 0;
+                    _tourReservationService.Update(tourReservation);
+                }
+                
                 _tourService.Update(_tour);
                 GuestAtTourNavigateCommand.Execute(null);
                 return;
@@ -130,11 +150,22 @@ namespace InitialProject.WPF.ViewModels
             _tourService.Update(_tour);
             GuestAtTourNavigateCommand.Execute(null);
 
+        }
+        private void StopTour()
+        {
+            _tour.State = TourState.Interrupted;
+            _tourService.Update(_tour);
 
+            BackNavigationCommand.Execute(null);
         }
         private TourGuestsViewModel ShowTourGuests()
         {
             return new TourGuestsViewModel(_navigationStore, _user, _tour);
+
+        }
+        private ToursTodayViewModel GoBack()
+        {
+            return new ToursTodayViewModel(_navigationStore, _user);
 
         }
 

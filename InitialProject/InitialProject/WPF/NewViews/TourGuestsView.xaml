@@ -13,5 +13,6 @@
                 <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="50,409,0,0" VerticalAlignment="Top" Width="78"/>
     </Grid>
 </UserControl>
