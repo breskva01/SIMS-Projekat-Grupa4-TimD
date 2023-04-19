@@ -27,7 +27,7 @@ namespace InitialProject.WPF.ViewModels
 
         public ICommand ChooseTourCommand { get; set; }
         public ICommand ReportGuestRatingCommand { get; set; }
-
+        public ICommand BackCommand { get; set; }
 
         private Tour _selectedTour;
         public Tour SelectedTour
@@ -59,6 +59,7 @@ namespace InitialProject.WPF.ViewModels
         private TourRatingService _ratingService;
         private List<TourRating> _tourRatings;
 
+
         //private readonly ObservableCollection<RatingViewModel> _ratings;
         public ObservableCollection<RatingViewModel> Ratings { get; set; }
 
@@ -87,14 +88,21 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
 
-            ChooseTourCommand = new ExecuteMethodCommand(ShowRatings);
-            ReportGuestRatingCommand = new ExecuteMethodCommand(ReportRating);
+            InitializeCommands();
 
             // tura se selktuje
             // rezervacije preko tour.id
             // filtriram ih da imaju Rating  > 0
             // 
 
+        }
+        private void InitializeCommands()
+        {
+
+            ChooseTourCommand = new ExecuteMethodCommand(ShowRatings);
+            ReportGuestRatingCommand = new ExecuteMethodCommand(ReportRating);
+
+            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
         }
         private void ShowRatings()
         {
@@ -116,6 +124,13 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
            // _ratingService.Update(SelectedGuestRating.TourRating);
+        }
+
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
         }
     }
 }

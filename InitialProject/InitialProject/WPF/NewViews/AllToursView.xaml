@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
         mc:Ignorable="d" Height="768" Width="1024">
-        
+
     <Grid RenderTransformOrigin="0.507,0.5">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
@@ -58,6 +58,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Command="{Binding CancelTourCommand}" Content="CANCEL" HorizontalAlignment="Left" Margin="891,0,0,0" Grid.Row="2" VerticalAlignment="Top" Height="55" Width="93" RenderTransformOrigin="2.495,0.335" FontSize="20"/>
+        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="40,8,0,0" Grid.Row="2" VerticalAlignment="Top" Height="47" Width="108" FontSize="20"/>
 
     </Grid>
 </UserControl>

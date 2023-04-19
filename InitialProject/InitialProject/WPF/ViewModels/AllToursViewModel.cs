@@ -30,6 +30,7 @@ namespace InitialProject.WPF.ViewModels
         private VoucherService _voucherService; 
 
         public ICommand CancelTourCommand { get; set; }
+        public ICommand BackCommand { get; set; }
 
         private DateTime _today;
 
@@ -101,6 +102,8 @@ namespace InitialProject.WPF.ViewModels
         private void InitializeCommands()
         {
             CancelTourCommand = new ExecuteMethodCommand(CancelTour);
+            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+
         }
         private void CancelTour()
         {
@@ -161,6 +164,14 @@ namespace InitialProject.WPF.ViewModels
             return new VoucherCreationViewModel(_navigationStore, _user, _guests);
 
         }
-        
+
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
+        }
+
+
     }
 }

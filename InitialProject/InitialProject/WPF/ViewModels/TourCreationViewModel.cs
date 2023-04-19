@@ -286,15 +286,20 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
-        public ICommand ConfirmCommand;
+        public ICommand ConfirmCommand { get; set; }
         public ICommand CancelCommand { get; }
-        public ICommand AddKeyPointCommand { get; } 
+        public ICommand AddKeyPointCommand { get; }
+        public ICommand BackCommand { get; set;  }
+
 
         public TourCreationViewModel(NavigationStore navigationStore, User user)
         {
             tourService = new TourService();    
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
+
+            _navigationStore = navigationStore;
+            _user = user;
             
            // ConfirmCommand = new CreateTourCommand(this);
             AddKeyPointCommand = new AddKeyPointCommand(this);
@@ -313,6 +318,7 @@ namespace InitialProject.WPF.ViewModels
         private void InitializeCommands()
         {
             ConfirmCommand = new ExecuteMethodCommand(CreateTour);
+            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
 
         }
         public void CreateTour()
@@ -356,6 +362,13 @@ namespace InitialProject.WPF.ViewModels
             // Clearing comboboxes after adding one keyPoint
             SelectedKeyPointCity = null;
             SelectedKeyPointPlace = null;
+        }
+
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
         }
 
 
