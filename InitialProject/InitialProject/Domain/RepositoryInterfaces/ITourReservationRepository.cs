@@ -13,8 +13,8 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public TourReservation Update(TourReservation tourReservation);
         public List<TourReservation> GetAll();
         public TourReservation GetById(int id);
-        public List<TourReservation> GetPresentReservations(List<TourReservation> reservations);
-        public List<TourReservation> GetPendingReservations(List<TourReservation> reservations);
+        public List<TourReservation> GetPresent(List<TourReservation> reservations);
+        public List<TourReservation> GetPending(List<TourReservation> reservations);
         public List<TourReservation> GetDuplicates(List<TourReservation> reservations, int tourId);
         public List<TourReservation> GetUnrated(List<TourReservation> reservations);
         public List<TourReservation> GetByUserId(int userId);
@@ -23,5 +23,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public int NextId();
         public List<TourReservation> GetPresentByTourId(int id);
         public string GetVoucherPercentage(int id);
+        public List<TourReservation> GetRatedByTourId(int id);
     }
 }

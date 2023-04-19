@@ -24,7 +24,6 @@ namespace InitialProject.Repositories
         {
             return _fileHandler.Load();
         }
-
         public KeyPoint GetById(int id)
         {
             _keyPoints = _fileHandler.Load();

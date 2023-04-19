@@ -59,7 +59,9 @@ namespace InitialProject.Domain.Models
             NumberOfArrivedGeusts = 0;
         }
 
-        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky, int currentKeyPoint, int numberOfArrivedGuests, int guideId)
+        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, 
+            DateTime start, int duration, string pictureURL, int currentNumberOfGuests,
+            List<KeyPoint> ky, int currentKeyPoint, int numberOfArrivedGuests, int guideId)
         {
             Id = id;
             Name = name;

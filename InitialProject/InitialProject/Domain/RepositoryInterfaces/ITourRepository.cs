@@ -31,5 +31,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public string GetNumberOfGuestBelow18(Tour tour);
         public string GetNumberOfMiddleAgeGuests(Tour tour);
         public string GetNumberOfOlderGuests(Tour tour);
+        public List<Tour> GetFinishedTours();
     }
 }

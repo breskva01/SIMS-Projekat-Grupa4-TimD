@@ -108,11 +108,11 @@ namespace InitialProject.Application.Services
         }
         private List<TourReservation> GetPresent(List<TourReservation> reservations)
         {
-            return _repository.GetPresentReservations(reservations);
+            return _repository.GetPresent(reservations);
         }
         private List<TourReservation> GetPending(List<TourReservation> reservations)
         {
-            return _repository.GetPendingReservations(reservations);
+            return _repository.GetPending(reservations);
         }
 
         public List<TourReservation> GetDuplicates(int userId, int tourId)

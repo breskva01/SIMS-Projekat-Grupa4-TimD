@@ -24,16 +24,6 @@ namespace InitialProject.Repositories
         private readonly TourFileHandler _tourFileHandler;
         private readonly TourReservationFileHandler _tourReservationFileHandler;
         
-        public TourReservation Update(TourReservation tourReservation)
-        {
-            _tourReservations = _tourReservationFileHandler.Load();
-            TourReservation updated = _tourReservations.Find(t => t.Id == tourReservation.Id);
-            _tourReservations.Remove(updated);
-            _tourReservations.Add(tourReservation);
-            _tourReservationFileHandler.Save(_tourReservations);
-            return tourReservation;
-        }
-
         public TourReservationRepository()
         {
             _tourReservationFileHandler = new TourReservationFileHandler();
@@ -50,70 +40,17 @@ namespace InitialProject.Repositories
         {
             return _tourReservations.Find(x => x.Id == id);
         }
-
-        public List<TourReservation> GetPresentReservations(List<TourReservation> reservations)
-        {
-            List<TourReservation> presentReservations = new List<TourReservation>();
-            foreach (TourReservation tr in reservations)
-            {
-                if (tr.Presence == Presence.Present)
-                    presentReservations.Add(tr);
-            }
-            return presentReservations;
-
-        }
-
-        public List<TourReservation> GetPendingReservations(List<TourReservation> reservations)
-        {
-            List<TourReservation> pendingReservations = new List<TourReservation>();
-            foreach (TourReservation tr in reservations)
-            {
-                if (tr.Presence == Presence.Pending)
-                    pendingReservations.Add(tr);
-            }
-            return pendingReservations;
-
-        }
-
-        public List<TourReservation> GetDuplicates(List<TourReservation> reservations, int tourId)
-        {
-            List<TourReservation> duplicateReservations = new List<TourReservation>();
-            foreach(TourReservation tr in reservations)
-            {
-                if(tr.TourId == tourId)
-                {
-                    duplicateReservations.Add(tr);
-                }
-            }
-            return duplicateReservations;
-        }
-
-        public List<TourReservation> GetUnrated(List<TourReservation> reservations)
-        {
-            List<TourReservation> rateableReservations = new List<TourReservation>();
-            foreach (TourReservation tr in reservations)
-            {
-                if(tr.RatingId == 0)
-                {
-                    rateableReservations.Add(tr);
-                }
-            }
-            return rateableReservations;
-        }
-
         public List<TourReservation> GetByUserId(int userId)
         {
             _tourReservations = _tourReservationFileHandler.Load();
             List<TourReservation> reservations = new List<TourReservation>();
-            foreach(TourReservation tr in _tourReservations)
+            foreach (TourReservation tr in _tourReservations)
             {
-                if(tr.GuestId == userId) 
+                if (tr.GuestId == userId)
                     reservations.Add(tr);
             }
             return reservations;
-
         }
-
         public List<TourReservation> GetByUserAndTourId(int userId, int tourId)
         {
             _tourReservations = GetByUserId(userId);
@@ -124,9 +61,16 @@ namespace InitialProject.Repositories
                     reservations.Add(tr);
             }
             return reservations;
-
         }
-
+        public TourReservation Update(TourReservation tourReservation)
+        {
+            _tourReservations = _tourReservationFileHandler.Load();
+            TourReservation updated = _tourReservations.Find(t => t.Id == tourReservation.Id);
+            _tourReservations.Remove(updated);
+            _tourReservations.Add(tourReservation);
+            _tourReservationFileHandler.Save(_tourReservations);
+            return tourReservation;
+        }
         public TourReservation Save(TourReservation tourReservation)
         {
             _tours = _tourFileHandler.Load();
@@ -147,7 +91,6 @@ namespace InitialProject.Repositories
 
             return tourReservation;
         }
-
         public int NextId()
         {
             _tourReservations = _tourReservationFileHandler.Load();
@@ -157,18 +100,63 @@ namespace InitialProject.Repositories
             }
             return _tourReservations.Max(r => r.Id) + 1;
         }
+
+        public List<TourReservation> GetPresent(List<TourReservation> reservations)
+        {
+            List<TourReservation> presentReservations = new List<TourReservation>();
+            foreach (TourReservation tr in reservations)
+            {
+                if (tr.Presence == Presence.Present)
+                    presentReservations.Add(tr);
+            }
+            return presentReservations;
+        }
         public List<TourReservation> GetPresentByTourId(int id)
         {
             _tourReservations = _tourReservationFileHandler.Load();
-            List<TourReservation> filteredReservations = new List<TourReservation>(); 
-            foreach(TourReservation tourReservation in _tourReservations)
+            List<TourReservation> filteredReservations = new List<TourReservation>();
+            foreach (TourReservation tourReservation in _tourReservations)
             {
-                if(tourReservation.TourId == id && tourReservation.Presence == Presence.Present)
+                if (tourReservation.TourId == id && tourReservation.Presence == Presence.Present)
                 {
-                    filteredReservations.Add(tourReservation);  
+                    filteredReservations.Add(tourReservation);
                 }
             }
             return filteredReservations;
+        }
+        public List<TourReservation> GetPending(List<TourReservation> reservations)
+        {
+            List<TourReservation> pendingReservations = new List<TourReservation>();
+            foreach (TourReservation tr in reservations)
+            {
+                if (tr.Presence == Presence.Pending)
+                    pendingReservations.Add(tr);
+            }
+            return pendingReservations;
+        }
+        public List<TourReservation> GetDuplicates(List<TourReservation> reservations, int tourId)
+        {
+            List<TourReservation> duplicateReservations = new List<TourReservation>();
+            foreach(TourReservation tr in reservations)
+            {
+                if(tr.TourId == tourId)
+                {
+                    duplicateReservations.Add(tr);
+                }
+            }
+            return duplicateReservations;
+        }
+        public List<TourReservation> GetUnrated(List<TourReservation> reservations)
+        {
+            List<TourReservation> rateableReservations = new List<TourReservation>();
+            foreach (TourReservation tr in reservations)
+            {
+                if (tr.RatingId == 0)
+                {
+                    rateableReservations.Add(tr);
+                }
+            }
+            return rateableReservations;
         }
         public string GetVoucherPercentage(int id)
         {

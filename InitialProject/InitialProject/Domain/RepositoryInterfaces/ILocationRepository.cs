@@ -11,6 +11,5 @@ namespace InitialProject.Domain.RepositoryInterfaces
     {
         public List<Location> GetAll();
         public Location GetById(int id);
-
     }
 }

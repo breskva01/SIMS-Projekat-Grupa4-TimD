@@ -50,9 +50,6 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-
-
-
         public RatingViewModel(TourReservation tourReservation)
         {
             _tourReservation = tourReservation;
@@ -60,7 +57,7 @@ namespace InitialProject.WPF.ViewModels
             _userService = new UserService();
             _keyPointService = new KeyPointService();
             _tourRatingService = new TourRatingService();
-            tourRating = _tourRatingService.Get(_tourReservation.RatingId);
+            tourRating = _tourRatingService.GetById(_tourReservation.RatingId);
             guest = _userService.GetById(_tourReservation.GuestId);
             _isValid = tourRating.IsValid;
             _id = tourRating.Id;

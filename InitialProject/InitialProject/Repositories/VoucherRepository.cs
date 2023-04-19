@@ -26,49 +26,11 @@ namespace InitialProject.Repositories
         {
             return _voucherFileHandler.Load();
         }
-
-        public Voucher Update(Voucher voucher)
-        {
-            _vouchers = _voucherFileHandler.Load();
-            Voucher updated = _vouchers.Find(v => v.Id == voucher.Id);
-            _vouchers.Remove(updated);
-            _vouchers.Add(voucher);
-            _voucherFileHandler.Save(_vouchers);
-            return voucher;
-        }
-        public Voucher Save(Voucher voucher)
-        {
-            voucher.Id = NextId();
-            _vouchers = _voucherFileHandler.Load();
-            _vouchers.Add(voucher);
-            _voucherFileHandler.Save(_vouchers);
-            return voucher;
-        }
-
-        public int NextId()
-        {
-            _vouchers = _voucherFileHandler.Load();
-            if (_vouchers.Count < 1)
-            {
-                return 1;
-            }
-            return _vouchers.Max(t => t.Id) + 1;
-        }
-
-        public void Delete(Voucher voucher)
-        {
-            _vouchers = _voucherFileHandler.Load();
-            Voucher founded = _vouchers.Find(v => v.Id == voucher.Id);
-            _vouchers.Remove(founded);
-            _voucherFileHandler.Save(_vouchers);
-        }
-
         public Voucher GetById(int voucherId)
         {
             _vouchers = _voucherFileHandler.Load();
             foreach (Voucher voucher in _vouchers)
             {
-                //CheckVoucherExpiration(voucher);
                 if (IsExpired(voucher))
                 {
                     voucher.State = VoucherState.Expired;
@@ -78,7 +40,39 @@ namespace InitialProject.Repositories
             List<Voucher> updatedVouchers = _voucherFileHandler.Load();
             return updatedVouchers.Find(v => v.Id == voucherId);
         }
-
+        public Voucher Update(Voucher voucher)
+        {
+            _vouchers = _voucherFileHandler.Load();
+            Voucher updated = _vouchers.Find(v => v.Id == voucher.Id);
+            _vouchers.Remove(updated);
+            _vouchers.Add(voucher);
+            _voucherFileHandler.Save(_vouchers);
+            return voucher;
+        }
+        public void Delete(Voucher voucher)
+        {
+            _vouchers = _voucherFileHandler.Load();
+            Voucher founded = _vouchers.Find(v => v.Id == voucher.Id);
+            _vouchers.Remove(founded);
+            _voucherFileHandler.Save(_vouchers);
+        }
+        public Voucher Save(Voucher voucher)
+        {
+            voucher.Id = NextId();
+            _vouchers = _voucherFileHandler.Load();
+            _vouchers.Add(voucher);
+            _voucherFileHandler.Save(_vouchers);
+            return voucher;
+        }
+        public int NextId()
+        {
+            _vouchers = _voucherFileHandler.Load();
+            if (_vouchers.Count < 1)
+            {
+                return 1;
+            }
+            return _vouchers.Max(t => t.Id) + 1;
+        }
         public List<Voucher> FilterUnexpired(List<Voucher> vouchers)
         {
             List<Voucher> filteredVouchers = new List<Voucher>();
@@ -92,7 +86,6 @@ namespace InitialProject.Repositories
             }
             return filteredVouchers;
         }
-
         public List<Voucher> FilterUnused(List<Voucher> vouchers)
         {
             List<Voucher> filteredVouchers = new List<Voucher>();
@@ -105,19 +98,14 @@ namespace InitialProject.Repositories
             }
             return filteredVouchers;
         }
-
-        public bool IsExpired(Voucher voucher)
-        {
-            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
-
-            return today.CompareTo(voucher.ExpirationDate) > 0;
-
-        }
-
         public bool MatchesUnusedFilter(Voucher voucher)
         {
             return voucher.State == VoucherState.Unused;
-
+        }
+        public bool IsExpired(Voucher voucher)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
+            return today.CompareTo(voucher.ExpirationDate) > 0;
         }
     }
 }
