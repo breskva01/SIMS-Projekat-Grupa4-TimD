@@ -32,7 +32,7 @@ namespace InitialProject.Application.Services
         }
 
         public TourRating Save(int guideKnowledge, int guideLanguage, int tourInteresting,
-                         int tourInformative, int tourContent, string comment, List<string> pictureURLs)
+                         int tourInformative, int tourContent, string comment, List<string> pictureURLs, User guest, int guideId)
         {
             var rating = new TourRating()
             {
@@ -42,6 +42,9 @@ namespace InitialProject.Application.Services
                 TourInformative = tourInformative,
                 TourContent = tourContent,
                 Comment = comment,
+                Guest = guest,
+                GuestId = guest.Id,
+                GuideId = guideId,
                 PictureURLs = pictureURLs
             };
             return _repository.Save(rating);

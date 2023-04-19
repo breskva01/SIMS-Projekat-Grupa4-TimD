@@ -17,13 +17,16 @@ namespace InitialProject.Domain.Models
         public int TourContent { get; set; }
         public string Comment { get; set; }
         public List<string> PictureURLs { get; set; }
+        public int GuideId { get; set; }
+        public User Guest { get; set; }
+        public int GuestId { get; set; }
         public TourRating()
         {
             Comment = string.Empty;
             PictureURLs = new List<string>();
         }
 
-        public TourRating(int guideKnowledge, int guideLanguage, int tourInteresting, int tourInformative, int tourContent, string comment, List<string> pictureURLs)
+        public TourRating(int guideKnowledge, int guideLanguage, int tourInteresting, int tourInformative, int tourContent, string comment, List<string> pictureURLs, int guideId, User guest, int guestId)
         {
             GuideKnowledge = guideKnowledge;
             GuideLanguage = guideLanguage;
@@ -32,6 +35,9 @@ namespace InitialProject.Domain.Models
             TourContent = tourContent;
             Comment = comment;
             PictureURLs = pictureURLs;
+            GuideId = guideId;
+            Guest = guest;
+            GuestId = guestId;
         }
 
         public void FromCSV(string[] values)
@@ -43,7 +49,9 @@ namespace InitialProject.Domain.Models
             TourInformative = int.Parse(values[4]);
             TourContent = int.Parse(values[5]);
             Comment = values[6];
-            PictureURLs = new List<string>(values[7].Split(','));
+            GuestId = int.Parse(values[7]);
+            GuideId = int.Parse(values[8]);
+            PictureURLs = new List<string>(values[9].Split(','));
         }
 
         public string[] ToCSV()
@@ -58,6 +66,8 @@ namespace InitialProject.Domain.Models
                 TourInformative.ToString(),
                 TourContent.ToString(),
                 Comment,
+                GuestId.ToString(),
+                GuideId.ToString(),
                 pictureURLs
             };
             return csvValues;
