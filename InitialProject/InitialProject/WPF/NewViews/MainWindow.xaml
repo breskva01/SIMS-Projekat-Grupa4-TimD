@@ -79,6 +79,9 @@
             <DataTemplate DataType="{x:Type vms:RateAccommodationViewModel}">
                 <views:RateAccommodationView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GuideRatingsViewModel}">
+                <views:GuideRatingsView />
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="{Binding CurrentViewModel}" />

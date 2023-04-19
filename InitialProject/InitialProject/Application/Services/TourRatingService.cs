@@ -5,6 +5,7 @@ using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,7 +51,15 @@ namespace InitialProject.Application.Services
             return _repository.Save(rating);
         }
 
-        
+        public ObservableCollection<TourRating> GetEligibleForDisplay(int id)
+        {
+            return _repository.GetEligibleForDisplay(id);
+        }
+
+        public TourRating Update(TourRating rating)
+        {
+            return _repository.Update(rating);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);

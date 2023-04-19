@@ -12,5 +12,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         User GetByUsername(string username);
         List<User> GetAll();
         User Update(User user);
+        User GetById(int id);
     }
 }

@@ -3,6 +3,7 @@ using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,19 @@ namespace InitialProject.Repositories
                 return 1;
             }
             return _tourRatings.Max(r => r.Id) + 1;
+        }
+        public ObservableCollection<TourRating> GetEligibleForDisplay(int id)
+        {
+            _tourRatings = _tourRatingFileHandler.Load();
+            ObservableCollection<TourRating> ownerRatings = new ObservableCollection<TourRating>();
+            foreach(TourRating rating in _tourRatings)
+            {
+                //if (rating.GuideId == id)
+                //{
+                    ownerRatings.Add(rating);
+                //}
+            }
+            return ownerRatings;
         }
 
 

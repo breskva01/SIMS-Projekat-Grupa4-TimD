@@ -110,6 +110,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetNumberOfOlderGuests(tour);
         }
+        public List<Tour> GetFinishedTours()
+        {
+            return _repository.GetFinishedTours();
+        }
 
         public void Subscribe(IObserver observer)
         {

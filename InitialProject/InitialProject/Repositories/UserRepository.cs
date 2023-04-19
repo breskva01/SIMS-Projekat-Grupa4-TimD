@@ -37,5 +37,10 @@ namespace InitialProject.Repository
             _fileHandler.Save(_users);
             return user;
         }
+        public User GetById(int id)
+        {
+            _users = _fileHandler.Load();
+            return _users.Find(u => u.Id == id);
+        }
     }
 }

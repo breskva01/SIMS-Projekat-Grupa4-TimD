@@ -124,7 +124,6 @@ namespace InitialProject.WPF.ViewModels
             return new TourCreationViewModel(_navigationStore, _user);
         }
         
-        
         private ToursTodayViewModel CreateGuideVM()
         {
             return new ToursTodayViewModel(_navigationStore, _user);
@@ -135,19 +134,14 @@ namespace InitialProject.WPF.ViewModels
             return new AllToursViewModel(_navigationStore, _user);
         }
         
-        private ToursTodayViewModel CreateGuideVM()
-        {
-            return new ToursTodayViewModel(_navigationStore, _user);
-        }
-        
         private TourStatsViewModel CreateGuideVM()
         {
             return new TourStatsViewModel(_navigationStore, _user);
         }
         */
-        private TourStatsViewModel CreateGuideVM()
+        private GuideRatingsViewModel CreateGuideVM()
         {
-            return new TourStatsViewModel(_navigationStore, _user);
+            return new GuideRatingsViewModel(_navigationStore, _user);
         }
     }
 }
