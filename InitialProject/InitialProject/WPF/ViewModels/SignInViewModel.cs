@@ -118,32 +118,7 @@ namespace InitialProject.WPF.ViewModels
             }
             return new Guest2MenuViewModel(_navigationStore, _user);
         }
-        /*
-        private TourCreationViewModel CreateGuideVM()
-        {
-            return new TourCreationViewModel(_navigationStore, _user);
-        }
-        
-        private ToursTodayViewModel CreateGuideVM()
-        {
-            return new ToursTodayViewModel(_navigationStore, _user);
-        }
-        
-        private AllToursViewModel CreateGuideVM()
-        {
-            return new AllToursViewModel(_navigationStore, _user);
-        }
-        
-        private TourStatsViewModel CreateGuideVM()
-        {
-            return new TourStatsViewModel(_navigationStore, _user);
-        }
-        
-        private GuideRatingsViewModel CreateGuideVM()
-        {
-            return new GuideRatingsViewModel(_navigationStore, _user);
-        }
-        */
+
         private GuideMenuViewModel CreateGuideVM()
         {
             return new GuideMenuViewModel(_navigationStore, _user);

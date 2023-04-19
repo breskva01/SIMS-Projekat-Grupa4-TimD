@@ -62,10 +62,31 @@ namespace InitialProject.WPF.ViewModels
             _user = user;
             SelectedTour = tour;
             AvailableSpots = (SelectedTour.MaximumGuests - SelectedTour.CurrentNumberOfGuests).ToString();
-            CancelCommand = new ExecuteMethodCommand(ShowTourBrowserView);
+
             ReserveCommand = new ExecuteMethodCommand(MakeReservation);
             UseVoucherCommand = new ReserveWithVoucherCommand(ShowVoucherView, this);
-            //CancelCommand = new NavigateCommand(tourBrowserNavigationService);
+            CancelCommand = new ExecuteMethodCommand(ShowTourBrowserView);
+        }
+
+        private void MakeReservation()
+        {
+            int numberOfGuests = GetNumberOfGuests();
+            if (numberOfGuests == 0)
+            {
+                MessageBox.Show("Please input a number of guests first.", "Warning", MessageBoxButton.OK, MessageBoxImage.Hand);
+                return;
+            }
+
+            if (numberOfGuests + SelectedTour.CurrentNumberOfGuests > SelectedTour.MaximumGuests)
+            {
+                MessageBox.Show("Unfortunately, there is not enough available spots for that many guests." +
+                    " Try lowering the guest number.", "Warning", MessageBoxButton.OK, MessageBoxImage.Hand);
+                return;
+            }
+
+            TourReservation tourReservation = _tourReservationService.CreateReservation(SelectedTour.Id, _user.Id, numberOfGuests, false);
+
+            ShowTourBrowserView();
         }
 
         private void ShowVoucherView()
@@ -81,24 +102,6 @@ namespace InitialProject.WPF.ViewModels
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourBrowserViewModel));
             navigate.Execute(null);
         }
-        private void MakeReservation()
-        {
-            int numberOfGuests = GetNumberOfGuests();
-            if (numberOfGuests == 0)
-            {
-                MessageBox.Show("Please input a number of guests first.", "Warning", MessageBoxButton.OK, MessageBoxImage.Hand);
-                return;
-            }
-
-            if (numberOfGuests + SelectedTour.CurrentNumberOfGuests > SelectedTour.MaximumGuests)
-            {
-                MessageBox.Show("Unfortunately, there is not enough available spots for that many guests. Try lowering the guest number.", "Warning", MessageBoxButton.OK, MessageBoxImage.Hand);
-                return;
-            }
-
-            TourReservation tourReservation = _tourReservationService.CreateReservation(SelectedTour.Id, _user.Id, numberOfGuests, false);
-
-            ShowTourBrowserView();
-        }
+        
     }
 }

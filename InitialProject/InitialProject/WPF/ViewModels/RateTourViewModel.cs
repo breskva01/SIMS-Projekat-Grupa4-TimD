@@ -18,7 +18,6 @@ namespace InitialProject.WPF.ViewModels
     {
         private User _user;
         private Tour _tour;
-        private readonly TourService _tourService;
         private readonly TourReservationService _tourReservationService;
         private readonly TourRatingService _tourRatingService;
         private readonly NavigationStore _navigationStore;
@@ -40,7 +39,6 @@ namespace InitialProject.WPF.ViewModels
             _navigationStore = navigationStore;
             _user = user;
             _tour = tour;
-            _tourService = new TourService();
             _tourReservationService = new TourReservationService();
             _tourRatingService = new TourRatingService();
             _pictureURLs = new List<string>();
@@ -48,9 +46,6 @@ namespace InitialProject.WPF.ViewModels
             BackCommand = new ExecuteMethodCommand(ShowTourRatingView);
             RateCommand = new ExecuteMethodCommand(SubmitRating);
             UploadImagesCommand = new ExecuteMethodCommand(UploadImages);
-
-
-
         }
         public void SubmitRating()
         {

@@ -14,20 +14,20 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourStatsViewModel : ViewModelBase
     {
-        public ObservableCollection<Location> Locations { get; set; }
         private readonly NavigationStore _navigationStore;
         private User _user;
+        private Tour _tour;
 
-        private LocationService _locationService;
-
-        private Tour tour;
+        public ObservableCollection<Location> Locations { get; set; }
 
         private readonly ObservableCollection<Tour> _tours;
         public IEnumerable<Tour> MostVisited => _tours;
 
         private TourService _tourService;
         private TourReservationService _tourReservationService;
+        private LocationService _locationService;
 
+        public ICommand BackCommand { get; set; }
 
         private string _selectedYear;
         public string SelectedYear
@@ -88,19 +88,6 @@ namespace InitialProject.WPF.ViewModels
                 OnPropertyChanged(nameof(AvaiableYears));
             }
         }
-
-        private void YearsSelectionChanged()
-        {
-            _tours.Clear();
-            tour = _tourService.GetMostVisited(SelectedYear);
-
-            foreach (Location l in Locations)
-            {
-                if (tour.LocationId == l.Id)
-                    tour.Location = l;
-            }
-            _tours.Add(tour);
-        }
         
         private string _minorGuests;
         public string MinorGuests
@@ -122,6 +109,18 @@ namespace InitialProject.WPF.ViewModels
             {
                 _middleAgeGuests = value;
                 OnPropertyChanged(nameof(MiddleAgeGuests));
+
+            }
+        }
+
+        private string _olderGuests;
+        public string OlderGuests
+        {
+            get { return _olderGuests; }
+            set
+            {
+                _olderGuests = value;
+                OnPropertyChanged(nameof(OlderGuests));
 
             }
         }
@@ -149,18 +148,56 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        private string _olderGuests;
-        public string OlderGuests
+        public TourStatsViewModel(NavigationStore navigationStore, User user)
         {
-            get { return _olderGuests; }
-            set
-            {
-                _olderGuests = value;
-                OnPropertyChanged(nameof(OlderGuests));
+            _navigationStore = navigationStore;
+            _user = user;
 
-            }
+            _tour = new Tour();
+            _tours = new ObservableCollection<Tour>();
+            _avaiableYears = new List<string>();
+            _tourNames = new List<string>();
+
+            _tourService = new TourService();
+            _tourReservationService = new TourReservationService();
+            _locationService = new LocationService();
+
+            AllGuests = string.Empty;
+
+            _tourNames = _tourService.GetFinishedTourNames();
+            _avaiableYears = _tourService.GetAvailableYears();
+            _avaiableYears.Add("All time");
+
+            Locations = new ObservableCollection<Location>(_locationService.GetAll());
+
+            InitializeCommands();
         }
 
+        private void InitializeCommands()
+        { 
+            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+
+        }
+
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
+        }
+
+        private void YearsSelectionChanged()
+        {
+            _tours.Clear();
+            _tour = _tourService.GetMostVisited(SelectedYear);
+
+            foreach (Location l in Locations)
+            {
+                if (_tour.LocationId == l.Id)
+                    _tour.Location = l;
+            }
+            _tours.Add(_tour);
+        }
 
         private void NamesSelectionChanged()
         {
@@ -174,45 +211,6 @@ namespace InitialProject.WPF.ViewModels
             WithoutVoucher = (100 - int.Parse(WithVoucher)).ToString();
             WithVoucher += "%";
             WithoutVoucher += "%";
-
-        }
-
-        public ICommand BackCommand { get; set; }
-
-        public TourStatsViewModel(NavigationStore navigationStore, User user)
-        {
-            _navigationStore = navigationStore;
-            _user = user;
-            _tours = new ObservableCollection<Tour>();
-
-            _tourService = new TourService();
-            _tourReservationService = new TourReservationService();
-            _locationService = new LocationService();
-
-            tour = new Tour();
-            _avaiableYears = new List<string>();
-            _tourNames = new List<string>();
-
-            AllGuests = string.Empty;
-
-            _tourNames = _tourService.GetFinishedTourNames();
-            _avaiableYears = _tourService.GetAvailableYears();
-            _avaiableYears.Add("All time");
-
-            Locations = new ObservableCollection<Location>(_locationService.GetAll());
-
-            InitializeCommands();
-        }
-        private void InitializeCommands()
-        { 
-            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
-
-        }
-        private void ShowGuideMenuView()
-        {
-            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigate.Execute(null);
         }
 
     }

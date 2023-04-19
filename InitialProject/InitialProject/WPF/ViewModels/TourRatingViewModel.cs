@@ -32,9 +32,9 @@ namespace InitialProject.WPF.ViewModels
             _tourReservationService = new TourReservationService();
             _tourService = new TourService();
             _locationService = new LocationService();
+
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             List<Tour> Tours = new List<Tour>();
-
             List<TourReservation> unratedReservations = _tourReservationService.GetUnratedByUser(user.Id);
             foreach(TourReservation tr in unratedReservations)
             {
@@ -43,8 +43,6 @@ namespace InitialProject.WPF.ViewModels
                 Tours.Add(tour);
             }
             UnratedTours = new ObservableCollection<Tour>(Tours.DistinctBy(t => t.Id));
-
-
 
             RateTourCommand = new TourClickCommand(ShowRateTourView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
@@ -58,7 +56,6 @@ namespace InitialProject.WPF.ViewModels
             navigateCommand.Execute(null);
         }
         
-
         private void ShowGuest2MenuView()
         {
             Guest2MenuViewModel guest2MenuViewModel = new Guest2MenuViewModel(_navigationStore, _user);
