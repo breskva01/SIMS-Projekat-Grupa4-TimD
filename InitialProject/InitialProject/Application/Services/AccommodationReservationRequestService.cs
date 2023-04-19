@@ -34,6 +34,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetAllNewlyAnswered(guestId);
         }
+        public void UpdateGuestNotifiedField(int guestId)
+        {
+            _repository.UpdateGuestNotifiedField(guestId);
+        }
         public bool HasPendingMoveRequest(int reservationId)
         {
             var requests = _repository.GetAll();

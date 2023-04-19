@@ -158,6 +158,8 @@ namespace InitialProject.WPF.ViewModels
         }
         private void NotificationsPrompt()
         {
+            var requestService = new AccommodationReservationRequestService();
+            requestService.UpdateGuestNotifiedField(_loggedInUser.Id);
             MessageBoxResult result = MessageBox.Show(
                    "Stiglo je jedan ili više novih odgovora na vaše zahteve," +
                    "da li želite da ih pogledate?",

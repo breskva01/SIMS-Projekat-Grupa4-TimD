@@ -106,6 +106,9 @@
             <DataTemplate DataType="{x:Type vms:OwnerViewModel}">
                 <views:OwnerView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:MyAccommodationReservationsViewModel}">
+                <views:MyAccommodationReservationsView />
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="{Binding CurrentViewModel}" />

@@ -16,6 +16,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public void ApproveRequest(int reservationId);
         public void DenyRequest(int reservationId, string comment);
         List<AccommodationReservationMoveRequest> GetAllNewlyAnswered(int guestId);
+        void UpdateGuestNotifiedField(int guestId);
         void Save(AccommodationReservationMoveRequest request);
     }
 
