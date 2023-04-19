@@ -28,8 +28,12 @@ namespace InitialProject.WPF.ViewModels
 
         private LocationService _locationService;
         private KeyPointService _keyPointService;
-        private TourService tourService;
+        private TourService _tourService;
 
+        public ICommand ConfirmCommand { get; set; }
+        public ICommand CancelCommand { get; }
+        public ICommand AddKeyPointCommand { get; }
+        public ICommand BackCommand { get; set; }
 
         private List<string> _countries;
         public List<string> Countries
@@ -124,48 +128,6 @@ namespace InitialProject.WPF.ViewModels
 
             }
         }
-
-        private void PopulateCitiesComboBox()
-        {
-            if (string.IsNullOrEmpty(SelectedCountry))
-            {
-                Cities = null;
-                return;
-            }
-            Cities = Locations.Where(l => l.Country == SelectedCountry).Select(l => l.City).ToList();
-        }
-
-        private void PopulateFirstKeyPointCityComboBox()
-        {
-            SelectedKeyPointCity = SelectedCity;
-        }
-        
-        private void PopulateKeyPointPlacesComboBox()
-        {
-            if (string.IsNullOrEmpty(SelectedKeyPointCity))
-            {
-                KeyPointPlaces = null;
-                return;
-            }
-            List<KeyPoint> keyPointsShow = new List<KeyPoint>();
-
-            foreach (Location l in Locations)
-            {
-                if (SelectedKeyPointCity == l.City)
-                {
-                    foreach (KeyPoint ky in KeyPoints)
-                    {
-                        if (ky.LocationId == l.Id)
-                        {
-                            keyPointsShow.Add(ky);
-                        }
-                    }
-                }
-            }
-            KeyPointPlaces = keyPointsShow.Select(l => l.Place).Distinct().ToList();
-        }
-        
-
 
         private string _tourName;
         public string TourName
@@ -286,17 +248,16 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
-        public ICommand ConfirmCommand;
-        public ICommand CancelCommand { get; }
-        public ICommand AddKeyPointCommand { get; } 
 
         public TourCreationViewModel(NavigationStore navigationStore, User user)
         {
-            tourService = new TourService();    
+            _navigationStore = navigationStore;
+            _user = user;
+
+            _tourService = new TourService();    
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
             
-           // ConfirmCommand = new CreateTourCommand(this);
             AddKeyPointCommand = new AddKeyPointCommand(this);
 
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
@@ -305,14 +266,15 @@ namespace InitialProject.WPF.ViewModels
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
             KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
 
-            Start = new DateTime(2022, 1, 1, 00, 5, 00);
-
             InitializeCommands();
+
+            Start = new DateTime(2023, 4, 19);
         }
 
         private void InitializeCommands()
         {
             ConfirmCommand = new ExecuteMethodCommand(CreateTour);
+            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
 
         }
         public void CreateTour()
@@ -330,9 +292,13 @@ namespace InitialProject.WPF.ViewModels
                 _keyPointIds.Add(ky.Id);
             }
 
-            tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
+            _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
 
-            // ovo u metodu
+            ClearOutTextBoxes();
+
+        }
+        private void ClearOutTextBoxes()
+        {
             TourName = null;
             City = null;
             Country = null;
@@ -345,8 +311,8 @@ namespace InitialProject.WPF.ViewModels
             LanguageType = null;
             _tourKeyPoints.Clear();
             _keyPointIds.Clear();
-            
         }
+
         public void AddKeyPoint()
         {
             KeyPoint keyPoint = KeyPoints.Where(ky => ky.Place == SelectedKeyPointPlace).FirstOrDefault();
@@ -356,6 +322,53 @@ namespace InitialProject.WPF.ViewModels
             // Clearing comboboxes after adding one keyPoint
             SelectedKeyPointCity = null;
             SelectedKeyPointPlace = null;
+        }
+
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
+        }
+
+        private void PopulateCitiesComboBox()
+        {
+            if (string.IsNullOrEmpty(SelectedCountry))
+            {
+                Cities = null;
+                return;
+            }
+            Cities = Locations.Where(l => l.Country == SelectedCountry).Select(l => l.City).ToList();
+        }
+
+        private void PopulateFirstKeyPointCityComboBox()
+        {
+            SelectedKeyPointCity = SelectedCity;
+        }
+
+        private void PopulateKeyPointPlacesComboBox()
+        {
+            if (string.IsNullOrEmpty(SelectedKeyPointCity))
+            {
+                KeyPointPlaces = null;
+                return;
+            }
+            List<KeyPoint> keyPointsShow = new List<KeyPoint>();
+
+            foreach (Location l in Locations)
+            {
+                if (SelectedKeyPointCity == l.City)
+                {
+                    foreach (KeyPoint ky in KeyPoints)
+                    {
+                        if (ky.LocationId == l.Id)
+                        {
+                            keyPointsShow.Add(ky);
+                        }
+                    }
+                }
+            }
+            KeyPointPlaces = keyPointsShow.Select(l => l.Place).Distinct().ToList();
         }
 
 

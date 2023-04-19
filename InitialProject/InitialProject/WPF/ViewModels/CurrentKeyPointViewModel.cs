@@ -31,8 +31,7 @@ namespace InitialProject.WPF.ViewModels
             _tourReservationService = new TourReservationService();
             _keyPointService = new KeyPointService();
 
-            Tour trackedTour = _tourService.GetById(_tourReservationService.getActivePresentReservations(_user.Id).FirstOrDefault().TourId);
-
+            Tour trackedTour = _tourService.GetById(_tourReservationService.GetActivePresent(_user.Id).FirstOrDefault().TourId);
 
             TourName = trackedTour.Name;
             KeyPointPlace = _keyPointService.GetById(trackedTour.CurrentKeyPoint).Place;

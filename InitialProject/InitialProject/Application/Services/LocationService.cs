@@ -1,5 +1,7 @@
 ﻿using InitialProject.Application.Observer;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,30 +14,31 @@ namespace InitialProject.Application.Services
     public class LocationService
     {
         private readonly List<IObserver> _observers;
-        private readonly LocationRepository _repository;
+        private readonly ILocationRepository _repository;
+
         public LocationService()
         {
             _observers = new List<IObserver>();
-            _repository = new LocationRepository();
+            _repository = RepositoryStore.GetILocationRepository;
         }
+
         public List<Location> GetAll()
         {
             return _repository.GetAll();
         }
-        public Location Get(int id)
+        public Location GetById(int id)
         {
-            return _repository.Get(id);
+            return _repository.GetById(id);
         }
+
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);
         }
-       
         public void Unsubscribe(IObserver observer)
         {
             _observers.Remove(observer);
         }
-
         public void NotifyObservers()
         {
             foreach (var observer in _observers)

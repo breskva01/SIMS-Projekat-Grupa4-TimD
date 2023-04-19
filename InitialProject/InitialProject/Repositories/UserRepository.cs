@@ -25,14 +25,19 @@ namespace InitialProject.Repository
             _users = _fileHandler.Load();
         }
 
+        public List<User> GetAll()
+        {
+            return _fileHandler.Load();
+        }
+        public User GetById(int id)
+        {
+            _users = _fileHandler.Load();
+            return _users.Find(u => u.Id == id);
+        }
         public User GetByUsername(string username)
         {
             _users = _fileHandler.Load();
             return _users.FirstOrDefault(u => u.Username == username);
-        }
-        public List<User> GetAll()
-        {
-            return _fileHandler.Load();
         }
         public User Update(User user)
         {
@@ -43,5 +48,6 @@ namespace InitialProject.Repository
             _fileHandler.Save(_users);
             return user;
         }
+        
     }
 }

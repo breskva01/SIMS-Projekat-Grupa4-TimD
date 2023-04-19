@@ -2,7 +2,6 @@
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
-using InitialProject.WPF.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,6 +43,8 @@ namespace InitialProject.WPF.ViewModels
         private User _user;
 
         public ICommand StartTourCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+
 
         public ToursTodayViewModel(NavigationStore navigationStore, User user) 
         {
@@ -82,6 +83,8 @@ namespace InitialProject.WPF.ViewModels
         private void InitializeCommands()
         {
             StartTourCommand = new ExecuteMethodCommand(StartTour);
+            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+
         }
         private bool IsDateToday(Tour t)
         {
@@ -115,6 +118,12 @@ namespace InitialProject.WPF.ViewModels
         {
             return new TourLiveTrackingViewModel(_navigationStore, _user, SelectedTour);
 
+        }
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
         }
 
 

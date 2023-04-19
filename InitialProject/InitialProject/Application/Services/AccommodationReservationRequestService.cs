@@ -30,6 +30,16 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetByGuestId(guestId);
         }
+        public List<AccommodationReservationMoveRequest> GetAllNewlyAnswered(int guestId)
+        {
+            return _repository.GetAllNewlyAnswered(guestId);
+        }
+        public bool HasPendingMoveRequest(int reservationId)
+        {
+            var requests = _repository.GetAll();
+            return requests.Any(r => r.ReservationId == reservationId &&
+                                     r.Status == ReservationMoveRequestStatus.Pending);
+        }
         public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId)
         {
             return _repository.GetPendingRequestsByOwnerId(ownerId);

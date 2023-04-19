@@ -1,8 +1,6 @@
 ﻿using InitialProject.Application.Commands;
 using InitialProject.Application.Services;
-using InitialProject.Application.Storage;
 using InitialProject.Application.Stores;
-using InitialProject.Controller;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
 using System;
@@ -134,60 +132,18 @@ namespace InitialProject.WPF.ViewModels
         }
         private ViewModelBase CreateGuest2VM()
         {
-            if (_tourReservationService.getActivePendingReservations(_user.Id).Any())
+            if (_tourReservationService.GetActivePending(_user.Id).Any())
             {
                 return new PresenceConfirmationViewModel(_navigationStore, _user);
             }
             return new Guest2MenuViewModel(_navigationStore, _user);
         }
 
-        /* private TourCreationViewModel CreateGuideVM()
-         {
-             return new TourCreationViewModel(_navigationStore, _user);
-         }
-
-
-         private ToursTodayViewModel CreateGuideVM()
-         {
-             return new ToursTodayViewModel(_navigationStore, _user);
-         }
-
-         private AllToursViewModel CreateGuideVM()
-         {
-             return new AllToursViewModel(_navigationStore, _user);
-         }
-
-         private ToursTodayViewModel CreateGuideVM()
-         {
-             return new ToursTodayViewModel(_navigationStore, _user);
-         }
-
-         private TourStatsViewModel CreateGuideVM()
-         {
-             return new TourStatsViewModel(_navigationStore, _user);
-         }
-         */
-        private TourStatsViewModel CreateGuideVM()
+        private GuideMenuViewModel CreateGuideVM()
         {
-            return new TourStatsViewModel(_navigationStore, _user);
+            return new GuideMenuViewModel(_navigationStore, _user);
         }
-        /*
-        private AccommodationRegistrationViewModel CreateOwnerVM()
-        {
-            return new AccommodationRegistrationViewModel(_navigationStore, _user);
-        }
-        private GuestRatingViewModel GuestRatingVM()
-        {
-            return new GuestRatingViewModel(_navigationStore, _user);
-        }
-        private OwnerRatingsViewModel OwnerRatingsVM()
-        {
-            return new OwnerRatingsViewModel(_navigationStore, _user);
-        }
-        private ReservationMoveRequestsViewModel ReservationMoveRequestsVM()
-        {
-            return new ReservationMoveRequestsViewModel(_navigationStore, _user);
-        }*/
+
         private OwnerViewModel OwnerVM()
         {
             return new OwnerViewModel(_navigationStore, _user);

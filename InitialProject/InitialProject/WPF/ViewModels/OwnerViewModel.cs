@@ -1,8 +1,6 @@
 ﻿using InitialProject.Application.Commands;
 using InitialProject.Application.Services;
-using InitialProject.Application.Storage;
 using InitialProject.Application.Stores;
-using InitialProject.Controller;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
 using System;

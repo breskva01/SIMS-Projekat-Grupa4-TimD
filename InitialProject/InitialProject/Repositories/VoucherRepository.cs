@@ -1,4 +1,5 @@
 ﻿using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Windows;
 
 namespace InitialProject.Repositories
 {
-    class VoucherRepository
+    public class VoucherRepository : IVoucherRepository
     {
         private readonly VoucherFileHandler _voucherFileHandler;
         private List<Voucher> _vouchers;
@@ -25,7 +26,20 @@ namespace InitialProject.Repositories
         {
             return _voucherFileHandler.Load();
         }
-
+        public Voucher GetById(int voucherId)
+        {
+            _vouchers = _voucherFileHandler.Load();
+            foreach (Voucher voucher in _vouchers)
+            {
+                if (IsExpired(voucher))
+                {
+                    voucher.State = VoucherState.Expired;
+                    Update(voucher);
+                }
+            }
+            List<Voucher> updatedVouchers = _voucherFileHandler.Load();
+            return updatedVouchers.Find(v => v.Id == voucherId);
+        }
         public Voucher Update(Voucher voucher)
         {
             _vouchers = _voucherFileHandler.Load();
@@ -35,6 +49,13 @@ namespace InitialProject.Repositories
             _voucherFileHandler.Save(_vouchers);
             return voucher;
         }
+        public void Delete(Voucher voucher)
+        {
+            _vouchers = _voucherFileHandler.Load();
+            Voucher founded = _vouchers.Find(v => v.Id == voucher.Id);
+            _vouchers.Remove(founded);
+            _voucherFileHandler.Save(_vouchers);
+        }
         public Voucher Save(Voucher voucher)
         {
             voucher.Id = NextId();
@@ -43,7 +64,6 @@ namespace InitialProject.Repositories
             _voucherFileHandler.Save(_vouchers);
             return voucher;
         }
-
         public int NextId()
         {
             _vouchers = _voucherFileHandler.Load();
@@ -53,30 +73,6 @@ namespace InitialProject.Repositories
             }
             return _vouchers.Max(t => t.Id) + 1;
         }
-
-        public void Delete(Voucher voucher)
-        {
-            _vouchers = _voucherFileHandler.Load();
-            Voucher founded = _vouchers.Find(v => v.Id == voucher.Id);
-            _vouchers.Remove(founded);
-            _voucherFileHandler.Save(_vouchers);
-        }
-
-        public Voucher GetById(int voucherId)
-        {
-            _vouchers = _voucherFileHandler.Load();
-            foreach (Voucher voucher in _vouchers)
-            {
-                //CheckVoucherExpiration(voucher);
-                if (IsExpired(voucher)) { 
-                    voucher.State = VoucherState.Expired;
-                    Update(voucher);
-                }
-            }
-            List<Voucher> updatedVouchers = _voucherFileHandler.Load();
-            return updatedVouchers.Find(v => v.Id == voucherId);
-        }
-
         public List<Voucher> FilterUnexpired(List<Voucher> vouchers)
         {
             List<Voucher> filteredVouchers = new List<Voucher>();
@@ -90,7 +86,6 @@ namespace InitialProject.Repositories
             }
             return filteredVouchers;
         }
-
         public List<Voucher> FilterUnused(List<Voucher> vouchers)
         {
             List<Voucher> filteredVouchers = new List<Voucher>();
@@ -103,20 +98,14 @@ namespace InitialProject.Repositories
             }
             return filteredVouchers;
         }
-
-        public bool IsExpired(Voucher voucher)
-        {
-            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
-
-            return today.CompareTo(voucher.ExpirationDate) > 0;
-
-        }
-
         public bool MatchesUnusedFilter(Voucher voucher)
         {
             return voucher.State == VoucherState.Unused;
-
         }
-
+        public bool IsExpired(Voucher voucher)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
+            return today.CompareTo(voucher.ExpirationDate) > 0;
+        }
     }
 }

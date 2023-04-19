@@ -43,6 +43,7 @@ namespace InitialProject.Domain.Models
         public TourState State { get; set; }
         public int CurrentKeyPoint { get; set; }
         public int NumberOfArrivedGeusts { get; set; }
+        public int GuideId { get; set; }
 
         public Tour()
         {
@@ -58,7 +59,9 @@ namespace InitialProject.Domain.Models
             NumberOfArrivedGeusts = 0;
         }
 
-        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky, int currentKeyPoint, int numberOfArrivedGuests)
+        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, 
+            DateTime start, int duration, string pictureURL, int currentNumberOfGuests,
+            List<KeyPoint> ky, int currentKeyPoint, int numberOfArrivedGuests, int guideId)
         {
             Id = id;
             Name = name;
@@ -73,6 +76,7 @@ namespace InitialProject.Domain.Models
             KeyPoints = ky;
             CurrentKeyPoint = currentKeyPoint;
             NumberOfArrivedGeusts = numberOfArrivedGuests;
+            GuideId = guideId;
         }
 
         public void FromCSV(string[] values)
@@ -98,6 +102,7 @@ namespace InitialProject.Domain.Models
             State = (TourState)Enum.Parse(typeof(TourState), values[11]);
             CurrentKeyPoint = Convert.ToInt32(values[12]);
             NumberOfArrivedGeusts = Convert.ToInt32(values[13]);
+            GuideId = Convert.ToInt32(values[14]);
 
         }
         public string[] ToCSV()
@@ -122,7 +127,8 @@ namespace InitialProject.Domain.Models
                 keyPointIds,
                 State.ToString(),
                 CurrentKeyPoint.ToString(),
-                NumberOfArrivedGeusts.ToString()
+                NumberOfArrivedGeusts.ToString(),
+                GuideId.ToString(),
             };
             return csvValues;
         }

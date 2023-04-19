@@ -1,5 +1,5 @@
 ﻿using InitialProject.Application.Serializer;
-using InitialProject.Application.Storage;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
@@ -24,7 +24,10 @@ namespace InitialProject.Repository
 
         public List<Accommodation> GetAll()
         {
-            return _fileHandler.Load();
+            _accommodations = _fileHandler.Load();
+            var users = RepositoryStore.GetIUserRepository.GetAll();
+            _accommodations.ForEach(a => a.Owner = users.Find(u => u.Id == a.OwnerId));
+            return _accommodations;
         }
 
         public Accommodation Save(Accommodation accommodation)

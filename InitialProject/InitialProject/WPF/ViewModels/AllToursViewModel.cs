@@ -16,22 +16,31 @@ namespace InitialProject.WPF.ViewModels
 {
     public class AllToursViewModel : ViewModelBase
     {
+        private readonly NavigationStore _navigationStore;
+        private User _user;
+
+        public ObservableCollection<Location> _locations { get; set; }
         private readonly ObservableCollection<Tour> _tours;
         private readonly ObservableCollection<Tour> _toursShow;
         public IEnumerable<Tour> ToursShow => _toursShow;
 
-        public ObservableCollection<Location> Locations { get; set; }
-        private readonly NavigationStore _navigationStore;
-        private User _user;
+        private List<User> _users;
+        private List<int> _guestIds;
+        private List<User> _guests;
+        private List<TourReservation> _tourReservations;
 
         private LocationService _locationService;
         private TourService _tourService;
         private TourReservationService _tourReservationService;
-        private VoucherService _voucherService; 
-
-        public ICommand CancelTourCommand { get; set; }
+        private UserService _userService;
+        //private VoucherService _voucherService; 
 
         private DateTime _today;
+
+        public ICommand CreateVoucherNavigateCommand =>
+            new NavigateCommand(new NavigationService(_navigationStore, CreateVoucher()));
+        public ICommand CancelTourCommand { get; set; }
+        public ICommand BackCommand { get; set; }
 
         private Tour _selectedTour;
         public Tour SelectedTour
@@ -45,23 +54,12 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        private List<User> _users;
-        private List<int> _guestIds;
-        private List<User> _guests;
-        private List<TourReservation> _tourReservations;
-        private UserService _userService;
-
-        public ICommand CreateVoucherNavigateCommand =>
-   new NavigateCommand(new NavigationService(_navigationStore, CreateVoucher()));
-
         public AllToursViewModel(NavigationStore navigationStore, User user)
         {
-            _toursShow = new ObservableCollection<Tour>();
-
             _navigationStore = navigationStore;
             _user = user;
 
-            _voucherService = new VoucherService();
+            //_voucherService = new VoucherService();
             _tourService = new TourService();
             _locationService = new LocationService();
             _userService = new UserService();
@@ -69,17 +67,18 @@ namespace InitialProject.WPF.ViewModels
 
             _guestIds = new List<int>();
             _guests = new List<User>();
+            _toursShow = new ObservableCollection<Tour>();
 
             _tourReservations = new List<TourReservation>(_tourReservationService.GetAll());
             _tours = new ObservableCollection<Tour>(_tourService.GetAll());
-            Locations = new ObservableCollection<Location>(_locationService.GetAll());
+            _locations = new ObservableCollection<Location>(_locationService.GetAll());
             _users = new List<User>(_userService.GetAll());
 
-
+            _today = DateTime.Now;
 
             foreach (Tour t in _tours)
             {
-                foreach (Location l in Locations)
+                foreach (Location l in _locations)
                 {
                     if (t.LocationId == l.Id)
                         t.Location = l;
@@ -93,14 +92,14 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
 
-            _today = DateTime.Now;
-
             InitializeCommands();
 
         }
         private void InitializeCommands()
         {
             CancelTourCommand = new ExecuteMethodCommand(CancelTour);
+            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+
         }
         private void CancelTour()
         {
@@ -137,17 +136,7 @@ namespace InitialProject.WPF.ViewModels
                     }
 
                     CreateVoucherNavigateCommand.Execute(null);
-
-                    /*
-                    foreach (User guest in _guests)
-                    {
-                        guest.VouchersIds.Add();
-                    }
-                    */
-
-
                     _tourService.Update(SelectedTour);
-
                     _toursShow.Remove(SelectedTour);
                     return;
                 }
@@ -161,6 +150,14 @@ namespace InitialProject.WPF.ViewModels
             return new VoucherCreationViewModel(_navigationStore, _user, _guests);
 
         }
-        
+
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
+        }
+
+
     }
 }

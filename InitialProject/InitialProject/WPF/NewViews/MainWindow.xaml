@@ -82,6 +82,21 @@
             <DataTemplate DataType="{x:Type vms:RateAccommodationViewModel}">
                 <views:RateAccommodationView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationReservationMoveRequestViewModel}">
+                <views:AccommodationReservationMoveRequestView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:MyAccommodationReservationRequestsViewModel}">
+                <views:MyAccommodationReservationRequestsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerCommentViewModel}">
+                <views:OwnerCommentView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GuideRatingsViewModel}">
+                <views:GuideRatingsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GuideMenuViewModel}">
+                <views:GuideMenuView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:OwnerRatingsViewModel}">
                 <views:OwnerRatingsView />
             </DataTemplate>

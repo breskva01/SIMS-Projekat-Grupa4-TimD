@@ -19,15 +19,11 @@ namespace InitialProject.Application.Commands
             _user = user;
             _execute = execute;
             _tourReservationService = new TourReservationService();
-
-            //_tourReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
-
 
         public override bool CanExecute(object? parameter)
         {
-            return _tourReservationService.GetUnrated(_user.Id).FirstOrDefault() != null && base.CanExecute(parameter);
-            //return !string.IsNullOrEmpty(_tourReservationViewModel.NumberOfGuests) && base.CanExecute(parameter);
+            return _tourReservationService.GetUnratedByUser(_user.Id).FirstOrDefault() != null && base.CanExecute(parameter);
         }
         public override void Execute(object? parameter)
         {

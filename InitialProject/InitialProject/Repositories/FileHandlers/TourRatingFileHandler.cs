@@ -21,7 +21,6 @@ namespace InitialProject.Repositories.FileHandlers
         {
             return _serializer.FromCSV(_tourRatingsFilePath);
         }
-
         public void Save(List<TourRating> list)
         {
             _serializer.ToCSV(_tourRatingsFilePath, list);

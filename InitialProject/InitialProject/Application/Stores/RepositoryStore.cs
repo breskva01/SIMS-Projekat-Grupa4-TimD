@@ -17,6 +17,12 @@ namespace InitialProject.Application.Stores
         private static IAccommodationRatingRepository _accommodationRatingRepository;
         private static IAccommodationReservationCancellationNotificationRepository _accommodationReservationCancellationNotificationRepository;
         private static IAccommodationReservationMoveRequestRepository _accommodationReservationMoveRequestRepository;
+        private static ITourRepository _tourRepository;
+        private static ITourReservationRepository _tourReservationRepository;
+        private static ITourRatingRepository _tourRatingRepository;
+        private static IVoucherRepository _voucherRepository;
+        private static ILocationRepository _locationRepository;
+        private static IKeyPointRepository _keyPointRepository;
         private static IGuestRatingRepository _guestRatingRepository;
 
         public static IAccommodationReservationMoveRequestRepository GetIAccommodationReservationMoveRequestRepository
@@ -85,6 +91,78 @@ namespace InitialProject.Application.Stores
                     _accommodationRatingRepository = new AccommodationRatingRepository();
                 }
                 return _accommodationRatingRepository;
+            }
+        }
+
+        public static ITourRepository GetITourRepository
+        {
+            get
+            {
+                if (_tourRepository == null)
+                {
+                    _tourRepository = new TourRepository();
+                }
+                return _tourRepository;
+            }
+        }
+
+        public static ITourReservationRepository GetITourReservationRepository
+        {
+            get
+            {
+                if (_tourReservationRepository == null)
+                {
+                    _tourReservationRepository = new TourReservationRepository();
+                }
+                return _tourReservationRepository;
+            }
+        }
+
+        public static IVoucherRepository GetIVoucherRepository
+        {
+            get
+            {
+                if (_voucherRepository == null)
+                {
+                    _voucherRepository = new VoucherRepository();
+                }
+                return _voucherRepository;
+            }
+        }
+
+        public static ITourRatingRepository GetITourRatingRepository
+        {
+            get
+            {
+                if (_tourRatingRepository == null)
+                {
+                    _tourRatingRepository = new TourRatingRepository();
+                }
+                return _tourRatingRepository;
+            }
+        }
+
+        public static ILocationRepository GetILocationRepository
+        {
+            get
+            {
+                if (_locationRepository == null)
+                {
+                    _locationRepository = new LocationRepository();
+                }
+                return _locationRepository;
+            }
+        }
+
+        public static IKeyPointRepository GetIKeyPointRepository
+        {
+            get
+            {
+                if (_keyPointRepository == null)
+                {
+                    _keyPointRepository = new KeyPointRepository();
+                }
+                return _keyPointRepository;
             }
         }
         public static IGuestRatingRepository GetIGuestRatingRepository

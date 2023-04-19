@@ -1,6 +1,4 @@
-﻿using InitialProject.Controller;
-using InitialProject.Domain.Models;
-using InitialProject.WPF.Views;
+﻿using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -92,12 +90,26 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
+        private bool _anyNotifications;
+        public bool AnyNotifications
+        {
+            get => _anyNotifications;
+            set
+            {
+                if (_anyNotifications != value)
+                {
+                    _anyNotifications = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public int TypeSelectedIndex { get; set; }
         public ICommand ApplyFiltersCommand { get; }
         public ICommand ResetFiltersCommand { get; }
         public ICommand ShowReservationViewCommand { get; }
         public ICommand ShowMyReservationsViewCommand { get; }
         public ICommand ShowRatingsViewCommand { get; }
+        public ICommand ShowRequestsViewCommand { get; }
         public ICommand SortByNameCommand { get; }
         public ICommand SortByLocationCommand { get; }
         public ICommand SortByMaxGuestNumberCommand { get; }
@@ -106,6 +118,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand NumberOfDaysIncrementCommand { get; }
         public ICommand GuestNumberDecrementCommand { get; }
         public ICommand NumberOfDaysDecrementCommand { get; }
+        public ICommand NewNotificationsCommand { get; }
         private string _lastSortingCriterium;
         public AccommodationBrowserViewModel(NavigationStore navigationStore ,User user)
         {
@@ -128,6 +141,30 @@ namespace InitialProject.WPF.ViewModels
             ShowReservationViewCommand = new AccommodationClickCommand(ShowAccommodationReservationView);
             ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
             ShowRatingsViewCommand = new ExecuteMethodCommand(ShowRatingsView);
+            ShowRequestsViewCommand = new ExecuteMethodCommand(ShowRequestsView);
+            NewNotificationsCommand = new ExecuteMethodCommand(NotificationsPrompt);
+
+            CheckForNotifications();
+        }
+        private void CheckForNotifications()
+        {
+            var requestService = new AccommodationReservationRequestService();
+            if (requestService.GetAllNewlyAnswered(_loggedInUser.Id).Count > 0)
+            {
+                AnyNotifications = true;
+            }
+            else
+                AnyNotifications = false;
+        }
+        private void NotificationsPrompt()
+        {
+            MessageBoxResult result = MessageBox.Show(
+                   "Stiglo je jedan ili više novih odgovora na vaše zahteve," +
+                   "da li želite da ih pogledate?",
+                   "Obaveštenje", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+                ShowRequestsView();
         }
         private void ApplyFilters()
         {
@@ -221,6 +258,12 @@ namespace InitialProject.WPF.ViewModels
         private void ShowRatingsView()
         {
             var viewModel = new AccommodationRatingViewModel(_navigationStore, _loggedInUser);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigateCommand.Execute(null);
+        }
+        private void ShowRequestsView()
+        {
+            var viewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _loggedInUser);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
         }
