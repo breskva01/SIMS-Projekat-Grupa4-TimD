@@ -32,7 +32,6 @@ namespace InitialProject.WPF.ViewModels
             TrackingCommand = new TourTrackingCommand(ShowTourTrackingView, user);
             RatingCommand = new TourRatingCommand(ShowTourRatingView, user);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
-
         }
 
         private void SignOut()

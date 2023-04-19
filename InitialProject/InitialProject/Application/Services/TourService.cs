@@ -53,6 +53,7 @@ namespace InitialProject.Application.Services
             Tour.CurrentNumberOfGuests = 0;
             Tour.KeyPoints = ky;
             Tour.KeyPointIds = kyIds;
+
             return _repository.Save(Tour);
         }
         public Tour Update(Tour tour)

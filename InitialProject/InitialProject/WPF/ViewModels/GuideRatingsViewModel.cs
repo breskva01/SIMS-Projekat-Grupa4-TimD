@@ -17,13 +17,18 @@ namespace InitialProject.WPF.ViewModels
         private readonly NavigationStore _navigationStore;
         private User _user;
 
-        private TourService _tourService;
-
+        private List<TourRating> _tourRatings;
+        private List<TourReservation> _tourReservations;
         private readonly ObservableCollection<Tour> _toursShow;
         public IEnumerable<Tour> ToursShow => _toursShow;
 
-        public ObservableCollection<Location> Locations { get; set; }
+        private TourService _tourService;
         private LocationService _locationService;
+        private TourRatingService _ratingService;
+        private TourReservationService _reservationService;
+
+        public ObservableCollection<Location> Locations { get; set; }
+        public ObservableCollection<RatingViewModel> Ratings { get; set; }
 
         public ICommand ChooseTourCommand { get; set; }
         public ICommand ReportGuestRatingCommand { get; set; }
@@ -53,16 +58,6 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        private List<TourReservation> _tourReservations;
-        private TourReservationService _reservationService;
-
-        private TourRatingService _ratingService;
-        private List<TourRating> _tourRatings;
-
-
-        //private readonly ObservableCollection<RatingViewModel> _ratings;
-        public ObservableCollection<RatingViewModel> Ratings { get; set; }
-
         public GuideRatingsViewModel(NavigationStore navigationStore, User user) 
         {
             _navigationStore = navigationStore;
@@ -90,18 +85,12 @@ namespace InitialProject.WPF.ViewModels
 
             InitializeCommands();
 
-            // tura se selktuje
-            // rezervacije preko tour.id
-            // filtriram ih da imaju Rating  > 0
-            // 
-
         }
         private void InitializeCommands()
         {
 
             ChooseTourCommand = new ExecuteMethodCommand(ShowRatings);
             ReportGuestRatingCommand = new ExecuteMethodCommand(ReportRating);
-
             BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
         }
         private void ShowRatings()
@@ -123,7 +112,6 @@ namespace InitialProject.WPF.ViewModels
                     _ratingService.Update(tourRating);
                 }
             }
-           // _ratingService.Update(SelectedGuestRating.TourRating);
         }
 
         private void ShowGuideMenuView()
