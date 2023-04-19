@@ -16,6 +16,7 @@ namespace InitialProject.Application.Stores
         private static IAccommodationReservationRepository _accommodationReservationRepository;
         private static IAccommodationRatingRepository _accommodationRatingRepository;
         private static IAccommodationReservationCancellationNotificationRepository _accommodationReservationCancellationNotificationRepository;
+        private static IAccommodationReservationMoveRequestRepository _accommodationReservationMoveRequestRepository;
         private static ITourRepository _tourRepository;
         private static ITourReservationRepository _tourReservationRepository;
         private static ITourRatingRepository _tourRatingRepository;
@@ -23,6 +24,17 @@ namespace InitialProject.Application.Stores
         private static ILocationRepository _locationRepository;
         private static IKeyPointRepository _keyPointRepository;
 
+        public static IAccommodationReservationMoveRequestRepository GetIAccommodationReservationMoveRequestRepository
+        {
+            get
+            {
+                if (_accommodationReservationMoveRequestRepository == null)
+                {
+                    _accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository();
+                }
+                return _accommodationReservationMoveRequestRepository;
+            }
+        }
         public static IAccommodationReservationCancellationNotificationRepository GetIAccommodationReservationCancellationNotificationRepository
         {
             get
