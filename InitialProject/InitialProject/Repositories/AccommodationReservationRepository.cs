@@ -21,7 +21,12 @@ namespace InitialProject.Repositories
         }
         public List<AccommodationReservation> GetAll()
         {
-            return _fileHandler.Load();
+            _reservations = _fileHandler.Load();
+            var accommodations = RepositoryStore.GetIAccommodationRepository.GetAll();
+            _reservations.ForEach(r => 
+                                    r.Accommodation = accommodations.Find(
+                                        a => a.Id == r.AccommodationId));
+            return _reservations;
         }
         public AccommodationReservation GetById(int reservationId)
         {
@@ -30,7 +35,7 @@ namespace InitialProject.Repositories
         }
         public List<AccommodationReservation> GetConfirmed(int guestId)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             var existingReservations = _reservations.FindAll(r => r.GuestId == guestId &&
                                          r.Status == AccommodationReservationStatus.Confirmed);
             return existingReservations.OrderBy(r => r.CheckIn).ToList();
