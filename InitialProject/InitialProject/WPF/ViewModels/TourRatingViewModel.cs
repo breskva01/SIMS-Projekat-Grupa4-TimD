@@ -35,7 +35,7 @@ namespace InitialProject.WPF.ViewModels
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             List<Tour> Tours = new List<Tour>();
 
-            List<TourReservation> unratedReservations = _tourReservationService.GetUnrated(user.Id);
+            List<TourReservation> unratedReservations = _tourReservationService.GetUnratedByUser(user.Id);
             foreach(TourReservation tr in unratedReservations)
             {
                 Tour tour = _tourService.GetById(tr.TourId);

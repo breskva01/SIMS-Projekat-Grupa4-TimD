@@ -1,6 +1,7 @@
 ﻿using InitialProject.Application.Observer;
 using InitialProject.Application.Storage;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Repositories
 {
-    class TourReservationRepository
+    public class TourReservationRepository : ITourReservationRepository
     {
         private List<Tour> _tours;
         private List<User> _users;
@@ -45,11 +46,10 @@ namespace InitialProject.Repositories
         {
             return _tourReservationFileHandler.Load();
         }
-        public TourReservation Get(int id)
+        public TourReservation GetById(int id)
         {
             return _tourReservations.Find(x => x.Id == id);
         }
-
 
         public List<TourReservation> GetPresentReservations(List<TourReservation> reservations)
         {
@@ -75,7 +75,7 @@ namespace InitialProject.Repositories
 
         }
 
-        public List<TourReservation> GetDuplicateReservations(List<TourReservation> reservations, int tourId)
+        public List<TourReservation> GetDuplicates(List<TourReservation> reservations, int tourId)
         {
             List<TourReservation> duplicateReservations = new List<TourReservation>();
             foreach(TourReservation tr in reservations)
@@ -88,7 +88,7 @@ namespace InitialProject.Repositories
             return duplicateReservations;
         }
 
-        public List<TourReservation> GetRateableReservations(List<TourReservation> reservations)
+        public List<TourReservation> GetUnrated(List<TourReservation> reservations)
         {
             List<TourReservation> rateableReservations = new List<TourReservation>();
             foreach (TourReservation tr in reservations)

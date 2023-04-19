@@ -59,7 +59,6 @@ namespace InitialProject.Domain.Models
             ArrivedAtKeyPoint = Convert.ToInt32(values[5]);
             RatingId = Convert.ToInt32(values[6]);
             UsedVoucher = Convert.ToBoolean(values[7]);
-
         }
         
         public string[] ToCSV()

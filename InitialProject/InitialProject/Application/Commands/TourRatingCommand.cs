@@ -26,7 +26,7 @@ namespace InitialProject.Application.Commands
 
         public override bool CanExecute(object? parameter)
         {
-            return _tourReservationService.GetUnrated(_user.Id).FirstOrDefault() != null && base.CanExecute(parameter);
+            return _tourReservationService.GetUnratedByUser(_user.Id).FirstOrDefault() != null && base.CanExecute(parameter);
             //return !string.IsNullOrEmpty(_tourReservationViewModel.NumberOfGuests) && base.CanExecute(parameter);
         }
         public override void Execute(object? parameter)

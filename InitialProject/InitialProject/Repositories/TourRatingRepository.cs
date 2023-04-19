@@ -1,4 +1,5 @@
 ﻿using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Repositories
 {
-    public class TourRatingRepository
+    public class TourRatingRepository : ITourRatingRepository
     {
         private List<TourRating> _tourRatings;
         private readonly TourRatingFileHandler _tourRatingFileHandler;
@@ -23,7 +24,7 @@ namespace InitialProject.Repositories
         {
             return _tourRatingFileHandler.Load();
         }
-        public TourRating Get(int id)
+        public TourRating GetById(int id)
         {
             return _tourRatings.Find(t => t.Id == id);
         }

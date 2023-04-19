@@ -112,7 +112,7 @@ namespace InitialProject.WPF.ViewModels
         }
         private ViewModelBase CreateGuest2VM()
         {
-            if (_tourReservationService.getActivePendingReservations(_user.Id).Any())
+            if (_tourReservationService.GetActivePending(_user.Id).Any())
             {
                 return new PresenceConfirmationViewModel(_navigationStore, _user);
             }

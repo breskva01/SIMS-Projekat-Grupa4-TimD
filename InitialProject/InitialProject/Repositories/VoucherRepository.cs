@@ -1,4 +1,5 @@
 ﻿using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Windows;
 
 namespace InitialProject.Repositories
 {
-    class VoucherRepository
+    public class VoucherRepository : IVoucherRepository
     {
         private readonly VoucherFileHandler _voucherFileHandler;
         private List<Voucher> _vouchers;
@@ -68,7 +69,8 @@ namespace InitialProject.Repositories
             foreach (Voucher voucher in _vouchers)
             {
                 //CheckVoucherExpiration(voucher);
-                if (IsExpired(voucher)) { 
+                if (IsExpired(voucher))
+                {
                     voucher.State = VoucherState.Expired;
                     Update(voucher);
                 }
@@ -117,6 +119,5 @@ namespace InitialProject.Repositories
             return voucher.State == VoucherState.Unused;
 
         }
-
     }
 }

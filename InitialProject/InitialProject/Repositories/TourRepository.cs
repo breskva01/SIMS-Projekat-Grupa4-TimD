@@ -1,4 +1,5 @@
 ﻿using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Repositories
 {
-    class TourRepository
+    public class TourRepository : ITourRepository
     {
         private readonly TourFileHandler _tourFileHandler;
         private readonly LocationFileHandler _locationFileHandler;
@@ -100,7 +101,7 @@ namespace InitialProject.Repositories
             return filteredTours;
         }
 
-        bool MatchesFilters(Tour tour, string country, string city, int duration, GuideLanguage language, int numberOfGuests)
+        public bool MatchesFilters(Tour tour, string country, string city, int duration, GuideLanguage language, int numberOfGuests)
         {
             bool countryMatch = tour.Location.Country == country || country == "";
             bool cityMatch = tour.Location.City == city || city == "";
