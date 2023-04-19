@@ -22,26 +22,19 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetAll();
         }
-        public void Subscribe(IObserver observer)
-        {
-            _observers.Add(observer);
-        }
-
         public KeyPoint GetById(int id)
         {
             return _repository.GetById(id);
         }
-        /*
-        public KeyPoint Update(KeyPoint keyPoint)
+
+        public void Subscribe(IObserver observer)
         {
-            return _repository.Update(keyPoint);
+            _observers.Add(observer);
         }
-        */
         public void Unsubscribe(IObserver observer)
         {
             _observers.Remove(observer);
         }
-
         public void NotifyObservers()
         {
             foreach (var observer in _observers)

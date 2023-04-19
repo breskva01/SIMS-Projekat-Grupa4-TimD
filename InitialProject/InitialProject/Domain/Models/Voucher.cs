@@ -25,7 +25,6 @@ namespace InitialProject.Domain.Models
         public Voucher() { 
             Name = string.Empty;
             State = VoucherState.Unused;
-            //ExpirationDate = (DateOnly.FromDateTime(DateTime.UtcNow)).AddMonths(1);
         }
 
         public Voucher(int id, string name, DateOnly expiration)

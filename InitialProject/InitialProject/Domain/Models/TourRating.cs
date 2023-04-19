@@ -26,7 +26,8 @@ namespace InitialProject.Domain.Models
             IsValid = true;
         }
 
-        public TourRating(int guideKnowledge, int guideLanguage, int tourInteresting, int tourInformative, int tourContent, string comment, List<string> pictureURLs)
+        public TourRating(int guideKnowledge, int guideLanguage, int tourInteresting, int tourInformative,
+            int tourContent, string comment, List<string> pictureURLs)
         {
             GuideKnowledge = guideKnowledge;
             GuideLanguage = guideLanguage;

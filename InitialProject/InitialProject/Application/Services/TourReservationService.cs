@@ -1,5 +1,7 @@
 ﻿using InitialProject.Application.Observer;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,37 +14,38 @@ namespace InitialProject.Application.Services
     public class TourReservationService
     {
         private readonly List<IObserver> _observers;
-        private readonly TourReservationRepository _repository;
+        private readonly ITourReservationRepository _repository;
         private List<TourReservation> _reservations;
         private readonly TourService _tourService;
         
         public TourReservationService()
         {
             _observers = new List<IObserver>();
-            _repository = new TourReservationRepository();
+            _repository = RepositoryStore.GetITourReservationRepository;
             _reservations = new List<TourReservation>();
             _tourService = new TourService();
         }
+
         public List<TourReservation> GetAll()
         {
             return _repository.GetAll();
         }
-        public TourReservation Get(int id)
+        public TourReservation GetById(int id)
         {
-            return _repository.Get(id);
+            return _repository.GetById(id);
         }
-
-        public List<TourReservation> GetUnrated(int userId) {
-            _reservations = GetByUserId(userId);
-            _reservations = GetRateableReservations(_reservations);
-            return _reservations;
-        }
-
-        public List<TourReservation> GetRateableReservations(List<TourReservation> reservations)
+        public List<TourReservation> GetByUserId(int userId)
         {
-           return _repository.GetRateableReservations(reservations);
+            return _repository.GetByUserId(userId);
         }
-
+        public List<TourReservation> GetByUserAndTourId(int userId, int tourId)
+        {
+            return _repository.GetByUserAndTourId(userId, tourId);
+        }
+        public TourReservation Update(TourReservation reservation)
+        {
+            return _repository.Update(reservation);
+        }
         public TourReservation CreateReservation(int tourId, int guestId, int numberOfGuests, bool usedVoucher)
         {
             TourReservation reservation = new()
@@ -54,19 +57,23 @@ namespace InitialProject.Application.Services
             };
             return _repository.Save(reservation);
         }
-        public TourReservation Update(TourReservation reservation)
+
+        public List<TourReservation> GetUnratedByUser(int userId) {
+            _reservations = GetByUserId(userId);
+            _reservations = GetUnrated(_reservations);
+            return _reservations;
+        }
+        public List<TourReservation> GetUnrated(List<TourReservation> reservations)
         {
-            return _repository.Update(reservation);
+           return _repository.GetUnrated(reservations);
         }
 
-        public List<TourReservation> getActivePresentReservations(int userId)
+        public List<TourReservation> GetActivePresent(int userId)
         {
             List<TourReservation> activePresentReservations = new();
-            _reservations = GetByUserId(userId);
-            //uzmi sve rezervacije koje odgovaraju korinikovom ID
 
-            _reservations = GetPresentReservations(_reservations);
-            //od tih rezervacija uzmi samo one koje imaju Pending status
+            _reservations = GetByUserId(userId);
+            _reservations = GetPresent(_reservations);
 
             foreach (TourReservation tr in _reservations)
             {
@@ -75,19 +82,15 @@ namespace InitialProject.Application.Services
                     activePresentReservations.Add(tr);
                 }
             }
-            //od tih rezervacija uzmi one koje imaju aktivnu turu u sebi
 
             return activePresentReservations;
         }
-
-        public List<TourReservation> getActivePendingReservations(int userId)
+        public List<TourReservation> GetActivePending(int userId)
         {
             List<TourReservation> activePendingReservations = new();
-            _reservations = GetByUserId(userId);
-            //uzmi sve rezervacije koje odgovaraju korinikovom ID
 
-            _reservations = GetPendingReservations(_reservations);
-            //od tih rezervacija uzmi samo one koje imaju Pending status
+            _reservations = GetByUserId(userId);
+            _reservations = GetPending(_reservations);
 
             foreach(TourReservation tr in _reservations)
             {
@@ -96,50 +99,32 @@ namespace InitialProject.Application.Services
                     activePendingReservations.Add(tr);
                 }
             }
-            //od tih rezervacija uzmi one koje imaju aktivnu turu u sebi
 
             return activePendingReservations;
         }
-
-        public List<TourReservation> getDuplicateReservations(int userId,int tourId)
-        {
-            _reservations = getActivePendingReservations(userId);
-            _reservations = _repository.GetDuplicateReservations(_reservations, tourId);
-            return _reservations;
-
-        }
-
         public bool IsActive(TourReservation reservation)
         {
             return _tourService.IsActive(reservation.TourId);
         }
-
-        private List<TourReservation> GetPresentReservations(List<TourReservation> reservations)
+        private List<TourReservation> GetPresent(List<TourReservation> reservations)
         {
-            return _repository.GetPresentReservations(reservations);
+            return _repository.GetPresent(reservations);
+        }
+        private List<TourReservation> GetPending(List<TourReservation> reservations)
+        {
+            return _repository.GetPending(reservations);
         }
 
-        private List<TourReservation> GetPendingReservations(List<TourReservation> reservations)
+        public List<TourReservation> GetDuplicates(int userId, int tourId)
         {
-            return _repository.GetPendingReservations(reservations);
-        }
+            _reservations = GetActivePending(userId);
+            _reservations = _repository.GetDuplicates(_reservations, tourId);
+            return _reservations;
 
-        public List<TourReservation> GetByUserId(int userId)
-        {
-            return _repository.GetByUserId(userId);
         }
-
-        public List<TourReservation> GetByUserAndTourId(int userId, int tourId)
+        public List<TourReservation> GetPresentByTourId(int tourId)
         {
-            return _repository.GetByUserAndTourId(userId, tourId);
-        }
-        public void Subscribe(IObserver observer)
-        {
-            _observers.Add(observer);
-        }
-        public List<TourReservation> GetPresentByTourId(int id)
-        {
-            return _repository.GetPresentByTourId(id);
+            return _repository.GetPresentByTourId(tourId);
         }
         public List<TourReservation> GetRatedByTourId(int id)
         {
@@ -150,11 +135,14 @@ namespace InitialProject.Application.Services
             return _repository.GetVoucherPercentage(id);
         }
 
+        public void Subscribe(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
         public void Unsubscribe(IObserver observer)
         {
             _observers.Remove(observer);
         }
-
         public void NotifyObservers()
         {
             foreach (var observer in _observers)
