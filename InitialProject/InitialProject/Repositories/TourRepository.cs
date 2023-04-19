@@ -270,5 +270,18 @@ namespace InitialProject.Repositories
             }
             return number.ToString();
         }
+        public List<Tour> GetFinishedTours()
+        {
+            _tours = _tourFileHandler.Load();
+            List<Tour> filterdTours = new List<Tour>();
+            foreach(Tour tour in _tours)
+            {
+                if(tour.State == TourState.Finished)
+                {
+                    filterdTours.Add(tour);
+                }
+            }
+            return filterdTours;
+        }
     }
 }

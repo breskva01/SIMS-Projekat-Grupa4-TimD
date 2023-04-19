@@ -4,6 +4,7 @@ using InitialProject.Domain.Models;
 using InitialProject.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace InitialProject.Application.Services
         }
 
         public TourRating Save(int guideKnowledge, int guideLanguage, int tourInteresting,
-                         int tourInformative, int tourContent, string comment, List<string> pictureURLs)
+                         int tourInformative, int tourContent, string comment, List<string> pictureURLs, int guestId, int guideId)
         {
             var rating = new TourRating()
             {
@@ -46,6 +47,11 @@ namespace InitialProject.Application.Services
             };
             return _repository.Save(rating);
             //RepositoryStore.GetIAccommodationReservationRepository.MarkOwnerAsRated(reservation.Id);
+        }
+
+        public ObservableCollection<TourRating> GetEligibleForDisplay(int id)
+        {
+            return _repository.GetEligibleForDisplay(id);
         }
 
         public TourRating Update(TourRating rating)

@@ -56,7 +56,7 @@ namespace InitialProject.WPF.ViewModels
         {
             CopyImages();
             TourRating rating = _tourRatingService.Save(KnowledgeRating, LanguageRating, InterestingRating, InformativeRating,
-                          ContentRating, Comment, _pictureURLs);
+                          ContentRating, Comment, _pictureURLs, 4, 3);
             List<TourReservation> reservations = _tourReservationService.GetByUserAndTourId(_user.Id, _tour.Id);
             foreach(TourReservation r in reservations)
             {

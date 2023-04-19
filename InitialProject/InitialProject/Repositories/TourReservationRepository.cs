@@ -177,5 +177,18 @@ namespace InitialProject.Repositories
             }
             return Math.Round((double)withVoucher / reservationCount * 100, 2).ToString();
         }
+        public List<TourReservation> GetRatedByTourId(int id)
+        {
+            _tourReservations = _tourReservationFileHandler.Load();
+            List<TourReservation> _filteredReservations = new List<TourReservation>();
+            foreach (TourReservation tourReservation in _tourReservations)
+            {
+                if(tourReservation.TourId == id && tourReservation.RatingId > 0)
+                {
+                    _filteredReservations.Add(tourReservation);
+                }
+            }
+            return _filteredReservations;
+        }
     }
 }
