@@ -47,7 +47,7 @@ namespace InitialProject.WPF.ViewModels
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                if (_reservationService.Cancel(reservation.Id, reservation.Accommodation.OwnerId))
+                if (_reservationService.Cancel(reservation.Id, reservation.Accommodation.Owner.Id))
                     MessageBox.Show("Rezervacija uspešno otkazana.");
                 else
                     MessageBox.Show("Rezervacija se ne može otkazati.");

@@ -23,10 +23,12 @@ namespace InitialProject.Domain.Models
         public int MinimumCancelationNotice { get; set; }
         public string PictureURL { get; set; }
         public User Owner { get; set; }
-        public int OwnerId { get; set; }
-        public Accommodation() { }
+        public Accommodation() 
+        {
+            Owner = new User();
+        }
         public Accommodation(int id, string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays,
-                             int minimumCancelationNotice, string pictureURL, User owner, int ownerId)
+                             int minimumCancelationNotice, string pictureURL, User owner)
         {
             Id = id;
             Name = name;
@@ -39,7 +41,6 @@ namespace InitialProject.Domain.Models
             MinimumCancelationNotice = minimumCancelationNotice;
             PictureURL = pictureURL;
             Owner = owner;
-            OwnerId = ownerId;
         }
         public bool MatchesFilters(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
         {
@@ -77,7 +78,7 @@ namespace InitialProject.Domain.Models
             MinimumDays = Convert.ToInt32(values[7]);
             MinimumCancelationNotice = Convert.ToInt32(values[8]);
             PictureURL = values[9];
-            OwnerId = Convert.ToInt32(values[10]);
+            Owner.Id = Convert.ToInt32(values[10]);
         }
 
         public string[] ToCSV()
@@ -92,7 +93,7 @@ namespace InitialProject.Domain.Models
                   MaximumGuests.ToString(),
                   MinimumDays.ToString(),
                   MinimumCancelationNotice.ToString(),
-                  PictureURL, OwnerId.ToString() };
+                  PictureURL, Owner.Id.ToString() };
             return csvValues;
         }
     }

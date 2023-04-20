@@ -33,18 +33,18 @@ namespace InitialProject.Repositories
         {
             _ratings = _fileHandler.Load();
             var reservations = _reservationRepository.GetAll();
-            _ratings.ForEach(r => r.Reservation = reservations.Find(res => res.Id == r.ReservationId));
+            _ratings.ForEach(r => r.Reservation = reservations.Find(res => res.Id == r.Reservation.Id));
             return _ratings;
         }
         public List<AccommodationRating> GetByOwnerId(int ownerId)
         {
             _ratings = GetAll();
-            return _ratings.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId);
+            return _ratings.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId);
         }
         public List<AccommodationRating> GetEgligibleForDisplay(int ownerId)
         {
             _ratings = GetAll();
-            return _ratings.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId &&
+            return _ratings.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId &&
                                          r.Reservation.IsGuestRated);
         }
         public void Save(AccommodationRating rating)
@@ -53,7 +53,7 @@ namespace InitialProject.Repositories
             _ratings.Add(rating);
             _fileHandler.Save(_ratings);
             double[] totalAverageRating = CalculateTotalAverageOwnerRating(rating);
-            UpdateSuperOwnerStatus(rating.Reservation.Accommodation.OwnerId, totalAverageRating);
+            UpdateSuperOwnerStatus(rating.Reservation.Accommodation.Owner.Id, totalAverageRating);
         }
         private double[] CalculateTotalAverageOwnerRating(AccommodationRating rating)
         {

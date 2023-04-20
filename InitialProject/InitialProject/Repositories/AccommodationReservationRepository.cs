@@ -35,14 +35,14 @@ namespace InitialProject.Repositories
             var accommodations = RepositoryInjector.Get<IAccommodationRepository>().GetAll();
             _reservations.ForEach(r =>
                                     r.Accommodation = accommodations.Find(
-                                        a => a.Id == r.AccommodationId));
+                                        a => a.Id == r.Accommodation.Id));
         }
         private void FillInGuests()
         {
             var users = RepositoryInjector.Get<IUserRepository>().GetAll();
             _reservations.ForEach(r =>
                                     r.Guest = users.Find(
-                                        u => u.Id == r.GuestId));
+                                        u => u.Id == r.Guest.Id));
         }
         public AccommodationReservation GetById(int reservationId)
         {
@@ -52,20 +52,20 @@ namespace InitialProject.Repositories
         public List<AccommodationReservation> GetConfirmed(int guestId)
         {
             GetAll();
-            var existingReservations = _reservations.FindAll(r => r.GuestId == guestId &&
+            var existingReservations = _reservations.FindAll(r => r.Guest.Id == guestId &&
                                          r.Status == AccommodationReservationStatus.Confirmed);
             return existingReservations.OrderBy(r => r.CheckIn).ToList();
         }
         public List<AccommodationReservation> GetExisting(int accommodationId)
         {
             GetAll();
-            return _reservations.FindAll(r => r.AccommodationId == accommodationId &&
+            return _reservations.FindAll(r => r.Accommodation.Id == accommodationId &&
                                          r.Status == AccommodationReservationStatus.Confirmed);
         }
         public List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate)
         {
             GetAll();    
-            return _reservations.FindAll(r => r.AccommodationId == accommodationId &&
+            return _reservations.FindAll(r => r.Accommodation.Id == accommodationId &&
                                          r.Status == AccommodationReservationStatus.Confirmed &&
                                          r.CheckIn >= startDate && r.CheckOut <= endDate);
         }
@@ -79,7 +79,7 @@ namespace InitialProject.Repositories
         {
             return accommodationReservation.CheckOut < DateOnly.FromDateTime(DateTime.Now)
                     && DateOnly.FromDateTime(DateTime.Now) < accommodationReservation.CheckOut.AddDays(5)
-                    && accommodationReservation.Accommodation.OwnerId == ownerId;
+                    && accommodationReservation.Accommodation.Owner.Id == ownerId;
         }
 
         public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId)
@@ -131,7 +131,7 @@ namespace InitialProject.Repositories
         {
             GetAll();
             DateOnly fiveDaysAgo = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
-            var egligibleReservations = _reservations.FindAll(r => r.GuestId == guestId &&
+            var egligibleReservations = _reservations.FindAll(r => r.Guest.Id == guestId &&
                                          r.Status == AccommodationReservationStatus.Finished &&
                                          r.IsOwnerRated == false &&
                                          r.CheckOut >= fiveDaysAgo);
@@ -182,7 +182,7 @@ namespace InitialProject.Repositories
                     || checkIn < res.CheckOut 
                     || checkOut > res.CheckIn 
                     || checkOut < res.CheckOut) 
-                    && accomodationId == res.AccommodationId;
+                    && accomodationId == res.Accommodation.Id;
 
                 if (AccommodationIsUnavailable)
                 {

@@ -35,9 +35,9 @@ namespace InitialProject.Application.Services
             return _repository.Sort(accommodations, criterium);
         }
         public void RegisterAccommodation(string name, string country, string city, string address, AccommodationType type, int maximumGuests,
-            int minimumDays, int minimumCancelationNotice, string pictureURL, User user, int ownerId)
+            int minimumDays, int minimumCancelationNotice, string pictureURL, User user)
         {
-            _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, user, ownerId);
+            _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, user);
         }
 
         public void Subscribe(IObserver observer)

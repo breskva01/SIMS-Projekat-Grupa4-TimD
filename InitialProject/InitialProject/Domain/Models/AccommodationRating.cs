@@ -9,7 +9,6 @@ namespace InitialProject.Domain.Models
 {
     public class AccommodationRating : ISerializable
     {
-        public int ReservationId { get; set; }
         public AccommodationReservation Reservation { get; set; }
         public int Location { get; set; }
         public int Hygiene { get; set; }
@@ -22,11 +21,11 @@ namespace InitialProject.Domain.Models
         {
             Comment = "";
             PictureURLs = new List<string>();
+            Reservation = new AccommodationReservation();
         }
         public AccommodationRating(AccommodationReservation reservation, int location, int hygiene, 
             int pleasantness, int fairness, int parking, string comment, List<string> pictureURLs)
         {
-            ReservationId = reservation.Id;
             Reservation = reservation;
             Location = location;
             Hygiene = hygiene;
@@ -38,7 +37,7 @@ namespace InitialProject.Domain.Models
         }
         public void FromCSV(string[] values)
         {
-            ReservationId = int.Parse(values[0]);
+            Reservation.Id = int.Parse(values[0]);
             Location = int.Parse(values[1]);
             Hygiene = int.Parse(values[2]);
             Pleasantness = int.Parse(values[3]);
@@ -53,7 +52,7 @@ namespace InitialProject.Domain.Models
             string pictureURLs = string.Join(",", PictureURLs);
             string[] csvValues =
             {
-                ReservationId.ToString(),
+                Reservation.Id.ToString(),
                 Location.ToString(),
                 Hygiene.ToString(),
                 Pleasantness.ToString(),

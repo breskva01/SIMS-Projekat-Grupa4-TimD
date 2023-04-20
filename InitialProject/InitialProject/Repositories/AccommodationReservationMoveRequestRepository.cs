@@ -31,24 +31,24 @@ namespace InitialProject.Repositories
             var reservations = RepositoryInjector.Get<IAccommodationReservationRepository>().GetAll();
             _requests.ForEach(req => 
                                 req.Reservation = reservations.Find
-                                    (res => res.Id == req.ReservationId)
+                                    (res => res.Id == req.Reservation.Id)
                              );
             return _requests;
         }
         public List<AccommodationReservationMoveRequest> GetByOwnerId(int ownerId)
         {
             GetAll();
-            return _requests.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId);
+            return _requests.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId);
         }
         public List<AccommodationReservationMoveRequest> GetByGuestId(int guestId)
         {
             GetAll();
-            return _requests.FindAll(r => r.Reservation.GuestId == guestId);
+            return _requests.FindAll(r => r.Reservation.Guest.Id == guestId);
         }
         public List<AccommodationReservationMoveRequest> GetAllNewlyAnswered(int guestId)
         {
             GetAll();
-            var answeredRequests = _requests.FindAll(r => r.Reservation.GuestId == guestId &&
+            var answeredRequests = _requests.FindAll(r => r.Reservation.Guest.Id == guestId &&
                                           r.Status != ReservationMoveRequestStatus.Pending &&
                                           r.GuestNotified == false);
             return answeredRequests;
@@ -56,7 +56,7 @@ namespace InitialProject.Repositories
         public void UpdateGuestNotifiedField(int guestId)
         {
             GetAll();
-            _requests.FindAll(request => request.Reservation.GuestId == guestId &&
+            _requests.FindAll(request => request.Reservation.Guest.Id == guestId &&
                                          request.Status != ReservationMoveRequestStatus.Pending)
                      .ForEach(request => request.GuestNotified = true);
             _fileHandler.Save(_requests);
@@ -64,12 +64,12 @@ namespace InitialProject.Repositories
         public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId)
         {
             GetAll();
-            return _requests.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId && r.Status == ReservationMoveRequestStatus.Pending);
+            return _requests.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId && r.Status == ReservationMoveRequestStatus.Pending);
         }
         public void ApproveRequest(int reservationId)
         {
             GetAll();
-            AccommodationReservationMoveRequest request = _requests.Find(r => r.ReservationId == reservationId);
+            AccommodationReservationMoveRequest request = _requests.Find(r => r.Reservation.Id == reservationId);
             AccommodationReservationMoveRequest newRequest = request;
             newRequest.Status = ReservationMoveRequestStatus.Accepted;
             _requests.Remove(request);
@@ -79,7 +79,7 @@ namespace InitialProject.Repositories
         public void DenyRequest(int reservationId, string comment)
         {
             GetAll();
-            AccommodationReservationMoveRequest request = _requests.Find(r => r.ReservationId == reservationId);
+            AccommodationReservationMoveRequest request = _requests.Find(r => r.Reservation.Id == reservationId);
             AccommodationReservationMoveRequest newRequest = request;
             newRequest.Status = ReservationMoveRequestStatus.Declined;
             newRequest.Comment = comment;

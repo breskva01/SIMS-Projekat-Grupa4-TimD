@@ -11,7 +11,7 @@ namespace InitialProject.Application.Injector
 {
     public class RepositoryInjector
     {
-        private static Dictionary<Type, Type> mappings = new Dictionary<Type, Type>();
+        private static Dictionary<Type, Type> _mappings = new Dictionary<Type, Type>();
 
         public static T Get<T>()
         {
@@ -28,9 +28,9 @@ namespace InitialProject.Application.Injector
 
         private static Type ResolveType(Type type)
         {
-            if (mappings.Keys.Contains(type))
+            if (_mappings.Keys.Contains(type))
             {
-                return mappings[type];
+                return _mappings[type];
             }
 
             return type;
@@ -38,12 +38,12 @@ namespace InitialProject.Application.Injector
 
         public static void Map<T, V>() where V : T
         {
-            mappings.Add(typeof(T), typeof(V));
+            _mappings.Add(typeof(T), typeof(V));
         }
 
         public static void Clear()
         {
-            mappings.Clear();
+            _mappings.Clear();
         }
         public static void MapRepositories()
         {

@@ -14,9 +14,7 @@ namespace InitialProject.Domain.Models
     public class AccommodationReservation : ISerializable
     {
         public int Id { get; set; }
-        public int AccommodationId { get; set; }
         public Accommodation Accommodation { get; set; }
-        public int GuestId { get; set; }
         public User Guest { get; set; }
         public int NumberOfDays { get; set; }
         public int GuestNumber { get; set; }
@@ -26,13 +24,15 @@ namespace InitialProject.Domain.Models
         public bool IsGuestRated { get; set; }
         public bool IsOwnerRated { get; set; }
         public AccommodationReservationStatus Status { get; set; }
-        public AccommodationReservation() { }
+        public AccommodationReservation() 
+        {
+            Guest = new User();
+            Accommodation = new Accommodation();
+        }
         public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkIn,
             DateOnly checkOut, AccommodationReservationStatus status)
         {
-            AccommodationId = accommodation.Id;
             Accommodation = accommodation;
-            GuestId = guest.Id;
             Guest = guest;
             NumberOfDays = numberOfDays;
             CheckIn = checkIn;
@@ -57,8 +57,8 @@ namespace InitialProject.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = int.Parse(values[0]);
-            AccommodationId = int.Parse(values[1]);
-            GuestId = int.Parse(values[2]);
+            Accommodation.Id = int.Parse(values[1]);
+            Guest.Id = int.Parse(values[2]);
             NumberOfDays = int.Parse(values[3]);
             GuestNumber = int.Parse(values[4]);
             CheckIn = DateOnly.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -75,7 +75,7 @@ namespace InitialProject.Domain.Models
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), AccommodationId.ToString(), GuestId.ToString(),
+            string[] csvValues = { Id.ToString(), Accommodation.Id.ToString(), Guest.Id.ToString(),
                                     NumberOfDays.ToString(), GuestNumber.ToString(), CheckIn.ToString("dd/MM/yyyy"), CheckOut.ToString("dd/MM/yyyy"),
                                     LastNotification.ToString("dd/MM/yyyy"), IsGuestRated.ToString(), IsOwnerRated.ToString(), Status.ToString()};
             return csvValues;

@@ -42,7 +42,7 @@ namespace InitialProject.Application.Services
         public bool HasPendingMoveRequest(int reservationId)
         {
             var requests = _repository.GetAll();
-            return requests.Any(r => r.ReservationId == reservationId &&
+            return requests.Any(r => r.Reservation.Id == reservationId &&
                                      r.Status == ReservationMoveRequestStatus.Pending);
         }
         public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId)
