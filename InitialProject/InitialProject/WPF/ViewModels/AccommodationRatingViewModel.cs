@@ -28,7 +28,7 @@ namespace InitialProject.WPF.ViewModels
             _loggedInUser = loggedInUser;
             _service = new AccommodationReservationService();
             Reservations = new ObservableCollection<AccommodationReservation>
-                                (_service.GetEgligibleForRating(_loggedInUser.Id));
+                                (_service.GetEligibleForRating(_loggedInUser.Id));
             _service.Subscribe(this);
             RateReservationCommand = new AccommodationReservationClickCommand(ShowRateAccommodationView);
             ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
@@ -42,7 +42,7 @@ namespace InitialProject.WPF.ViewModels
         public void Update()
         {
             var reservations = new ObservableCollection<AccommodationReservation>
-                                (_service.GetEgligibleForRating(_loggedInUser.Id));
+                                (_service.GetEligibleForRating(_loggedInUser.Id));
             Reservations.Clear();
             foreach (var r in reservations)
                 Reservations.Add(r);

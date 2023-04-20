@@ -34,29 +34,27 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetById(reservationId);
         }
-        public List<AccommodationReservation> GetEgligibleForRating(int guestId)
+        public List<AccommodationReservation> GetEligibleForRating(int guestId)
         {
-            return _repository.GetEgligibleForRating(guestId);
+            return _repository.GetEligibleForRating(guestId);
         }
-        public List<AccommodationReservation> GetConfirmed(int guestId)
+        public List<AccommodationReservation> GetExistingGuestReservations(int guestId)
         {
-            return _repository.GetConfirmed(guestId);
+            return _repository.GetExistingGuestReservations(guestId);
         }
         public bool Cancel(int reservationId, int ownerId)
         {
             var reservation = _repository.GetById(reservationId);
-            if (!reservation.CanBeCancelled())
-                return false;
+            if (!reservation.CanBeCancelled())  return false;
             _repository.Cancel(reservationId);
-            RepositoryInjector.Get
-                <IAccommodationReservationCancellationNotificationRepository>().
+            RepositoryInjector.Get<IAccommodationReservationCancellationNotificationRepository>().
                 Save(new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
             return true;
         }
         public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, User guest)
         {
-            var existingReservations = _repository.GetExisting(accommodation.Id);
+            var existingReservations = _repository.GetExistingReservationsForAccommodation(accommodation.Id);
             var availableReservations = FindInsideDateRange(startDate, endDate, stayLength, 
                                                             accommodation, guest, existingReservations);
             if (availableReservations.Count == 0)
@@ -75,7 +73,8 @@ namespace InitialProject.Application.Services
             {
                 if (IsAvailable(checkIn, checkOut, existingReservations))
                 {
-                    availableReservations.Add(CreateReservation(accommodation, guest, stayLength, checkIn, checkOut));
+                    availableReservations.Add(
+                        new AccommodationReservation(accommodation, guest, stayLength, checkIn, checkOut));
                     availableReservationsCount++;
                 }
                 checkIn = checkIn.AddDays(1);
@@ -97,7 +96,8 @@ namespace InitialProject.Application.Services
                 DateOnly checkOut = checkIn.AddDays(stayLength);
                 if (IsAvailable(checkIn, checkOut, existingReservations))
                 {
-                    availableReservations.Add(CreateReservation(accommodation, guest, stayLength, checkIn, checkOut));
+                    availableReservations.Add(
+                        new AccommodationReservation(accommodation, guest, stayLength, checkIn, checkOut));
                     availableReservationsCount++;
                 }           
                 daysOffset++;
@@ -121,10 +121,6 @@ namespace InitialProject.Application.Services
             return !(checkIn < DateOnly.FromDateTime(DateTime.Now) ||
                     existingReservations.Any(r => r.Overlaps(checkIn, checkOut)));
         }
-        private AccommodationReservation CreateReservation(Accommodation accommodation, User guest, int days, DateOnly checkIn, DateOnly checkOut)
-        {
-            return new AccommodationReservation(accommodation, guest, days, checkIn, checkOut, AccommodationReservationStatus.Confirmed);
-        }
         public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId)
         {
             return _repository.FindCompletedAndUnrated(ownerId);
@@ -136,10 +132,12 @@ namespace InitialProject.Application.Services
         public void updateLastNotification(AccommodationReservation accommodationReservation)
         {
             _repository.updateLastNotification(accommodationReservation);
+            NotifyObservers();
         }
         public void updateRatingStatus(AccommodationReservation accommodationReservation)
         {
             _repository.updateRatingStatus(accommodationReservation);
+            NotifyObservers();
         }
         public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut)
         {

@@ -28,7 +28,7 @@ namespace InitialProject.WPF.ViewModels
             _owner = user;
             _navigationStore = navigationStore;
             _accommodatonRatingService= new AccommodationRatingService();
-            OwnerRatings = new ObservableCollection<AccommodationRating>(_accommodatonRatingService.GetEgligibleForDisplay(_owner.Id));
+            OwnerRatings = new ObservableCollection<AccommodationRating>(_accommodatonRatingService.GetEligibleForDisplay(_owner.Id));
             InitializeCommands();
         }
         private void InitializeCommands()

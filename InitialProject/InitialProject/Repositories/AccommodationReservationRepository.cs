@@ -13,61 +13,43 @@ using InitialProject.Application.Injector;
 
 namespace InitialProject.Repositories
 {
-    public class AccommodationReservationRepository : IAccommodationReservationRepository, ISubject
+    public class AccommodationReservationRepository : IAccommodationReservationRepository
     {
-        private readonly List<IObserver> _observers;
         private List<AccommodationReservation> _reservations;
         private readonly AccommodationReservationFileHandler _fileHandler;
         public AccommodationReservationRepository()
         {
             _fileHandler = new AccommodationReservationFileHandler();
-            _observers = new List<IObserver>();
         }
         public List<AccommodationReservation> GetAll()
         {
-            _reservations = _fileHandler.Load();
-            FillInAccommodations();
-            FillInGuests();
-            return _reservations;
-        }
-        private void FillInAccommodations()
-        {
-            var accommodations = RepositoryInjector.Get<IAccommodationRepository>().GetAll();
-            _reservations.ForEach(r =>
-                                    r.Accommodation = accommodations.Find(
-                                        a => a.Id == r.Accommodation.Id));
-        }
-        private void FillInGuests()
-        {
-            var users = RepositoryInjector.Get<IUserRepository>().GetAll();
-            _reservations.ForEach(r =>
-                                    r.Guest = users.Find(
-                                        u => u.Id == r.Guest.Id));
+            return _reservations = _fileHandler.Load();
         }
         public AccommodationReservation GetById(int reservationId)
         {
             GetAll();
             return _reservations.Find(r => r.Id == reservationId);
         }
-        public List<AccommodationReservation> GetConfirmed(int guestId)
+        public List<AccommodationReservation> GetExistingGuestReservations(int guestId)
         {
             GetAll();
-            var existingReservations = _reservations.FindAll(r => r.Guest.Id == guestId &&
-                                         r.Status == AccommodationReservationStatus.Confirmed);
-            return existingReservations.OrderBy(r => r.CheckIn).ToList();
+            var activeReservations = _reservations.FindAll(r => 
+                                             r.Guest.Id == guestId &&
+                                             r.Status == AccommodationReservationStatus.Active);
+            return activeReservations.OrderBy(r => r.CheckIn).ToList();
         }
-        public List<AccommodationReservation> GetExisting(int accommodationId)
+        public List<AccommodationReservation> GetExistingReservationsForAccommodation(int accommodationId)
         {
             GetAll();
             return _reservations.FindAll(r => r.Accommodation.Id == accommodationId &&
-                                         r.Status == AccommodationReservationStatus.Confirmed);
+                                              r.Status == AccommodationReservationStatus.Active);
         }
         public List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate)
         {
             GetAll();    
             return _reservations.FindAll(r => r.Accommodation.Id == accommodationId &&
-                                         r.Status == AccommodationReservationStatus.Confirmed &&
-                                         r.CheckIn >= startDate && r.CheckOut <= endDate);
+                                              r.Status == AccommodationReservationStatus.Active &&
+                                              r.CheckIn >= startDate && r.CheckOut <= endDate);
         }
         public void Cancel(int reservationId)
         {
@@ -104,7 +86,6 @@ namespace InitialProject.Repositories
             _reservations.Remove(accommodationReservation);
             _reservations.Add(newAccommodationReservation);
             _fileHandler.Save(_reservations);
-            NotifyObservers();
         }
         public void updateRatingStatus(AccommodationReservation accommodationReservation)
         {
@@ -112,7 +93,6 @@ namespace InitialProject.Repositories
             AccommodationReservation newAccommodationReservation = _reservations.Find(a => a.Id == accommodationReservation.Id);
             newAccommodationReservation.IsGuestRated = true;
             _fileHandler.Save(_reservations);
-            NotifyObservers();
         }
         public void Save(AccommodationReservation reservation)
         {
@@ -127,15 +107,15 @@ namespace InitialProject.Repositories
             return _reservations?.Max(r => r.Id) + 1 ?? 0;
         }
 
-        public List<AccommodationReservation> GetEgligibleForRating(int guestId)
+        public List<AccommodationReservation> GetEligibleForRating(int guestId)
         {
             GetAll();
-            DateOnly fiveDaysAgo = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
-            var egligibleReservations = _reservations.FindAll(r => r.Guest.Id == guestId &&
+            DateOnly cutoffDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
+            var eligibleReservations = _reservations.FindAll(r => 
+                                         r.Guest.Id == guestId && r.IsOwnerRated == false &&
                                          r.Status == AccommodationReservationStatus.Finished &&
-                                         r.IsOwnerRated == false &&
-                                         r.CheckOut >= fiveDaysAgo);
-            return egligibleReservations.OrderBy(r => r.CheckIn).ToList();
+                                         r.CheckOut >= cutoffDate);
+            return eligibleReservations.OrderBy(r => r.CheckIn).ToList();
         }
 
         public void MarkOwnerAsRated(int reservationId)
@@ -148,12 +128,10 @@ namespace InitialProject.Repositories
         public List<AccommodationReservation> GetAllNewlyCancelled(int ownerId)
         {
             GetAll();
-            var notifactions = RepositoryInjector.
-                                Get<IAccommodationReservationCancellationNotificationRepository>().
+            var notifactions = RepositoryInjector.Get<IAccommodationReservationCancellationNotificationRepository>().
                                     GetByOwnerId(ownerId);
             var cancelledReservatons = new List<AccommodationReservation>();
-            notifactions.ForEach(n =>
-                cancelledReservatons.Add(
+            notifactions.ForEach(n => cancelledReservatons.Add(
                     _reservations.Find(r => r.Id == n.ReservationId)
                 )
             );
@@ -190,24 +168,6 @@ namespace InitialProject.Repositories
                 }
             }
             return "Available";
-        }
-
-        public void Subscribe(IObserver observer)
-        {
-            _observers.Add(observer);
-        }
-
-        public void Unsubscribe(IObserver observer)
-        {
-            _observers.Remove(observer);
-        }
-
-        public void NotifyObservers()
-        {
-            foreach (var observer in _observers)
-            {
-                observer.Update();
-            }
         }
     }
 }

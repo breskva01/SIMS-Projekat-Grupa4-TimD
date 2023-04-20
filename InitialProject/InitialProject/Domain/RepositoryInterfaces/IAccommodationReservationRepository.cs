@@ -11,9 +11,9 @@ namespace InitialProject.Domain.RepositoryInterfaces
     {
         AccommodationReservation GetById(int reservationId);
         List<AccommodationReservation> GetAllNewlyCancelled(int ownerId);
-        List<AccommodationReservation> GetConfirmed(int guestId);
-        List<AccommodationReservation> GetEgligibleForRating(int guestId);
-        List<AccommodationReservation> GetExisting(int accommodationId);
+        List<AccommodationReservation> GetExistingGuestReservations(int guestId);
+        List<AccommodationReservation> GetEligibleForRating(int guestId);
+        List<AccommodationReservation> GetExistingReservationsForAccommodation(int accommodationId);
         List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate);
         public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId);
         public void updateLastNotification(AccommodationReservation accommodationReservation);

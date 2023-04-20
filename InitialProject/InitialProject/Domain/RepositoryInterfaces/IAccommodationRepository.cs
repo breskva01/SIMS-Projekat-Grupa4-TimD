@@ -9,8 +9,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
 {
     public interface IAccommodationRepository : IRepository<Accommodation>
     {
-        Accommodation Save(Accommodation accommodation);
-        void Delete(Accommodation accommodation);
         List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays);
         List<Accommodation> Sort(List<Accommodation> accommodations, string criterium);
         public void Add(string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,

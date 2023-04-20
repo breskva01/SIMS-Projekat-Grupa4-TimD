@@ -34,7 +34,7 @@ namespace InitialProject.WPF.ViewModels
             _reservationService = new AccommodationReservationService();
             _requestService = new AccommodationReservationRequestService();
             Reservations = new ObservableCollection<AccommodationReservation>
-                                (_reservationService.GetConfirmed(_loggedInUser.Id));
+                                (_reservationService.GetExistingGuestReservations(_loggedInUser.Id));
             _reservationService.Subscribe(this);
             CancelReservationCommand = new AccommodationReservationClickCommand(CancelReservation);
             MoveReservationCommand = new AccommodationReservationClickCommand(MoveReservation);
@@ -64,7 +64,7 @@ namespace InitialProject.WPF.ViewModels
         public void Update()
         {
             var reservations = new ObservableCollection<AccommodationReservation>
-                                (_reservationService.GetConfirmed(_loggedInUser.Id));
+                                (_reservationService.GetExistingGuestReservations(_loggedInUser.Id));
             Reservations.Clear();
             foreach (var r in reservations)
                 Reservations.Add(r);

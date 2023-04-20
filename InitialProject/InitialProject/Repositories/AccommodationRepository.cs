@@ -25,42 +25,17 @@ namespace InitialProject.Repository
         public List<Accommodation> GetAll()
         {
             _accommodations = _fileHandler.Load();
-            var users = RepositoryInjector.Get<IUserRepository>().GetAll();
-            _accommodations.ForEach(a => a.Owner = users.Find(u => u.Id == a.Owner.Id));
-            var accommodations = new List<Accommodation>();
-            _accommodations.ForEach(a => { if (a.Owner.SuperOwner) accommodations.Add(a); });
-            _accommodations.ForEach(a => { if (!a.Owner.SuperOwner) accommodations.Add(a); });
-
-            return accommodations;
+            return _accommodations.OrderBy(a => !a.Owner.SuperOwner).ToList();
         }
-
-        public Accommodation Save(Accommodation accommodation)
-        {
-            GetAll();
-            accommodation.Id = NextId();
-            _accommodations.Add(accommodation);
-            _fileHandler.Save(_accommodations);
-            return accommodation;
-        }
-
         private int NextId()
         {
             return _accommodations?.Max(r => r.Id) + 1 ?? 0;
         }
-
-        public void Delete(Accommodation accommodation)
-        {
-            GetAll();
-            Accommodation founded = _accommodations.Find(a => a.Id == accommodation.Id);
-            _accommodations.Remove(founded);
-            _fileHandler.Save(_accommodations);
-        }
         public List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
         {
             GetAll();
-            var filteredAccommodations = new List<Accommodation>();
-            filteredAccommodations = _accommodations.FindAll(a => a.MatchesFilters(keyWords, type, guestNumber, numberOfDays));
-            return filteredAccommodations;
+            return _accommodations.FindAll
+                (a => a.MatchesFilters(keyWords, type, guestNumber, numberOfDays));
         }
         public List<Accommodation> Sort(List<Accommodation> accommodations, string criterium)
         {
@@ -96,14 +71,13 @@ namespace InitialProject.Repository
         {
             return accommodations.OrderBy(a => a.MinimumDays).ToList();
         }
-        public void Add(string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,
-                        User owner)
+        public void Add(string name, string country, string city, string address, AccommodationType type,
+            int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL, User owner)
         {
             GetAll();
             int accommodationId = NextId();
             Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address,
-                type, maximumGuests, minimumDays, minimumCancelationNotice,
-                                                            pictureURL, owner);
+                type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, owner);
             _accommodations.Add(accommodation);
             _fileHandler.Save(_accommodations);
         }

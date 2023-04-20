@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace InitialProject.Domain.Models
 {
-    public enum AccommodationReservationStatus { Finished, Confirmed, Cancelled }
+    public enum AccommodationReservationStatus { Finished, Active, Cancelled }
     public class AccommodationReservation : ISerializable
     {
         public int Id { get; set; }
@@ -30,7 +30,7 @@ namespace InitialProject.Domain.Models
             Accommodation = new Accommodation();
         }
         public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkIn,
-            DateOnly checkOut, AccommodationReservationStatus status)
+            DateOnly checkOut)
         {
             Accommodation = accommodation;
             Guest = guest;
@@ -39,7 +39,7 @@ namespace InitialProject.Domain.Models
             CheckOut = checkOut;
             IsGuestRated = false;
             IsOwnerRated = false;
-            Status = status;
+            Status = AccommodationReservationStatus.Active;
         }
         public bool Overlaps(DateOnly checkIn, DateOnly checkOut)
         {
@@ -67,7 +67,7 @@ namespace InitialProject.Domain.Models
             IsGuestRated = bool.Parse(values[8]);
             IsOwnerRated = bool.Parse(values[9]);
             Status = (AccommodationReservationStatus)Enum.Parse(typeof(AccommodationReservationStatus), values[10]);
-            if (CheckOut <= DateOnly.FromDateTime(DateTime.Now) && Status == AccommodationReservationStatus.Confirmed)
+            if (CheckOut <= DateOnly.FromDateTime(DateTime.Now) && Status == AccommodationReservationStatus.Active)
             {
                 Status = AccommodationReservationStatus.Finished;
             }

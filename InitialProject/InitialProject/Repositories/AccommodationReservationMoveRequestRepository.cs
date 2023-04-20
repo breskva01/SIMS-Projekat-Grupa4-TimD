@@ -14,26 +14,15 @@ namespace InitialProject.Repositories
     public class AccommodationReservationMoveRequestRepository : IAccommodationReservationMoveRequestRepository
     {
         private readonly AccommodationReservationMoveRequestFileHandler _fileHandler;
-        private readonly AccommodationReservationFileHandler _reservationFileHandler;
         private List<AccommodationReservationMoveRequest> _requests;
-        private List<AccommodationReservation> _reservations;
-
 
         public AccommodationReservationMoveRequestRepository()
         {
             _fileHandler = new AccommodationReservationMoveRequestFileHandler();
-            _reservationFileHandler= new AccommodationReservationFileHandler();
-            _requests = _fileHandler.Load();
         }
         public List<AccommodationReservationMoveRequest> GetAll()
         {
-            _requests = _fileHandler.Load();
-            var reservations = RepositoryInjector.Get<IAccommodationReservationRepository>().GetAll();
-            _requests.ForEach(req => 
-                                req.Reservation = reservations.Find
-                                    (res => res.Id == req.Reservation.Id)
-                             );
-            return _requests;
+            return _requests = _fileHandler.Load();
         }
         public List<AccommodationReservationMoveRequest> GetByOwnerId(int ownerId)
         {
@@ -48,23 +37,23 @@ namespace InitialProject.Repositories
         public List<AccommodationReservationMoveRequest> GetAllNewlyAnswered(int guestId)
         {
             GetAll();
-            var answeredRequests = _requests.FindAll(r => r.Reservation.Guest.Id == guestId &&
+            return _requests.FindAll(r => r.Reservation.Guest.Id == guestId &&
                                           r.Status != ReservationMoveRequestStatus.Pending &&
                                           r.GuestNotified == false);
-            return answeredRequests;
         }
         public void UpdateGuestNotifiedField(int guestId)
         {
             GetAll();
-            _requests.FindAll(request => request.Reservation.Guest.Id == guestId &&
-                                         request.Status != ReservationMoveRequestStatus.Pending)
-                     .ForEach(request => request.GuestNotified = true);
+            _requests.FindAll(r => r.Reservation.Guest.Id == guestId &&
+                                   r.Status != ReservationMoveRequestStatus.Pending)
+                     .ForEach(r => r.GuestNotified = true);
             _fileHandler.Save(_requests);
         }
         public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId)
         {
             GetAll();
-            return _requests.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId && r.Status == ReservationMoveRequestStatus.Pending);
+            return _requests.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId && 
+                                          r.Status == ReservationMoveRequestStatus.Pending);
         }
         public void ApproveRequest(int reservationId)
         {

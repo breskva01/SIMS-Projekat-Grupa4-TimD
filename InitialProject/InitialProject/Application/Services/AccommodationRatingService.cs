@@ -28,9 +28,9 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetByOwnerId(ownerId);
         }
-        public List<AccommodationRating> GetEgligibleForDisplay(int ownerId)
+        public List<AccommodationRating> GetEligibleForDisplay(int ownerId)
         {
-            return _repository.GetEgligibleForDisplay(ownerId);
+            return _repository.GetEligibleForDisplay(ownerId);
         }
         public void Save(AccommodationReservation reservation, int location, int hygiene, int pleasantness,
                          int fairness, int parking, string comment, List<string> pictureURLs)
