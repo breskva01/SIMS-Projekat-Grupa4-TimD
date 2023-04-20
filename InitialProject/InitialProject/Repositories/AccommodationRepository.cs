@@ -27,8 +27,11 @@ namespace InitialProject.Repository
             _accommodations = _fileHandler.Load();
             var users = RepositoryStore.GetIUserRepository.GetAll();
             _accommodations.ForEach(a => a.Owner = users.Find(u => u.Id == a.OwnerId));
-            _accommodations.OrderByDescending(a => a.Owner.SuperOwner);
-            return _accommodations;
+            var accommodations = new List<Accommodation>();
+            _accommodations.ForEach(a => { if (a.Owner.SuperOwner) accommodations.Add(a); });
+            _accommodations.ForEach(a => { if (!a.Owner.SuperOwner) accommodations.Add(a); });
+
+            return accommodations;
         }
 
         public Accommodation Save(Accommodation accommodation)

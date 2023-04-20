@@ -4,4 +4,5 @@
 5|Bob2|bob123|Guest2|Bob2|Marley2|marleyb@gmail.com|415-289|11|False|3,4,5,6,
 6|Bob3|bob123|Guest2|Bob3|Marley3|marleyb@gmail.com|415-289|100|False|3,4,5,6,
 7|Bob4|bob123|Guest2|Bob4|Marley4|marleyb@gmail.com|415-289|31|False|3,4,5,6,
-1|Pera|pera123|Owner|Pera|Pasulj|pera123@gmail.com|643-235|21|False|3,4,5,
+1|Pera|pera123|Owner|Pera|Pasulj|pera123@gmail.com|643-235|21|True|3,4,5,
+8|Pera2|pera123|Owner|Pera|Pasulj|pera123@gmail.com|643-235|21|False|3,4,5,

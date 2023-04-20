@@ -34,7 +34,7 @@ namespace InitialProject.Repositories
         }
         public AccommodationReservation GetById(int reservationId)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             return _reservations.Find(r => r.Id == reservationId);
         }
         public List<AccommodationReservation> GetConfirmed(int guestId)
@@ -117,7 +117,7 @@ namespace InitialProject.Repositories
 
         public List<AccommodationReservation> GetEgligibleForRating(int guestId)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             DateOnly fiveDaysAgo = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
             var egligibleReservations = _reservations.FindAll(r => r.GuestId == guestId &&
                                          r.Status == AccommodationReservationStatus.Finished &&

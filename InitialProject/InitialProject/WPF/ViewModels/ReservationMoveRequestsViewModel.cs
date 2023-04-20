@@ -46,6 +46,7 @@ namespace InitialProject.WPF.ViewModels
                 {
                     _selectedRequest = value;
                     OnPropertyChanged();
+                    if(_selectedRequest != null)
                     Availability = CheckAvailability(_selectedRequest.Reservation.AccommodationId, _selectedRequest.RequestedCheckIn, _selectedRequest.RequestedCheckOut);
                 }
             }
