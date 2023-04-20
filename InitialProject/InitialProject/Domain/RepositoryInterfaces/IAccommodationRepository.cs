@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IAccommodationRepository
+    public interface IAccommodationRepository : IRepository<Accommodation>
     {
-        List<Accommodation> GetAll();
         Accommodation Save(Accommodation accommodation);
         void Delete(Accommodation accommodation);
         List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays);

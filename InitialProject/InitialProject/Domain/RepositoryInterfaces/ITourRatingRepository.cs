@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface ITourRatingRepository
+    public interface ITourRatingRepository : IRepository<TourRating>
     {
-        public List<TourRating> GetAll();
         public TourRating GetById(int id);
         public TourRating Update(TourRating rating);
         public TourRating Save(TourRating tourRating);

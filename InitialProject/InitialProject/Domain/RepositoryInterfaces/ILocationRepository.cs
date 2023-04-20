@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface ILocationRepository
+    public interface ILocationRepository : IRepository<Location>
     {
-        public List<Location> GetAll();
         public Location GetById(int id);
     }
 }
