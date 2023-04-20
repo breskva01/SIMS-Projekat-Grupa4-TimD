@@ -1,5 +1,7 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,11 +14,11 @@ namespace InitialProject.Application.Services
     public class KeyPointService
     {
         private readonly List<IObserver> _observers;
-        private readonly KeyPointRepository _repository;
+        private readonly IKeyPointRepository _repository;
         public KeyPointService()
         {
             _observers = new List<IObserver>();
-            _repository = new KeyPointRepository();
+            _repository = RepositoryInjector.Get<IKeyPointRepository>();
         }
         public List<KeyPoint> GetAll()
         {

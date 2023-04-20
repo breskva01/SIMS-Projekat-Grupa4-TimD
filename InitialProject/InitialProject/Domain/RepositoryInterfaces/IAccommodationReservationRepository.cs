@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IAccommodationReservationRepository
+    public interface IAccommodationReservationRepository : IRepository<AccommodationReservation>
     {
-        List<AccommodationReservation> GetAll();
         AccommodationReservation GetById(int reservationId);
         List<AccommodationReservation> GetAllNewlyCancelled(int ownerId);
         List<AccommodationReservation> GetConfirmed(int guestId);

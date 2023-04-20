@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IVoucherRepository
+    public interface IVoucherRepository : IRepository<Voucher>
     {
-        public List<Voucher> GetAll();
         public Voucher Update(Voucher voucher);
         public Voucher Save(Voucher voucher);
         public int NextId();

@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -16,7 +17,7 @@ namespace InitialProject.Application.Services
         private readonly IAccommodationReservationMoveRequestRepository _repository;
         public AccommodationReservationRequestService()
         {
-            _repository = RepositoryStore.GetIAccommodationReservationMoveRequestRepository;
+            _repository = RepositoryInjector.Get<IAccommodationReservationMoveRequestRepository>();
         }
         public List<AccommodationReservationMoveRequest> GetAll()
         {

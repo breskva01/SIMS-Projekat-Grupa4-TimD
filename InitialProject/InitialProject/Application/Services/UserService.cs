@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -17,7 +18,7 @@ namespace InitialProject.Application.Services
 
         public UserService()
         {
-            _repository = RepositoryStore.GetIUserRepository;
+            _repository = RepositoryInjector.Get<IUserRepository>();
         }
         public User GetByUsername(string username)
         {

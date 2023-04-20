@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface ITourRepository
+    public interface ITourRepository : IRepository<Tour>
     {
-        public List<Tour> GetAll();
         public Tour GetById(int tourId);
         public Tour GetByName(String name);
         public List<Tour> GetToursByYear(String year);

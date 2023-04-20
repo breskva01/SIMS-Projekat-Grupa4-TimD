@@ -1,5 +1,4 @@
-﻿using InitialProject.Domain.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IKeyPointRepository : IRepository<KeyPoint>
+    public interface IRepository<T>
     {
-        public KeyPoint GetById(int id);
+        List<T> GetAll();
     }
 }

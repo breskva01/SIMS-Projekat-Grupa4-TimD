@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InitialProject.Application.Injector;
 
 namespace InitialProject.Repositories
 {
@@ -20,17 +21,28 @@ namespace InitialProject.Repositories
         public AccommodationReservationRepository()
         {
             _fileHandler = new AccommodationReservationFileHandler();
-            _reservations = _fileHandler.Load();
             _observers = new List<IObserver>();
         }
         public List<AccommodationReservation> GetAll()
         {
             _reservations = _fileHandler.Load();
-            var accommodations = RepositoryStore.GetIAccommodationRepository.GetAll();
-            _reservations.ForEach(r => 
+            FillInAccommodations();
+            FillInGuests();
+            return _reservations;
+        }
+        private void FillInAccommodations()
+        {
+            var accommodations = RepositoryInjector.Get<IAccommodationRepository>().GetAll();
+            _reservations.ForEach(r =>
                                     r.Accommodation = accommodations.Find(
                                         a => a.Id == r.AccommodationId));
-            return _reservations;
+        }
+        private void FillInGuests()
+        {
+            var users = RepositoryInjector.Get<IUserRepository>().GetAll();
+            _reservations.ForEach(r =>
+                                    r.Guest = users.Find(
+                                        u => u.Id == r.GuestId));
         }
         public AccommodationReservation GetById(int reservationId)
         {
@@ -46,13 +58,13 @@ namespace InitialProject.Repositories
         }
         public List<AccommodationReservation> GetExisting(int accommodationId)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             return _reservations.FindAll(r => r.AccommodationId == accommodationId &&
                                          r.Status == AccommodationReservationStatus.Confirmed);
         }
         public List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();    
             return _reservations.FindAll(r => r.AccommodationId == accommodationId &&
                                          r.Status == AccommodationReservationStatus.Confirmed &&
                                          r.CheckIn >= startDate && r.CheckOut <= endDate);
@@ -63,7 +75,7 @@ namespace InitialProject.Repositories
             reservation.Status = AccommodationReservationStatus.Cancelled;
             _fileHandler.Save(_reservations);
         }
-        public bool IsCompleted(AccommodationReservation accommodationReservation, int ownerId)
+        private bool IsCompleted(AccommodationReservation accommodationReservation, int ownerId)
         {
             return accommodationReservation.CheckOut < DateOnly.FromDateTime(DateTime.Now)
                     && DateOnly.FromDateTime(DateTime.Now) < accommodationReservation.CheckOut.AddDays(5)
@@ -85,6 +97,7 @@ namespace InitialProject.Repositories
         }
         public void updateLastNotification(AccommodationReservation accommodationReservation)
         {
+            GetAll();
             AccommodationReservation newAccommodationReservation = new AccommodationReservation();
             newAccommodationReservation = accommodationReservation;
             newAccommodationReservation.LastNotification = newAccommodationReservation.LastNotification.AddDays(1);
@@ -95,7 +108,7 @@ namespace InitialProject.Repositories
         }
         public void updateRatingStatus(AccommodationReservation accommodationReservation)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             AccommodationReservation newAccommodationReservation = _reservations.Find(a => a.Id == accommodationReservation.Id);
             newAccommodationReservation.IsGuestRated = true;
             _fileHandler.Save(_reservations);
@@ -103,16 +116,15 @@ namespace InitialProject.Repositories
         }
         public void Save(AccommodationReservation reservation)
         {
+            GetAll();
             reservation.Id = NextId();
-            _reservations = _fileHandler.Load();
             _reservations.Add(reservation);
             _fileHandler.Save(_reservations);
         }
         private int NextId()
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             return _reservations?.Max(r => r.Id) + 1 ?? 0;
-            //return _reservations.Count == 0 ? 0 : _reservations.Max(r => r.Id) + 1;
         }
 
         public List<AccommodationReservation> GetEgligibleForRating(int guestId)
@@ -135,9 +147,10 @@ namespace InitialProject.Repositories
 
         public List<AccommodationReservation> GetAllNewlyCancelled(int ownerId)
         {
-            _reservations = _fileHandler.Load();
-            var notifactions = RepositoryStore.GetIAccommodationReservationCancellationNotificationRepository.
-                                               GetByOwnerId(ownerId);
+            GetAll();
+            var notifactions = RepositoryInjector.
+                                Get<IAccommodationReservationCancellationNotificationRepository>().
+                                    GetByOwnerId(ownerId);
             var cancelledReservatons = new List<AccommodationReservation>();
             notifactions.ForEach(n =>
                 cancelledReservatons.Add(
@@ -148,7 +161,7 @@ namespace InitialProject.Repositories
         }
         public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly NewCheckOut)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             AccommodationReservation reservation = new AccommodationReservation();
             AccommodationReservation newReservation = new AccommodationReservation();
             reservation = _reservations.Find(r => r.Id == reservationId);
@@ -162,7 +175,7 @@ namespace InitialProject.Repositories
 
         public string CheckAvailability(int accomodationId, DateOnly checkIn, DateOnly checkOut)
         {
-            _reservations = _fileHandler.Load();
+            GetAll();
             foreach (AccommodationReservation res in _reservations)
             {
                 var AccommodationIsUnavailable = (checkIn > res.CheckIn 

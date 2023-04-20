@@ -22,7 +22,6 @@ namespace InitialProject.Repository
         {
             _fileHandler = new UserFileHandler();
             //_accommmodationRatingRepository = RepositoryStore.GetIAccommodationRatingRepository;
-            _users = _fileHandler.Load();
         }
 
         public List<User> GetAll()

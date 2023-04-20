@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -19,7 +20,7 @@ namespace InitialProject.Application.Services
         public AccommodationService()
         {
             _observers = new List<IObserver>();
-            _repository = RepositoryStore.GetIAccommodationRepository;
+            _repository = RepositoryInjector.Get<IAccommodationRepository>();
         }
         public List<Accommodation> GetAll()
         {

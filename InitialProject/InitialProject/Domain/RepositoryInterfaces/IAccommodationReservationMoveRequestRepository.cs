@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IAccommodationReservationMoveRequestRepository
+    public interface IAccommodationReservationMoveRequestRepository : IRepository<AccommodationReservationMoveRequest>
     {
-        List<AccommodationReservationMoveRequest> GetAll();
         List<AccommodationReservationMoveRequest> GetByOwnerId(int ownerId);
         List<AccommodationReservationMoveRequest> GetByGuestId(int guestId);
         public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId);

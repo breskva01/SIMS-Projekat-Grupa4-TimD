@@ -40,5 +40,10 @@ namespace InitialProject.Repositories
             _notifications.Add(notification);
             _fileHandler.Save(_notifications);
         }
+
+        public List<AccommodationReservationCancellationNotification> GetAll()
+        {
+            return _fileHandler.Load();
+        }
     }
 }

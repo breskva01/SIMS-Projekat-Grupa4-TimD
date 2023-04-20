@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.RepositoryInterfaces;
+using InitialProject.Application.Injector;
 
 namespace InitialProject.Application.Services
 {
@@ -15,7 +16,7 @@ namespace InitialProject.Application.Services
 
         public GuestRatingService()
         {
-            _repository = RepositoryStore.GetIGuestRatingRepository;
+            _repository = RepositoryInjector.Get<IGuestRatingRepository>();
         }
 
         public List<GuestRating> GetAll()
