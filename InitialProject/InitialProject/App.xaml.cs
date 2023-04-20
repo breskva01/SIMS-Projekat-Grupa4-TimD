@@ -9,6 +9,7 @@ using System.Windows;
 using InitialProject.WPF.NewViews;
 using InitialProject.Application.Stores;
 using InitialProject.Application.Services;
+using InitialProject.Application.Injector;
 
 namespace InitialProject
 {
@@ -21,6 +22,7 @@ namespace InitialProject
         public App()
         {
             _navigationStore = new NavigationStore();
+            RepositoryInjector.MapRepositories();
         }
         protected override void OnStartup(StartupEventArgs e)
         {

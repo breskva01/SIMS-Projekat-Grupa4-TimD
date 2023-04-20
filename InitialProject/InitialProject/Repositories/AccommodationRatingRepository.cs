@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Stores;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
@@ -24,8 +25,8 @@ namespace InitialProject.Repositories
             _fileHandler = new AccommodationRatingFileHandler();
             _userFileHandler = new UserFileHandler();
             _ratings = _fileHandler.Load();
-            _reservationRepository = RepositoryStore.GetIAccommodationReservationRepository;
-            _userRepository = RepositoryStore.GetIUserRepository;
+            _reservationRepository = RepositoryInjector.Get<IAccommodationReservationRepository>();
+            _userRepository = RepositoryInjector.Get<IUserRepository>();
         }
 
         public List<AccommodationRating> GetAll()

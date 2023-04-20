@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Stores;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
@@ -27,7 +28,7 @@ namespace InitialProject.Repositories
         public List<AccommodationReservationMoveRequest> GetAll()
         {
             _requests = _fileHandler.Load();
-            var reservations = RepositoryStore.GetIAccommodationReservationRepository.GetAll();
+            var reservations = RepositoryInjector.Get<IAccommodationReservationRepository>().GetAll();
             _requests.ForEach(req => 
                                 req.Reservation = reservations.Find
                                     (res => res.Id == req.ReservationId)
@@ -54,6 +55,7 @@ namespace InitialProject.Repositories
         }
         public void UpdateGuestNotifiedField(int guestId)
         {
+            GetAll();
             _requests.FindAll(request => request.Reservation.GuestId == guestId &&
                                          request.Status != ReservationMoveRequestStatus.Pending)
                      .ForEach(request => request.GuestNotified = true);
@@ -76,6 +78,7 @@ namespace InitialProject.Repositories
         }
         public void DenyRequest(int reservationId, string comment)
         {
+            GetAll();
             AccommodationReservationMoveRequest request = _requests.Find(r => r.ReservationId == reservationId);
             AccommodationReservationMoveRequest newRequest = request;
             newRequest.Status = ReservationMoveRequestStatus.Declined;

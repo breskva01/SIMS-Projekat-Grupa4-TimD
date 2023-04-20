@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -19,7 +20,7 @@ namespace InitialProject.Application.Services
         public AccommodationReservationService()
         {
             _observers = new List<IObserver>();
-            _repository = RepositoryStore.GetIAccommodationReservationRepository;
+            _repository = RepositoryInjector.Get<IAccommodationReservationRepository>();
         }
         public void Save(AccommodationReservation accommodationReservation)
         {
@@ -47,8 +48,9 @@ namespace InitialProject.Application.Services
             if (!reservation.CanBeCancelled())
                 return false;
             _repository.Cancel(reservationId);
-            RepositoryStore.GetIAccommodationReservationCancellationNotificationRepository.Save(
-                new AccommodationReservationCancellationNotification(reservationId, ownerId));
+            RepositoryInjector.Get
+                <IAccommodationReservationCancellationNotificationRepository>().
+                Save(new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
             return true;
         }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using InitialProject.Domain.RepositoryInterfaces;
+using InitialProject.Repositories;
+using InitialProject.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +44,22 @@ namespace InitialProject.Application.Injector
         public static void Clear()
         {
             mappings.Clear();
+        }
+        public static void MapRepositories()
+        {
+            Map<IUserRepository, UserRepository>();
+            Map<IAccommodationRepository, AccommodationRepository>();
+            Map<IAccommodationReservationRepository, AccommodationReservationRepository>();
+            Map<IAccommodationRatingRepository, AccommodationRatingRepository>();
+            Map<IAccommodationReservationCancellationNotificationRepository, AccommodationReservationCancellationNotificationRepository>();
+            Map<IAccommodationReservationMoveRequestRepository, AccommodationReservationMoveRequestRepository>();
+            Map<ITourRepository, TourRepository>();
+            Map<ITourReservationRepository, TourReservationRepository>();
+            Map<ITourRatingRepository, TourRatingRepository>();
+            Map<IVoucherRepository, VoucherRepository>();
+            Map<ILocationRepository, LocationRepository>();
+            Map<IKeyPointRepository, KeyPointRepository>();
+            Map<IGuestRatingRepository, GuestRatingRepository>();
         }
     }
 

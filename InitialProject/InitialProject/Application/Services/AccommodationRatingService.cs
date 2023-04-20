@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -17,7 +18,7 @@ namespace InitialProject.Application.Services
         public AccommodationRatingService()
         {
             _observers = new List<IObserver>();
-            _repository = RepositoryStore.GetIAccommodationRatingRepository;
+            _repository = RepositoryInjector.Get<IAccommodationRatingRepository>();
         }
         public List<AccommodationRating> GetAll()
         {
@@ -37,7 +38,7 @@ namespace InitialProject.Application.Services
             var rating = new AccommodationRating(reservation, location, hygiene, pleasantness, fairness,
                                                  parking, comment, pictureURLs);
             _repository.Save(rating);
-            RepositoryStore.GetIAccommodationReservationRepository.MarkOwnerAsRated(reservation.Id);
+            RepositoryInjector.Get<IAccommodationReservationRepository>().MarkOwnerAsRated(reservation.Id);
         }
         public void Subscribe(IObserver observer)
         {

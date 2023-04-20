@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Serializer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Serializer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -25,7 +26,7 @@ namespace InitialProject.Repository
         public List<Accommodation> GetAll()
         {
             _accommodations = _fileHandler.Load();
-            var users = RepositoryStore.GetIUserRepository.GetAll();
+            var users = RepositoryInjector.Get<IUserRepository>().GetAll();
             _accommodations.ForEach(a => a.Owner = users.Find(u => u.Id == a.OwnerId));
             var accommodations = new List<Accommodation>();
             _accommodations.ForEach(a => { if (a.Owner.SuperOwner) accommodations.Add(a); });

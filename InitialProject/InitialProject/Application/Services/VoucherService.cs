@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -21,7 +22,7 @@ namespace InitialProject.Application.Services
         public VoucherService()
         {
             _observers = new List<IObserver>();
-            _repository = RepositoryStore.GetIVoucherRepository;
+            _repository = RepositoryInjector.Get<IVoucherRepository>();
         }
 
         public List<Voucher> GetAll()
