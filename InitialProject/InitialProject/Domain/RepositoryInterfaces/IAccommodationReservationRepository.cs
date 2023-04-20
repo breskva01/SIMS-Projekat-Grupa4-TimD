@@ -10,11 +10,8 @@ namespace InitialProject.Domain.RepositoryInterfaces
     public interface IAccommodationReservationRepository : IRepository<AccommodationReservation>
     {
         AccommodationReservation GetById(int reservationId);
-        List<AccommodationReservation> GetAllNewlyCancelled(int ownerId);
-        List<AccommodationReservation> GetExistingGuestReservations(int guestId);
-        List<AccommodationReservation> GetEligibleForRating(int guestId);
-        List<AccommodationReservation> GetExistingReservationsForAccommodation(int accommodationId);
-        List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate);
+        List<AccommodationReservation> GetFilteredReservations(int? guestId = null, int? accommodationId = null, DateOnly? startDate = null,
+            DateOnly? endDate = null, AccommodationReservationStatus status = AccommodationReservationStatus.Active);
         public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId);
         public void updateLastNotification(AccommodationReservation accommodationReservation);
         public void updateRatingStatus(AccommodationReservation accommodationReservation);

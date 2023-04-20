@@ -36,11 +36,13 @@ namespace InitialProject.Application.Services
         }
         public List<AccommodationReservation> GetEligibleForRating(int guestId)
         {
-            return _repository.GetEligibleForRating(guestId);
+            var reservations = _repository.GetFilteredReservations(guestId: guestId,
+                                                                   status: AccommodationReservationStatus.Finished);
+            return reservations.FindAll(r => r.IsEligibleForRating());
         }
         public List<AccommodationReservation> GetExistingGuestReservations(int guestId)
         {
-            return _repository.GetExistingGuestReservations(guestId);
+            return _repository.GetFilteredReservations(guestId: guestId);
         }
         public bool Cancel(int reservationId, int ownerId)
         {
@@ -54,7 +56,7 @@ namespace InitialProject.Application.Services
         }
         public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, User guest)
         {
-            var existingReservations = _repository.GetExistingReservationsForAccommodation(accommodation.Id);
+            var existingReservations = _repository.GetFilteredReservations(accommodationId: accommodation.Id);
             var availableReservations = FindInsideDateRange(startDate, endDate, stayLength, 
                                                             accommodation, guest, existingReservations);
             if (availableReservations.Count == 0)
@@ -107,7 +109,8 @@ namespace InitialProject.Application.Services
         }
         private void SetStartingSearchDates(ref DateOnly startDate, ref DateOnly endDate, int accommodationId, int stayLength)
         {
-            var reservationsInsideDateRange = _repository.GetExistingInsideDateRange(accommodationId, startDate, endDate);
+            var reservationsInsideDateRange = _repository.GetFilteredReservations(accommodationId: accommodationId,
+                                                                                  startDate: startDate, endDate: endDate);
             if (reservationsInsideDateRange.Count == 0)
                 endDate = startDate.AddDays(1);
             else
@@ -142,6 +145,17 @@ namespace InitialProject.Application.Services
         public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut)
         {
             return _repository.CheckAvailability(accommodationId ,checkIn, checkOut);
+        }
+        public List<AccommodationReservation> GetAllNewlyCancelled(int ownerId)
+        {
+            var notifactions = RepositoryInjector.Get<IAccommodationReservationCancellationNotificationRepository>().
+                                    GetByOwnerId(ownerId);
+            var cancelledReservatons = new List<AccommodationReservation>();
+            notifactions.ForEach(n => 
+            {
+                cancelledReservatons.Add(_repository.GetById(n.ReservationId));
+            });
+            return cancelledReservatons;
         }
         public void Subscribe(IObserver observer)
         {

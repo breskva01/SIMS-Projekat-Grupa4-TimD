@@ -53,6 +53,13 @@ namespace InitialProject.Domain.Models
             int differenceInDays = (int)difference.TotalDays;
             return differenceInDays >= Accommodation.MinimumCancelationNotice;
         }
+        public bool IsEligibleForRating()
+        {
+            DateOnly cutoffDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
+            return IsOwnerRated == false && 
+                   Status == AccommodationReservationStatus.Finished &&
+                   CheckOut >= cutoffDate;
+        }
 
         public void FromCSV(string[] values)
         {
