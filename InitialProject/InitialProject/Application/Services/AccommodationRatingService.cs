@@ -11,48 +11,40 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Application.Services
 {
-    public class AccommodationRatingService : ISubject
+    public class AccommodationRatingService
     {
-        private readonly List<IObserver> _observers;
-        private readonly IAccommodationRatingRepository _repository;
+        private readonly IAccommodationRatingRepository _ratingRepository;
+        private readonly IAccommodationReservationRepository _reservationRepository;
         public AccommodationRatingService()
         {
-            _observers = new List<IObserver>();
-            _repository = RepositoryInjector.Get<IAccommodationRatingRepository>();
+            _ratingRepository = RepositoryInjector.Get<IAccommodationRatingRepository>();
+            _reservationRepository = RepositoryInjector.Get<IAccommodationReservationRepository>();
         }
         public List<AccommodationRating> GetAll()
         {
-            return _repository.GetAll();
+            return _ratingRepository.GetAll();
         }
         public List<AccommodationRating> GetByOwnerId(int ownerId)
         {
-            return _repository.GetByOwnerId(ownerId);
+            return _ratingRepository.GetByOwnerId(ownerId);
         }
         public List<AccommodationRating> GetEligibleForDisplay(int ownerId)
         {
-            return _repository.GetEligibleForDisplay(ownerId);
+            return _ratingRepository.GetEligibleForDisplay(ownerId);
+        }
+        public List<AccommodationReservation> GetEligibleForRating(int guestId)
+        {
+            var reservations = _reservationRepository.GetFilteredReservations(guestId: guestId,
+                                                        status: AccommodationReservationStatus.Finished);
+            return reservations.FindAll(r => r.IsEligibleForRating());
         }
         public void Save(AccommodationReservation reservation, int location, int hygiene, int pleasantness,
                          int fairness, int parking, string comment, List<string> pictureURLs)
         {
             var rating = new AccommodationRating(reservation, location, hygiene, pleasantness, fairness,
                                                  parking, comment, pictureURLs);
-            _repository.Save(rating);
-            RepositoryInjector.Get<IAccommodationReservationRepository>().MarkOwnerAsRated(reservation.Id);
-        }
-        public void Subscribe(IObserver observer)
-        {
-            _observers.Add(observer);
-        }
-
-        public void Unsubscribe(IObserver observer)
-        {
-            _observers.Remove(observer);
-        }
-
-        public void NotifyObservers()
-        {
-            _observers.ForEach(o => o.Update());
+            _ratingRepository.Save(rating);
+            _reservationRepository.MarkOwnerAsRated(reservation.Id);
         }
     }
 }

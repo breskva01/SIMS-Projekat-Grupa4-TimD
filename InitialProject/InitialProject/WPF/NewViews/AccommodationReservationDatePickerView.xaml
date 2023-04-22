@@ -16,7 +16,7 @@
                 </TextBlock>
                 <TextBlock FontSize="14" FontWeight="Light" Margin="5">
                     <Run Text="Broj dana: "/>  
-                    <Run Text="{Binding NumberOfDays}" />
+                    <Run Text="{Binding NumberOfDays, Mode=OneWay}" />
                 </TextBlock>
                 <TextBlock FontSize="14" FontWeight="Light" Margin="5">
                     <Run Text="Check in: "/>  
@@ -50,7 +50,7 @@
         </ListBox>
         <StackPanel Margin="15" Grid.Row="1" Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center" FontSize="14" Text="Broj gostiju: "/>
-            <TextBox FontSize="14" Padding="3" MinWidth="100" Text="{Binding Path=GuestNumber, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox FontSize="14" Padding="3" MinWidth="100" Text="{Binding Path=GuestCount, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Margin="5 0" FontSize="14" Padding="3" Content="Rezerviši"
                     Command="{Binding ReserveCommand}"/>
             <Button Margin="5 0" FontSize="14" Padding="3" Content="Nazad" 

@@ -19,7 +19,7 @@ namespace InitialProject.WPF.ViewModels
         private readonly NavigationStore _navigationStore;
         public AccommodationReservation SelectedReservation { get; set; }
         public List<AccommodationReservation> Reservations { get; set; }
-        public int GuestNumber { get; set; }
+        public int GuestCount { get; set; }
         public ICommand ReserveCommand { get; }
         public ICommand ShowReservationViewCommand { get; }
         public AccommodationReservationDatePickerViewModel(NavigationStore navigationStore, List<AccommodationReservation> reservations)
@@ -35,13 +35,13 @@ namespace InitialProject.WPF.ViewModels
         {
             if (SelectedReservation == null)
                 MessageBox.Show("Izaberite željeni termin.");
-            else if (GuestNumber == 0)
+            else if (GuestCount == 0)
                 MessageBox.Show("Unesite broj gostiju.");
-            else if (GuestNumber > SelectedReservation.Accommodation.MaximumGuests)
+            else if (GuestCount > SelectedReservation.Accommodation.MaximumGuests)
                 MessageBox.Show("Uneti broj gostiju prelazi zadati limit.");
             else
             {
-                SelectedReservation.GuestNumber = GuestNumber;
+                SelectedReservation.GuestCount = GuestCount;
                 _service.Save(SelectedReservation);
                 MessageBox.Show("Rezervacija uspešno kreirana.");
                 ShowAccommodationBrowserView();

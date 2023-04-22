@@ -16,8 +16,9 @@ namespace InitialProject.Domain.Models
         public int Id { get; set; }
         public Accommodation Accommodation { get; set; }
         public User Guest { get; set; }
-        public int NumberOfDays { get; set; }
-        public int GuestNumber { get; set; }
+        public int NumberOfDays => (CheckOut.ToDateTime(TimeOnly.MinValue) - 
+                                    CheckIn.ToDateTime(TimeOnly.MinValue)).Days;
+        public int GuestCount { get; set; }
         public DateOnly CheckIn { get; set; }
         public DateOnly CheckOut { get; set; }
         public DateOnly LastNotification { get; set; }
@@ -29,12 +30,11 @@ namespace InitialProject.Domain.Models
             Guest = new User();
             Accommodation = new Accommodation();
         }
-        public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkIn,
-            DateOnly checkOut)
+        public AccommodationReservation(Accommodation accommodation, User guest,
+            DateOnly checkIn, DateOnly checkOut)
         {
             Accommodation = accommodation;
             Guest = guest;
-            NumberOfDays = numberOfDays;
             CheckIn = checkIn;
             CheckOut = checkOut;
             IsGuestRated = false;
@@ -66,14 +66,13 @@ namespace InitialProject.Domain.Models
             Id = int.Parse(values[0]);
             Accommodation.Id = int.Parse(values[1]);
             Guest.Id = int.Parse(values[2]);
-            NumberOfDays = int.Parse(values[3]);
-            GuestNumber = int.Parse(values[4]);
-            CheckIn = DateOnly.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            CheckOut = DateOnly.ParseExact(values[6], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            LastNotification = DateOnly.ParseExact(values[7], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            IsGuestRated = bool.Parse(values[8]);
-            IsOwnerRated = bool.Parse(values[9]);
-            Status = (AccommodationReservationStatus)Enum.Parse(typeof(AccommodationReservationStatus), values[10]);
+            GuestCount = int.Parse(values[3]);
+            CheckIn = DateOnly.ParseExact(values[4], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            CheckOut = DateOnly.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LastNotification = DateOnly.ParseExact(values[6], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            IsGuestRated = bool.Parse(values[7]);
+            IsOwnerRated = bool.Parse(values[8]);
+            Status = (AccommodationReservationStatus)Enum.Parse(typeof(AccommodationReservationStatus), values[9]);
             if (CheckOut <= DateOnly.FromDateTime(DateTime.Now) && Status == AccommodationReservationStatus.Active)
             {
                 Status = AccommodationReservationStatus.Finished;
@@ -82,9 +81,17 @@ namespace InitialProject.Domain.Models
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Accommodation.Id.ToString(), Guest.Id.ToString(),
-                                    NumberOfDays.ToString(), GuestNumber.ToString(), CheckIn.ToString("dd/MM/yyyy"), CheckOut.ToString("dd/MM/yyyy"),
-                                    LastNotification.ToString("dd/MM/yyyy"), IsGuestRated.ToString(), IsOwnerRated.ToString(), Status.ToString()};
+            string[] csvValues = 
+                { Id.ToString(), 
+                  Accommodation.Id.ToString(),
+                  Guest.Id.ToString(),
+                  GuestCount.ToString(),
+                  CheckIn.ToString("dd/MM/yyyy"), 
+                  CheckOut.ToString("dd/MM/yyyy"),
+                  LastNotification.ToString("dd/MM/yyyy"),
+                  IsGuestRated.ToString(),
+                  IsOwnerRated.ToString(),
+                  Status.ToString() };
             return csvValues;
         }
     }

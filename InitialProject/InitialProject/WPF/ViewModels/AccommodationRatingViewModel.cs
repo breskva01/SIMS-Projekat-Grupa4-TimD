@@ -14,11 +14,11 @@ using InitialProject.Application.Observer;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class AccommodationRatingViewModel : ViewModelBase, IObserver
+    public class AccommodationRatingViewModel : ViewModelBase
     {
         private readonly User _loggedInUser;
         public ObservableCollection<AccommodationReservation> Reservations { get; set; }
-        private readonly AccommodationReservationService _service;
+        private readonly AccommodationRatingService _service;
         private readonly NavigationStore _navigationStore;
         public ICommand RateReservationCommand { get; }      
         public ICommand ShowAccommodationBrowserViewCommand { get; }
@@ -26,10 +26,9 @@ namespace InitialProject.WPF.ViewModels
         {
             _navigationStore = navigationStore;
             _loggedInUser = loggedInUser;
-            _service = new AccommodationReservationService();
+            _service = new AccommodationRatingService();
             Reservations = new ObservableCollection<AccommodationReservation>
                                 (_service.GetEligibleForRating(_loggedInUser.Id));
-            _service.Subscribe(this);
             RateReservationCommand = new AccommodationReservationClickCommand(ShowRateAccommodationView);
             ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
         }
@@ -38,14 +37,6 @@ namespace InitialProject.WPF.ViewModels
             var viewModel = new RateAccommodationViewModel(_navigationStore, reservation);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
-        }
-        public void Update()
-        {
-            var reservations = new ObservableCollection<AccommodationReservation>
-                                (_service.GetEligibleForRating(_loggedInUser.Id));
-            Reservations.Clear();
-            foreach (var r in reservations)
-                Reservations.Add(r);
         }
         private void ShowAccommodationBrowserView()
         {

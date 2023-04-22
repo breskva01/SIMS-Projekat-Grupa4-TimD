@@ -23,29 +23,29 @@ namespace InitialProject.WPF.ViewModels
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
         private readonly AccommodationService _service;
-        private int _guestNumber;
-        public int GuestNumber
+        private int _guestCount;
+        public int GuestCount
         {
-            get { return _guestNumber; }
+            get { return _guestCount; }
             set
             {
-                if (value != _guestNumber)
+                if (value != _guestCount)
                 {
-                    _guestNumber = value;
-                    CanDecrementGuestNumber = value > 1;
+                    _guestCount = value;
+                    CanDecrementGuestCount = value > 1;
                     OnPropertyChanged();
                 }
             }
         }
-        private bool _canDecrementGuestNumber;
-        public bool CanDecrementGuestNumber
+        private bool _canDecrementGuestCount;
+        public bool CanDecrementGuestCount
         {
-            get => _canDecrementGuestNumber;
+            get => _canDecrementGuestCount;
             set
             {
-                if (_canDecrementGuestNumber != value)
+                if (_canDecrementGuestCount != value)
                 {
-                    _canDecrementGuestNumber = value;
+                    _canDecrementGuestCount = value;
                     OnPropertyChanged();
                 }
             }
@@ -114,9 +114,9 @@ namespace InitialProject.WPF.ViewModels
         public ICommand SortByLocationCommand { get; }
         public ICommand SortByMaxGuestNumberCommand { get; }
         public ICommand SortByMinDaysNumberCommand { get; }
-        public ICommand GuestNumberIncrementCommand { get; }
+        public ICommand GuestCountIncrementCommand { get; }
         public ICommand NumberOfDaysIncrementCommand { get; }
-        public ICommand GuestNumberDecrementCommand { get; }
+        public ICommand GuestCountDecrementCommand { get; }
         public ICommand NumberOfDaysDecrementCommand { get; }
         public ICommand NewNotificationsCommand { get; }
         public ICommand SignOutCommand { get; }
@@ -127,7 +127,7 @@ namespace InitialProject.WPF.ViewModels
             _navigationStore = navigationStore;
             _service = new AccommodationService();
             Accommodations = new ObservableCollection<Accommodation>(_service.GetAll());
-            GuestNumber = 1;
+            GuestCount = 1;
             NumberOfDays = 1;
             ApplyFiltersCommand = new ExecuteMethodCommand(ApplyFilters);
             ResetFiltersCommand = new ExecuteMethodCommand(ResetFilters);
@@ -135,9 +135,9 @@ namespace InitialProject.WPF.ViewModels
             SortByLocationCommand = new SortAccommodationsCommand(SortAccommodations, "Location");
             SortByMaxGuestNumberCommand = new SortAccommodationsCommand(SortAccommodations, "MaxGuestNumber");
             SortByMinDaysNumberCommand = new SortAccommodationsCommand(SortAccommodations, "MinDaysNumber");
-            GuestNumberIncrementCommand = new ExecuteMethodCommand(IncrementGuestNumber);
+            GuestCountIncrementCommand = new ExecuteMethodCommand(IncrementGuestCount);
             NumberOfDaysIncrementCommand = new ExecuteMethodCommand(IncrementNumberOfDays);
-            GuestNumberDecrementCommand = new ExecuteMethodCommand(DecrementGuestNumber);
+            GuestCountDecrementCommand = new ExecuteMethodCommand(DecrementGuestCount);
             NumberOfDaysDecrementCommand = new ExecuteMethodCommand(DecrementNumberOfDays);
             ShowReservationViewCommand = new AccommodationClickCommand(ShowAccommodationReservationView);
             ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
@@ -175,7 +175,7 @@ namespace InitialProject.WPF.ViewModels
             AccommodationType type = GetSelectedType();
 
             Accommodations.Clear();
-            foreach (var accommodation in _service.GetFiltered(SearchText, type, GuestNumber, NumberOfDays))
+            foreach (var accommodation in _service.GetFiltered(SearchText, type, GuestCount, NumberOfDays))
             {
                 Accommodations.Add(accommodation);
             }
@@ -197,7 +197,7 @@ namespace InitialProject.WPF.ViewModels
         private void ResetFilters()
         {
             SearchText = "";
-            GuestNumber = 1;
+            GuestCount = 1;
             NumberOfDays = 1;
             TypeSelectedIndex = 0;
             Accommodations.Clear();
@@ -216,14 +216,14 @@ namespace InitialProject.WPF.ViewModels
             navigateCommand.Execute(null);
         }
 
-        private void DecrementGuestNumber()
+        private void DecrementGuestCount()
         {
-            GuestNumber--;
+            GuestCount--;
         }
 
-        private void IncrementGuestNumber()
+        private void IncrementGuestCount()
         {
-            GuestNumber++;
+            GuestCount++;
         }
 
         private void DecrementNumberOfDays()
