@@ -7,6 +7,7 @@ using InitialProject.Repositories;
 using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,9 +29,9 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetFiltered(keyWords, type, guestNumber, numberOfDays);
         }
-        public List<Accommodation> Sort(List<Accommodation> accommodations, string criterium)
+        public List<Accommodation> Sort(ObservableCollection<Accommodation> accommodations, string criterion)
         {
-            return _repository.Sort(accommodations, criterium);
+            return _repository.Sort(new List<Accommodation>(accommodations), criterion);
         }
         public void RegisterAccommodation(string name, string country, string city, string address, AccommodationType type, int maximumGuests,
             int minimumDays, int minimumCancelationNotice, string pictureURL, User user)

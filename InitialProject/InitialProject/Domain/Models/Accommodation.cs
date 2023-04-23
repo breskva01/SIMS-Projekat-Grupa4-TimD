@@ -1,6 +1,7 @@
 ﻿using InitialProject.Application.Serializer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,17 @@ using System.Xml.Linq;
 
 namespace InitialProject.Domain.Models
 {
-    public enum AccommodationType { Apartment, House, Cottage, Everything }
+    public enum AccommodationType
+    {
+        [Display(Name = "Kuća")]
+        House,
+        [Display(Name = "Apartman")]
+        Apartment,
+        [Display(Name = "Koliba")]
+        Cottage,
+        [Display(Name = "Sve")]
+        Everything
+    }
     public class Accommodation : ISerializable
     {
         public int Id { get; set; }

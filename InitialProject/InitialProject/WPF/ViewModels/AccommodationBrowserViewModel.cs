@@ -21,8 +21,8 @@ namespace InitialProject.WPF.ViewModels
         private readonly User _loggedInUser;
         private readonly NavigationStore _navigationStore;
         public ObservableCollection<Accommodation> Accommodations { get; set; }
-        public Accommodation SelectedAccommodation { get; set; }
         private readonly AccommodationService _service;
+        private string _lastSortingCriterion;
         private int _guestCount;
         public int GuestCount
         {
@@ -32,20 +32,6 @@ namespace InitialProject.WPF.ViewModels
                 if (value != _guestCount)
                 {
                     _guestCount = value;
-                    CanDecrementGuestCount = value > 1;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        private bool _canDecrementGuestCount;
-        public bool CanDecrementGuestCount
-        {
-            get => _canDecrementGuestCount;
-            set
-            {
-                if (_canDecrementGuestCount != value)
-                {
-                    _canDecrementGuestCount = value;
                     OnPropertyChanged();
                 }
             }
@@ -59,20 +45,6 @@ namespace InitialProject.WPF.ViewModels
                 if (value != _numberOfDays)
                 {
                     _numberOfDays = value;
-                    CanDecrementNumberOfDays = value > 1;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        private bool _canDecrementNumberOfDays;
-        public bool CanDecrementNumberOfDays
-        {
-            get => _canDecrementNumberOfDays;
-            set
-            {
-                if (_canDecrementNumberOfDays != value)
-                {
-                    _canDecrementNumberOfDays = value;
                     OnPropertyChanged();
                 }
             }
@@ -103,6 +75,21 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
+        public AccommodationType[] AccommodationTypes { get; } = Enum.GetValues(typeof(AccommodationType)).Cast<AccommodationType>().ToArray();
+
+        private AccommodationType _selectedAccommodationType;
+        public AccommodationType SelectedAccommodationType
+        {
+            get => _selectedAccommodationType;
+            set
+            {
+                if (_selectedAccommodationType != value)
+                {
+                    _selectedAccommodationType = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public int TypeSelectedIndex { get; set; }
         public ICommand ApplyFiltersCommand { get; }
         public ICommand ResetFiltersCommand { get; }
@@ -120,7 +107,6 @@ namespace InitialProject.WPF.ViewModels
         public ICommand NumberOfDaysDecrementCommand { get; }
         public ICommand NewNotificationsCommand { get; }
         public ICommand SignOutCommand { get; }
-        private string _lastSortingCriterium;
         public AccommodationBrowserViewModel(NavigationStore navigationStore ,User user)
         {
             _loggedInUser = user;
@@ -135,17 +121,17 @@ namespace InitialProject.WPF.ViewModels
             SortByLocationCommand = new SortAccommodationsCommand(SortAccommodations, "Location");
             SortByMaxGuestNumberCommand = new SortAccommodationsCommand(SortAccommodations, "MaxGuestNumber");
             SortByMinDaysNumberCommand = new SortAccommodationsCommand(SortAccommodations, "MinDaysNumber");
-            GuestCountIncrementCommand = new ExecuteMethodCommand(IncrementGuestCount);
-            NumberOfDaysIncrementCommand = new ExecuteMethodCommand(IncrementNumberOfDays);
-            GuestCountDecrementCommand = new ExecuteMethodCommand(DecrementGuestCount);
-            NumberOfDaysDecrementCommand = new ExecuteMethodCommand(DecrementNumberOfDays);
+            GuestCountIncrementCommand = new IncrementCommand(() => GuestCount, (newValue) => GuestCount = newValue);
+            NumberOfDaysIncrementCommand = new IncrementCommand(() => NumberOfDays, (newValue) => NumberOfDays = newValue);
+            GuestCountDecrementCommand = new DecrementCommand(this, () => GuestCount, (newValue) => GuestCount = newValue);
+            NumberOfDaysDecrementCommand = new DecrementCommand(this, () => NumberOfDays, (newValue) => NumberOfDays = newValue);
             ShowReservationViewCommand = new AccommodationClickCommand(ShowAccommodationReservationView);
             ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
             ShowRatingsViewCommand = new ExecuteMethodCommand(ShowRatingsView);
             ShowRequestsViewCommand = new ExecuteMethodCommand(ShowRequestsView);
             NewNotificationsCommand = new ExecuteMethodCommand(NotificationsPrompt);
             SignOutCommand = new ExecuteMethodCommand(ShowSignInView);
-
+            SelectedAccommodationType = AccommodationType.Everything;
             CheckForNotifications();
         }
         private void CheckForNotifications()
@@ -172,41 +158,31 @@ namespace InitialProject.WPF.ViewModels
         }
         private void ApplyFilters()
         {
-            AccommodationType type = GetSelectedType();
-
             Accommodations.Clear();
-            foreach (var accommodation in _service.GetFiltered(SearchText, type, GuestCount, NumberOfDays))
-            {
-                Accommodations.Add(accommodation);
-            }
-        }
-        private AccommodationType GetSelectedType()
-        {
-            switch (TypeSelectedIndex)
-            {
-                case 0:
-                    return AccommodationType.Everything;
-                case 1:
-                    return AccommodationType.House;
-                case 2:
-                    return AccommodationType.Apartment;
-                default:
-                    return AccommodationType.Cottage;
-            }
+            _service.GetFiltered(SearchText, SelectedAccommodationType, GuestCount, NumberOfDays).
+                ForEach(a =>  Accommodations.Add(a));
         }
         private void ResetFilters()
         {
             SearchText = "";
-            GuestCount = 1;
-            NumberOfDays = 1;
-            TypeSelectedIndex = 0;
+            GuestCount = NumberOfDays = 1;
+            SelectedAccommodationType = AccommodationType.Everything;
             Accommodations.Clear();
-            foreach (var accommodation in _service.GetAll())
-            {
-                Accommodations.Add(accommodation);
-            }
+            _service.GetAll().ForEach(a => Accommodations.Add(a));
         }
-
+        private void SortAccommodations(string criterion)
+        {
+            List<Accommodation> sortedAccommodations;
+            if (_lastSortingCriterion == criterion)
+                sortedAccommodations = new List<Accommodation>(Accommodations.Reverse());
+            else
+            {
+                sortedAccommodations = _service.Sort(Accommodations, criterion);
+                _lastSortingCriterion = criterion;
+            }
+            Accommodations.Clear();
+            sortedAccommodations.ForEach(a => Accommodations.Add(a));
+        }
         private void ShowAccommodationReservationView(Accommodation accommodation)
         {
             var viewModel = new AccommodationReservationViewModel(_navigationStore, _loggedInUser, accommodation);
@@ -215,44 +191,6 @@ namespace InitialProject.WPF.ViewModels
 
             navigateCommand.Execute(null);
         }
-
-        private void DecrementGuestCount()
-        {
-            GuestCount--;
-        }
-
-        private void IncrementGuestCount()
-        {
-            GuestCount++;
-        }
-
-        private void DecrementNumberOfDays()
-        {
-            NumberOfDays--;
-        }
-
-        private void IncrementNumberOfDays()
-        {
-            NumberOfDays++;
-        }
-
-        private void SortAccommodations(string criterium)
-        {
-            List<Accommodation> sortedAccommodations;
-            if (_lastSortingCriterium == criterium)
-                 sortedAccommodations = new List<Accommodation>(Accommodations.Reverse());
-            else
-            {
-                sortedAccommodations = _service.Sort(new List<Accommodation>(Accommodations), criterium);
-                _lastSortingCriterium = criterium;
-            }          
-            Accommodations.Clear();
-            foreach (var accommodation in sortedAccommodations)
-            {
-                Accommodations.Add(accommodation);
-            }
-        }
-
         private void ShowMyReservationsView()
         {
             var viewModel = new MyAccommodationReservationsViewModel(_navigationStore, _loggedInUser);

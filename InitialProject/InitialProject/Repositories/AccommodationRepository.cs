@@ -37,9 +37,9 @@ namespace InitialProject.Repository
             return _accommodations.FindAll
                 (a => a.MatchesFilters(keyWords, type, guestNumber, numberOfDays));
         }
-        public List<Accommodation> Sort(List<Accommodation> accommodations, string criterium)
+        public List<Accommodation> Sort(List<Accommodation> accommodations, string criterion)
         {
-            switch (criterium)
+            switch (criterion)
             {
                 case "Name":
                     return SortByName(accommodations);
