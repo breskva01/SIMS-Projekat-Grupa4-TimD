@@ -20,6 +20,7 @@
     <None Remove="Resources\Images\paris.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
     <None Remove="Resources\Images\search.png" />
+    <None Remove="Resources\Images\TravelBuddy.png" />
     <None Remove="Resources\Images\vienna.jpeg" />
     <None Remove="Resources\Images\view.png" />
     <None Remove="Resources\Images\vila_slap.jpg" />
@@ -53,6 +54,7 @@
     <Resource Include="Resources\Images\paris.png" />
     <Resource Include="Resources\Images\petrovaradin.png" />
     <Content Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\TravelBuddy.png" />
     <Resource Include="Resources\Images\vienna.jpeg" />
     <Resource Include="Resources\Images\vila_slap.jpg" />
   </ItemGroup>
