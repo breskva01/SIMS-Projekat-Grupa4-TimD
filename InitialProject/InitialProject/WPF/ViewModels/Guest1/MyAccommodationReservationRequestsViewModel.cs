@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class MyAccommodationReservationRequestsViewModel : ViewModelBase
     {
@@ -19,7 +19,6 @@ namespace InitialProject.WPF.ViewModels
         public List<AccommodationReservationMoveRequest> Requests { get; set; }
         private readonly AccommodationReservationRequestService _requestService;
         private readonly NavigationStore _navigationStore;
-        public ICommand ShowAccommodationBrowserViewCommand { get; }
         public ICommand ShowCommentViewCommand { get; }
         public MyAccommodationReservationRequestsViewModel(NavigationStore navigationStore, User loggedInUser)
         {
@@ -27,14 +26,7 @@ namespace InitialProject.WPF.ViewModels
             _loggedInUser = loggedInUser;
             _requestService = new AccommodationReservationRequestService();
             Requests = _requestService.GetByGuestId(_loggedInUser.Id);
-            ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
             ShowCommentViewCommand = new AccommodationReservationRequestClickCommand(ShowComment);
-        }
-        private void ShowAccommodationBrowserView()
-        {
-            var viewModel = new AccommodationBrowserViewModel(_navigationStore, _loggedInUser);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
         }
         private void ShowComment(AccommodationReservationMoveRequest request)
         {

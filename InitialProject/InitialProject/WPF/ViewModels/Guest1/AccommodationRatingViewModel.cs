@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows;
 using InitialProject.Application.Observer;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class AccommodationRatingViewModel : ViewModelBase
     {
@@ -20,8 +20,7 @@ namespace InitialProject.WPF.ViewModels
         public ObservableCollection<AccommodationReservation> Reservations { get; set; }
         private readonly AccommodationRatingService _service;
         private readonly NavigationStore _navigationStore;
-        public ICommand RateReservationCommand { get; }      
-        public ICommand ShowAccommodationBrowserViewCommand { get; }
+        public ICommand RateReservationCommand { get; }  
         public AccommodationRatingViewModel(NavigationStore navigationStore, User loggedInUser)
         {
             _navigationStore = navigationStore;
@@ -30,17 +29,10 @@ namespace InitialProject.WPF.ViewModels
             Reservations = new ObservableCollection<AccommodationReservation>
                                 (_service.GetEligibleForRating(_loggedInUser.Id));
             RateReservationCommand = new AccommodationReservationClickCommand(ShowRateAccommodationView);
-            ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
         }
         private void ShowRateAccommodationView(AccommodationReservation reservation)
         {
             var viewModel = new RateAccommodationViewModel(_navigationStore, reservation);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
-        }
-        private void ShowAccommodationBrowserView()
-        {
-            var viewModel = new AccommodationBrowserViewModel(_navigationStore, _loggedInUser);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
         }

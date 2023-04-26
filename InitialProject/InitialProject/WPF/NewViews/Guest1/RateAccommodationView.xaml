@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="InitialProject.WPF.NewViews.RateAccommodationView"
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.Guest1.RateAccommodationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,7 +27,7 @@
         <StackPanel Orientation="Horizontal">
             <Button Height="40" Margin="5" Padding="2"
                     Command="{Binding ShowRatingsViewCommand}"
-                    Content="Neocenjeni smeštaji"/>
+                    Content="Nazad"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="10">
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">

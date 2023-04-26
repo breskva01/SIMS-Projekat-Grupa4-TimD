@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class AccommodationReservationMoveRequestViewModel : ViewModelBase
     {
@@ -44,8 +44,10 @@ namespace InitialProject.WPF.ViewModels
         }
         private void ShowMyReservationsView()
         {
-            var viewModel = new MyAccommodationReservationsViewModel(_navigationStore, Reservation.Guest);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            var contentViewModel = new MyAccommodationReservationsViewModel(_navigationStore, Reservation.Guest);
+            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, Reservation.Guest);
+            var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
             navigateCommand.Execute(null);
         }
     }

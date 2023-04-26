@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InitialProject.WPF.NewViews
+namespace InitialProject.WPF.NewViews.Guest1
 {
     /// <summary>
-    /// Interaction logic for RateAccommodationView.xaml
+    /// Interaction logic for MyAccommodationReservationRequestsView.xaml
     /// </summary>
-    public partial class RateAccommodationView : UserControl
+    public partial class MyAccommodationReservationRequestsView : UserControl
     {
-        public RateAccommodationView()
+        public MyAccommodationReservationRequestsView()
         {
             InitializeComponent();
         }

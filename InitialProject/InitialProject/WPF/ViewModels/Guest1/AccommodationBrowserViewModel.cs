@@ -14,7 +14,7 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Commands;
 using InitialProject.Application.Stores;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class AccommodationBrowserViewModel : ViewModelBase
     {
@@ -94,9 +94,6 @@ namespace InitialProject.WPF.ViewModels
         public ICommand ApplyFiltersCommand { get; }
         public ICommand ResetFiltersCommand { get; }
         public ICommand ShowReservationViewCommand { get; }
-        public ICommand ShowMyReservationsViewCommand { get; }
-        public ICommand ShowRatingsViewCommand { get; }
-        public ICommand ShowRequestsViewCommand { get; }
         public ICommand SortByNameCommand { get; }
         public ICommand SortByLocationCommand { get; }
         public ICommand SortByMaxGuestNumberCommand { get; }
@@ -106,8 +103,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand GuestCountDecrementCommand { get; }
         public ICommand NumberOfDaysDecrementCommand { get; }
         public ICommand NewNotificationsCommand { get; }
-        public ICommand SignOutCommand { get; }
-        public AccommodationBrowserViewModel(NavigationStore navigationStore ,User user)
+        public AccommodationBrowserViewModel(NavigationStore navigationStore, User user)
         {
             _loggedInUser = user;
             _navigationStore = navigationStore;
@@ -126,11 +122,7 @@ namespace InitialProject.WPF.ViewModels
             GuestCountDecrementCommand = new DecrementCommand(this, () => GuestCount, (newValue) => GuestCount = newValue);
             NumberOfDaysDecrementCommand = new DecrementCommand(this, () => NumberOfDays, (newValue) => NumberOfDays = newValue);
             ShowReservationViewCommand = new AccommodationClickCommand(ShowAccommodationReservationView);
-            ShowMyReservationsViewCommand = new ExecuteMethodCommand(ShowMyReservationsView);
-            ShowRatingsViewCommand = new ExecuteMethodCommand(ShowRatingsView);
-            ShowRequestsViewCommand = new ExecuteMethodCommand(ShowRequestsView);
             NewNotificationsCommand = new ExecuteMethodCommand(NotificationsPrompt);
-            SignOutCommand = new ExecuteMethodCommand(ShowSignInView);
             SelectedAccommodationType = AccommodationType.Everything;
             CheckForNotifications();
         }
@@ -191,27 +183,9 @@ namespace InitialProject.WPF.ViewModels
 
             navigateCommand.Execute(null);
         }
-        private void ShowMyReservationsView()
-        {
-            var viewModel = new MyAccommodationReservationsViewModel(_navigationStore, _loggedInUser);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
-        }
-        private void ShowRatingsView()
-        {
-            var viewModel = new AccommodationRatingViewModel(_navigationStore, _loggedInUser);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
-        }
         private void ShowRequestsView()
         {
             var viewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _loggedInUser);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
-        }
-        private void ShowSignInView()
-        {
-            var viewModel = new SignInViewModel(_navigationStore);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
         }

@@ -14,7 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class RateAccommodationViewModel : ViewModelBase
     {
@@ -57,8 +57,10 @@ namespace InitialProject.WPF.ViewModels
         }
         private void ShowRatingsView()
         {
-            var viewModel = new AccommodationRatingViewModel(_navigationStore, Reservation.Guest);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            var contentViewModel = new AccommodationRatingViewModel(_navigationStore, Reservation.Guest);
+            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, Reservation.Guest);
+            var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
             navigateCommand.Execute(null);
         }
         private void UploadImages()

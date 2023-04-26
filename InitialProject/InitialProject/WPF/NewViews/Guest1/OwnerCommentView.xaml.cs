@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InitialProject.WPF.NewViews
+namespace InitialProject.WPF.NewViews.Guest1
 {
     /// <summary>
     /// Interaction logic for OwnerCommentView.xaml

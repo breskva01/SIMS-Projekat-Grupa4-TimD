@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InitialProject.WPF.NewViews
+namespace InitialProject.WPF.NewViews.Guest1
 {
     /// <summary>
-    /// Interaction logic for AccommodationRatingView.xaml
+    /// Interaction logic for AccommodationReservationDatePickerView.xaml
     /// </summary>
-    public partial class AccommodationRatingView : UserControl
+    public partial class AccommodationReservationDatePickerView : UserControl
     {
-        public AccommodationRatingView()
+        public AccommodationReservationDatePickerView()
         {
             InitializeComponent();
         }

@@ -15,7 +15,7 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Commands;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class MyAccommodationReservationsViewModel : ViewModelBase, IObserver
     {
@@ -26,7 +26,6 @@ namespace InitialProject.WPF.ViewModels
         private readonly NavigationStore _navigationStore;
         public ICommand CancelReservationCommand { get; }
         public ICommand MoveReservationCommand { get; }
-        public ICommand ShowAccommodationBrowserViewCommand { get; }
         public MyAccommodationReservationsViewModel(NavigationStore navigationStore, User loggedInUser)
         {
             _navigationStore = navigationStore;
@@ -38,7 +37,6 @@ namespace InitialProject.WPF.ViewModels
             _reservationService.Subscribe(this);
             CancelReservationCommand = new AccommodationReservationClickCommand(CancelReservation);
             MoveReservationCommand = new AccommodationReservationClickCommand(MoveReservation);
-            ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
         }
         private void CancelReservation(AccommodationReservation reservation)
         {
@@ -71,12 +69,6 @@ namespace InitialProject.WPF.ViewModels
             Reservations.Clear();
             foreach (var r in reservations)
                 Reservations.Add(r);
-        }
-        private void ShowAccommodationBrowserView()
-        {
-            var viewModel = new AccommodationBrowserViewModel(_navigationStore, _loggedInUser);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
         }
         private void ShowAccommodationReservationMoveRequestView(AccommodationReservation reservation)
         {

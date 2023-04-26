@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class OwnerCommentViewModel : ViewModelBase
     {
@@ -26,8 +26,10 @@ namespace InitialProject.WPF.ViewModels
         }
         private void ShowRequestsView()
         {
-            var viewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _loggedInUser);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            var contentViewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _loggedInUser);
+            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _loggedInUser);
+            var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
             navigateCommand.Execute(null);
         }
     }

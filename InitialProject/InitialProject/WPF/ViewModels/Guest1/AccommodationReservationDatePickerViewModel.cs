@@ -11,7 +11,7 @@ using InitialProject.Application.Stores;
 using InitialProject.Application.Commands;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class AccommodationReservationDatePickerViewModel : ViewModelBase
     {
@@ -49,10 +49,10 @@ namespace InitialProject.WPF.ViewModels
         }
         private void ShowAccommodationBrowserView()
         {
-            var viewModel = new AccommodationBrowserViewModel(_navigationStore, SelectedReservation.Guest);
-            var navigateCommand = new NavigateCommand
-                (new NavigationService(_navigationStore, viewModel));
-
+            var contentViewModel = new AccommodationBrowserViewModel(_navigationStore, SelectedReservation.Guest);
+            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, SelectedReservation.Guest);
+            var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
+            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
             navigateCommand.Execute(null);
         }
         private void ShowAccommodationReservationView()

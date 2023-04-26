@@ -3,6 +3,7 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
+using InitialProject.WPF.ViewModels.Guest1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand Guest2NavigateCommand => 
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuest2VM()));
         public ICommand Guest1NavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, CreateAccommodationBrowserViewModel()));
+            new NavigateCommand(new NavigationService(_navigationStore, NavigateAccommodationBrowser()));
         public ICommand GuideNavigateCommand =>
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuideVM()));
         //public ICommand Guest1NavigateCommand { get; }
@@ -126,9 +127,11 @@ namespace InitialProject.WPF.ViewModels
                     }
             }
         }
-        private AccommodationBrowserViewModel CreateAccommodationBrowserViewModel()
+        private ViewModelBase NavigateAccommodationBrowser()
         {
-            return new AccommodationBrowserViewModel(_navigationStore, _user);
+            var accommodationBrowserViewModel = new AccommodationBrowserViewModel(_navigationStore, _user);
+            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _user);
+            return new LayoutViewModel(navigationBarViewModel, accommodationBrowserViewModel);
         }
         private ViewModelBase CreateGuest2VM()
         {
