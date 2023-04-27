@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace InitialProject.WPF.NewViews.Guest1
 {
     /// <summary>
-    /// Interaction logic for AccommodationReservationView.xaml
+    /// Interaction logic for AccommodationReservationMoveRequestView.xaml
     /// </summary>
-    public partial class AccommodationReservationView : UserControl
+    public partial class AccommodationReservationMoveRequestForm : UserControl
     {
-        public AccommodationReservationView()
+        public AccommodationReservationMoveRequestForm()
         {
             InitializeComponent();
         }

@@ -46,13 +46,13 @@
                 <views:AccommodationRegistrationView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:AccommodationBrowserViewModel}">
-                <viewsg1:AccommodationBrowserView />
+                <viewsg1:AccommodationBrowser />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationViewModel}">
-                <viewsg1:AccommodationReservationView />
+                <viewsg1:AccommodationReservationForm />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationDatePickerViewModel}">
-                <viewsg1:AccommodationReservationDatePickerView />
+                <viewsg1:AccommodationReservationDatePicker />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:GuestRatingViewModel}">
                 <views:GuestRatingView />
@@ -82,10 +82,10 @@
                 <viewsg1:AccommodationRatingView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:RateAccommodationViewModel}">
-                <viewsg1:RateAccommodationView />
+                <viewsg1:RateAccommodationForm />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationMoveRequestViewModel}">
-                <viewsg1:AccommodationReservationMoveRequestView />
+                <viewsg1:AccommodationReservationMoveRequestForm />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:MyAccommodationReservationRequestsViewModel}">
                 <viewsg1:MyAccommodationReservationRequestsView />
@@ -112,7 +112,7 @@
                 <viewsg1:MyAccommodationReservationsView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:LayoutViewModel}">
-                <viewsg1:Layout />
+                <viewsg1:LayoutPanel />
             </DataTemplate>
         </Grid.Resources>
 

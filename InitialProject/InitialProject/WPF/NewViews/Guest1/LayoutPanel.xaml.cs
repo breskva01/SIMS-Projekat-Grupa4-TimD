@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace InitialProject.WPF.NewViews.Guest1
 {
     /// <summary>
-    /// Interaction logic for AccommodationBrowserView.xaml
+    /// Interaction logic for Layout.xaml
     /// </summary>
-    public partial class AccommodationBrowserView : UserControl
+    public partial class LayoutPanel : UserControl
     {
-        public AccommodationBrowserView()
+        public LayoutPanel()
         {
             InitializeComponent();
         }
