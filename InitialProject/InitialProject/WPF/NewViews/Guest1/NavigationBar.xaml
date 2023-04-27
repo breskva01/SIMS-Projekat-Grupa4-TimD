@@ -6,9 +6,10 @@
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews.Guest1"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="IndianRed"
+             Background="#FF88B745"
              FontSize="14">
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Style TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="White" />
@@ -37,6 +38,7 @@
     <Grid MaxWidth="1000" Margin="20 10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
@@ -75,6 +77,13 @@
 
         <Button
             Grid.Column="5"
+            Margin="10 0 0 0"
+            Command="{Binding OpenNotificationsPromptCommand}"
+            Visibility="{Binding AnyNotifications, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Content="Obaveštenja"/>
+
+        <Button
+            Grid.Column="6"
             Margin="10 0 0 0"
             Command="{Binding NavigateLoginCommand}"
             Content="Izloguj se"/>

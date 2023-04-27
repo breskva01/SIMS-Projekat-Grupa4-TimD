@@ -63,7 +63,7 @@
             <Button HorizontalAlignment="Left" Content="Pronađi slobodne termine" Padding="3" Margin="0 20"
                     Command="{Binding FindAvailableReservationsCommand}"/>
             <Button HorizontalAlignment="Left" Content="Nazad" Padding="3" Margin="0 20"
-                    Command="{Binding ShowAccommodationBrowserViewCommand}"/>
+                    Command="{Binding NavigateAccommodationBrowserCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

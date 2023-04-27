@@ -19,21 +19,21 @@ namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class MyAccommodationReservationsViewModel : ViewModelBase, IObserver
     {
-        private readonly User _loggedInUser;
+        private readonly User _user;
         public ObservableCollection<AccommodationReservation> Reservations { get; set; }
         private readonly AccommodationReservationService _reservationService;
         private readonly AccommodationReservationRequestService _requestService;
         private readonly NavigationStore _navigationStore;
         public ICommand CancelReservationCommand { get; }
         public ICommand MoveReservationCommand { get; }
-        public MyAccommodationReservationsViewModel(NavigationStore navigationStore, User loggedInUser)
+        public MyAccommodationReservationsViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
-            _loggedInUser = loggedInUser;
+            _user = user;
             _reservationService = new AccommodationReservationService();
             _requestService = new AccommodationReservationRequestService();
             Reservations = new ObservableCollection<AccommodationReservation>
-                                (_reservationService.GetExistingGuestReservations(_loggedInUser.Id));
+                                (_reservationService.GetExistingGuestReservations(_user.Id));
             _reservationService.Subscribe(this);
             CancelReservationCommand = new AccommodationReservationClickCommand(CancelReservation);
             MoveReservationCommand = new AccommodationReservationClickCommand(MoveReservation);
@@ -60,17 +60,17 @@ namespace InitialProject.WPF.ViewModels.Guest1
             if (_requestService.HasPendingMoveRequest(reservation.Id))
                 MessageBox.Show("Već postoji zahtev za pomeranje ove rezervacije.");
             else
-                ShowAccommodationReservationMoveRequestView(reservation);
+                ShowMoveRequestPrompt(reservation);
         }
         public void Update()
         {
             var reservations = new ObservableCollection<AccommodationReservation>
-                                (_reservationService.GetExistingGuestReservations(_loggedInUser.Id));
+                                (_reservationService.GetExistingGuestReservations(_user.Id));
             Reservations.Clear();
             foreach (var r in reservations)
                 Reservations.Add(r);
         }
-        private void ShowAccommodationReservationMoveRequestView(AccommodationReservation reservation)
+        private void ShowMoveRequestPrompt(AccommodationReservation reservation)
         {
             var viewModel = new AccommodationReservationMoveRequestViewModel(_navigationStore, reservation);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));

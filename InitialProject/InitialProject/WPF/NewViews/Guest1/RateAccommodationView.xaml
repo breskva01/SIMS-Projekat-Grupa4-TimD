@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <Button Height="40" Margin="5" Padding="2"
-                    Command="{Binding ShowRatingsViewCommand}"
+                    Command="{Binding NavigateRatingsCommand}"
                     Content="Nazad"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="10">

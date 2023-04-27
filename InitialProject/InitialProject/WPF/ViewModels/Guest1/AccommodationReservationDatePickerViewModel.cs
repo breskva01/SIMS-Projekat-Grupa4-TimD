@@ -15,20 +15,21 @@ namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class AccommodationReservationDatePickerViewModel : ViewModelBase
     {
-        private readonly AccommodationReservationService _service;
+        private readonly AccommodationReservationService _reservationService;
         private readonly NavigationStore _navigationStore;
         public AccommodationReservation SelectedReservation { get; set; }
         public List<AccommodationReservation> Reservations { get; set; }
         public int GuestCount { get; set; }
-        public ICommand ReserveCommand { get; }
-        public ICommand ShowReservationViewCommand { get; }
-        public AccommodationReservationDatePickerViewModel(NavigationStore navigationStore, List<AccommodationReservation> reservations)
+        public ICommand ConfirmReservationCommand { get; }
+        public ICommand OpenReservationFormCommand { get; }
+        public AccommodationReservationDatePickerViewModel(NavigationStore navigationStore,
+            List<AccommodationReservation> reservations)
         {
             _navigationStore = navigationStore;
-            _service = new AccommodationReservationService();
+            _reservationService = new AccommodationReservationService();
             Reservations = reservations;
-            ReserveCommand = new ExecuteMethodCommand(ReserveAccommodation);
-            ShowReservationViewCommand = new ExecuteMethodCommand(ShowAccommodationReservationView);
+            ConfirmReservationCommand = new ExecuteMethodCommand(ReserveAccommodation);
+            OpenReservationFormCommand = new ExecuteMethodCommand(ShowReservationForm);
         }
 
         private void ReserveAccommodation()
@@ -42,12 +43,12 @@ namespace InitialProject.WPF.ViewModels.Guest1
             else
             {
                 SelectedReservation.GuestCount = GuestCount;
-                _service.Save(SelectedReservation);
+                _reservationService.Save(SelectedReservation);
                 MessageBox.Show("Rezervacija uspešno kreirana.");
-                ShowAccommodationBrowserView();
+                NavigateAccommodationBrowser();
             }
         }
-        private void ShowAccommodationBrowserView()
+        private void NavigateAccommodationBrowser()
         {
             var contentViewModel = new AccommodationBrowserViewModel(_navigationStore, SelectedReservation.Guest);
             var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, SelectedReservation.Guest);
@@ -55,7 +56,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
             navigateCommand.Execute(null);
         }
-        private void ShowAccommodationReservationView()
+        private void ShowReservationForm()
         {
             var viewModel = new AccommodationReservationViewModel(_navigationStore, 
                 Reservations[0].Guest, Reservations[0].Accommodation);

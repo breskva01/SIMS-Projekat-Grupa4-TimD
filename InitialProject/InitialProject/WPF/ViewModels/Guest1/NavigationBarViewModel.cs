@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels.Guest1
@@ -15,54 +16,99 @@ namespace InitialProject.WPF.ViewModels.Guest1
     {
         private readonly NavigationStore _navigationStore;
         private readonly User _user;
+        private bool _anyNotifications;
+        public bool AnyNotifications
+        {
+            get => _anyNotifications;
+            set
+            {
+                if (_anyNotifications != value)
+                {
+                    _anyNotifications = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public ICommand NavigateAccommodationBrowserCommand { get; }
         public ICommand NavigateMyResevationsCommand { get; }
         public ICommand NavigateMyRequestsCommand { get; }
         public ICommand NavigateRatingsCommand { get; }
         public ICommand NavigateLoginCommand { get; }
+        public ICommand OpenNotificationsPromptCommand { get; }
         public NavigationBarViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
             _user = user;
+            CheckForNotifications();
             NavigateAccommodationBrowserCommand = new ExecuteMethodCommand(NavigateAccommodationBrowser);
             NavigateMyResevationsCommand = new ExecuteMethodCommand(NavigateMyReservations);
             NavigateMyRequestsCommand = new ExecuteMethodCommand(NavigateMyRequests);
             NavigateRatingsCommand = new ExecuteMethodCommand(NavigateRatings);
             NavigateLoginCommand = new ExecuteMethodCommand(NavigateLogin);
+            OpenNotificationsPromptCommand = new ExecuteMethodCommand(OpenNotificationsPrompt);
+        }
+        private void CheckForNotifications()
+        {
+            var requestService = new AccommodationReservationRequestService();
+            if (requestService.GetAllNewlyAnswered(_user.Id).Count > 0)
+            {
+                AnyNotifications = true;
+            }
+            else
+                AnyNotifications = false;
+        }
+        private void OpenNotificationsPrompt()
+        {
+            var requestService = new AccommodationReservationRequestService();
+            requestService.UpdateGuestNotifiedField(_user.Id);
+            MessageBoxResult result = MessageBox.Show(
+                   "Stiglo je jedan ili više novih odgovora na vaše zahteve," +
+                   "da li želite da ih pogledate?",
+                   "Obaveštenje", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+                NavigateMyRequests();
+            AnyNotifications = false;
         }
         private void NavigateAccommodationBrowser()
         {
-            var viewModel = new AccommodationBrowserViewModel(_navigationStore, _user);
-            CreateLayoutViewModel(viewModel);
+            ViewModelBase viewModel = new AccommodationBrowserViewModel(_navigationStore, _user);
+            viewModel = CreateLayoutViewModel(viewModel);
+            Navigate(viewModel);
         }
         private void NavigateMyReservations()
         {
-            var viewModel = new MyAccommodationReservationsViewModel(_navigationStore, _user);
-            CreateLayoutViewModel(viewModel);
+            ViewModelBase viewModel = new MyAccommodationReservationsViewModel(_navigationStore, _user);
+            viewModel = CreateLayoutViewModel(viewModel);
+            Navigate(viewModel);
         }
         private void NavigateMyRequests()
         {
-            var viewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _user);
-            CreateLayoutViewModel(viewModel);
+            ViewModelBase viewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _user);
+            viewModel = CreateLayoutViewModel(viewModel);
+            Navigate(viewModel);
         }
         private void NavigateRatings()
         {
-            var viewModel = new AccommodationRatingViewModel(_navigationStore, _user);
-            CreateLayoutViewModel(viewModel);
+            ViewModelBase viewModel = new AccommodationRatingViewModel(_navigationStore, _user);
+            viewModel = CreateLayoutViewModel(viewModel);
+            Navigate(viewModel);
         }   
         private void NavigateLogin()
         {
             var viewModel = new SignInViewModel(_navigationStore);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
+            Navigate(viewModel);
         }
-        private void CreateLayoutViewModel(ViewModelBase contentViewModel)
+        private ViewModelBase CreateLayoutViewModel(ViewModelBase contentViewModel)
         {
             var navigateBarViewModel = new NavigationBarViewModel(_navigationStore, _user);
             var layoutViewModel = new LayoutViewModel(navigateBarViewModel, contentViewModel);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
-            navigateCommand.Execute(null);
+            return layoutViewModel;
+        }
+        private void Navigate(ViewModelBase viewModel)
+        {
+            new NavigationService(_navigationStore, viewModel).Navigate();
         }
     }
 }

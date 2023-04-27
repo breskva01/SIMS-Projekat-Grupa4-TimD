@@ -116,6 +116,6 @@
             </DataTemplate>
         </Grid.Resources>
 
-        <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="{Binding CurrentViewModel}" />
+        <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

@@ -14,20 +14,20 @@ namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class AccommodationReservationMoveRequestViewModel : ViewModelBase
     {
-        private readonly AccommodationReservationRequestService _service;
+        private readonly AccommodationReservationRequestService _requestService;
         private readonly NavigationStore _navigationStore;
         public AccommodationReservation Reservation { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
         public ICommand SubmitRequestCommand { get; }
-        public ICommand CancelCommand { get; }
+        public ICommand NavigateMyResevationsCommand { get; }
         public AccommodationReservationMoveRequestViewModel(NavigationStore navigationStore, AccommodationReservation reservation)
         {
             _navigationStore = navigationStore;
-            _service = new AccommodationReservationRequestService();
+            _requestService = new AccommodationReservationRequestService();
             Reservation = reservation;
             SubmitRequestCommand = new ExecuteMethodCommand(SubmitRequest);
-            CancelCommand = new ExecuteMethodCommand(ShowMyReservationsView);
+            NavigateMyResevationsCommand = new ExecuteMethodCommand(NavigateMyReservations);
         }
         private void SubmitRequest()
         {
@@ -35,14 +35,14 @@ namespace InitialProject.WPF.ViewModels.Guest1
             {
                 DateOnly checkIn = DateOnly.FromDateTime(CheckIn);
                 DateOnly checkOut = DateOnly.FromDateTime(CheckOut);
-                _service.Save(Reservation, checkIn, checkOut);
+                _requestService.Save(Reservation, checkIn, checkOut);
                 MessageBox.Show("Zahtev uspešno poslat.");
-                ShowMyReservationsView();
+                NavigateMyReservations();
             }
             else
                 MessageBox.Show("Izaberite željene datume.");
         }
-        private void ShowMyReservationsView()
+        private void NavigateMyReservations()
         {
             var contentViewModel = new MyAccommodationReservationsViewModel(_navigationStore, Reservation.Guest);
             var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, Reservation.Guest);

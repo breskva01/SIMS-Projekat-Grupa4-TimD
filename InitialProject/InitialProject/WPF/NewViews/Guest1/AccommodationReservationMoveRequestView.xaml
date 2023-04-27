@@ -34,7 +34,7 @@
             <Button Content="Pošalji zahtev" Margin="10"
                     Command="{Binding SubmitRequestCommand}"/>
             <Button Content="Nazad" Margin="10"
-                    Command="{Binding CancelCommand}"/>
+                    Command="{Binding NavigateMyResevationsCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

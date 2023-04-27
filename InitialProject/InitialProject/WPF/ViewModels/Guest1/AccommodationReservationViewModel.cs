@@ -15,7 +15,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class AccommodationReservationViewModel : ViewModelBase
     {
-        private readonly AccommodationReservationService _service;
+        private readonly AccommodationReservationService _reservationService;
         private readonly NavigationStore _navigationStore;
         public Accommodation Accommodation { get; set; }
         public User Guest { get; set; }
@@ -23,15 +23,15 @@ namespace InitialProject.WPF.ViewModels.Guest1
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public ICommand FindAvailableReservationsCommand { get; }
-        public ICommand ShowAccommodationBrowserViewCommand { get; }
+        public ICommand NavigateAccommodationBrowserCommand { get; }
         public AccommodationReservationViewModel(NavigationStore navigationStore ,User user, Accommodation accommodation)
         {
             _navigationStore = navigationStore;
             Guest = user;
             Accommodation = accommodation;
-            _service = new AccommodationReservationService();
+            _reservationService = new AccommodationReservationService();
             FindAvailableReservationsCommand = new ExecuteMethodCommand(GetAvailableReservations);
-            ShowAccommodationBrowserViewCommand = new ExecuteMethodCommand(ShowAccommodationBrowserView);
+            NavigateAccommodationBrowserCommand = new ExecuteMethodCommand(NavigateAcoommodationBrowser);
         }
 
         private void GetAvailableReservations()
@@ -44,14 +44,14 @@ namespace InitialProject.WPF.ViewModels.Guest1
             {
                 DateOnly startDate = DateOnly.FromDateTime(StartDate);
                 DateOnly endDate = DateOnly.FromDateTime(EndDate);
-                List<AccommodationReservation> reservations = _service.GetAvailable(startDate, endDate, Days, Accommodation, Guest);
-                ShowDatePickerView(reservations);
+                List<AccommodationReservation> reservations = _reservationService.GetAvailable(startDate, endDate, Days, Accommodation, Guest);
+                ShowDatePicker(reservations);
                 
             }
             else
                 MessageBox.Show("Izaberite željeni opseg datuma");
         }
-        private void ShowDatePickerView(List<AccommodationReservation> reservations)
+        private void ShowDatePicker(List<AccommodationReservation> reservations)
         {
             var viewModel = new AccommodationReservationDatePickerViewModel(_navigationStore, reservations);
             var navigateCommand = new NavigateCommand
@@ -59,7 +59,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
 
             navigateCommand.Execute(null);
         }
-        private void ShowAccommodationBrowserView()
+        private void NavigateAcoommodationBrowser()
         {
             var contentViewModel = new AccommodationBrowserViewModel(_navigationStore, Guest);
             var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, Guest);

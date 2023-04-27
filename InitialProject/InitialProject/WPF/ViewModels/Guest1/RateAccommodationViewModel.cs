@@ -19,10 +19,10 @@ namespace InitialProject.WPF.ViewModels.Guest1
     public class RateAccommodationViewModel : ViewModelBase
     {
         public AccommodationReservation Reservation { get; set; }
-        private readonly AccommodationRatingService _service;
+        private readonly AccommodationRatingService _ratingService;
         private readonly NavigationStore _navigationStore;
         public ICommand RateReservationCommand { get; }
-        public ICommand ShowRatingsViewCommand { get; }
+        public ICommand NavigateRatingsCommand { get; }
         public ICommand UploadImagesCommand { get; }
         public int Location { get; set; }
         public int Hygiene { get; set; }
@@ -37,9 +37,9 @@ namespace InitialProject.WPF.ViewModels.Guest1
             _navigationStore = navigationStore;
             Reservation = reservation;
             _pictureURLs = new List<string>();
-            _service = new AccommodationRatingService();
+            _ratingService = new AccommodationRatingService();
             RateReservationCommand = new ExecuteMethodCommand(SubmitRating);
-            ShowRatingsViewCommand = new ExecuteMethodCommand(ShowRatingsView);
+            NavigateRatingsCommand = new ExecuteMethodCommand(NavigateRatings);
             UploadImagesCommand = new ExecuteMethodCommand(UploadImages);
         }
         public void SubmitRating()
@@ -50,12 +50,12 @@ namespace InitialProject.WPF.ViewModels.Guest1
             if (result == MessageBoxResult.Yes)
             {
                 CopyImages();
-                _service.Save(Reservation, Location, Hygiene, Pleasantness, Fairness,
+                _ratingService.Save(Reservation, Location, Hygiene, Pleasantness, Fairness,
                               Parking, Comment, _pictureURLs);
-                ShowRatingsView();
+                NavigateRatings();
             }      
         }
-        private void ShowRatingsView()
+        private void NavigateRatings()
         {
             var contentViewModel = new AccommodationRatingViewModel(_navigationStore, Reservation.Guest);
             var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, Reservation.Guest);

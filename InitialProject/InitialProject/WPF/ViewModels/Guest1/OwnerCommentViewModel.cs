@@ -13,21 +13,21 @@ namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class OwnerCommentViewModel : ViewModelBase
     {
-        private readonly User _loggedInUser;
-        public AccommodationReservationMoveRequest Request { get; set; }
+        private readonly User _user;
+        public string Comment { get; set; }
         private readonly NavigationStore _navigationStore;
-        public ICommand ShowRequestsViewCommand { get; }
-        public OwnerCommentViewModel(NavigationStore navigationStore, User loggedInUser, AccommodationReservationMoveRequest request)
+        public ICommand NavigateMyRequestsCommand { get; }
+        public OwnerCommentViewModel(NavigationStore navigationStore, User user, string comment)
         {
             _navigationStore = navigationStore;
-            _loggedInUser = loggedInUser;
-            Request = request;
-            ShowRequestsViewCommand = new ExecuteMethodCommand(ShowRequestsView);
+            _user = user;
+            Comment = comment;
+            NavigateMyRequestsCommand = new ExecuteMethodCommand(NavigateMyRequests);
         }
-        private void ShowRequestsView()
+        private void NavigateMyRequests()
         {
-            var contentViewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _loggedInUser);
-            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _loggedInUser);
+            var contentViewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _user);
+            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _user);
             var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
             navigateCommand.Execute(null);

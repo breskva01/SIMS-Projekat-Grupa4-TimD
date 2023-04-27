@@ -45,8 +45,8 @@ namespace InitialProject.Repository
                     return SortByName(accommodations);
                 case "Location":
                     return SortByLocation(accommodations);
-                case "MaxGuestNumber":
-                    return SortByMaxGuestNumber(accommodations);
+                case "MaxGuestCount":
+                    return SortByMaxGuestCount(accommodations);
                 case "MinDaysNumber":
                     return SortByMinDaysNumber(accommodations);
                 default:
@@ -63,7 +63,7 @@ namespace InitialProject.Repository
                                           .ThenBy(a => a.City)
                                           .ToList();
         }
-        private List<Accommodation> SortByMaxGuestNumber(List<Accommodation> accommodations)
+        private List<Accommodation> SortByMaxGuestCount(List<Accommodation> accommodations)
         {
             return accommodations.OrderBy(a => a.MaximumGuests).ToList();
         }

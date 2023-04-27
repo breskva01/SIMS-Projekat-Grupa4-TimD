@@ -15,18 +15,18 @@ namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class MyAccommodationReservationRequestsViewModel : ViewModelBase
     {
-        private readonly User _loggedInUser;
+        private readonly User _user;
         public List<AccommodationReservationMoveRequest> Requests { get; set; }
         private readonly AccommodationReservationRequestService _requestService;
         private readonly NavigationStore _navigationStore;
-        public ICommand ShowCommentViewCommand { get; }
+        public ICommand ShowCommentCommand { get; }
         public MyAccommodationReservationRequestsViewModel(NavigationStore navigationStore, User loggedInUser)
         {
             _navigationStore = navigationStore;
-            _loggedInUser = loggedInUser;
+            _user = loggedInUser;
             _requestService = new AccommodationReservationRequestService();
-            Requests = _requestService.GetByGuestId(_loggedInUser.Id);
-            ShowCommentViewCommand = new AccommodationReservationRequestClickCommand(ShowComment);
+            Requests = _requestService.GetByGuestId(_user.Id);
+            ShowCommentCommand = new AccommodationReservationRequestClickCommand(ShowComment);
         }
         private void ShowComment(AccommodationReservationMoveRequest request)
         {
@@ -34,7 +34,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
                 MessageBox.Show("Vlasnik nije ostavio komentar.");
             else
             {
-                var viewModel = new OwnerCommentViewModel(_navigationStore, _loggedInUser, request);
+                var viewModel = new OwnerCommentViewModel(_navigationStore, _user, request.Comment);
                 var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
                 navigateCommand.Execute(null);
             }

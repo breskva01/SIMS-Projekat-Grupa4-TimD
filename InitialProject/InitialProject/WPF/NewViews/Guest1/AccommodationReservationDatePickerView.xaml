@@ -52,9 +52,9 @@
             <TextBlock VerticalAlignment="Center" FontSize="14" Text="Broj gostiju: "/>
             <TextBox FontSize="14" Padding="3" MinWidth="100" Text="{Binding Path=GuestCount, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Margin="5 0" FontSize="14" Padding="3" Content="Rezerviši"
-                    Command="{Binding ReserveCommand}"/>
+                    Command="{Binding ConfirmReservationCommand}"/>
             <Button Margin="5 0" FontSize="14" Padding="3" Content="Nazad" 
-                    Command="{Binding ShowReservationViewCommand}"/>
+                    Command="{Binding OpenReservationFormCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
