@@ -24,6 +24,7 @@
     <None Remove="Resources\Images\vienna.jpeg" />
     <None Remove="Resources\Images\view.png" />
     <None Remove="Resources\Images\vila_slap.jpg" />
+    <None Remove="WPF\NewViews\TravelBuddy.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,6 +58,7 @@
     <Resource Include="Resources\Images\TravelBuddy.png" />
     <Resource Include="Resources\Images\vienna.jpeg" />
     <Resource Include="Resources\Images\vila_slap.jpg" />
+    <Resource Include="WPF\NewViews\TravelBuddy.png" />
   </ItemGroup>
 
 </Project>

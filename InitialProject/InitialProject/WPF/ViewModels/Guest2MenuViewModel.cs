@@ -17,20 +17,23 @@ namespace InitialProject.WPF.ViewModels
         private User _user;
         private readonly NavigationStore _navigationStore;
 
-        public ICommand MyVouchersCommand { get; }
         public ICommand TourBrowserCommand { get; }
         public ICommand TrackingCommand { get; }
-        public ICommand RatingCommand { get; }
+        public ICommand MyReservationsCommand { get; }
+        public ICommand RequestMenuCommand { get; }
+        public ICommand MyInfoCommand { get; }
+
         public ICommand SignOutCommand { get; }
         public Guest2MenuViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
             _user = user;
 
-            MyVouchersCommand = new ExecuteMethodCommand(ShowMyVouchersView);
             TourBrowserCommand = new ExecuteMethodCommand(ShowTourBrowserView);
             TrackingCommand = new TourTrackingCommand(ShowTourTrackingView, user);
-            RatingCommand = new TourRatingCommand(ShowTourRatingView, user);
+            //MyReservationsCommand = new ExecuteMethodCommand(ShowMyReservationsView, user);
+            RequestMenuCommand = new ExecuteMethodCommand(ShowRequestMenuView);
+            MyInfoCommand = new ExecuteMethodCommand(ShowInfoMenuView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
         }
 
@@ -42,13 +45,6 @@ namespace InitialProject.WPF.ViewModels
             navigate.Execute(null);
         }
 
-        private void ShowTourRatingView()
-        {
-            TourRatingViewModel tourRatingViewModel= new TourRatingViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourRatingViewModel));
-
-            navigate.Execute(null);
-        }
 
         private void ShowTourTrackingView()
         {
@@ -70,6 +66,21 @@ namespace InitialProject.WPF.ViewModels
         {
             TourBrowserViewModel tourBrowserViewModel = new TourBrowserViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourBrowserViewModel));
+
+            navigate.Execute(null);
+        }
+
+        private void ShowRequestMenuView()
+        {
+            Guest2RequestMenuViewModel requestMenuViewModel = new Guest2RequestMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, requestMenuViewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowInfoMenuView()
+        {
+            Guest2InfoMenuViewModel infoMenuViewModel = new Guest2InfoMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, infoMenuViewModel));
 
             navigate.Execute(null);
         }

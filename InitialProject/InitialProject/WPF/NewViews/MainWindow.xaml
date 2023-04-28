@@ -10,6 +10,12 @@
         Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:Guest2RequestMenuViewModel}">
+                <views:Guest2RequestMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:Guest2InfoMenuViewModel}">
+                <views:Guest2InfoMenuView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:RateTourViewModel}">
                 <views:RateTourView />
             </DataTemplate>
