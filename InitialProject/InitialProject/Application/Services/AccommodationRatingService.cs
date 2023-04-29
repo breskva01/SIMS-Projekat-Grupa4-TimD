@@ -39,10 +39,13 @@ namespace InitialProject.Application.Services
             return reservations.FindAll(r => r.IsEligibleForRating());
         }
         public void Save(AccommodationReservation reservation, int location, int hygiene, int pleasantness,
-                         int fairness, int parking, string comment, List<string> pictureURLs)
+                         int fairness, int parking, string comment, List<string> pictureURLs,
+                         bool renovatingNeeded, string renovationComment, int renovationUrgency)
         {
-            var rating = new AccommodationRating(reservation, location, hygiene, pleasantness, fairness,
-                                                 parking, comment, pictureURLs);
+            if (!renovatingNeeded)
+                renovationUrgency = 0;
+            var rating = new AccommodationRating(reservation, location, hygiene, pleasantness, fairness, parking,
+                                                 comment, pictureURLs, renovationComment, renovationUrgency);
             _ratingRepository.Save(rating);
             _reservationRepository.MarkOwnerAsRated(reservation.Id);
         }

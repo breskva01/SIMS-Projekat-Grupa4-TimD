@@ -84,7 +84,7 @@
                          VerticalScrollBarVisibility="Auto" 
                          Height="100" Width="350"
                          Padding="2"
-                         Text="{Binding RenovatingComment}"/>
+                         Text="{Binding RenovationComment }"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10"
                         Visibility="{Binding RenovatingNeeded,

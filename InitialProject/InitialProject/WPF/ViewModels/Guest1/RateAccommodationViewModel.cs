@@ -46,7 +46,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
                 }
             }
         }
-        public string renovatingComment { get; set; }
+        public string RenovationComment { get; set; }
         public int RenovationUrgency { get; set; }
         public string ToolTipText { get; } =
             "Nivo 1 - bilo bi lepo renovirati neke sitnice, ali sve funkcioniše kako treba i bez toga\r\n" +
@@ -73,8 +73,8 @@ namespace InitialProject.WPF.ViewModels.Guest1
             if (result == MessageBoxResult.Yes)
             {
                 CopyImages();
-                _ratingService.Save(Reservation, Location, Hygiene, Pleasantness, Fairness,
-                              Parking, Comment, _pictureURLs);
+                _ratingService.Save(Reservation, Location, Hygiene, Pleasantness, Fairness, Parking, Comment,
+                                    _pictureURLs, RenovatingNeeded, RenovationComment, RenovationUrgency);
                 NavigateRatings();
             }      
         }

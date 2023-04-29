@@ -17,6 +17,9 @@ namespace InitialProject.Domain.Models
         public int Parking { get; set; }
         public string Comment { get; set; }
         public List<string> PictureURLs { get; set; }
+        public bool RenovatingNeeded => RenovationUrgency > 0;
+        public string RenovationComment { get; set; }
+        public int RenovationUrgency { get; set; }
         public AccommodationRating() 
         {
             Comment = "";
@@ -24,7 +27,8 @@ namespace InitialProject.Domain.Models
             Reservation = new AccommodationReservation();
         }
         public AccommodationRating(AccommodationReservation reservation, int location, int hygiene, 
-            int pleasantness, int fairness, int parking, string comment, List<string> pictureURLs)
+            int pleasantness, int fairness, int parking, string comment, List<string> pictureURLs,
+            string renovationComment, int renovationUrgency)
         {
             Reservation = reservation;
             Location = location;
@@ -34,6 +38,8 @@ namespace InitialProject.Domain.Models
             Parking = parking;
             Comment = comment;
             PictureURLs = pictureURLs;
+            RenovationComment = renovationComment;
+            RenovationUrgency = renovationUrgency;
         }
         public void FromCSV(string[] values)
         {
@@ -45,6 +51,8 @@ namespace InitialProject.Domain.Models
             Parking = int.Parse(values[5]);
             Comment = values[6];
             PictureURLs = new List<string>(values[7].Split(','));
+            RenovationComment = values[8];
+            RenovationUrgency = int.Parse(values[9]);
         }
 
         public string[] ToCSV()
@@ -59,7 +67,9 @@ namespace InitialProject.Domain.Models
                 Fairness.ToString(),
                 Parking.ToString(),
                 Comment,
-                pictureURLs
+                pictureURLs,
+                RenovationComment,
+                RenovationUrgency.ToString()
             };
             return csvValues;
         }
