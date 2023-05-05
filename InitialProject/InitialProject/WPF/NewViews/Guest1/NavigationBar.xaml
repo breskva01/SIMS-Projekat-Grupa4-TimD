@@ -23,7 +23,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid MaxWidth="1000" Margin="20 10">
+    <Grid MaxWidth="1000" Margin="0 0 0 10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
@@ -59,6 +59,7 @@
             </Grid.ColumnDefinitions>
 
             <Image
+                Margin="0 0 5 0"
                 Grid.Column="1"
                 Cursor="Hand"
                 VerticalAlignment="Top"

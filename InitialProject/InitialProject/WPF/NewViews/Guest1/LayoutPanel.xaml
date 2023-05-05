@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <local:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
@@ -17,8 +18,9 @@
         <ContentControl
             Grid.Row="1"
             MaxWidth="1000"
-            Margin="20"
             Content="{Binding ContentViewModel}" />
+
+        <local:StatusBar Grid.Row="2"/>
 
     </Grid>
 </UserControl>
