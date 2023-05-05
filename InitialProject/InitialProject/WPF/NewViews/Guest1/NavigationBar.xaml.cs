@@ -24,5 +24,20 @@ namespace InitialProject.WPF.NewViews.Guest1
         {
             InitializeComponent();
         }
+
+        private void PersonImageLeftClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 1)
+            {
+                Image image = (Image)sender;
+                ContextMenu contextMenu = image.ContextMenu;
+                if (contextMenu != null)
+                {
+                    contextMenu.PlacementTarget = image;
+                    contextMenu.IsOpen = true;
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }
