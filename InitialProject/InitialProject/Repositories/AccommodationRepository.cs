@@ -1,5 +1,9 @@
-﻿using InitialProject.Application.Serializer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Serializer;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
+using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,50 +12,75 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Repository
 {
-    class AccommodationRepository
+    public class AccommodationRepository : IAccommodationRepository
     {
-        private const string FilePath = "../../../Resources/Data/accommodations.csv";
-
-        private readonly Serializer<Accommodation> _serializer;
-
+        private readonly AccommodationFileHandler _fileHandler;
         private List<Accommodation> _accommodations;
 
         public AccommodationRepository()
         {
-            _serializer = new Serializer<Accommodation>();
-            _accommodations = _serializer.FromCSV(FilePath);
+            _fileHandler = new AccommodationFileHandler();
         }
 
         public List<Accommodation> GetAll()
         {
-            return _serializer.FromCSV(FilePath);
+            _accommodations = _fileHandler.Load();
+            return _accommodations.OrderBy(a => !a.Owner.SuperOwner).ToList();
         }
-
-        public Accommodation Save(Accommodation accommodation)
+        private int NextId()
         {
-            accommodation.Id = NextId();
-            _accommodations = _serializer.FromCSV(FilePath);
-            _accommodations.Add(accommodation);
-            _serializer.ToCSV(FilePath, _accommodations);
-            return accommodation;
+            return _accommodations?.Max(r => r.Id) + 1 ?? 0;
         }
-
-        public int NextId()
+        public List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
         {
-            _accommodations = _serializer.FromCSV(FilePath);
-            if (_accommodations.Count < 1)
+            GetAll();
+            return _accommodations.FindAll
+                (a => a.MatchesFilters(keyWords, type, guestNumber, numberOfDays));
+        }
+        public List<Accommodation> Sort(List<Accommodation> accommodations, string criterion)
+        {
+            switch (criterion)
             {
-                return 1;
+                case "Name":
+                    return SortByName(accommodations);
+                case "Location":
+                    return SortByLocation(accommodations);
+                case "MaxGuestCount":
+                    return SortByMaxGuestCount(accommodations);
+                case "MinDaysNumber":
+                    return SortByMinDaysNumber(accommodations);
+                default:
+                    return accommodations;
             }
-            return _accommodations.Max(a => a.Id) + 1;
+        }
+        private List<Accommodation> SortByName(List<Accommodation> accommodations)
+        {
+            return accommodations.OrderBy(a => a.Name).ToList();
+        }
+        private List<Accommodation> SortByLocation(List<Accommodation> accommodations)
+        {
+            return accommodations.OrderBy(a => a.Country)
+                                          .ThenBy(a => a.City)
+                                          .ToList();
+        }
+        private List<Accommodation> SortByMaxGuestCount(List<Accommodation> accommodations)
+        {
+            return accommodations.OrderBy(a => a.MaximumGuests).ToList();
+        }
+        private List<Accommodation> SortByMinDaysNumber(List<Accommodation> accommodations)
+        {
+            return accommodations.OrderBy(a => a.MinimumDays).ToList();
+        }
+        public void Add(string name, string country, string city, string address, AccommodationType type,
+            int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL, User owner)
+        {
+            GetAll();
+            int accommodationId = NextId();
+            Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address,
+                type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, owner);
+            _accommodations.Add(accommodation);
+            _fileHandler.Save(_accommodations);
         }
 
-        public void Delete(Accommodation accommodation)
-        {
-            _accommodations = _serializer.FromCSV(FilePath);
-            Accommodation founded = _accommodations.Find(a => a.Id == accommodation.Id);
-            _accommodations.Remove(founded);
-            _serializer.ToCSV(FilePath, _accommodations);
-        }
     }
 }

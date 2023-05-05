@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,10 @@ namespace InitialProject.Domain.Models
         public List<KeyPoint> KeyPoints { get; set; }
         public List<int> KeyPointIds { get; set; }
         public TourState State { get; set; }
+        public int CurrentKeyPoint { get; set; }
+        public int NumberOfArrivedGeusts { get; set; }
+        public int GuideId { get; set; }
+
         public Tour()
         {
             Name = string.Empty;
@@ -49,9 +54,14 @@ namespace InitialProject.Domain.Models
             KeyPoints = new List<KeyPoint>();
             KeyPointIds = new List<int>();
             State = TourState.None;
+            CurrentNumberOfGuests = 0;
+            CurrentKeyPoint = 0;
+            NumberOfArrivedGeusts = 0;
         }
 
-        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, DateTime start, int duration, string pictureURL, int currentNumberOfGuests, List<KeyPoint> ky)
+        public Tour(int id, string name, int locationId, string description, GuideLanguage language, int maximumGuests, 
+            DateTime start, int duration, string pictureURL, int currentNumberOfGuests,
+            List<KeyPoint> ky, int currentKeyPoint, int numberOfArrivedGuests, int guideId)
         {
             Id = id;
             Name = name;
@@ -64,6 +74,9 @@ namespace InitialProject.Domain.Models
             PictureURL = pictureURL;
             CurrentNumberOfGuests = currentNumberOfGuests;
             KeyPoints = ky;
+            CurrentKeyPoint = currentKeyPoint;
+            NumberOfArrivedGeusts = numberOfArrivedGuests;
+            GuideId = guideId;
         }
 
         public void FromCSV(string[] values)
@@ -74,7 +87,7 @@ namespace InitialProject.Domain.Models
             Description = values[3];
             Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[4]);
             MaximumGuests = Convert.ToInt32(values[5]);
-            Start = DateTime.Parse(values[6]);
+            Start = DateTime.ParseExact(values[6], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             Duration = Convert.ToInt32(values[7]);
             PictureURL = values[8];
             CurrentNumberOfGuests = Convert.ToInt32(values[9]);
@@ -87,6 +100,9 @@ namespace InitialProject.Domain.Models
                 KeyPointIds.Add(Convert.ToInt32(keyPoint));
             }
             State = (TourState)Enum.Parse(typeof(TourState), values[11]);
+            CurrentKeyPoint = Convert.ToInt32(values[12]);
+            NumberOfArrivedGeusts = Convert.ToInt32(values[13]);
+            GuideId = Convert.ToInt32(values[14]);
 
         }
         public string[] ToCSV()
@@ -104,12 +120,15 @@ namespace InitialProject.Domain.Models
                 Description,
                 Language.ToString(),
                 MaximumGuests.ToString(),
-                Start.ToString(),
+                Start.ToString("dd.MM.yyyy. HH:mm:ss"),
                 Duration.ToString(),
                 PictureURL.ToString(),
                 CurrentNumberOfGuests.ToString(),
                 keyPointIds,
-                State.ToString()
+                State.ToString(),
+                CurrentKeyPoint.ToString(),
+                NumberOfArrivedGeusts.ToString(),
+                GuideId.ToString(),
             };
             return csvValues;
         }

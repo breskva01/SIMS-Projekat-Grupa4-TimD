@@ -1,4 +1,5 @@
-1|1|4|4
-2|1|4|15
-3|1|4|1
-4|3|4|2
+4|1|7|5|Pending|5|-1|False
+2|1|5|3|Pending|4|-1|True
+3|1|6|7|Pending|4|1|True
+5|2|4|10|Present|5|1|False
+1|1|4|10|Present|5|3|False

@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.TourRatingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ReservationsTemplate">
+            <StackPanel Margin="7" Orientation="Horizontal" 
+                        HorizontalAlignment="Stretch">
+                <Image Source="{Binding PictureURL}" Width="180" Height="180" />
+                <StackPanel VerticalAlignment="Center" Margin="30" Orientation="Vertical">
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0 0 0 5">
+                    </TextBlock>
+                    <TextBlock FontSize="14" FontWeight="Light">
+                        <Run Text="{Binding Location.Country}"/> -
+                        <Run Text="{Binding Location.City}" />
+                    </TextBlock>
+                    <TextBlock FontSize="14" FontWeight="Light">
+                        Check in:
+                        <Run Text="{Binding Start, StringFormat='dd.MM.yyyy.'}" />
+                    </TextBlock>
+                </StackPanel>
+                <Button Height="50" Width="100"  Margin="300 5 5 5" HorizontalAlignment="Right" FontSize="15"
+                        Command="{Binding DataContext.RateTourCommand, 
+                                  RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                        CommandParameter="{Binding}">Rate</Button>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom"
+                    Margin="10"
+                    Orientation="Horizontal">
+
+            <Button Height="40" Margin="5,20,5,20" Padding="4 2"
+                    Command="{Binding MenuCommand}"
+                    Content="Menu" Width="100" FontSize="17"/>
+
+        </StackPanel>
+        <ListBox ItemTemplate="{StaticResource ReservationsTemplate}"
+                 ItemsSource="{Binding UnratedTours, UpdateSourceTrigger=PropertyChanged}"
+                 HorizontalAlignment="Stretch"/>
+    </DockPanel>
+</UserControl>

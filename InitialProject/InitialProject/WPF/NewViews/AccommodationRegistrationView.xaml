@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.AccommodationRegistrationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignWidth="800" Height="708">
+    <Grid RenderTransformOrigin="0.492,0.511">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="580"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Height="530" Width="700">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Height="40" FontSize="18">Naziv</Label>
+            <Label Grid.Row="1" Grid.Column="0" Height="40" FontSize="18">Lokacija</Label>
+            <Label Grid.Row="2" Grid.Column="0" Height="40" FontSize="18">Adresa</Label>
+            <Label Grid.Row="3" Grid.Column="0" Height="40" FontSize="18">Tip</Label>
+            <Label Grid.Row="4" Grid.Column="0" Height="40" FontSize="18">Maksimalan broj gostiju</Label>
+            <Label Grid.Row="5" Grid.Column="0" Height="40" FontSize="18">Minimalan broj dana za rezervaciju</Label>
+            <Label Grid.Row="6" Grid.Column="0" Height="40" FontSize="18">Broj dana pred rezervaciju za otkazivanje</Label>
+            <Label Grid.Row="7" Grid.Column="0" Height="40" FontSize="18">Slike</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=AccommodationName, UpdateSourceTrigger=PropertyChanged}" Height="30" FontSize="18">
+            </TextBox>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="22*"/>
+                    <ColumnDefinition Width="153*"/>
+                    <ColumnDefinition Width="175*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="countryComboBox" Grid.Row="0" Grid.Column="0" Height="30" FontSize="18" 
+                          ItemsSource="{Binding Countries}" Text="{Binding Path=SelectedCountry}" Grid.ColumnSpan="2" Margin="0,18,0,18">
+                </ComboBox>
+                <ComboBox Grid.Row="0" Grid.Column="2" Height="30" FontSize="18" ItemsSource="{Binding Cities}" x:Name="cityComboBox" Text="{Binding Path=SelectedCity, UpdateSourceTrigger=PropertyChanged}" Margin="0,18,0,18">
+                </ComboBox>
+            </Grid>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=Address, UpdateSourceTrigger=PropertyChanged}" Height="30" FontSize="18">
+            </TextBox>
+            <ComboBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged}" Height="30" FontSize="18">
+                <ComboBoxItem>Apartment</ComboBoxItem>
+                <ComboBoxItem>House</ComboBoxItem>
+                <ComboBoxItem>Cottage</ComboBoxItem>
+                <ComboBoxItem>Everything</ComboBoxItem>
+            </ComboBox>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=MaximumGuests, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="40" FontSize="18">
+            </TextBox>
+            <TextBox Grid.Row="5" Grid.Column="1"  Text="{Binding Path=MinimumDays, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="40" FontSize="18">
+            </TextBox>
+            <TextBox Grid.Row="6" Grid.Column="1" 
+                     Text="{Binding Path=MinimumCancellationNotice, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="40" FontSize="18">
+            </TextBox>
+            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Path=PictureURL, UpdateSourceTrigger=PropertyChanged}" Height="30" FontSize="18">
+            </TextBox>
+        </Grid>
+        <WrapPanel Grid.Row="1" Grid.Column="0" FlowDirection="RightToLeft">
+            <Button Content="Confirm" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                 Command="{Binding RegisterAccommodationCommand}" FontSize="18"/>
+            <Button Content="Cancel" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                Command="{Binding BackCommand}" FontSize="18"/>
+            
+        </WrapPanel>
+    </Grid>
+</UserControl>

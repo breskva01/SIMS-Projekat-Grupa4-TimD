@@ -1,6 +1,7 @@
-﻿using InitialProject.Application.Serializer;
-using InitialProject.Application.Storage;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Serializer;
 using InitialProject.Domain.Models;
+using InitialProject.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,6 @@ namespace InitialProject.Repositories.FileHandlers
     public class AccommodationReservationFileHandler
     {
         private const string _reservationsFilePath = "../../../Resources/Data/accommodationReservations.csv";
-        private const string _accommodationsFilePath = "../../../Resources/Data/accommodations.csv";
-        private const string _guestsFilePath = "../../../Resources/Data/users.csv";
         private readonly Serializer<AccommodationReservation> _serializer;
 
         public AccommodationReservationFileHandler()
@@ -24,29 +23,22 @@ namespace InitialProject.Repositories.FileHandlers
         public List<AccommodationReservation> Load()
         {
             var reservations = _serializer.FromCSV(_reservationsFilePath);
-            FillInAccommodations(reservations);
             FillInGuests(reservations);
+            FillInAccommodations(reservations);
             return reservations;
-        }
-        private void FillInAccommodations(List<AccommodationReservation> reservations)
-        {
-            AccommodationFileHandler fileHandler = new AccommodationFileHandler();
-            List<Accommodation> accommodations = fileHandler.Load();
-            foreach (var reservation in reservations)
-            {
-                reservation.Accommodation = accommodations.FirstOrDefault(a => a.Id == reservation.AccommodationId);
-            }
         }
         private void FillInGuests(List<AccommodationReservation> reservations)
         {
-            Storage<User> storage = new Storage<User>(_guestsFilePath);
-            List<User> guests = storage.Load();
-            foreach (var reservation in reservations)
-            {
-                reservation.Guest = guests.FirstOrDefault(g => g.Id == reservation.GuestId);
-            }
+            var users = new UserFileHandler().Load();
+            reservations.ForEach(r =>
+                r.Guest = users.Find(u => u.Id == r.Guest.Id));
         }
-
+        private void FillInAccommodations(List<AccommodationReservation> reservations)
+        {
+            var accommodations = new AccommodationFileHandler().Load();
+            reservations.ForEach(r =>
+                r.Accommodation = accommodations.Find(a => a.Id == r.Accommodation.Id));
+        }
         public void Save(List<AccommodationReservation> reservations)
         {
             _serializer.ToCSV(_reservationsFilePath, reservations);

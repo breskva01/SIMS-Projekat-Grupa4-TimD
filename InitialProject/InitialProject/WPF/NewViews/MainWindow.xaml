@@ -1,0 +1,121 @@
+﻿<Window x:Class="InitialProject.WPF.NewViews.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+        xmlns:views="clr-namespace:InitialProject.WPF.NewViews"
+        xmlns:viewsg1="clr-namespace:InitialProject.WPF.NewViews.Guest1" 
+        xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
+        xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.Guest1"
+        mc:Ignorable="d"
+        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:RateTourViewModel}">
+                <views:RateTourView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourRatingViewModel}">
+                <views:TourRatingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:PresenceConfirmationViewModel}">
+                <views:PresenceConfirmationView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CurrentKeyPointViewModel}">
+                <views:CurrentKeyPointView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:Guest2MenuViewModel}">
+                <views:Guest2MenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:MyVouchersViewModel}">
+                <views:MyVouchersView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourBrowserViewModel}">
+                <views:TourBrowserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourReservationViewModel}">
+                <views:TourReservationView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:VoucherBrowserViewModel}">
+                <views:VoucherBrowserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:SignInViewModel}">
+                <views:SignInView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationRegistrationViewModel}">
+                <views:AccommodationRegistrationView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationBrowserViewModel}">
+                <viewsg1:AccommodationBrowser />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationViewModel}">
+                <viewsg1:AccommodationReservationForm />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationDatePickerViewModel}">
+                <viewsg1:AccommodationReservationDatePicker />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GuestRatingViewModel}">
+                <views:GuestRatingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ToursTodayViewModel}">
+                <views:ToursTodayView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourCreationViewModel}">
+                <views:TourCreateView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AllToursViewModel}">
+                <views:AllToursView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourLiveTrackingViewModel}">
+                <views:TourLiveTrackingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourGuestsViewModel}">
+                <views:TourGuestsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:VoucherCreationViewModel}">
+                <views:VoucherCreationView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourStatsViewModel}">
+                <views:TourStatsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationRatingViewModel}">
+                <viewsg1:AccommodationRatingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:RateAccommodationViewModel}">
+                <viewsg1:RateAccommodationForm />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationMoveRequestViewModel}">
+                <viewsg1:AccommodationReservationMoveRequestForm />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:MyAccommodationReservationRequestsViewModel}">
+                <viewsg1:MyAccommodationReservationRequestsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:OwnerCommentViewModel}">
+                <viewsg1:OwnerCommentView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GuideRatingsViewModel}">
+                <views:GuideRatingsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GuideMenuViewModel}">
+                <views:GuideMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerRatingsViewModel}">
+                <views:OwnerRatingsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ReservationMoveRequestsViewModel}">
+                <views:ReservationsMoveRequestsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerViewModel}">
+                <views:OwnerView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:MyAccommodationReservationsViewModel}">
+                <viewsg1:MyAccommodationReservationsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:LayoutViewModel}">
+                <viewsg1:LayoutPanel />
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />
+    </Grid>
+</Window>

@@ -10,34 +10,36 @@ using System.Xml.Linq;
 
 namespace InitialProject.Domain.Models
 {
-    public enum AccommodationReservationStatus { Finished, Confirmed, Cancelled }
+    public enum AccommodationReservationStatus { Finished, Active, Cancelled }
     public class AccommodationReservation : ISerializable
     {
         public int Id { get; set; }
-        public int AccommodationId { get; set; }
         public Accommodation Accommodation { get; set; }
-        public int GuestId { get; set; }
         public User Guest { get; set; }
-        public int NumberOfDays { get; set; }
-        public int GuestNumber { get; set; }
+        public int NumberOfDays => (CheckOut.ToDateTime(TimeOnly.MinValue) - 
+                                    CheckIn.ToDateTime(TimeOnly.MinValue)).Days;
+        public int GuestCount { get; set; }
         public DateOnly CheckIn { get; set; }
         public DateOnly CheckOut { get; set; }
         public DateOnly LastNotification { get; set; }
         public bool IsGuestRated { get; set; }
+        public bool IsOwnerRated { get; set; }
         public AccommodationReservationStatus Status { get; set; }
-        public AccommodationReservation() { }
-        public AccommodationReservation(Accommodation accommodation, User guest, int numberOfDays, DateOnly checkIn,
-            DateOnly checkOut, AccommodationReservationStatus status)
+        public AccommodationReservation() 
         {
-            AccommodationId = accommodation.Id;
+            Guest = new User();
+            Accommodation = new Accommodation();
+        }
+        public AccommodationReservation(Accommodation accommodation, User guest,
+            DateOnly checkIn, DateOnly checkOut)
+        {
             Accommodation = accommodation;
-            GuestId = guest.Id;
             Guest = guest;
-            NumberOfDays = numberOfDays;
             CheckIn = checkIn;
             CheckOut = checkOut;
             IsGuestRated = false;
-            Status = status;
+            IsOwnerRated = false;
+            Status = AccommodationReservationStatus.Active;
         }
         public bool Overlaps(DateOnly checkIn, DateOnly checkOut)
         {
@@ -51,26 +53,45 @@ namespace InitialProject.Domain.Models
             int differenceInDays = (int)difference.TotalDays;
             return differenceInDays >= Accommodation.MinimumCancelationNotice;
         }
+        public bool IsEligibleForRating()
+        {
+            DateOnly cutoffDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
+            return IsOwnerRated == false && 
+                   Status == AccommodationReservationStatus.Finished &&
+                   CheckOut >= cutoffDate;
+        }
 
         public void FromCSV(string[] values)
         {
             Id = int.Parse(values[0]);
-            AccommodationId = int.Parse(values[1]);
-            GuestId = int.Parse(values[2]);
-            NumberOfDays = int.Parse(values[3]);
-            GuestNumber = int.Parse(values[4]);
-            CheckIn = DateOnly.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            CheckOut = DateOnly.ParseExact(values[6], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            LastNotification = DateOnly.ParseExact(values[7], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            IsGuestRated = bool.Parse(values[8]);
+            Accommodation.Id = int.Parse(values[1]);
+            Guest.Id = int.Parse(values[2]);
+            GuestCount = int.Parse(values[3]);
+            CheckIn = DateOnly.ParseExact(values[4], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            CheckOut = DateOnly.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LastNotification = DateOnly.ParseExact(values[6], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            IsGuestRated = bool.Parse(values[7]);
+            IsOwnerRated = bool.Parse(values[8]);
             Status = (AccommodationReservationStatus)Enum.Parse(typeof(AccommodationReservationStatus), values[9]);
+            if (CheckOut <= DateOnly.FromDateTime(DateTime.Now) && Status == AccommodationReservationStatus.Active)
+            {
+                Status = AccommodationReservationStatus.Finished;
+            }
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), AccommodationId.ToString(), GuestId.ToString(),
-                                    NumberOfDays.ToString(), GuestNumber.ToString(), CheckIn.ToString("dd/MM/yyyy"), CheckOut.ToString("dd/MM/yyyy"),
-                                    LastNotification.ToString("dd/MM/yyyy"), IsGuestRated.ToString(), Status.ToString()};
+            string[] csvValues = 
+                { Id.ToString(), 
+                  Accommodation.Id.ToString(),
+                  Guest.Id.ToString(),
+                  GuestCount.ToString(),
+                  CheckIn.ToString("dd/MM/yyyy"), 
+                  CheckOut.ToString("dd/MM/yyyy"),
+                  LastNotification.ToString("dd/MM/yyyy"),
+                  IsGuestRated.ToString(),
+                  IsOwnerRated.ToString(),
+                  Status.ToString() };
             return csvValues;
         }
     }
