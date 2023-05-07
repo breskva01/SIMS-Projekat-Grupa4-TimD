@@ -45,10 +45,22 @@ namespace InitialProject.Repository
                     return SortByName(accommodations);
                 case "Location":
                     return SortByLocation(accommodations);
-                case "MaxGuestCount":
+                case "MaxGuestCountAsc":
                     return SortByMaxGuestCount(accommodations);
-                case "MinDaysNumber":
+                case "MaxGuestCountDesc":
+                    {
+                        var sortedList = SortByMaxGuestCount(accommodations);
+                        sortedList.Reverse();
+                        return sortedList;
+                    }
+                case "MinDaysNumberAsc":
                     return SortByMinDaysNumber(accommodations);
+                case "MinDaysNumberDesc":
+                    {
+                        var sortedList = SortByMinDaysNumber(accommodations);
+                        sortedList.Reverse();
+                        return sortedList;
+                    }
                 default:
                     return accommodations;
             }
