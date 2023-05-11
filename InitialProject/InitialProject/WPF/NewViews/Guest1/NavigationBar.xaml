@@ -10,7 +10,7 @@
              FontSize="18">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Style TargetType="TextBlock" x:Key="NavigationTextBlockStyle">
+        <Style TargetType="TextBlock" x:Key="BaseTextBlockStyle">
             <Setter Property="TextDecorations" Value="None"/>
             <Setter Property="FontWeight" Value="DemiBold" />
             <Setter Property="Foreground" Value="#3283a8" />
@@ -20,6 +20,46 @@
                     <Setter Property="Foreground" Value="#deb93e" />
                     <Setter Property="Cursor" Value="Hand" />
                 </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style 
+            x:Key="AccommodationBrowserStyle" 
+            BasedOn="{StaticResource BaseTextBlockStyle}" 
+            TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedTab}" Value="AccommodationBrowser">
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style 
+            x:Key="MyReservationsStyle" 
+            BasedOn="{StaticResource BaseTextBlockStyle}" 
+            TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedTab}" Value="MyReservations">
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style 
+            x:Key="MyRequestsStyle" 
+            BasedOn="{StaticResource BaseTextBlockStyle}" 
+            TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedTab}" Value="MyRequests">
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style 
+            x:Key="RatingsStyle" 
+            BasedOn="{StaticResource BaseTextBlockStyle}" 
+            TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedTab}" Value="Ratings">
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
@@ -103,7 +143,7 @@
             <TextBlock
                 Margin="10 0"
                 Text="Pretraga smeštaja"
-                Style="{StaticResource NavigationTextBlockStyle}">
+                Style="{StaticResource AccommodationBrowserStyle}">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -118,7 +158,7 @@
             <TextBlock
                 Margin="10 0"
                 Text="Bilo gde/bilo kada"
-                Style="{StaticResource NavigationTextBlockStyle}">
+                Style="{StaticResource BaseTextBlockStyle}">
             </TextBlock>
 
             <Rectangle
@@ -128,7 +168,7 @@
             <TextBlock
                 Margin="10 0"
                 Text="Moje rezervacije"
-                Style="{StaticResource NavigationTextBlockStyle}">
+                Style="{StaticResource MyReservationsStyle}">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -143,7 +183,7 @@
             <TextBlock
                 Margin="10 0"
                 Text="Poslati zahtevi"
-                Style="{StaticResource NavigationTextBlockStyle}">
+                Style="{StaticResource MyRequestsStyle}">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -158,7 +198,7 @@
             <TextBlock
                 Margin="10 0"
                 Text="Ocene"
-                Style="{StaticResource NavigationTextBlockStyle}">
+                Style="{StaticResource RatingsStyle}">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -173,7 +213,7 @@
             <TextBlock
                 Margin="10 0"
                 Text="Forumi"
-                Style="{StaticResource NavigationTextBlockStyle}">
+                Style="{StaticResource BaseTextBlockStyle}">
             </TextBlock>
             
         </StackPanel>

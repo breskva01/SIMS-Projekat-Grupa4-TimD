@@ -79,15 +79,14 @@
                         </TextBlock.Style>
                     </TextBlock>
 
-                    <TextBlock
-                        FontSize="13">
-                        <Run Text=" - " />
-                        <Run Text="{Binding Country}"/>
-                        <Run Text="," />
-                        <Run Text="{Binding City}" />
-                    </TextBlock>
-
                 </StackPanel>
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="13">
+                    <Run Text="{Binding Country}"/>,
+                    <Run Text="{Binding City}" />
+                </TextBlock>
 
                 <StackPanel 
                     HorizontalAlignment="Center"
@@ -96,8 +95,8 @@
                     <TextBlock
                         FontSize="13">
                         <Run Text="Maks gostiju:"/>
-                        <Run Text="{Binding MaximumGuests}" />
-                        <Run Text=", min dana:"/> 
+                        <Run Text="{Binding MaximumGuests}" />,
+                        <Run Text="min dana:"/> 
                         <Run Text="{Binding MinimumDays}" />
                     </TextBlock>
 
