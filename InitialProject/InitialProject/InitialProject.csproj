@@ -15,6 +15,7 @@
     <None Remove="Resources\Images\brvnara_tara.jpg" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\left_arrow.png" />
     <None Remove="Resources\Images\moscow.png" />
     <None Remove="Resources\Images\novi_sad.jpg" />
     <None Remove="Resources\Images\paris.png" />
@@ -44,12 +45,14 @@
 
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Images\apartman_liman.jpg" />
     <Resource Include="Resources\Images\berlin.jpg" />
     <Resource Include="Resources\Images\brvnara_tara.jpg" />
+    <Resource Include="Resources\Images\left_arrow.png" />
     <Resource Include="Resources\Images\moscow.png" />
     <Resource Include="Resources\Images\novi_sad.jpg" />
     <Resource Include="Resources\Images\paris.png" />
