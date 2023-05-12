@@ -7,58 +7,177 @@
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
         mc:Ignorable="d" Height="768" Width="1024">
+    <UserControl.Background>
+        <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundYG.jpg"/>
+    </UserControl.Background>
+    <UserControl.Resources>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="250" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryBoard" Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonMenu" >
+            <BeginStoryboard  Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid>
+        <Grid x:Name="GridBackground">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="620"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Content="All Tours" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+            <Button Background="White" Height="40" Width="48" Grid.Row="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="-0.066,-0.073">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
+            </Button>
 
-    <Grid RenderTransformOrigin="0.507,0.5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="620"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Label Content="All Tours" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
-        <Button Background="White" Height="40" Width="48" Grid.Row="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="-0.066,-0.073">
-            <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
-        </Button>
-
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
-        <ListBox SelectedItem="{Binding SelectedTour}" BorderBrush="Black" BorderThickness="2" Grid.Row="1" Name="lbTours" Padding="15,15,5,5" Margin="40,10,40,10" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Margin" Value="0,5,10,15" />
-                    <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="BorderBrush" Value="Black" />
-                    <Setter Property="Padding" Value="15" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="0,0,10,0" />
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"/>
-                            <TextBlock>
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
+            <ListBox SelectedItem="{Binding SelectedTour}" BorderBrush="Black" BorderThickness="2" Grid.Row="1" Padding="15,15,5,5" Margin="40,10,40,10" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Height="500">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="0,5,10,15" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="BorderBrush" Value="Black" />
+                        <Setter Property="Padding" Value="15" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="0,0,10,0" />
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"/>
+                                <TextBlock>
                                 <Run Text="{Binding Location.Country}" FontSize="20"/> -
                                 <Run Text="{Binding Location.City}" FontSize="20" />
-                            </TextBlock>
-                            <TextBlock>
+                                </TextBlock>
+                                <TextBlock>
                                  <TextBlock FontSize="20">Tour Duration : </TextBlock> 
                                 <Run Text="{Binding Duration}" FontSize="20"/>
                                  h
                             </TextBlock>
-                            <TextBlock>
+                                <TextBlock>
                                 <TextBlock FontSize="20">Language: </TextBlock>
                                 <Run Text="{Binding Language}" FontSize="20"/>
                             </TextBlock>
-                            <TextBlock>
+                                <TextBlock>
                                  <TextBlock FontSize="20">Spaces filled : </TextBlock>
                                 <Run Text="{Binding CurrentNumberOfGuests}" FontSize="20"/>
                             </TextBlock>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Command="{Binding CancelTourCommand}" Content="CANCEL" HorizontalAlignment="Left" Margin="891,0,0,0" Grid.Row="2" VerticalAlignment="Top" Height="55" Width="93" RenderTransformOrigin="2.495,0.335" FontSize="20"/>
-        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="40,8,0,0" Grid.Row="2" VerticalAlignment="Top" Height="47" Width="108" FontSize="20"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding CancelTourCommand}" Content="CANCEL" HorizontalAlignment="Left" Margin="827,615,0,0" Grid.Row="2" VerticalAlignment="Top" Height="56" Width="150" RenderTransformOrigin="2.495,0.335" FontSize="20"/>
+            <Button Command="{Binding BackCommand}" Content="BACK" HorizontalAlignment="Left" Margin="58,615,0,0" Grid.Row="2" VerticalAlignment="Top" Height="56" Width="150" FontSize="20"/>
 
+        </Grid>
+        <Grid x:Name="InterfaceGrid" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="620"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="Black"/>
+
+            <Label Content="All Tours" Foreground="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+            <Button x:Name="ButtonMenu" Grid.Row="0" Background="White" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7,10,5,0"  Height="40" Width="48">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
+            </Button>
+
+            <ListBox SelectedItem="{Binding SelectedTour}" BorderBrush="Black" BorderThickness="2" Grid.Row="1" Name="lbTours" Padding="15,15,5,5" Margin="40,0,40,0" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Height="500" VerticalAlignment="Center">
+                <ListBox.Background>
+                    Black
+                </ListBox.Background>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="0,5,10,15" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="BorderBrush" Value="Black" />
+                        <Setter Property="Padding" Value="15" />
+                        <Setter Property="Background" Value="LightYellow"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="0,0,10,0" />
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"/>
+                                <TextBlock>
+                                <Run Text="{Binding Location.Country}" FontSize="20"/> -
+                                <Run Text="{Binding Location.City}" FontSize="20" />
+                                </TextBlock>
+                                <TextBlock>
+                                 <TextBlock FontSize="20">Tour Duration : </TextBlock> 
+                                <Run Text="{Binding Duration}" FontSize="20"/>
+                                 h
+                            </TextBlock>
+                                <TextBlock>
+                                <TextBlock FontSize="20">Language: </TextBlock>
+                                <Run Text="{Binding Language}" FontSize="20"/>
+                            </TextBlock>
+                                <TextBlock>
+                                 <TextBlock FontSize="20">Spaces filled : </TextBlock>
+                                <Run Text="{Binding CurrentNumberOfGuests}" FontSize="20"/>
+                            </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding CancelTourCommand}" Content="CANCEL TOUR" HorizontalAlignment="Left" Margin="827,590,0,0" Grid.Row="1" VerticalAlignment="Top" Height="56" Width="150" RenderTransformOrigin="2.495,0.335" FontSize="20" Grid.RowSpan="2"/>
+            <Button Command="{Binding BackCommand}" Content="BACK" HorizontalAlignment="Left" Margin="58,590,0,0" Grid.Row="1" VerticalAlignment="Top" Height="56" Width="150" FontSize="20" Grid.RowSpan="2"/>
+        </Grid>
+        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-250,0,0,0" Background="Black">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <StackPanel>
+                <Border BorderBrush="Yellow" BorderThickness="5" Height="100" Width="100" Margin="10">
+                    <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoG.jpg"/>
+                </Border>
+                <Button Content="Profile" Width="221" Background="#F4FF43 " FontSize="25" Height="44" Margin="5" />
+                <Button Content="Create Tour" Command="{Binding CreateTourCommand}"  Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+                <Button Content="Live Tracking" Command="{Binding LiveTrackingCommand}" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+                <Button Content="Cancel Tour"  Command="{Binding CancelTourCommand}"  Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+                <Button Content="Tour Stats" Command="{Binding TourStatsCommand}" Width="221" Background="#F4FF43 " FontSize="25" Height="44" Margin="5"/>
+                <Button Content="Tour Requests" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+                <Button Content="Tour Request Stats"  Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+                <Button Content="Reviews" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+                <Button Content="Complex Tour" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+                <Button  Content="Generate Report" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+            </StackPanel>
+            <Button x:Name="ButtonClose"  HorizontalAlignment="Center" Margin="0,690,0,0" VerticalAlignment="Top" Height="45" Width="45" >
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\back.png"></Image>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

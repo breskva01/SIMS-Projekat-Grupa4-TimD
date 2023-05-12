@@ -6,65 +6,272 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
-        mc:Ignorable="d">
+        mc:Ignorable="d" 
+        d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Background>
+        <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundYG.jpg"/>
+    </UserControl.Background>
+    <UserControl.Resources>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="250" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryBoard" Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonMenu" >
+            <BeginStoryboard  Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Grid.Column="0" Width="380">
+        <Grid x:Name="GridBackground" Opacity="0" Grid.ColumnSpan="2" Background="#55313131">
             <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Height="30">Name</Label>
-            <Label Grid.Row="1" Grid.Column="0" Height="30">Location</Label>
-            <Label Grid.Row="3" Grid.Column="0" Height="30">Description</Label>
-            <Label Grid.Row="4" Grid.Column="0" Height="30">Language</Label>
-            <Label Grid.Row="5" Grid.Column="0" Height="30">Guest capicity</Label>
-            <Label Grid.Row="6" Grid.Column="0" Height="30">Date and time</Label>
-            <Label Grid.Row="7" Grid.Column="0" Height="30">Duration</Label>
-            <Label Grid.Row="8" Grid.Column="0" Height="30">Image</Label>
-            <Label Grid.Row="2" Grid.Column="0" Height="30">Key Points</Label>
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0"/>
+            <Label Grid.Row="0" Content="CREATE TOUR" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            </Label>
+            <Button Grid.Row="0" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7,10,5,0"  Height="40" Width="48">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
+            </Button>
+            
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="330"/>
+                    <ColumnDefinition Width="380"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="0" Content="Name" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Location" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Check Points" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="Date and Time" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="Guest Capacity" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="Language" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="7" Grid.Column="0" Content="Duration" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="8" Grid.Column="0" Content="Image" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="9" Grid.Column="0" Content="Description" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
 
-            <TextBox Grid.Row="0" Grid.Column="1" Height="20" Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Grid.Row="1" Grid.Column="1" Height="20" Width="106" IsEditable="True" HorizontalAlignment="Left" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}" Margin="0,19,0,18">
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28" IsEnabled="False" IsReadOnly="True" />
+                <ComboBox FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" IsEditable="True" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" IsEditable="True" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" />
+                <ComboBox FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding KeyPointPlaces}" SelectedItem="{Binding SelectedKeyPointPlace}" IsEditable="True"/>
+                <xctk:DateTimePicker  FontSize="28" Grid.Row="4" Grid.Column="1" Margin="5"/>
+                <TextBox FontSize="28" Grid.Row="5" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=MaximumGuests,UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox FontSize="28" Grid.Row="6" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=LanguageType, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>English</ComboBoxItem>
+                    <ComboBoxItem>Serbian</ComboBoxItem>
+                </ComboBox>
+                <TextBox FontSize="28" Grid.Row="7" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox FontSize="28" Grid.Row="8" Grid.Column="1" Margin="5" Text="{Binding Path=PictureUrl, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox FontSize="28" Grid.Row="9" Grid.Column="1" Margin="5,5,5,30" Grid.RowSpan="3"  Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
 
-            </ComboBox>
-            <ComboBox ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" Grid.Row="1" Grid.Column="1" Height="20" Width="105" IsEditable="True" HorizontalAlignment="Left"  Margin="125,19,0,18" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" ></ComboBox>
-            <TextBox Grid.Row="3" Grid.Column="1" Height="20" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <ComboBox Grid.Row="4" Grid.Column="1" Height="20" Text="{Binding Path=LanguageType, UpdateSourceTrigger=PropertyChanged}">
-                <ComboBoxItem>English</ComboBoxItem>
-                <ComboBoxItem>Serbian</ComboBoxItem>
-            </ComboBox>
-            <xctk:DateTimePicker Height="20" Grid.Row="6" Grid.Column="1" Margin="0,18,0,19" x:Name="dateTimePicker"/>
-            <TextBox Grid.Row="5" Grid.Column="1" Height="20" Text="{Binding Path=MaximumGuests,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="7" Grid.Column="1" Height="20" Text="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="8" Grid.Column="1" Height="20" Text="{Binding Path=PictureUrl, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <ComboBox ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Width="90" Height="18"/>
-            <ComboBox ItemsSource="{Binding KeyPointPlaces}" SelectedItem="{Binding SelectedKeyPointPlace}" IsEditable="True" Grid.Column="1" HorizontalAlignment="Left" Margin="94,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="84" Height="20"/>
-            <Button Command="{Binding AddKeyPointCommand}" Grid.Column="1" Content="+" HorizontalAlignment="Left" Margin="210,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="19" Width="20"  RenderTransformOrigin="1.59,0.545"/>
-
-
+                <Button Grid.Row="3" Grid.Column="3" Height="30" Width="30" HorizontalAlignment="Left" Margin="15" VerticalAlignment="Center" Content="+" FontSize="30" VerticalContentAlignment="Center" Command="{Binding AddKeyPointCommand}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Grid.Column="2" Content="CREATE" HorizontalAlignment="Left" Margin="115,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="139" FontSize="25" Command="{Binding ConfirmCommand}" />
+            </Grid>
         </Grid>
-        <WrapPanel Grid.Row="1" FlowDirection="RightToLeft">
-            <Button IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="20, 5, 20, 5" Content="Cancel" Command="{Binding CancelCommand}"></Button>
-            <Button IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="20, 5, 20, 5" Content="Confirm" Command="{Binding ConfirmCommand}" ></Button>
-            <Button Content="Back" Height="20" Width="39"  Command="{Binding BackCommand}"/>
-        </WrapPanel>
+
+        <Grid x:Name="InterfaceGrid" Opacity="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="Black"/>
+            <Label Grid.Row="0" Content="CREATE TOUR" Foreground="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            </Label>
+            <Button x:Name="ButtonMenu" Grid.Row="0" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7,10,5,0"  Height="40" Width="48">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="330"/>
+                    <ColumnDefinition Width="380"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="0" Content="Name" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Location" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Check Points" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="Date and Time" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="Guest Capacity" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="Language" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="7" Grid.Column="0" Content="Duration" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="8" Grid.Column="0" Content="Image" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="9" Grid.Column="0" Content="Description" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+
+                <TextBox BorderThickness="2" BorderBrush="Black" Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28"/>
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" IsEditable="True" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" IsEditable="True" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" />
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding KeyPointPlaces}" SelectedItem="{Binding SelectedKeyPointPlace}" IsEditable="True"/>
+                <xctk:DateTimePicker BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="4" Grid.Column="1"  x:Name="dateTimePicker" Margin="5"/>
+                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="5" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=MaximumGuests,UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="6" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=LanguageType, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>English</ComboBoxItem>
+                    <ComboBoxItem>Serbian</ComboBoxItem>
+                </ComboBox>
+                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="7" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="8" Grid.Column="1" Margin="5" Text="{Binding Path=PictureUrl, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="9" Grid.Column="1" Margin="5,5,5,30" Grid.RowSpan="3"  Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button Grid.Row="3" Grid.Column="3" Height="30" Width="30" HorizontalAlignment="Left" Margin="15" VerticalAlignment="Center" Content="+" FontSize="30" VerticalContentAlignment="Center" Command="{Binding AddKeyPointCommand}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Grid.Column="2" Content="CREATE" HorizontalAlignment="Left" Margin="115,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="139" FontSize="25" Command="{Binding ConfirmCommand}" />
+            </Grid>
+        </Grid>
+        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-250,0,0,0" Background="Black">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Border BorderBrush="Black" BorderThickness="5"/>
+            <StackPanel>
+                <Image Margin="15" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\vienna.jpeg" Height="140"/>
+                <ListView Foreground="#FF313131" FontSize="18" HorizontalAlignment="Center">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Profile" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Create Tour" Command="{Binding CreateTourCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Live Tracking" Command="{Binding LiveTrackingCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Tour Stats" Command="{Binding TourStatsCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Tour Requests" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Tour Requests Stats"  Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Cancel Tour" Command="{Binding CancelTourCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Reviews"  Command="{Binding RatingsViewCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Complex Tour" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView Foreground="#FF313131" FontSize="18">
+                    <ListViewItem Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Button Content="Generate Report" Width="221" Background="{x:Null}" FontSize="25"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </StackPanel>
+            <Button x:Name="ButtonClose"  HorizontalAlignment="Center" Margin="0,680,0,0" VerticalAlignment="Top" Height="45" Width="45" >
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\back.png"></Image>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

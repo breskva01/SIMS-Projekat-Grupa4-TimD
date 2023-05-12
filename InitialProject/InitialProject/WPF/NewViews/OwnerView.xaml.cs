@@ -23,14 +23,6 @@ namespace InitialProject.WPF.NewViews
         public OwnerView()
         {
             InitializeComponent();
-            DataContext = this;
-        }
-
-        private void CancelTourClick(object sender, RoutedEventArgs e)
-        {
-            AllToursView allToursView = new AllToursView(user);
-            this.Close();
-            allToursView.Show();
         }
     }
 }
