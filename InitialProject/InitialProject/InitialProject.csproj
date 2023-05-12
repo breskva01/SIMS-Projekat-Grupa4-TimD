@@ -28,6 +28,7 @@
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\go-back.png" />
+    <None Remove="Resources\Images\go_back.png" />
     <None Remove="Resources\Images\help.png" />
     <None Remove="Resources\Images\info-icon.png" />
     <None Remove="Resources\Images\kuca_jadran.jpg" />
@@ -84,6 +85,7 @@
     <Resource Include="Resources\Images\comment.png" />
     <Resource Include="Resources\Images\cross.png" />
     <Resource Include="Resources\Images\dash-line.png" />
+    <Resource Include="Resources\Images\go_back.png" />
     <Resource Include="Resources\Images\help.png" />
     <Resource Include="Resources\Images\info-icon.png" />
     <Resource Include="Resources\Images\kuca_jadran.jpg" />

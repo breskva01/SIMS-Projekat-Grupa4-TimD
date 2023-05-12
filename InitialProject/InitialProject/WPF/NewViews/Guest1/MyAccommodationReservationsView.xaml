@@ -45,7 +45,9 @@
 
                     <TextBlock
                         Margin="0 0 0 5"
-                        Text="{Binding Accommodation.Owner.FirstName}">,
+                        Text="{Binding Accommodation.Owner.FirstName}"> 
+                        <Run Text=""/>
+                        <Run Text="{Binding Accommodation.Owner.LastName}"/>,
                         <Run Text="{Binding Accommodation.Owner.PhoneNumber}"/>
                     </TextBlock>
 

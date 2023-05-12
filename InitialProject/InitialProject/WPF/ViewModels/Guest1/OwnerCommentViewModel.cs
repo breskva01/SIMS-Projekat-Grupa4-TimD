@@ -14,14 +14,14 @@ namespace InitialProject.WPF.ViewModels.Guest1
     public class OwnerCommentViewModel : ViewModelBase
     {
         private readonly User _user;
-        public string Comment { get; set; }
+        public AccommodationReservationMoveRequest Request { get; set; }
         private readonly NavigationStore _navigationStore;
         public ICommand NavigateMyRequestsCommand { get; }
-        public OwnerCommentViewModel(NavigationStore navigationStore, User user, string comment)
+        public OwnerCommentViewModel(NavigationStore navigationStore, User user, AccommodationReservationMoveRequest request)
         {
             _navigationStore = navigationStore;
             _user = user;
-            Comment = comment;
+            Request = request;
             NavigateMyRequestsCommand = new ExecuteMethodCommand(NavigateMyRequests);
         }
         private void NavigateMyRequests()
