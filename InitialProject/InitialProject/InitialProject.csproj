@@ -19,6 +19,9 @@
     <None Remove="Resources\Images\clipboard-check.png" />
     <None Remove="Resources\Images\clipboard-question.png" />
     <None Remove="Resources\Images\clipboard-x.png" />
+    <None Remove="Resources\Images\clipboard_check.png" />
+    <None Remove="Resources\Images\clipboard_question.png" />
+    <None Remove="Resources\Images\clipboard_x.png" />
     <None Remove="Resources\Images\comment.png" />
     <None Remove="Resources\Images\cross.png" />
     <None Remove="Resources\Images\dash-line.png" />
@@ -75,7 +78,9 @@
     <Resource Include="Resources\Images\brvnara_rumunija.jpg" />
     <Resource Include="Resources\Images\brvnara_tara.jpg" />
     <Resource Include="Resources\Images\calendar-edit.png" />
-    <Resource Include="Resources\Images\clipboard-check.png" />
+    <Resource Include="Resources\Images\clipboard_check.png" />
+    <Resource Include="Resources\Images\clipboard_question.png" />
+    <Resource Include="Resources\Images\clipboard_x.png" />
     <Resource Include="Resources\Images\comment.png" />
     <Resource Include="Resources\Images\cross.png" />
     <Resource Include="Resources\Images\dash-line.png" />
