@@ -16,10 +16,14 @@ namespace InitialProject.WPF.ViewModels.Guest1
 {
     public class AccommodationRatingViewModel : ViewModelBase
     {
+        public int SelectedTab { get; set; }
         public UnratedAccommodationsViewModel UnratedAccommodationsViewModel { get; set; }
-        public AccommodationRatingViewModel(NavigationStore navigationStore, User user)
+        public ReceivedRatingsViewModel ReceivedRatingsViewModel { get; set; }
+        public AccommodationRatingViewModel(NavigationStore navigationStore, User user, int selectedTab = 0)
         {
             UnratedAccommodationsViewModel = new UnratedAccommodationsViewModel(navigationStore, user);
+            ReceivedRatingsViewModel = new ReceivedRatingsViewModel(navigationStore, user);
+            SelectedTab = selectedTab;
         }
 
     }

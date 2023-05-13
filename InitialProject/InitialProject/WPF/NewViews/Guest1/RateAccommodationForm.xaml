@@ -248,7 +248,8 @@
             </StackPanel>
 
             <Button 
-                MaxHeight="30"
+                FontSize="20"
+                MaxHeight="34"
                 Grid.Row="2" 
                 Content="Potvrdi ocenu" 
                 HorizontalAlignment="Right" 

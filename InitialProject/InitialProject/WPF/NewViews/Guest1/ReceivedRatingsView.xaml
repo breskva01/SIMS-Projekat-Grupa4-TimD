@@ -1,13 +1,13 @@
-﻿<UserControl x:Class="InitialProject.WPF.NewViews.Guest1.MyAccommodationReservationsView"
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.Guest1.ReceivedRatingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             xmlns:local="clr-namespace:InitialProject.WPF.NewViews.Guest1"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" FontSize="14" FontWeight="Light">
     <UserControl.Resources>
-        <DataTemplate x:Key="ReservationsTemplate">
+        <DataTemplate x:Key="RatingsTemplate">
             <Grid 
                 Margin="0 10"
                 HorizontalAlignment="Stretch">
@@ -16,11 +16,11 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Image
                     Margin="20 0 0 0"
                     Grid.Column="0"
-                    Source="{Binding Accommodation.PictureURL}" 
+                    Source="{Binding Reservation.Accommodation.PictureURL}" 
                     Width="240" 
                     Height="160"/>
 
@@ -32,49 +32,42 @@
                         Margin="0 0 0 5"
                         Orientation="Horizontal">
                         <TextBlock 
-                            Text="{Binding Accommodation.Name}" 
+                            Text="{Binding Reservation.Accommodation.Name}" 
                             FontWeight="SemiBold" 
                             FontSize="16"/>
                         <TextBlock 
                             Text=" - "
                             VerticalAlignment="Center">
-                            <Run Text="{Binding Accommodation.Country}"/>,
-                            <Run Text="{Binding Accommodation.City}" />
+                            <Run Text="{Binding Reservation.Accommodation.Country}"/>,
+                            <Run Text="{Binding Reservation.Accommodation.City}" />
                         </TextBlock>
                     </StackPanel>
 
                     <TextBlock
                         Margin="0 0 0 5"
-                        Text="{Binding Accommodation.Owner.FirstName}"> 
+                        Text="{Binding Reservation.Accommodation.Owner.FirstName}"> 
                         <Run Text=""/>
-                        <Run Text="{Binding Accommodation.Owner.LastName}"/>,
-                        <Run Text="{Binding Accommodation.Owner.PhoneNumber}"/>
-                    </TextBlock>
-
-                    <TextBlock 
-                        Margin="0 0 0 5">
-                        Minimalni rok za otkazivanje: 
-                        <Run Text="{Binding Accommodation.MinimumCancelationNotice}"/>
-                        <Run Text="dana"/>
+                        <Run Text="{Binding Reservation.Accommodation.Owner.LastName}"/>,
+                        <Run Text="{Binding Reservation.Accommodation.Owner.PhoneNumber}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 0 0 5"
-                        Text="{Binding GuestCount}">
+                        Text="{Binding Reservation.GuestCount}">
                         <Run Text=" gostiju,"/>
-                        <Run Text="{Binding NumberOfDays, Mode=OneWay}"/>
+                        <Run Text="{Binding Reservation.NumberOfDays, Mode=OneWay}"/>
                         <Run Text="dana"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 0 0 5">
                         Check in:
-                        <Run Text="{Binding CheckIn, StringFormat='dd.MM.yyyy.'}" />
+                        <Run Text="{Binding Reservation.CheckIn, StringFormat='dd.MM.yyyy.'}" />
                     </TextBlock>
 
                     <TextBlock>
                         Check out: 
-                        <Run Text="{Binding CheckOut, StringFormat='dd.MM.yyyy.'}" />
+                        <Run Text="{Binding Reservation.CheckOut, StringFormat='dd.MM.yyyy.'}" />
                     </TextBlock>
 
                 </StackPanel>
@@ -84,33 +77,24 @@
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
 
-                    <Image
-                        Height="50"
-                        Width="50"
-                        Margin="10 0"
-                        Source="../../../Resources/Images/calendar-edit.png"
-                        Cursor="Hand"
-                        ToolTip="Pomeri rezervaciju">
-                        <Image.InputBindings>
-                            <MouseBinding 
-                                MouseAction="LeftClick"
-                                Command="{Binding DataContext.MoveReservationCommand, 
-                                      RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
-                                CommandParameter="{Binding}"/>
-                        </Image.InputBindings>
-                    </Image>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="ocena: ">
+                        <Run Text="{Binding AverageRating, Mode=OneWay, StringFormat={}{0:F1}}"/>
+                    </TextBlock>
 
                     <Image
                         Height="50"
                         Width="50"
-                        Margin="20 0"
-                        Source="../../../Resources/Images/cross.png"
+                        Margin="30 0 50 0"
+                        Source="../../../Resources/Images/new-page.png"
                         Cursor="Hand"
-                        ToolTip="Otkaži rezervaciju">
+                        ToolTip="Pogledaj detalje dobijene ocene">
                         <Image.InputBindings>
                             <MouseBinding 
                                 MouseAction="LeftClick"
-                                Command="{Binding DataContext.CancelReservationCommand, 
+                                Command="{Binding DataContext.ShowRatingCommand, 
                                   RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                 CommandParameter="{Binding}"/>
                         </Image.InputBindings>
@@ -121,12 +105,12 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    <DockPanel>
+    <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled">
             <ItemsControl 
-                ItemTemplate="{StaticResource ReservationsTemplate}"
-                ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}"
-                HorizontalContentAlignment="Stretch"/>
+                ItemTemplate="{StaticResource RatingsTemplate}"
+                ItemsSource="{Binding Ratings, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Stretch"/>
         </ScrollViewer>
-    </DockPanel>
+    </Grid>
 </UserControl>

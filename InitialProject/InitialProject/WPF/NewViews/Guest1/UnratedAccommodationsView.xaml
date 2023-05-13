@@ -81,15 +81,6 @@
                         VerticalAlignment="Center"
                         FontSize="16"
                         Text="Imate još ">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding DaysLeftForRating, Mode=OneWay}" Value="0">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
                         <Run Text="{Binding DaysLeftForRating, Mode=OneWay}"/>
                         <Run Text="dana da"/>
                         <LineBreak/>
@@ -118,9 +109,11 @@
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel>
-        <ItemsControl 
-            ItemTemplate="{StaticResource ReservationsTemplate}"
-            ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}"
-            HorizontalAlignment="Stretch"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl 
+                ItemTemplate="{StaticResource ReservationsTemplate}"
+                ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Stretch"/>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>

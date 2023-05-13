@@ -40,5 +40,12 @@ namespace InitialProject.Repositories
             _fileHandler.Save(_guestRatings);
             return guestRating;
         }
+
+        public List<GuestRating> GetEligibleForDisplay(int guestId)
+        {
+            _guestRatings = _fileHandler.Load();
+            return _guestRatings.FindAll(r => r.Reservation.Guest.Id == guestId &&
+                                         r.Reservation.IsOwnerRated);
+        }
     }
 }

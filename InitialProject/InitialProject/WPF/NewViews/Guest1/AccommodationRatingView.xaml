@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <TabControl
+        SelectedIndex="{Binding SelectedTab, Mode=OneTime}"
         Margin="0 10 0 0">
         <TabItem Header="Neocenjeni smeštaji">
             <ContentControl
@@ -14,9 +15,9 @@
                 Content="{Binding UnratedAccommodationsViewModel}" />
         </TabItem>
         <TabItem Header="Dobijene ocene">
-            <TextBlock
-                FontSize="24"
-                Text="TO be implemented."/>
+            <ContentControl
+                MaxWidth="1000"
+                Content="{Binding ReceivedRatingsViewModel}" />
         </TabItem>
         
     </TabControl>
