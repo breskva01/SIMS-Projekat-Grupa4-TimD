@@ -14,6 +14,8 @@ namespace InitialProject.Domain.Models
         public AccommodationReservation Reservation { get; set; }
         public DateOnly RequestedCheckIn { get; set; }
         public DateOnly RequestedCheckOut { get; set; }
+        public int NumberOfDays => (RequestedCheckOut.ToDateTime(TimeOnly.MinValue) -
+                                    RequestedCheckIn.ToDateTime(TimeOnly.MinValue)).Days;
         public string Comment { get; set; }
         public ReservationMoveRequestStatus Status { get; set; }
         public bool GuestNotified { get; set; }

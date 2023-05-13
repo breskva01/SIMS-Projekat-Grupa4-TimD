@@ -29,6 +29,19 @@ namespace InitialProject.WPF.ViewModels.Guest1
                 }
             }
         }
+        private string _selectedTab;
+        public string SelectedTab
+        {
+            get => _selectedTab;
+            set
+            {
+                if (_selectedTab != value)
+                {
+                    _selectedTab = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public ICommand NavigateAccommodationBrowserCommand { get; }
         public ICommand NavigateMyResevationsCommand { get; }

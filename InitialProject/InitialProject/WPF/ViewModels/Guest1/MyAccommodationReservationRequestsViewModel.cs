@@ -34,7 +34,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
                 MessageBox.Show("Vlasnik nije ostavio komentar.");
             else
             {
-                var viewModel = new OwnerCommentViewModel(_navigationStore, _user, request.Comment);
+                var viewModel = new OwnerCommentViewModel(_navigationStore, _user, request);
                 var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
                 navigateCommand.Execute(null);
             }

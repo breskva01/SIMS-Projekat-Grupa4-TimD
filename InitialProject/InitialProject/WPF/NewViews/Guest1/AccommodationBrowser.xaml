@@ -6,137 +6,338 @@
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
         xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
         mc:Ignorable="d"
-        Height="auto" Width="auto" FontSize="14">
+        Height="auto" Width="auto" FontSize="14" d:DesignWidth="900">
     <UserControl.Resources>
         <converters:EnumDisplayNameConverter x:Key="EnumDisplayNameConverter"/>
-        <Style TargetType="{x:Type ListBox}">
-            <Setter Property="Background" Value="#f7f7f2"/>
-        </Style>
         <DataTemplate x:Key="AccommodationTemplate">
-            <StackPanel Margin="7" Orientation="Horizontal" >
-                <Image Source="{Binding PictureURL}" Width="180" Height="180" />
-                <StackPanel VerticalAlignment="Top" Margin="30" Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0 0 0 5">
-                            <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftClick"
-                                          Command="{Binding DataContext.OpenReservationFormCommand, 
-                                                RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-                                          CommandParameter="{Binding}"/>
-                            </TextBlock.InputBindings>
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="TextDecorations" Value="None"/>
-                                    <Setter Property="Foreground" Value="#3283a8" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="TextDecorations" Value="Underline" />
-                                            <Setter Property="Foreground" Value="#deb93e" />
-                                            <Setter Property="Cursor" Value="Hand" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock Text=" " FontSize="20" />
-                        <TextBlock FontSize="20">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Owner.SuperOwner}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                            <Setter Property="ToolTip" Value="Super vlasnik"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                            *
-                        </TextBlock>
-                    </StackPanel>
-                    <TextBlock FontWeight="Light">
-                        <Run Text="{Binding Country}"/> -
-                        <Run Text="{Binding City}" />
+            <StackPanel 
+                Margin="5 10" 
+                Orientation="Vertical">
+
+                <Image 
+                    Source="{Binding PictureURL}" 
+                    Width="225" 
+                    Height="140"
+                    Margin="0 0 0 5"
+                    HorizontalAlignment="Center"
+                    Cursor="Hand">
+                    <Image.InputBindings>
+                        <MouseBinding 
+                            MouseAction="LeftClick"
+                            Command="{Binding DataContext.OpenReservationFormCommand, 
+                                      RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                            CommandParameter="{Binding}"/>
+                    </Image.InputBindings>
+                </Image>
+                
+                <StackPanel 
+                    VerticalAlignment="Top" 
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="★ ">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Owner.SuperOwner}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="ToolTip" Value="Super vlasnik"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
                     </TextBlock>
-                    <TextBlock FontWeight="Light">
-                        Maksimalan broj gostiju:
-                        <Run Text="{Binding MaximumGuests}" />
+
+                    <TextBlock
+                        FontSize="14"
+                        Text="{Binding Name}" 
+                        FontWeight="Bold" >
+                        <TextBlock.InputBindings>
+                            <MouseBinding 
+                                MouseAction="LeftClick"
+                                Command="{Binding DataContext.OpenReservationFormCommand, 
+                                          RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                CommandParameter="{Binding}"/>
+                        </TextBlock.InputBindings>
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextDecorations" Value="None"/>
+                                <Setter Property="Foreground" Value="#3283a8" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="TextDecorations" Value="Underline" />
+                                        <Setter Property="Foreground" Value="#deb93e" />
+                                        <Setter Property="Cursor" Value="Hand" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
                     </TextBlock>
-                    <TextBlock FontWeight="Light">
-                        Minimalno dana: 
+
+                </StackPanel>
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="13">
+                    <Run Text="{Binding Country}"/>,
+                    <Run Text="{Binding City}" />
+                </TextBlock>
+
+                <StackPanel 
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        FontSize="13">
+                        <Run Text="Maks gostiju:"/>
+                        <Run Text="{Binding MaximumGuests}" />,
+                        <Run Text="min dana:"/> 
                         <Run Text="{Binding MinimumDays}" />
                     </TextBlock>
+
                 </StackPanel>
+
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel>
-        <StackPanel Orientation="Vertical" DockPanel.Dock="Left" >
-            <TextBlock Margin="10,30,10,15" HorizontalAlignment="Center"
-                       FontWeight="Bold" FontSize="18">Filteri
-            </TextBlock>
-            <TextBlock Margin="0,10,0,3" HorizontalAlignment="Center">Ključne reči
-            </TextBlock>
-            <TextBox Padding="2" Margin="10,3,10,10" MaxHeight="30"
-                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Margin="0,10,0,3" HorizontalAlignment="Center">Tip smeštaja</TextBlock>
-            <ComboBox HorizontalContentAlignment="Center" Padding="3" Margin="10,3,10,10"
-                      ItemsSource="{Binding AccommodationTypes}"
-                      SelectedItem="{Binding SelectedAccommodationType}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <TextBlock Margin="0,10,0,3" HorizontalAlignment="Center">Broj gostiju</TextBlock>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <RepeatButton Interval="100" Delay="500" Content="-" Margin="10,3,5,10" Width="20" 
-                              Command="{Binding GuestCountDecrementCommand}"
-                              />
-                <TextBox Grid.Column="1" Padding="2" Margin="5,3,5,10"
-                         HorizontalContentAlignment="Center" Text="{Binding Path=GuestCount, UpdateSourceTrigger=PropertyChanged}"/>
-                <RepeatButton Interval="100" Delay="500" Grid.Column="2" Content="+" Margin="5,3,5,10" Width="20" 
-                              Command="{Binding GuestCountIncrementCommand}"/>
-            </Grid>
-            <TextBlock Margin="0,10,0,3" HorizontalAlignment="Center">Broj dana</TextBlock>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <RepeatButton Interval="100" Delay="500" Content="-" Margin="10,3,5,10" Width="20" 
-                              Command="{Binding NumberOfDaysDecrementCommand}"/>
-                <TextBox Grid.Column="1" Padding="2" Margin="5,3,5,10" Name ="NumberOfDaysTextBox"
-                         HorizontalContentAlignment="Center" Text="{Binding Path=NumberOfDays, UpdateSourceTrigger=PropertyChanged}"/>
-                <RepeatButton Interval="100" Delay="500" Grid.Column="2" Content="+" Margin="5,3,5,10" Width="20" 
-                              Command="{Binding NumberOfDaysIncrementCommand}"/>
-            </Grid>
-            <StackPanel Orientation="Horizontal">
-                <Button Padding="2" Margin="10,10,5,10" MaxHeight="30" 
-                        Command="{Binding ApplyFiltersCommand}">Primeni filtere</Button>
-                <Button Padding="2" Margin="5,10" MaxHeight="30"
-                        Command="{Binding ResetFiltersCommand}">Resetuj filtere</Button>
+
+            <ScrollBar
+                DockPanel.Dock="Right" 
+                x:Name="scrollBar"
+                Orientation="Vertical" 
+                Width="20" 
+                Margin="0,-10,0,0"   
+                ViewportSize="{Binding ViewportHeight, ElementName=scrollViewer}"
+                Maximum="{Binding ScrollableHeight, ElementName=scrollViewer}"
+                Scroll="ScrollEvent"/>
+
+            <Grid DockPanel.Dock="Top" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" SharedSizeGroup="Row1"/>
+                <RowDefinition Height="auto" SharedSizeGroup="Row2"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Center"
+                Grid.Row="0"
+                Margin="0 10">
+
+                <TextBlock 
+                    Text="Broj dana:"
+                    Margin="0 0 10 0"
+                    VerticalAlignment="Center"/>
+
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox 
+                        Width="25"
+                        Grid.Column="0"
+                        Grid.RowSpan="2"
+                        Padding="2 0"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Text="{Binding Path=NumberOfDays, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <RepeatButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Interval="75" 
+                        Delay="400" 
+                        Content="▲"
+                        FontSize="8"
+                        Padding="2 0"
+                        FontWeight="Bold"
+                        Command="{Binding NumberOfDaysIncrementCommand}"/>
+
+                    <RepeatButton
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Interval="75" 
+                        Delay="400"  
+                        Content="▼" 
+                        FontSize="8"
+                        Padding="2 0"
+                        FontWeight="SemiBold"
+                        Command="{Binding NumberOfDaysDecrementCommand}"/>
+
+                </Grid>
+
+                <TextBlock 
+                    Text="Broj gostiju:"
+                    Margin="25 0 10 0" 
+                    VerticalAlignment="Center"/>
+
+                <Grid VerticalAlignment="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox 
+                        Width="25"
+                        Grid.Column="0"
+                        Grid.RowSpan="2"
+                        Padding="2 0"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Text="{Binding Path=GuestCount, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <RepeatButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Interval="75" 
+                        Delay="400"  
+                        Content="▲"
+                        FontSize="8"
+                        Padding="2 0"
+                        FontWeight="Bold"
+                        Command="{Binding GuestCountIncrementCommand}"/>
+
+                    <RepeatButton
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Interval="75" 
+                        Delay="400"  
+                        Content="▼" 
+                        FontSize="8"
+                        Padding="2 0"
+                        FontWeight="SemiBold"
+                        Command="{Binding GuestCountDecrementCommand}"/>
+
+                </Grid>
+
+                <TextBlock 
+                    Margin="25 0 10 0"
+                    Text="Tip smeštaja:"
+                    VerticalAlignment="Center"/>
+
+                <ComboBox 
+                    Padding="5 2 0 2"
+                    Width="85"
+                    ItemsSource="{Binding AccommodationTypes}"
+                    SelectedItem="{Binding SelectedAccommodationType}"
+                    VerticalContentAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
             </StackPanel>
-            <TextBlock Margin="0 10" HorizontalAlignment="Center">Sortiraj po:</TextBlock>
-            <StackPanel Orientation="Vertical">
-                <Button Padding="2" Margin="10" 
-                        Command="{Binding SortByNameCommand}">Imenu</Button>
-                <Button Padding="2" Margin="10"
-                        Command="{Binding SortByMaxGuestCountCommand}">Maksimalnom broju gostiju</Button>
-                <Button Padding="2" Margin="10"
-                        Command="{Binding SortByMinDaysNumberCommand}">Minimalnom broju dana</Button>
-                <Button Padding="2" Margin="10"
-                        Command="{Binding SortByLocationCommand}">Lokaciji</Button>
+
+            <StackPanel 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Center"
+                Grid.Row="1"
+                Margin="0 10 0 25">
+
+                <TextBox 
+                    Padding="10 2" 
+                    Margin="0 0 20 0"
+                    Width="250"
+                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Grid>
+                                            <Border x:Name="border"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="1.5"
+                                                CornerRadius="10"/>
+                                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="BorderBrush" Value="#deb93e"/>
+                                            </Trigger>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter TargetName="border" Property="BorderBrush" Value="#3283a8"/> 
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+                <Button 
+                    Padding="5 2" 
+                    Margin="0 0 10 0"
+                    Content="Pretraži"
+                    Command="{Binding ApplyFiltersCommand}">
+                </Button>
+
+                <Button 
+                    Padding="4 2" 
+                    Content="X"
+                    Command="{Binding ResetFiltersCommand}"
+                    Click="ResetEvent"/>
+
+                <TextBlock 
+                    Margin="10 0"
+                    VerticalAlignment="Center"
+                    Text="Sortiraj po:"/>
+
+                <ComboBox 
+                    Padding="5 2 0 2"
+                    Width="200"
+                    VerticalContentAlignment="Center"
+                    SelectedIndex="{Binding SortSelectedIndex, Mode=TwoWay}">
+                    <ComboBoxItem Content=""/>
+                    <ComboBoxItem Content="Imenu"/>
+                    <ComboBoxItem Content="Lokaciji"/>
+                    <ComboBoxItem Content="Maksimalnom broj gostiju ↗"/>
+                    <ComboBoxItem Content="Maksimalnom broj gostiju ↘"/>
+                    <ComboBoxItem Content="Minimalnom broju dana ↗"/>
+                    <ComboBoxItem Content="Minimalnom broju dana ↘"/>
+                </ComboBox>
+
             </StackPanel>
-        </StackPanel>
-        <ListBox DockPanel.Dock="Right" ItemTemplate="{StaticResource AccommodationTemplate}"
-                 ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}"/>
+
+        </Grid>
+
+        <ScrollViewer 
+            Margin="25 0"
+            DockPanel.Dock="Top"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Hidden"
+            x:Name="scrollViewer"
+            ScrollChanged="ScrollViewerEvent">
+            <ItemsControl
+            ItemTemplate="{StaticResource AccommodationTemplate}"
+            ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" ItemWidth="225"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
     </DockPanel>
 </UserControl>

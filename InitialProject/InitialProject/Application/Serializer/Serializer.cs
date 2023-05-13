@@ -27,7 +27,7 @@ namespace InitialProject.Application.Serializer
         {
             List<T> objects = new List<T>();
 
-            foreach (string line in File.ReadLines(fileName))
+            foreach (string line in File.ReadLines(fileName, Encoding.UTF8))
             {
                 string[] csvValues = line.Split(Delimiter);
                 T obj = new T();

@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" FontSize="14">
+             d:DesignHeight="450" d:DesignWidth="800" FontSize="16">
     <UserControl.Resources>
         <converters:BooleanInverter x:Key="BooleanInverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Style TargetType="Slider">
+            <Setter Property="Margin" Value="0 5"/>
             <Setter Property="Foreground" Value="#FF615E5E"/>
             <Setter Property="Minimum" Value="1"/>
             <Setter Property="Maximum" Value="5"/>
@@ -21,74 +22,222 @@
             <Setter Property="AutoToolTipPlacement" Value="TopLeft"/>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid
+        Margin="25 0 ">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Button Height="40" Margin="5" Padding="2"
-                    Command="{Binding NavigateRatingsCommand}"
-                    Content="Nazad"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Margin="10">
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Lokacija:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding Location}"/>
+
+        <Grid
+            Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Row="0">
+                
+                <Image 
+                    Margin="0 20 20 0"
+                    Source="../../../Resources/Images/go_back.png"
+                    Cursor="Hand">
+                    <Image.InputBindings>
+                        <MouseBinding 
+                    MouseAction="LeftClick"
+                    Command="{Binding NavigateRatingsCommand}"/>
+                    </Image.InputBindings>
+                </Image>
+
+                <StackPanel
+                    Margin="0 18 0 0"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        FontSize="24"
+                        VerticalAlignment="Center"
+                        Text="{Binding Reservation.Accommodation.Name}" 
+                        FontWeight="Bold" />
+                    <TextBlock 
+                        FontSize="24"
+                        VerticalAlignment="Center"
+                        Text=" - ">
+                        <Run Text="{Binding Reservation.Accommodation.Country}"/>,
+                        <Run Text="{Binding Reservation.Accommodation.City}" />
+                    </TextBlock>
+                </StackPanel>
+
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Higijena:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding Hygiene}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Prijatnost:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding Pleasantness}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Korektnost:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding Fairness}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Dostupnost parkinga:" Width="150" VerticalAlignment="Center"/>
-                <Slider Value="{Binding Parking}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Dodatni komentar:" Width="150" VerticalAlignment="Top"/>
-                <TextBox TextWrapping="Wrap" AcceptsReturn="True" 
-                         VerticalScrollBarVisibility="Auto" 
-                         Height="100" Width="350"
-                         Padding="2"
-                         Text="{Binding Comment}"/>
-            </StackPanel>
-            <Button Grid.Row="2" Content="Dodaj slike" 
-                HorizontalAlignment="Left" Margin="10" 
-                Padding="10 5" Width="120"
+
+            <TextBlock
+                Margin="0 10"
+                Grid.Row="1"
+                FontSize="24"
+                Text="Izaberite ocenu za svaku od ponuđenih kategorija" 
+                FontStyle="Italic" 
+                TextDecorations="Underline"/>
+
+            <TextBlock 
+                Margin="0 5"
+                Grid.Row="2"
+                Text="Lokacija:" 
+                Width="150" 
+                HorizontalAlignment="Left"/>
+            <Slider 
+                Grid.Row="2"
+                HorizontalAlignment="Right"
+                Value="{Binding Location}"/>
+
+            <TextBlock 
+                Margin="0 5"
+                Grid.Row="3"
+                Text="Higijena:" 
+                Width="150" 
+                HorizontalAlignment="Left"/>
+            <Slider 
+                Grid.Row="3"
+                HorizontalAlignment="Right"
+                Value="{Binding Hygiene}"/>
+
+            <TextBlock 
+                Margin="0 5"
+                Grid.Row="4"
+                Text="Prijatnost:" 
+                Width="150" 
+                HorizontalAlignment="Left"/>
+            <Slider 
+                Grid.Row="4"
+                HorizontalAlignment="Right"
+                Value="{Binding Pleasantness}"/>
+
+            <TextBlock 
+                Margin="0 5"
+                Grid.Row="5"
+                Text="Korektnost:" 
+                Width="150" 
+                HorizontalAlignment="Left"/>
+            <Slider 
+                Grid.Row="5"
+                HorizontalAlignment="Right"
+                Value="{Binding Fairness}"/>
+
+            <TextBlock 
+                Margin="0 5"
+                Grid.Row="6"
+                Text="Dostupnost parkinga:" 
+                Width="150" 
+                HorizontalAlignment="Left"/>
+            <Slider 
+                Grid.Row="6"
+                HorizontalAlignment="Right"
+                Value="{Binding Parking}"/>
+
+            <TextBlock 
+                Margin="0 20 0 5"
+                Grid.Row="7"
+                Text="Dodatni komentar:" 
+                Width="150" 
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"/>
+            <TextBox 
+                Margin="0 20 0 5"
+                Grid.Row="7" 
+                HorizontalAlignment="Right"
+                TextWrapping="Wrap" 
+                AcceptsReturn="True" 
+                VerticalScrollBarVisibility="Auto" 
+                Height="100" 
+                Width="350"
+                Padding="2"
+                Text="{Binding Comment}"/>
+
+            <TextBlock 
+                HorizontalAlignment="Left"
+                Grid.Row="8"
+                Text="(Nije obavezno)" 
+                Width="150" />
+
+            <TextBlock 
+                HorizontalAlignment="Left"
+                Grid.Row="9"
+                Text="Ostavite jednu ili više slika smeštaja:"/>
+            <Button 
+                Margin="0 10"
+                Grid.Row="9" 
+                Content="Učitaj" 
+                HorizontalAlignment="Right"  
+                Padding="10 2" 
                 Command="{Binding UploadImagesCommand}"/>
-            <Rectangle Fill="Black" Height="1" />
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Renoviranje potrebno:" Width="150" VerticalAlignment="Top"/>
-                <RadioButton Content="Da" IsChecked="{Binding RenovatingNeeded, Mode=TwoWay}"
-                             Margin="10 0"
-                             VerticalAlignment="Center"/>
-                <RadioButton Content="Ne" IsChecked="{Binding RenovatingNeeded, 
-                             Converter={StaticResource BooleanInverter}, Mode=TwoWay}"
-                             VerticalAlignment="Center"/>
+
+            <Rectangle 
+                Margin=" 0 10"
+                Grid.Row="10"
+                Fill="Black" 
+                Height="1" />
+
+        </Grid>
+
+        <Grid
+            Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel 
+                Grid.Row="0"
+                Orientation="Horizontal" 
+                Margin="0 0 0 10">
+                <TextBlock 
+                    Text="Renoviranje potrebno:" 
+                    VerticalAlignment="Bottom"/>
+                <RadioButton 
+                    Content="Da" 
+                    IsChecked="{Binding RenovatingNeeded, Mode=TwoWay}"
+                    Margin="10 0"
+                    VerticalAlignment="Center"/>
+                <RadioButton 
+                    Content="Ne" 
+                    IsChecked="{Binding RenovatingNeeded, 
+                        Converter={StaticResource BooleanInverter}, Mode=TwoWay}"
+                    VerticalAlignment="Center"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10"
-                        Visibility="{Binding RenovatingNeeded,
-                        Converter={StaticResource BooleanToVisibilityConverter}}">
-                <TextBlock Text="Šta je potrebno renovirati:" 
-                           Width="190"  VerticalAlignment="Top"/>
-                <TextBox TextWrapping="Wrap" AcceptsReturn="True" 
-                         VerticalScrollBarVisibility="Auto" 
-                         Height="100" Width="350"
-                         Padding="2"
-                         Text="{Binding RenovationComment }"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10"
-                        Visibility="{Binding RenovatingNeeded,
-                        Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Grid 
+                Grid.Row="1"
+                Margin="0 0 0 10"
+                Visibility="{Binding RenovatingNeeded,
+                    Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock 
+                    Text="Šta je potrebno renovirati:" 
+                    VerticalAlignment="Top"/>
+                <TextBox 
+                    HorizontalAlignment="Right"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True" 
+                    VerticalScrollBarVisibility="Auto" 
+                    Height="100" Width="350"
+                    Padding="2"
+                    Text="{Binding RenovationComment }"/>
+            </Grid>
+
+            <StackPanel 
+                Grid.Row="2"
+                Orientation="Horizontal" 
+                Margin="0 0 0 10"    
+                Visibility="{Binding RenovatingNeeded,
+                    Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image Source="../../../Resources/Images/info-icon.png" 
                        Width="20"
                        Height="20"
@@ -97,10 +246,17 @@
                 <TextBlock Text="Nivo hitnosti:" Width="150" VerticalAlignment="Center"/>
                 <Slider Value="{Binding RenovationUrgency}"/>
             </StackPanel>
-        </StackPanel>
-        <Button Grid.Row="2" Content="Potvrdi ocenu" 
-                HorizontalAlignment="Left" Margin="10" 
-                Padding="10 5" Width="120"
+
+            <Button 
+                FontSize="20"
+                MaxHeight="34"
+                Grid.Row="2" 
+                Content="Potvrdi ocenu" 
+                HorizontalAlignment="Right" 
+                Padding="10 2" 
                 Command="{Binding RateReservationCommand}"/>
+
+        </Grid>
+
     </Grid>
 </UserControl>
