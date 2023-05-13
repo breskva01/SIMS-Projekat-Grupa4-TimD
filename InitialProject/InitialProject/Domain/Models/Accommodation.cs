@@ -81,8 +81,8 @@ namespace InitialProject.Domain.Models
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            City = values[2];
-            Country = values[3];
+            Country = values[2];
+            City = values[3];
             Address = values[4];
             Type = (AccommodationType)Enum.Parse(typeof(AccommodationType), values[5]);
             MaximumGuests = Convert.ToInt32(values[6]);
@@ -97,8 +97,8 @@ namespace InitialProject.Domain.Models
             string[] csvValues =
                 { Id.ToString(),
                   Name,
-                  City,
                   Country,
+                  City,
                   Address,
                   Type.ToString(),
                   MaximumGuests.ToString(),
