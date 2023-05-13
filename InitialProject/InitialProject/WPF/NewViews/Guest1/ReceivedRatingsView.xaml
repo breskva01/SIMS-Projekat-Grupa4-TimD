@@ -20,7 +20,7 @@
                 <Image
                     Margin="20 0 0 0"
                     Grid.Column="0"
-                    Source="{Binding Reservation.Accommodation.PictureURL}" 
+                    Source="{Binding Reservation.Accommodation.MainPictureURL, Mode=OneWay}"  
                     Width="240" 
                     Height="160"/>
 

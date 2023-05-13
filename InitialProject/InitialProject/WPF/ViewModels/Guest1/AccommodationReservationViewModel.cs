@@ -18,14 +18,32 @@ namespace InitialProject.WPF.ViewModels.Guest1
         private readonly AccommodationReservationService _reservationService;
         private readonly NavigationStore _navigationStore;
         public Accommodation Accommodation { get; set; }
+        public string SecondImagePath => Accommodation.PictureURLs.Count > 1 ? Accommodation.PictureURLs[1] : null;
+        public string ThirdImagePath => Accommodation.PictureURLs.Count > 2 ? Accommodation.PictureURLs[2] : null;
+        public string FourthImagePath => Accommodation.PictureURLs.Count > 3 ? Accommodation.PictureURLs[3] : null;
+        public string FifthImagePath => Accommodation.PictureURLs.Count > 4 ? Accommodation.PictureURLs[4] : null;
+
         public User Guest { get; set; }
         public int Days { get; set; }
-        public DateTime StartDate { get; set; }
+        private DateTime _startDate;
+        public DateTime StartDate
+        {
+            get => _startDate;
+            set
+            {
+                if (_startDate != value)
+                {
+                    _startDate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public DateTime EndDate { get; set; }
         public ICommand FindAvailableReservationsCommand { get; }
         public ICommand NavigateAccommodationBrowserCommand { get; }
         public AccommodationReservationViewModel(NavigationStore navigationStore ,User user, Accommodation accommodation)
         {
+            StartDate = DateTime.Now;
             _navigationStore = navigationStore;
             Guest = user;
             Accommodation = accommodation;
