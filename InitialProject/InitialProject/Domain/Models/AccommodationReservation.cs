@@ -18,6 +18,7 @@ namespace InitialProject.Domain.Models
         public User Guest { get; set; }
         public int NumberOfDays => (CheckOut.ToDateTime(TimeOnly.MinValue) - 
                                     CheckIn.ToDateTime(TimeOnly.MinValue)).Days;
+        public int DaysLeftForRating => CalculateDaysLeftForRating();
         public int GuestCount { get; set; }
         public DateOnly CheckIn { get; set; }
         public DateOnly CheckOut { get; set; }
@@ -59,6 +60,15 @@ namespace InitialProject.Domain.Models
             return IsOwnerRated == false && 
                    Status == AccommodationReservationStatus.Finished &&
                    CheckOut >= cutoffDate;
+        }
+
+        private int CalculateDaysLeftForRating()
+        {
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            DateOnly ratingDeadline = CheckOut.AddDays(5);
+            int daysLeft = (ratingDeadline.ToDateTime(TimeOnly.MinValue) - 
+                            currentDate.ToDateTime(TimeOnly.MinValue)).Days;
+            return daysLeft;
         }
 
         public void FromCSV(string[] values)

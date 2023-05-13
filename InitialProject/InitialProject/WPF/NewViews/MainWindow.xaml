@@ -114,6 +114,12 @@
             <DataTemplate DataType="{x:Type vmsg1:LayoutViewModel}">
                 <viewsg1:LayoutPanel />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:UnratedAccommodationsViewModel}">
+                <viewsg1:UnratedAccommodationsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:NavigationBarViewModel}">
+                <viewsg1:NavigationBar/>
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />

@@ -13,7 +13,10 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <local:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}" />
+        <ContentControl
+            Grid.Row="0"
+            MaxWidth="1000"
+            Content="{Binding NavigationBarViewModel}" />
 
         <ContentControl
             Grid.Row="1"
