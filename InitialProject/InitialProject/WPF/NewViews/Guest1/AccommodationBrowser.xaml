@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
         xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
         mc:Ignorable="d"
-        Height="auto" Width="auto" FontSize="14" d:DesignWidth="900">
+        Height="auto" Width="auto" FontSize="14" d:DesignWidth="900" FontFamily="Segoe UI">
     <UserControl.Resources>
         <converters:EnumDisplayNameConverter x:Key="EnumDisplayNameConverter"/>
         <DataTemplate x:Key="AccommodationTemplate">

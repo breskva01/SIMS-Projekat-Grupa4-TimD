@@ -39,6 +39,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
             }
         }
         public DateTime EndDate { get; set; }
+        public ICommand NavigateImageBrowserCommand { get; }
         public ICommand FindAvailableReservationsCommand { get; }
         public ICommand NavigateAccommodationBrowserCommand { get; }
         public AccommodationReservationViewModel(NavigationStore navigationStore ,User user, Accommodation accommodation)
@@ -50,6 +51,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
             _reservationService = new AccommodationReservationService();
             FindAvailableReservationsCommand = new ExecuteMethodCommand(GetAvailableReservations);
             NavigateAccommodationBrowserCommand = new ExecuteMethodCommand(NavigateAcoommodationBrowser);
+            NavigateImageBrowserCommand = new ImageClickCommand(NavigateImageBrowser);
         }
 
         private void GetAvailableReservations()
@@ -84,6 +86,11 @@ namespace InitialProject.WPF.ViewModels.Guest1
             var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
             navigateCommand.Execute(null);
+        }
+        private void NavigateImageBrowser(string imageURL)
+        {
+            var viewModel = new ImageBrowserViewModel(_navigationStore, Guest, Accommodation, imageURL);
+            new NavigationService(_navigationStore, viewModel).Navigate();
         }
     }
 }

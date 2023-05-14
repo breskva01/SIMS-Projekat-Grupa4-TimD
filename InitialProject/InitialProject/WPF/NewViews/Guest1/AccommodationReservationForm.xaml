@@ -7,9 +7,39 @@
              xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="1000" FontSize="16">
+             d:DesignHeight="700" d:DesignWidth="1000" 
+             FontSize="17" 
+             FontWeight="Light" 
+             Background="#FAF8F4" 
+             FontFamily="Segoe UI">
     <UserControl.Resources>
         <converters:AccommodationTypeConverter x:Key="AccommodationTypeConverter"/>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#deb93e"/> 
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#999997" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
     </UserControl.Resources>
     <Grid
         Margin="0 20 0 0">
@@ -41,6 +71,9 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -49,69 +82,140 @@
             </Grid.ColumnDefinitions>
 
             <Image 
+                Cursor="Hand"
                 Source="{Binding Accommodation.MainPictureURL, Mode=OneTime}" 
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 Margin="10 0"
-                MaxHeight="300"/>
+                MaxHeight="300">
+                <Image.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateImageBrowserCommand}"
+                        CommandParameter="{Binding Accommodation.MainPictureURL, Mode=OneTime}"/>
+                </Image.InputBindings>
+            </Image>
 
             <Image 
+                Cursor="Hand"
                 Source="{Binding SecondImagePath, Mode=OneTime}" 
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0 0 10 10"
-                MaxHeight="145"/>
+                MaxHeight="145">
+                <Image.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateImageBrowserCommand}"
+                        CommandParameter="{Binding SecondImagePath, Mode=OneTime}"/>
+                </Image.InputBindings>
+            </Image>
+
             <Image 
+                Cursor="Hand"
                 Source="{Binding ThirdImagePath, Mode=OneTime}" 
                 Grid.Row="0"
                 Grid.Column="2"
                 Margin="0 0 10 10"
-                MaxHeight="145"/>
+                MaxHeight="145">
+                <Image.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateImageBrowserCommand}"
+                        CommandParameter="{Binding ThirdImagePath, Mode=OneTime}"/>
+                </Image.InputBindings>
+            </Image>
+
             <Image 
+                Cursor="Hand"
                 Source="{Binding FourthImagePath, Mode=OneTime}" 
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="0 0 10 0"
-                MaxHeight="145"/>
+                MaxHeight="145">
+                <Image.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateImageBrowserCommand}"
+                        CommandParameter="{Binding FourthImagePath, Mode=OneTime}"/>
+                </Image.InputBindings>
+            </Image>
+
             <Image 
+                Cursor="Hand"
                 Source="{Binding FifthImagePath, Mode=OneTime}" 
                 Grid.Row="1"
                 Grid.Column="2"
                 Margin="0 0 10 0"
-                MaxHeight="145"/>
+                MaxHeight="145">
+                <Image.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateImageBrowserCommand}"
+                        CommandParameter="{Binding FifthImagePath, Mode=OneTime}"/>
+                </Image.InputBindings>
+            </Image>
+
+            <StackPanel
+                Grid.Row="2"
+                Margin="10 20 10 5"
+                Orientation="Horizontal"
+                Grid.ColumnSpan="2">
+                <TextBlock 
+                    Text="{Binding Accommodation.Name}" 
+                    FontWeight="SemiBold" 
+                    FontSize="22"/>
+                <TextBlock 
+                    FontSize="22"
+                    FontWeight="Normal"
+                    Text=" - "/>
+                <TextBlock 
+                    FontSize="22"
+                    FontWeight="Normal"
+                    Text="{Binding Accommodation.Country}"/>
+                <TextBlock 
+                    FontSize="22" 
+                    FontWeight="Normal"
+                    Text=", "/>
+                <TextBlock 
+                    FontSize="22" 
+                    FontWeight="Normal"
+                    Text="{Binding Accommodation.City}"/>
+                <TextBlock 
+                    FontSize="22" 
+                    FontWeight="Normal"
+                    Text=", "/>
+                <TextBlock 
+                    FontSize="22" 
+                    FontWeight="Normal"
+                    Text="{Binding Accommodation.Address}"/>
+
+            </StackPanel>
+
+            <Rectangle
+                VerticalAlignment="Top"
+                Grid.Row="3"
+                Grid.ColumnSpan="3"
+                Margin="10 5 10 10"
+                Height="2"
+                Fill="#999997"/>
 
             <Grid
-                Margin="10 20"
+                Margin="10 0"
                 Grid.ColumnSpan="3"
-                Grid.Row="2">
+                Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel
                     Grid.Column="0">
-                    
-                    <TextBlock 
-                        Margin="0 5"
-                        Text="{Binding Accommodation.Name}" 
-                        FontWeight="SemiBold" 
-                        FontSize="20"
-                        TextDecorations="Underline"/>
-
-                    <StackPanel 
-                        Orientation="Horizontal"
-                        Margin="0 5">
-                        <TextBlock Text="{Binding Accommodation.Country}"/>
-                        <TextBlock Text=", "/>
-                        <TextBlock Text="{Binding Accommodation.City}"/>
-                        <TextBlock Text=", "/>
-                        <TextBlock Text="{Binding Accommodation.Address}"/>
-                    </StackPanel>
 
                     <StackPanel
                         Orientation="Horizontal"
                         Margin="0 5">
+                        <TextBlock Text="Vlasnik: "/>
                         <TextBlock Text="{Binding Accommodation.Owner.FirstName}"/>
                         <TextBlock Text=" "/>
                         <TextBlock Text="{Binding Accommodation.Owner.LastName}"/>
@@ -151,28 +255,34 @@
 
                 </StackPanel>
 
-                <Grid
+                <Border 
+                    Padding="10"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Right"
-                    Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
+                    Grid.Column="1"
+                    BorderBrush="#999997"
+                    CornerRadius="10"
+                    BorderThickness="2"
+                    Background="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
 
-                    <TextBlock
+                        <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
                         Margin="5"
                         Text="Najranije od:"/>
 
-                    <DatePicker 
+                        <DatePicker 
                         Grid.Row="0"
                         Grid.Column="1"
                         Language="sr-Latn" 
@@ -181,13 +291,13 @@
                         SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged,
                                        Mode=OneWayToSource}"/>
 
-                    <TextBlock
+                        <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"
                         Margin="5"
                         Text="Najkasnije do:"/>
 
-                    <DatePicker 
+                        <DatePicker 
                         Grid.Row="1"
                         Grid.Column="1"
                         Language="sr-Latn" 
@@ -196,29 +306,30 @@
                         SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged,
                                        Mode=OneWayToSource}"/>
 
-                    <TextBlock
+                        <TextBlock
                         Grid.Row="2"
                         Grid.Column="0"
                         Margin="5"
                         Text="Broj dana:"/>
 
-                    <TextBox 
+                        <TextBox 
                         Grid.Row="2"
                         Grid.Column="1"
                         Padding="3 2"
                         Margin="5" 
-                        Width="125" 
+                        Width="150" 
                         Text="{Binding Path=Days, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Button 
-                        Grid.Row="3"
-                        Grid.ColumnSpan="2"
-                        Content="Pronađi slobodne termine" 
-                        Padding="3 2" 
-                        Margin="5"
-                        Command="{Binding FindAvailableReservationsCommand}"/>
+                        <Button 
+                            Height="25"
+                            Grid.Row="3"
+                            Grid.ColumnSpan="2"
+                            Content="Pronađi slobodne termine"  
+                            Margin="5"
+                            Command="{Binding FindAvailableReservationsCommand}"/>
 
-                </Grid>
+                    </Grid>
+                </Border>
 
             </Grid>
 
