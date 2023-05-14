@@ -36,14 +36,14 @@ namespace InitialProject.Domain.Models
         public int MinimumCancelationNotice { get; set; }
         public List<string> PictureURLs { get; set; }
         public string MainPictureURL => PictureURLs[0];
-        public User Owner { get; set; }
+        public Owner Owner { get; set; }
         public Accommodation() 
         {
-            Owner = new User();
+            Owner = new Owner();
             PictureURLs = new List<string>();
         }
         public Accommodation(int id, string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays,
-                             int minimumCancelationNotice, List<string> pictureURLs, User owner)
+                             int minimumCancelationNotice, List<string> pictureURLs, Owner owner)
         {
             Id = id;
             Name = name;

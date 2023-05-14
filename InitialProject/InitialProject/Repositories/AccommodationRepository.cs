@@ -89,7 +89,7 @@ namespace InitialProject.Repository
             GetAll();
             int accommodationId = NextId();
             Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address,
-                type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, owner);
+                type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, (Owner)owner);
             _accommodations.Add(accommodation);
             _fileHandler.Save(_accommodations);
         }

@@ -27,7 +27,7 @@ namespace InitialProject.Repositories.FileHandlers
         {
             var users = new UserFileHandler().Load();
             accommodations.ForEach(a =>
-                a.Owner = users.Find(u => u.Id == a.Owner.Id));
+                a.Owner = (Owner)users.Find(u => u.Id == a.Owner.Id));
         }
         public void Save(List<Accommodation> accommmodations)
         {

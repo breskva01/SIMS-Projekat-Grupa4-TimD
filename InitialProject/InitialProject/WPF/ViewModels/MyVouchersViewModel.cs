@@ -15,7 +15,7 @@ namespace InitialProject.WPF.ViewModels
     public class MyVouchersViewModel : ViewModelBase
     {
         public ObservableCollection<Voucher> Vouchers { get; set; }
-        private User _user;
+        private Guest2 _user;
         private readonly NavigationStore _navigationStore;
         private readonly VoucherService _voucherService;
 
@@ -24,7 +24,7 @@ namespace InitialProject.WPF.ViewModels
         public MyVouchersViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
-            _user = user;
+            _user = (Guest2)user;
             _voucherService = new VoucherService();
 
             List<Voucher> vouchers = new List<Voucher>();

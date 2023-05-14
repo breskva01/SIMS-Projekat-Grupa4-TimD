@@ -74,7 +74,7 @@ namespace InitialProject.WPF.ViewModels
             Voucher voucher = _voucherService.CreateVoucher(Name, _expiration);
             foreach (User guest in _guests)
             {
-                guest.VouchersIds.Add(voucher.Id);
+                ((Guest2)guest).VouchersIds.Add(voucher.Id);
                 _userService.Update(guest);
             }
 
