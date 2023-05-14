@@ -9,7 +9,9 @@
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
         xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.Guest1"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
+        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowState="Normal">
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:RateTourViewModel}">

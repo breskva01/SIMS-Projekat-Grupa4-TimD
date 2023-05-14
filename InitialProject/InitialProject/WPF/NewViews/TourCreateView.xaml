@@ -9,7 +9,7 @@
         mc:Ignorable="d" 
         d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Background>
-        <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundYG.jpg"/>
+        <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundLP.jpg"/>
     </UserControl.Background>
     <UserControl.Resources>
         <Storyboard x:Key="OpenMenu">
@@ -32,6 +32,17 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
@@ -42,7 +53,7 @@
         </EventTrigger>
     </UserControl.Triggers>
     <Grid>
-        <Grid x:Name="GridBackground" Opacity="0" Grid.ColumnSpan="2" Background="#55313131">
+        <Grid x:Name="GridBackground"  Opacity="0" Grid.ColumnSpan="2" Background="#55313131">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -84,7 +95,7 @@
                 <Label Grid.Row="8" Grid.Column="0" Content="Image" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
                 <Label Grid.Row="9" Grid.Column="0" Content="Description" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
 
-                <TextBox Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28" IsEnabled="False" IsReadOnly="True" />
+                <TextBox  Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28" IsEnabled="False" IsReadOnly="True" />
                 <ComboBox FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" IsEditable="True" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"/>
                 <ComboBox FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" IsEditable="True" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
                 <ComboBox FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" />
@@ -120,11 +131,14 @@
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="Black"/>
-            <Label Grid.Row="0" Content="CREATE TOUR" Foreground="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
+            <Label Grid.Row="0" Content="ᑕᖇEᗩTE TOᑌᖇ" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
             </Label>
-            <Button x:Name="ButtonMenu" Grid.Row="0" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7,10,5,0"  Height="40" Width="48">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
+            <Button x:Name="ButtonMenu" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Height="50" Width="50">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,20,5">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -146,15 +160,15 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="1" Grid.Column="0" Content="Name" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="2" Grid.Column="0" Content="Location" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="3" Grid.Column="0" Content="Check Points" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="4" Grid.Column="0" Content="Date and Time" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="5" Grid.Column="0" Content="Guest Capacity" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="6" Grid.Column="0" Content="Language" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="7" Grid.Column="0" Content="Duration" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="8" Grid.Column="0" Content="Image" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="9" Grid.Column="0" Content="Description" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="ᑎᗩᗰE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="ᒪOᑕᗩTIOᑎ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="ᑕᕼEᑕK ᑭOIᑎTS" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="ᗪᗩTE ᗩᑎᗪ TIᗰE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="GᑌEST ᑕᗩᑭᗩᑕITY" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="ᒪᗩᑎGᑌᗩGE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="7" Grid.Column="0" Content="ᗪᑌᖇᗩTIOᑎ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="8" Grid.Column="0" Content="IᗰᗩGE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="9" Grid.Column="0" Content="ᗪESᑕᖇIᑭTIOᑎ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
 
                 <TextBox BorderThickness="2" BorderBrush="Black" Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28"/>
                 <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" IsEditable="True" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"/>
@@ -183,10 +197,10 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Button Grid.Column="2" Content="CREATE" HorizontalAlignment="Left" Margin="115,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="139" FontSize="25" Command="{Binding ConfirmCommand}" />
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="ᑕᖇEᗩTE" HorizontalAlignment="Left" Margin="115,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="139" FontSize="25" Command="{Binding ConfirmCommand}" />
             </Grid>
         </Grid>
-        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-250,0,0,0" Background="Black">
+        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -195,82 +209,23 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <Border BorderBrush="Black" BorderThickness="5"/>
             <StackPanel>
-                <Image Margin="15" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\vienna.jpeg" Height="140"/>
-                <ListView Foreground="#FF313131" FontSize="18" HorizontalAlignment="Center">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Profile" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Create Tour" Command="{Binding CreateTourCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Live Tracking" Command="{Binding LiveTrackingCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Tour Stats" Command="{Binding TourStatsCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Tour Requests" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Tour Requests Stats"  Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Cancel Tour" Command="{Binding CancelTourCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Reviews"  Command="{Binding RatingsViewCommand}" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Complex Tour" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <ListView Foreground="#FF313131" FontSize="18">
-                    <ListViewItem Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="10 0">
-                            <Button Content="Generate Report" Width="221" Background="{x:Null}" FontSize="25"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                <Border Height="80" Width="80" Margin="10">
+                    <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png"/>
+                </Border>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>
-            <Button x:Name="ButtonClose"  HorizontalAlignment="Center" Margin="0,680,0,0" VerticalAlignment="Top" Height="45" Width="45" >
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\back.png"></Image>
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
+                <Image Height="30" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backW.jpg"></Image>
             </Button>
         </Grid>
     </Grid>

@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Background>
-        <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundYG.jpg"/>
+        <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundLP.jpg"/>
     </UserControl.Background>
     <UserControl.Resources>
         <Storyboard x:Key="OpenMenu">
@@ -30,6 +30,17 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
@@ -38,6 +49,7 @@
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonMenu" >
             <BeginStoryboard  Storyboard="{StaticResource OpenMenu}"/>
         </EventTrigger>
+        
     </UserControl.Triggers>
     <Grid >
         <Grid x:Name="GridBackground" Background="#55313131" Opacity="0" Grid.ColumnSpan="2">
@@ -46,8 +58,8 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
-            <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoG.jpg" Margin="431,29,431,499" Grid.Row="1"/>
-            <Label Content="Ꮤ𐌄𐌋𐌂Ꝋ𐌌𐌄 𐌕Ꝋ 𐌕𐌓𐌀ᕓ𐌄𐌋 𐌁𐌵𐌃𐌃𐌙" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60"/>
+            <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
+            <Label Content="ᗯEᒪᑕOᗰE TO TᖇᗩᐯEᒪᗷᑌᗪᗪY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60"/>
             <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Integer quis consequat ante, nec accumsan elit. Donec rutrum, nunc ultrices porttitor malesuada, ante nisi efficitur turpis, et pulvinar enim elit in sapien. Duis non tempor ligula. In hac habitasse platea dictumst. Vestibulum sodales nulla enim, et condimentum elit luctus in. Vivamus dui mauris, egestas sed nibh id, cursus imperdiet dolor. Morbi quis mattis quam. Donec et dui sodales, congue nisi fermentum, elementum ex. Maecenas vitae nisi non sapien commodo aliquet vitae et tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam eu elit et risus fermentum iaculis vel eu ligula. Mauris posuere dui eget blandit finibus. Donec tellus velit, maximus et scelerisque vel, ultrices a neque." VerticalAlignment="Top" Height="212" Width="656" FontSize="20"/>
         </Grid>
 
@@ -56,19 +68,22 @@
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="Black"/>
-            <Button x:Name="ButtonMenu" Grid.Row="0" Background="White" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7,10,5,0"  Height="40" Width="48">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
+            <Border Grid.Row="0" Background="#270138 "/>
+            <Button x:Name="ButtonMenu" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Height="50" Width="50">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
             </Button>
-            <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoG.jpg" Margin="431,29,431,499" Grid.Row="1"/>
-            <Label Foreground="Black"  Content="Ꮤ𐌄𐌋𐌂Ꝋ𐌌𐌄 𐌕Ꝋ 𐌕𐌓𐌀ᕓ𐌄𐌋 𐌁𐌵𐌃𐌃𐌙" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
+            <Button Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,20,5">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+            <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
+            <Label Foreground="Black"  Content="ᗯEᒪᑕOᗰE TO TᖇᗩᐯEᒪᗷᑌᗪᗪY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
 
             </Label>
             <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Integer quis consequat ante, nec accumsan elit. Donec rutrum, nunc ultrices porttitor malesuada, ante nisi efficitur turpis, et pulvinar enim elit in sapien. Duis non tempor ligula. In hac habitasse platea dictumst. Vestibulum sodales nulla enim, et condimentum elit luctus in. Vivamus dui mauris, egestas sed nibh id, cursus imperdiet dolor. Morbi quis mattis quam. Donec et dui sodales, congue nisi fermentum, elementum ex. Maecenas vitae nisi non sapien commodo aliquet vitae et tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam eu elit et risus fermentum iaculis vel eu ligula. Mauris posuere dui eget blandit finibus. Donec tellus velit, maximus et scelerisque vel, ultrices a neque." VerticalAlignment="Top" Height="212" Width="656" FontSize="20"/>
 
         </Grid>
 
-        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-250,0,0,0" Background="Black">
+        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -78,22 +93,22 @@
                 </TransformGroup>
             </Grid.RenderTransform>
             <StackPanel>
-                <Border BorderBrush="Yellow" BorderThickness="5" Height="100" Width="100" Margin="10">
-                    <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoG.jpg"/>
+                <Border Height="80" Width="80" Margin="10">
+                    <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png"/>
                 </Border>
-                <Button Content="Profile" Width="221" Background="#F4FF43 " FontSize="25" Height="44" Margin="5" />
-                <Button Content="Create Tour" Command="{Binding CreateTourCommand}"  Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
-                <Button Content="Live Tracking" Command="{Binding LiveTrackingCommand}" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
-                <Button Content="Cancel Tour"  Command="{Binding CancelTourCommand}"  Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
-                <Button Content="Tour Stats" Command="{Binding TourStatsCommand}" Width="221" Background="#F4FF43 " FontSize="25" Height="44" Margin="5"/>
-                <Button Content="Tour Requests" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
-                <Button Content="Tour Request Stats"  Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
-                <Button Content="Reviews" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
-                <Button Content="Complex Tour" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
-                <Button  Content="Generate Report" Width="221" Background="#F4FF43 "  FontSize="25" Height="44" Margin="5"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>
-            <Button x:Name="ButtonClose"  HorizontalAlignment="Center" Margin="0,690,0,0" VerticalAlignment="Top" Height="45" Width="45" >
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\back.png"></Image>
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
+                <Image Height="30" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backW.jpg"></Image>
             </Button>
         </Grid>
     </Grid>
