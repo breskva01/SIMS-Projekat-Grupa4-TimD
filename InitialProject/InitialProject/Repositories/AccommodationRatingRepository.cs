@@ -33,6 +33,11 @@ namespace InitialProject.Repositories
             GetAll();
             return _ratings.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId);
         }
+        public List<AccommodationRating> GetByAccommodationId(int accommodationId)
+        {
+            GetAll();
+            return _ratings.FindAll(r => r.Reservation.Accommodation.Id == accommodationId);
+        }
         public List<AccommodationRating> GetEligibleForDisplay(int ownerId)
         {
             GetAll();

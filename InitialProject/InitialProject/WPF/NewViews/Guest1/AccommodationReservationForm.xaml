@@ -8,10 +8,10 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1000" 
-             FontSize="17" 
-             FontWeight="Light" 
+             FontSize="17"  
              Background="#FAF8F4" 
-             FontFamily="Segoe UI">
+             FontFamily="Segoe UI"
+             FontWeight="Light">
     <UserControl.Resources>
         <converters:AccommodationTypeConverter x:Key="AccommodationTypeConverter"/>
         <Style TargetType="Button">
@@ -166,28 +166,53 @@
                     FontWeight="SemiBold" 
                     FontSize="22"/>
                 <TextBlock 
-                    FontSize="22"
                     FontWeight="Normal"
+                    FontSize="22"
+                    Text=" ("/>
+                <TextBlock  
+                    FontWeight="Normal"
+                    FontSize="22">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="{Binding AccommodationAverageRating, Mode=OneTime, StringFormat={}{0:F1}}"/>
+                            <Setter Property="ToolTip" Value="Prosečna ocena" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding AccommodationAverageRating}" Value="0.0">
+                                    <Setter Property="Text" Value="X" />
+                                    <Setter Property="ToolTip" Value="Trenutno ne postoje ocene za ovaj smeštaj" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <TextBlock 
+                    FontWeight="Normal"
+                    FontSize="22"
+                    Text=")"/>
+                <TextBlock 
+                    FontWeight="Normal"
+                    FontSize="22"
                     Text=" - "/>
                 <TextBlock 
-                    FontSize="22"
                     FontWeight="Normal"
+                    FontSize="22"
                     Text="{Binding Accommodation.Country}"/>
                 <TextBlock 
-                    FontSize="22" 
                     FontWeight="Normal"
+                    FontSize="22"
                     Text=", "/>
                 <TextBlock 
-                    FontSize="22" 
                     FontWeight="Normal"
+                    FontSize="22"
                     Text="{Binding Accommodation.City}"/>
                 <TextBlock 
-                    FontSize="22" 
                     FontWeight="Normal"
+                    FontSize="22"
                     Text=", "/>
                 <TextBlock 
-                    FontSize="22" 
                     FontWeight="Normal"
+                    FontSize="22"
                     Text="{Binding Accommodation.Address}"/>
 
             </StackPanel>
@@ -219,38 +244,63 @@
                         <TextBlock Text="{Binding Accommodation.Owner.FirstName}"/>
                         <TextBlock Text=" "/>
                         <TextBlock Text="{Binding Accommodation.Owner.LastName}"/>
+                        <TextBlock
+                            Text=" ("/>
+                        <TextBlock>
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding OwnerAverageRating, Mode=OneTime, StringFormat={}{0:F1}}"/>
+                                    <Setter Property="ToolTip" Value="Prosečna ocena" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding OwnerAverageRating}" Value="0.0">
+                                            <Setter Property="Text" Value="X" />
+                                            <Setter Property="ToolTip" Value="Trenutno ne postoje ocene za ovog vlasnika" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <TextBlock
+                            Text=")"/>
                     </StackPanel>
 
                     <TextBlock 
                         Margin="0 5"
-                        Text="Kontakt telefon: ">
-                        <Run Text="{Binding Accommodation.Owner.PhoneNumber}"/>
+                        Text="Kontakt telefon: " >
+                        <Run 
+                            Text="{Binding Accommodation.Owner.PhoneNumber}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 5"
                         Text="Tip smeštaja: ">
-                        <Run Text="{Binding Accommodation.Type, 
-                            Converter={StaticResource AccommodationTypeConverter}}"/>
+                        <Run 
+                            Text="{Binding Accommodation.Type, 
+                                Converter={StaticResource AccommodationTypeConverter}}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 5"
                         Text="Maksimalno gostiju: ">
-                        <Run Text="{Binding Accommodation.MaximumGuests}"/>
+                        <Run 
+                            Text="{Binding Accommodation.MaximumGuests}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 5"
                         Text="Minimalno dana: ">
-                        <Run Text="{Binding Accommodation.MinimumDays}"/>
+                        <Run 
+                            Text="{Binding Accommodation.MinimumDays}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 5"
                         Text="Minimalni rok za otkazivanje: ">
-                        <Run Text="{Binding Accommodation.MinimumCancelationNotice}"/>
-                        <Run Text="dana"/>
+                        <Run 
+                            Text="{Binding Accommodation.MinimumCancelationNotice}"/>
+                        <Run 
+                            Text="dana"/>
                     </TextBlock>
 
                 </StackPanel>
@@ -277,48 +327,48 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5"
-                        Text="Najranije od:"/>
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="5"
+                            Text="Najranije od:"/>
 
                         <DatePicker 
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Language="sr-Latn" 
-                        Margin="5" 
-                        DisplayDateStart="{x:Static sys:DateTime.Now}"
-                        SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged,
-                                       Mode=OneWayToSource}"/>
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Language="sr-Latn" 
+                            Margin="5" 
+                            DisplayDateStart="{x:Static sys:DateTime.Now}"
+                            SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged,
+                                Mode=OneWayToSource}"/>
 
                         <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="5"
-                        Text="Najkasnije do:"/>
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="5"
+                            Text="Najkasnije do:"/>
 
                         <DatePicker 
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Language="sr-Latn" 
-                        Margin="5" 
-                        DisplayDateStart="{Binding StartDate}"
-                        SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged,
-                                       Mode=OneWayToSource}"/>
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Language="sr-Latn" 
+                            Margin="5" 
+                            DisplayDateStart="{Binding StartDate}"
+                            SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged,
+                                Mode=OneWayToSource}"/>
 
                         <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Margin="5"
-                        Text="Broj dana:"/>
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Margin="5"
+                            Text="Broj dana:"/>
 
                         <TextBox 
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Padding="3 2"
-                        Margin="5" 
-                        Width="150" 
-                        Text="{Binding Path=Days, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Padding="3 2"
+                            Margin="5" 
+                            Width="150" 
+                            Text="{Binding Path=Days, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Button 
                             Height="25"

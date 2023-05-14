@@ -44,8 +44,6 @@ namespace InitialProject.Domain.Models
             double averageRating = ratings.Average();
             return averageRating;
         }
-
-
         public void FromCSV(string[] values)
         {
             OwnerId = int.Parse(values[0]);
