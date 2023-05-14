@@ -19,6 +19,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
         private readonly NavigationStore _navigationStore;
         public AccommodationReservation SelectedReservation { get; set; }
         public List<AccommodationReservation> Reservations { get; set; }
+        public Accommodation Accommodation { get; set; }
         public int GuestCount { get; set; }
         public ICommand ConfirmReservationCommand { get; }
         public ICommand OpenReservationFormCommand { get; }
@@ -28,6 +29,7 @@ namespace InitialProject.WPF.ViewModels.Guest1
             _navigationStore = navigationStore;
             _reservationService = new AccommodationReservationService();
             Reservations = reservations;
+            Accommodation = reservations[0].Accommodation;
             ConfirmReservationCommand = new ExecuteMethodCommand(ReserveAccommodation);
             OpenReservationFormCommand = new ExecuteMethodCommand(ShowReservationForm);
         }
@@ -39,7 +41,8 @@ namespace InitialProject.WPF.ViewModels.Guest1
             else if (GuestCount == 0)
                 MessageBox.Show("Unesite broj gostiju.");
             else if (GuestCount > SelectedReservation.Accommodation.MaximumGuests)
-                MessageBox.Show("Uneti broj gostiju prelazi zadati limit.");
+                MessageBox.Show($"Uneti broj gostiju prelazi zadati limit " +
+                    $"({SelectedReservation.Accommodation.MaximumGuests})");
             else
             {
                 SelectedReservation.GuestCount = GuestCount;
