@@ -12,6 +12,9 @@
         Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowState="Normal">
+    <Window.Icon>
+        <BitmapImage UriSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png"/>
+    </Window.Icon>
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:RateTourViewModel}">

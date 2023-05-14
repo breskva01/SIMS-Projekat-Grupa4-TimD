@@ -5,6 +5,7 @@ using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
@@ -175,8 +176,8 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        private DateTime _start;
-        public DateTime Start 
+        private string _start;
+        public string Start 
         {
             get => _start;
             set
@@ -275,7 +276,7 @@ namespace InitialProject.WPF.ViewModels
 
             InitializeCommands();
 
-            Start = new DateTime(2023, 4, 19);
+            //Start = new DateTime(2023, 4, 15);
         }
 
         private void InitializeCommands()
@@ -305,7 +306,7 @@ namespace InitialProject.WPF.ViewModels
                 _keyPointIds.Add(ky.Id);
             }
 
-            _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
+            _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
 
             ClearOutTextBoxes();
 
@@ -322,6 +323,7 @@ namespace InitialProject.WPF.ViewModels
             PictureUrl = null;
             Duration = null;
             LanguageType = null;
+            Start = null;
             _tourKeyPoints.Clear();
             _keyPointIds.Clear();
         }

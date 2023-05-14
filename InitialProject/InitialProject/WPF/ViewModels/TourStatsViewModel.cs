@@ -38,7 +38,6 @@ namespace InitialProject.WPF.ViewModels
                 _selectedYear = value;
                 OnPropertyChanged(nameof(SelectedYear));
                 YearsSelectionChanged();
-
             }
         }
 
@@ -51,7 +50,6 @@ namespace InitialProject.WPF.ViewModels
                 _selectedTourName = value;
                 OnPropertyChanged(nameof(SelectedTourName));
                 NamesSelectionChanged();
-
             }
         }
 

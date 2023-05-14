@@ -124,7 +124,6 @@ namespace InitialProject.Repositories
         public List<Tour> SortByLocation(List<Tour> tours)
         {
             return tours.OrderBy(t => t.Location.Country).ThenBy(t => t.Location.City).ToList();
-
         }
         public List<Tour> SortByDuration(List<Tour> tours)
         {
