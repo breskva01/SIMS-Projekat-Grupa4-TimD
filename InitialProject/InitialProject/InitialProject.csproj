@@ -13,14 +13,23 @@
     <None Remove="Resources\Images\apartman_liman.jpg" />
     <None Remove="Resources\Images\berlin.jpg" />
     <None Remove="Resources\Images\brvnara_tara.jpg" />
+    <None Remove="Resources\Images\check.png" />
+    <None Remove="Resources\Images\checkmark.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\filter.png" />
     <None Remove="Resources\Images\left_arrow.png" />
+    <None Remove="Resources\Images\logo.png" />
+    <None Remove="Resources\Images\menu.png" />
     <None Remove="Resources\Images\moscow.png" />
+    <None Remove="Resources\Images\notification.png" />
+    <None Remove="Resources\Images\notify.png" />
     <None Remove="Resources\Images\novi_sad.jpg" />
     <None Remove="Resources\Images\paris.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
     <None Remove="Resources\Images\search.png" />
+    <None Remove="Resources\Images\sort.png" />
+    <None Remove="Resources\Images\tourist.png" />
     <None Remove="Resources\Images\TravelBuddy.png" />
     <None Remove="Resources\Images\vienna.jpeg" />
     <None Remove="Resources\Images\view.png" />
@@ -44,6 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
   </ItemGroup>
@@ -52,12 +62,21 @@
     <Resource Include="Resources\Images\apartman_liman.jpg" />
     <Resource Include="Resources\Images\berlin.jpg" />
     <Resource Include="Resources\Images\brvnara_tara.jpg" />
+    <Resource Include="Resources\Images\check.png" />
+    <Resource Include="Resources\Images\checkmark.png" />
+    <Resource Include="Resources\Images\filter.png" />
     <Resource Include="Resources\Images\left_arrow.png" />
+    <Resource Include="Resources\Images\logo.png" />
+    <Resource Include="Resources\Images\menu.png" />
     <Resource Include="Resources\Images\moscow.png" />
+    <Resource Include="Resources\Images\notification.png" />
+    <Resource Include="Resources\Images\notify.png" />
     <Resource Include="Resources\Images\novi_sad.jpg" />
     <Resource Include="Resources\Images\paris.png" />
     <Resource Include="Resources\Images\petrovaradin.png" />
-    <Content Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\sort.png" />
+    <Resource Include="Resources\Images\tourist.png" />
     <Resource Include="Resources\Images\TravelBuddy.png" />
     <Resource Include="Resources\Images\vienna.jpeg" />
     <Resource Include="Resources\Images\vila_slap.jpg" />

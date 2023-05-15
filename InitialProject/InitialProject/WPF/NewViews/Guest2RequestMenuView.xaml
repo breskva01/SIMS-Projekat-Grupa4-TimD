@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="430">
-    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="#d7e5ec">
         <Grid VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -14,16 +14,16 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
-                <Image Source="/WPF/NewViews/TravelBuddy.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                <TextBlock Text="TravelBuddy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#007ACC" FontFamily="Segoe UI"/>
+                <Image Source="/Resources/Images/logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                <TextBlock Text="TravelBuddy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#779ecb" FontFamily="Segoe UI"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
-                <Button Content="Request a tour" Background="#007ACC" Foreground="White" Padding="10" Margin="10,90,10,10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
-                <Button Content="Request a complex tour" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
-                <Button Content="Request stats" Background="#007ACC" Foreground="White" Padding="10" Margin="10,10,10,90" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Content="Request a tour" Background="#779ecb" Foreground="White" Padding="10" Margin="10,90,10,10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Content="Request a complex tour" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Content="Request stats" Background="#779ecb" Foreground="White" Padding="10" Margin="10,10,10,90" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
-                <Button Command="{Binding MenuCommand}" Content="Main menu" Background="#FF632305" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="200" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Command="{Binding MenuCommand}" Content="Main menu" Background="#FAA0A0" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="200" BorderBrush="Transparent" Cursor="Hand"  />
             </StackPanel>
         </Grid>
     </Border>

@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="430">
 
-    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="#d7e5ec">
         <Grid VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -21,36 +21,66 @@
 
             <!-- Docked content -->
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,0">
-                <Image Source="/Resources/Images/left_arrow.png" Height="30" Width="30" Margin="15 10 0 10" />
-                <TextBlock Text="Filter" VerticalAlignment="Center" FontSize="30"  FontFamily="Segoe UI" Margin="10 0 0 0"/>
-                <Image Source="/Resources/Images/checkmark.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="240 0 0 0" />
+                <Image Source="/Resources/Images/left_arrow.png" Height="30" Width="30" Margin="15 10 0 10" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="Filter" VerticalAlignment="Center" FontSize="30" Foreground="#FF6092CC"  FontFamily="Segoe UI" Margin="10 0 0 0"/>
+                <Image Source="/Resources/Images/checkmark.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="240 0 0 0" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding FilterCommand}" />
+                    </Image.InputBindings>
+                </Image>
             </StackPanel>
 
             <!-- Separator -->
             <Separator Grid.Row="1" Margin="0,5,0,5"/>
 
             <!-- Blank bottom part -->
-            <Grid Grid.Row="2" Background="White">
+            <Grid Grid.Row="2" Background="White" >
                 <!-- Add your content here -->
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Country:" Margin="40 35" FontSize="24" />
-                        <ComboBox x:Name="cmbCountry" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Width="150" Height="35" Margin="20,0,0,0" />
+                        <TextBlock Text="Country:" Margin="40 35" FontSize="24" Foreground="#FF6092CC" />
+                        <ComboBox x:Name="cmbCountry" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Width="150" Height="35" Margin="20,0,0,0"  />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="City:" Margin="40 35" FontSize="24"/>
+                        <TextBlock Text="City:" Margin="40 35" FontSize="24" Foreground="#FF6092CC"/>
                         <ComboBox  ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" Width="150" Height="35" Margin="63,0,0,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Duration min:" Margin="40,35,60,35" FontSize="24" />
-                        <controls:NumericUpDown Value="0" Minimum="0" Maximum="100" Height="35" Margin="25 0" FontSize="24" />
+                        <TextBlock Text="Duration min:" Margin="40,35,85,35" FontSize="24" Foreground="#FF6092CC" />
+                        <Grid VerticalAlignment="Center" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" FontSize="24" Text="{Binding SelectedMinDuration}" IsReadOnly="True" Background="#d7e5ec"/>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <Button Content="+" FontSize="14" FontWeight="Bold" Background="#FF6092CC" Command="{Binding IncreaseMinCommand}" />
+                                <Button Content="-" FontSize="14" FontWeight="Bold" Background="#FAA0A0" Command="{Binding DecreaseMinCommand}" />
+                            </StackPanel>
+                        </Grid>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Duration max:" Margin="40,35,60,35" FontSize="24" />
-                        <controls:NumericUpDown Value="0" Minimum="0" Maximum="100" Height="35" Margin="25 0" FontSize="24" />
+                        <TextBlock Text="Duration max:" Margin="40,35,85,35" FontSize="24" Foreground="#FF6092CC" />
+                        <Grid VerticalAlignment="Center" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" FontSize="24" Text="{Binding SelectedMaxDuration}" IsReadOnly="True" Background="#d7e5ec"/>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <Button Content="+" FontSize="14" FontWeight="Bold" Background="#FF6092CC" Command="{Binding IncreaseMaxCommand}"  />
+                                <Button Content="-" FontSize="14" FontWeight="Bold" Background="#FAA0A0" Command="{Binding DecreaseMaxCommand}" />
+                            </StackPanel>
+                        </Grid>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Language:" Margin="40 35 27 35" FontSize="24" />
+                        <TextBlock Text="Language:" Margin="40 35 27 35" FontSize="24" Foreground="#FF6092CC" />
                         <ComboBox x:Name="cmbLanguage" SelectedIndex="{Binding SelectedLanguageIndex}" Width="150" Height="35" FontSize="24" Margin="20,0,0,0" >
                             <ComboBoxItem IsSelected="True" Content="All"/>
                             <ComboBoxItem Content="Serbian"/>
@@ -58,8 +88,19 @@
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Number of guests:" Margin="40,35,42,35" FontSize="24" />
-                        <controls:NumericUpDown Value="0" Minimum="0" Maximum="100" Height="35" FontSize="24" />
+                        <TextBlock Text="Number of guests:" Margin="40,35,37,35" FontSize="24" Foreground="#FF6092CC" />
+                        <Grid VerticalAlignment="Center" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" FontSize="24" Text="{Binding SelectedNumberOfGuests}" IsReadOnly="True" Background="#d7e5ec"/>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <Button Content="+" FontSize="14" FontWeight="Bold" Background="#FF6092CC" Command="{Binding IncreaseGuestsCommand}" />
+                                <Button Content="-" FontSize="14" FontWeight="Bold" Background="#FAA0A0" Command="{Binding DecreaseGuestsCommand}" />
+                            </StackPanel>
+                        </Grid>
                     </StackPanel>
                     
                     

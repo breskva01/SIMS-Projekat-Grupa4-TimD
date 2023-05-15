@@ -7,7 +7,7 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="430">
-    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="#d7e5ec">
         <Grid VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -20,9 +20,17 @@
 
             <!-- Docked content -->
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,0">
-                <Image Source="/Resources/Images/left_arrow.png" Height="30" Width="30" Margin="15 10 0 10" />
+                <Image Source="/Resources/Images/left_arrow.png" Height="30" Width="30" Margin="15 10 0 10" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />
+                    </Image.InputBindings>
+                </Image>
                 <TextBlock Text="Sort By" VerticalAlignment="Center" FontSize="30"  FontFamily="Segoe UI" Margin="10 0 0 0"/>
-                <Image Source="/Resources/Images/checkmark.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="210 0 0 0" />
+                <Image Source="/Resources/Images/checkmark.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="210 0 0 0" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" />
+                    </Image.InputBindings>
+                </Image>
             </StackPanel>
 
             <!-- Separator -->
@@ -33,24 +41,24 @@
                 <!-- Add your content here -->
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="30 50 0 0">
-                        <CheckBox VerticalAlignment="Center"/>
-                        <TextBlock Text="Country" FontSize="24" Margin="5,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsSortCountryChecked}" Background="#d7e5ec" />
+                        <TextBlock Text="Country" FontSize="24" Margin="5,0,0,0" Foreground="#FF6092CC"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="30 30 0 0">
-                        <CheckBox VerticalAlignment="Center"/>
-                        <TextBlock Text="City" FontSize="24" Margin="5,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsSortCityChecked}" Background="#d7e5ec"/>
+                        <TextBlock Text="City" FontSize="24" Margin="5,0,0,0" Foreground="#FF6092CC"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="30 30 0 0">
-                        <CheckBox VerticalAlignment="Center"/>
-                        <TextBlock Text="Duration" FontSize="24" Margin="5,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsSortDurationChecked}" Background="#d7e5ec"/>
+                        <TextBlock Text="Duration" FontSize="24" Margin="5,0,0,0" Foreground="#FF6092CC"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="30 30 0 0">
-                        <CheckBox VerticalAlignment="Center"/>
-                        <TextBlock Text="Language" FontSize="24" Margin="5,0,0,0"/>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsSortLanguageChecked}" Background="#d7e5ec"/>
+                        <TextBlock Text="Language" FontSize="24" Margin="5,0,0,0" Foreground="#FF6092CC"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="30 30 0 0">
-                        <CheckBox VerticalAlignment="Center"/>
-                        <TextBlock Text="Empty spaces left" FontSize="24" Margin="5,0,0,0"/>
+                        <CheckBox VerticalAlignment="Top" Margin ="0 8 0 0" IsChecked="{Binding IsSortEmptySpacesChecked}" Background="#d7e5ec"/>
+                        <TextBlock Text="Empty spaces left" VerticalAlignment="Top" FontSize="24" Margin="5,0,0,280" Foreground="#FF6092CC"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

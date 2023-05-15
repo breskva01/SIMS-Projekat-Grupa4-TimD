@@ -7,7 +7,7 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="430">
-    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="#d7e5ec">
         <Grid VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="415*"/>
@@ -26,68 +26,90 @@
 
             <!-- Docked content -->
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                <Image Source="/Resources/Images/menu.png" Height="30" Width="30" Margin="0 10 0 10" VerticalAlignment="Center" />
-                <Image Source="/Resources/Images/notification.png" Height="30" Width="30" Margin="5 0 50 0" VerticalAlignment="Center"/>
+                <Image Source="/Resources/Images/menu.png" Height="30" Width="30" Margin="0 10 0 10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding MenuCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <Image Source="/Resources/Images/notify.png" Height="30" Width="30" Margin="5 0 50 0" VerticalAlignment="Center"/>
                 <TextBlock Text="Tourist Tours" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center"/>
-                <Image Source="/Resources/Images/TravelBuddy.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="70 0 0 0" VerticalAlignment="Center" />
+                <Image Source="/Resources/Images/logo.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="70 0 0 0" VerticalAlignment="Center" />
             </StackPanel>
 
             <!-- Separator -->
             <Separator Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
 
             <!-- Blank bottom part -->
-            <Grid Grid.Row="2" Background="White" Grid.ColumnSpan="2" Margin="0 5">
+            <Grid Grid.Row="2" Background="#e6e6fa" Grid.ColumnSpan="2" Margin="0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="202*"/>
+                    <ColumnDefinition Width="11*"/>
+                </Grid.ColumnDefinitions>
                 <!-- Add your content here -->
-                <ListBox SelectedItem="{Binding SelectedTour}" Name="lbTours" Grid.Row ="0" Grid.Column="1" Margin="10,10,10,3" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}">
+                <ListBox SelectedItem="{Binding SelectedTour}" Name="lbTours" Grid.Row ="0" Margin="10,10,10,3" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Grid.ColumnSpan="2" Background="#e6e6fa" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="5 10">
-                                <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="0,0,10,0"  />
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20" Margin="0 0 0 10">
-                                        <TextBlock.InputBindings>
-                                            <MouseBinding MouseAction="LeftClick"
-                                          Command="{Binding DataContext.MakeReservationCommand, 
-                                                RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-                                          CommandParameter="{Binding}"/>
-                                        </TextBlock.InputBindings>
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="TextDecorations" Value="None"/>
-                                                <Setter Property="Foreground" Value="#3283a8" />
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="TextDecorations" Value="Underline" />
-                                                        <Setter Property="Foreground" Value="#deb93e" />
-                                                        <Setter Property="Cursor" Value="Hand" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                    <TextBlock FontSize="15">
-                                        <Run Text="{Binding Location.Country, Mode=OneWay}"/> -
-                                         <Run Text="{Binding Location.City, Mode=OneWay}" />
-                                    </TextBlock>
-                                    <TextBlock FontSize="15">
-                                        Duration: 
-                                        <Run Text="{Binding Duration, Mode=OneWay}"/>
-                                        h
-                                    </TextBlock>
-                                    <TextBlock FontSize="15">
-                                        Language: 
-                                        <Run Text="{Binding Language, Mode=OneWay}"/>
-                                    </TextBlock>
-                                    <TextBlock FontSize="15">
-                                        Date:
-                                        <Run Text="{Binding Start, Mode=OneWay}"/>
-                                    </TextBlock>
-                                    <TextBlock FontSize="15">
-                                        Spaces filled: 
-                                         <Run Text="{Binding CurrentNumberOfGuests, Mode=OneWay}"/>
-                                    </TextBlock>
+                            <Border Margin="0 10" BorderBrush="#FF6092CC" BorderThickness="1" CornerRadius="2" Width="390" Height="200" Background="#c3cde6" >
+                                <StackPanel Orientation="Horizontal" Margin="5 10" VerticalAlignment="Center">
+                                    <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="5,10,20,0"  />
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20" Margin="0 0 0 15">
+                                            <TextBlock.InputBindings>
+                                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding DataContext.MakeReservationCommand, 
+                                                    RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                              CommandParameter="{Binding}"/>
+                                            </TextBlock.InputBindings>
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="TextDecorations" Value="None"/>
+                                                    <Setter Property="Foreground" Value="#333333" />
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="TextDecorations" Value="Underline" />
+                                                            <Setter Property="Foreground" Value="White" />
+                                                            <Setter Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock FontSize="15">
+                                            <Run Text="{Binding Location.Country, Mode=OneWay}"/> -
+                                             <Run Text="{Binding Location.City, Mode=OneWay}" />
+                                        </TextBlock>
+                                        <TextBlock FontSize="15">
+                                            Duration: 
+                                            <Run Text="{Binding Duration, Mode=OneWay}"/>
+                                            h
+                                        </TextBlock>
+                                        <TextBlock FontSize="15">
+                                            Language: 
+                                            <Run Text="{Binding Language, Mode=OneWay}"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="15">
+                                            Date:
+                                            <Run Text="{Binding Start, Mode=OneWay, StringFormat={}{0:dd/MM/yyyy}}"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="15">
+                                            Spaces filled: 
+                                             <Run Text="{Binding CurrentNumberOfGuests, Mode=OneWay}"/>
+                                        </TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
+                            </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -95,10 +117,26 @@
 
             <Separator Grid.Row="3" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
             <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,5,0,5" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                <Image Source="/Resources/Images/filter.png" Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" />
-                <TextBlock Text="FILTER" FontSize="24" VerticalAlignment="Center" Margin="0,0,30,0"/>
-                <Image Source="/Resources/Images/sort.png" Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" />
-                <TextBlock Text="SORT BY" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
+                <Image Source="/Resources/Images/filter.png"  Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding FilterCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="FILTER"  FontSize="24" VerticalAlignment="Center" Margin="0,0,30,0">
+                    <TextBlock.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding FilterCommand}" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
+                <Image Source="/Resources/Images/sort.png" Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="SORT BY" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center">
+                    <TextBlock.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
             </StackPanel>
         </Grid>
     </Border>
