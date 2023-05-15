@@ -129,7 +129,7 @@ namespace InitialProject.WPF.ViewModels
             _navigationStore = navigationStore;
             _accommodations = _accommodationService.GetAll();
             _owner = user;
-            IsNotified = isNotified;
+            IsNotified = true;
             AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_owner.Id));
             InitializeCommands();
         }
