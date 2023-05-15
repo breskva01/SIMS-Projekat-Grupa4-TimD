@@ -50,7 +50,7 @@ namespace InitialProject.WPF.ViewModels
         //public ICommand Guest1NavigateCommand { get; }
 
         public ICommand OwnerNavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, OwnerVM()));
+            new NavigateCommand(new NavigationService(_navigationStore, OwnerMainMenuVM()));
         private readonly NavigationStore _navigationStore;
         private User _user;
         public SignInViewModel(NavigationStore navigationStore)
@@ -90,22 +90,6 @@ namespace InitialProject.WPF.ViewModels
             {
                 case UserType.Owner:
                     {
-                        int UnratedGuests = 0;
-                        bool IsNotified = true;
-                        _reservations = _reservationService.FindCompletedAndUnrated(user.Id);
-                        foreach (AccommodationReservation res in _reservations)
-                        {
-                            if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
-                            {
-                                _reservationService.updateLastNotification(res);
-                                UnratedGuests++;
-                                IsNotified= false;
-                            }
-
-                        }
-                        if (UnratedGuests > 0 && !IsNotified)
-                            MessageBox.Show("You have " + UnratedGuests.ToString() + " unrated guests!");
-
                         OwnerNavigateCommand.Execute(null);
                         break;
                     }
@@ -144,9 +128,21 @@ namespace InitialProject.WPF.ViewModels
             return new GuideMenuViewModel(_navigationStore, _user);
         }
 
-        private OwnerViewModel OwnerVM()
+        private OwnerMainMenuViewModel OwnerMainMenuVM()
         {
-            return new OwnerViewModel(_navigationStore, _user);
+            _user = _userService.GetByUsername(Username);
+            bool IsNotified = true;
+            _reservations = _reservationService.FindCompletedAndUnrated(_user.Id);
+            foreach (AccommodationReservation res in _reservations)
+            {
+                if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
+                {
+                    _reservationService.updateLastNotification(res);
+                    IsNotified = false;
+                }
+
+            }
+            return new OwnerMainMenuViewModel(_navigationStore, _user, IsNotified);
         }
     }
 }

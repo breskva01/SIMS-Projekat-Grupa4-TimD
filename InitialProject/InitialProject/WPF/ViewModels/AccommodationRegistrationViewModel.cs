@@ -182,7 +182,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand BackCommand { get; set; }
         public ICommand RegisterAccommodationCommand { get; set; }
         public ICommand BackNavigateCommand =>
-new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
+        new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
 
         public AccommodationRegistrationViewModel(NavigationStore navigationStore ,User user) 
         {

@@ -105,6 +105,15 @@ namespace InitialProject.Repository
             _accommodations.Add(accommodation);
             _fileHandler.Save(_accommodations);
         }
-
+        public List<Accommodation> GetAllOwnersAccommodations(int id)
+        {
+            List<Accommodation> allOwnersAccommodations= new List<Accommodation>();
+            foreach(Accommodation accommodation in _accommodations)
+            {
+                if(accommodation.OwnerId==id)
+                    allOwnersAccommodations.Add(accommodation);
+            }
+            return allOwnersAccommodations;
+        }
     }
 }

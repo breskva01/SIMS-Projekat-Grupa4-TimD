@@ -17,6 +17,7 @@ namespace InitialProject.Repositories
         private List<AccommodationRating> _ratings;
         private List<User> _users;
         private readonly IAccommodationReservationRepository _reservationRepository;
+        private readonly IAccommodationRepository _accommodationRepository;
         private readonly IUserRepository _userRepository;
 
         public AccommodationRatingRepository()
@@ -26,6 +27,7 @@ namespace InitialProject.Repositories
             _ratings = _fileHandler.Load();
             _reservationRepository = RepositoryStore.GetIAccommodationReservationRepository;
             _userRepository = RepositoryStore.GetIUserRepository;
+            _accommodationRepository = RepositoryStore.GetIAccommodationRepository;
         }
 
         public List<AccommodationRating> GetAll()
@@ -48,9 +50,11 @@ namespace InitialProject.Repositories
         }
         public void Save(AccommodationRating rating)
         {
-            _ratings = _fileHandler.Load();
+            _ratings = GetAll();
             _ratings.Add(rating);
             _fileHandler.Save(_ratings);
+            var accommodations = _accommodationRepository.GetAll();
+            _ratings.ForEach(r => r.Reservation.Accommodation = accommodations.Find(acc => acc.Id == r.Reservation.AccommodationId));
             double[] totalAverageRating = CalculateTotalAverageOwnerRating(rating);
             UpdateSuperOwnerStatus(rating.Reservation.Accommodation.OwnerId, totalAverageRating);
         }
@@ -79,8 +83,8 @@ namespace InitialProject.Repositories
             _ratings = GetByOwnerId(ownerId);
             User owner = _users.Find(o => o.Id == ownerId);
             double OwnerRatingsCount = totalAverageRating[1];
-            owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 2) ? true : false;  
-
+            owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 2) ? true : false;
+            owner.Rating = Math.Round(totalAverageRating[0],2); 
             newOwner = owner;
             _users.Remove(owner);
             _users.Add(newOwner);

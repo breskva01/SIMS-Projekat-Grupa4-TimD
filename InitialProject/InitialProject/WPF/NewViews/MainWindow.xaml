@@ -7,7 +7,9 @@
         xmlns:views="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
+        Title="TravelBuddy" Height="670" Width="1030" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowState="Normal">
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:RateTourViewModel}">
@@ -103,8 +105,14 @@
             <DataTemplate DataType="{x:Type vms:ReservationMoveRequestsViewModel}">
                 <views:ReservationsMoveRequestsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:OwnerViewModel}">
-                <views:OwnerView />
+            <DataTemplate DataType="{x:Type vms:OwnerMainMenuViewModel}">
+                <views:OwnerMainMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerProfileViewModel}">
+                <views:OwnerProfileView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationsViewModel}">
+                <views:AccommodationsView />
             </DataTemplate>
         </Grid.Resources>
 

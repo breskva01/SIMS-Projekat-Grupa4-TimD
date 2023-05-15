@@ -17,14 +17,14 @@ namespace InitialProject.Domain.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public List<GuestRating> Ratings { get; set; }
+        public double Rating { get; set; }
         public List<int> VouchersIds { get; set; }
         public int Age { get; set; }
         public bool SuperOwner { get; set; }
 
         public User() { }
 
-        public User(string username, string password, UserType userType, string firstName, string lastName, string email, string phoneNumber, int age, bool superOwner)
+        public User(string username, string password, UserType userType, string firstName, string lastName, string email, double rating, string phoneNumber, int age, bool superOwner)
         {
             Username = username;
             Password = password;
@@ -33,7 +33,7 @@ namespace InitialProject.Domain.Models
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
-            Ratings = new List<GuestRating>();
+            Rating = rating; 
             VouchersIds = new List<int>();
             Age = age;
             SuperOwner= superOwner;
@@ -48,7 +48,7 @@ namespace InitialProject.Domain.Models
                 voucherIds += vId.ToString() + ",";
             }
             string[] csvValues = { Id.ToString(), Username, Password, Type.ToString(), FirstName, LastName,
-                                   Email, PhoneNumber , Age.ToString(), SuperOwner.ToString(), voucherIds};
+                                   Email, Rating.ToString(), PhoneNumber , Age.ToString(), SuperOwner.ToString(), voucherIds};
             return csvValues;
         }
 
@@ -62,10 +62,11 @@ namespace InitialProject.Domain.Models
             FirstName = values[4];
             LastName = values[5];
             Email = values[6];
-            PhoneNumber = values[7];
-            Age = Convert.ToInt32(values[8]);
-            SuperOwner = Convert.ToBoolean(values[9]);
-            string vouchers = values[10];
+            Rating = Convert.ToDouble(values[7]);
+            PhoneNumber = values[8];
+            Age = Convert.ToInt32(values[9]);
+            SuperOwner = Convert.ToBoolean(values[10]);
+            string vouchers = values[11];
             string[] splitVouchers = vouchers.Split(',');
             splitVouchers = splitVouchers.SkipLast(1).ToArray();
             VouchersIds = new List<int>();

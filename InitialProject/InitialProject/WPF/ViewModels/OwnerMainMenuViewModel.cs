@@ -1,40 +1,56 @@
 ﻿using InitialProject.Application.Commands;
-using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
-using InitialProject.WPF.NewViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
+using InitialProject.Application.Services;
+using InitialProject.WPF.NewViews;
+using System.Runtime.CompilerServices;
+using System.Security;
+using System.Windows;
 using System.Xml.Serialization;
+using System.Windows.Shapes;
+using System.Windows.Ink;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class OwnerViewModel: ViewModelBase
+    public class OwnerMainMenuViewModel : ViewModelBase
     {
         private User _user;
         private readonly NavigationStore _navigationStore;
+        private bool _isNotified;
+        public bool IsNotified 
+        {
+            get => _isNotified;
+            set
+            {
+                if(value != _isNotified)
+                {
+                    _isNotified = value;
+                    OnPropertyChanged(nameof(IsNotified));
+                }
+            }
+                
+        }
 
-        public ICommand AccommodationRegistrationCommand { get; }
+        /*public ICommand AccommodationRegistrationCommand { get; }
         public ICommand ViewRatingsCommand { get; }
-        public ICommand MoveRequestsCommand { get; }
-        public ICommand RateGuestCommand { get; }
+        public ICommand MoveRequestsCommand { get; }*/
+        public ICommand ViewProfileCommand { get; }
         public ICommand SignOutCommand { get; }
-        public OwnerViewModel(NavigationStore navigationStore, User user)
+        public OwnerMainMenuViewModel(NavigationStore navigationStore, User user, bool isNotified)
         {
             _navigationStore = navigationStore;
             _user = user;
-
-            AccommodationRegistrationCommand = new ExecuteMethodCommand(ShowAccommodationRegistrationView);
+            IsNotified = isNotified;
+            /*AccommodationRegistrationCommand = new ExecuteMethodCommand(ShowAccommodationRegistrationView);
             ViewRatingsCommand = new ExecuteMethodCommand(ShowOwnerRatingsView);
-            MoveRequestsCommand = new ExecuteMethodCommand(ShowReservationMoveRequestsView);
-            //RateGuestCommand = new ExecuteMethodCommand(ShowGuestRatingView);
+            MoveRequestsCommand = new ExecuteMethodCommand(ShowReservationMoveRequestsView);*/
+            ViewProfileCommand = new ExecuteMethodCommand(ShowOwnerProfileView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
 
         }
@@ -47,22 +63,22 @@ namespace InitialProject.WPF.ViewModels
             navigate.Execute(null);
         }
 
-        private void ShowAccommodationRegistrationView()
+        /*private void ShowAccommodationRegistrationView()
         {
             AccommodationRegistrationViewModel accommodationRegistrationViewModel = new AccommodationRegistrationViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, accommodationRegistrationViewModel));
 
             navigate.Execute(null);
-        }
-
-        /*private void ShowGuestRatingView()
-        {
-            GuestRatingViewModel guestRatingViewModel = new GuestRatingViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guestRatingViewModel));
-
-            navigate.Execute(null);
         }*/
 
+        private void ShowOwnerProfileView()
+        {
+            OwnerProfileViewModel ownerProfileViewModel = new OwnerProfileViewModel(_navigationStore, _user, IsNotified);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, ownerProfileViewModel));
+
+            navigate.Execute(null);
+        }
+        /*
         private void ShowReservationMoveRequestsView()
         {
             ReservationMoveRequestsViewModel reservationMoveRequestsViewModel = new ReservationMoveRequestsViewModel(_navigationStore, _user);
@@ -78,5 +94,6 @@ namespace InitialProject.WPF.ViewModels
 
             navigate.Execute(null);
         }
+        */
     }
 }

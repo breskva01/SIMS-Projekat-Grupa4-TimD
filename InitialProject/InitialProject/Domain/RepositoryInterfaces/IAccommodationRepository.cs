@@ -16,5 +16,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         List<Accommodation> Sort(List<Accommodation> accommodations, string criterium);
         public void Add(string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL,
                         User owner, int ownerId);
+        public List<Accommodation> GetAllOwnersAccommodations(int id);
     }
 }

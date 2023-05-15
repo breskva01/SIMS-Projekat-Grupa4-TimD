@@ -38,7 +38,10 @@ namespace InitialProject.Application.Services
         {
             _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, user, ownerId);
         }
-
+        public List<Accommodation> GetAllOwnersAccommodations(int id)
+        {
+           return _repository.GetAllOwnersAccommodations(id);
+        }
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);
