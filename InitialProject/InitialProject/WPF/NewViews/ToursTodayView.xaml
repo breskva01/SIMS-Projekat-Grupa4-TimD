@@ -59,10 +59,10 @@
             <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
             <Label Grid.Row="0" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
             </Label>
-            <Button Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Height="50" Width="50">
+            <Button BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
             </Button>
-            <Button Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,20,5">
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">
@@ -70,7 +70,7 @@
                     <RowDefinition Height="550"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <DataGrid Grid.Row="0" Margin="30,15,30,10" FontSize="22" FontWeight="Bold" AutoGenerateColumns="False" ItemsSource="{Binding ToursToday}" SelectedItem="{Binding SelectedTour}">
+                <DataGrid ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Row="0" Margin="30,15,30,10" FontSize="22" FontWeight="Bold" AutoGenerateColumns="False" ItemsSource="{Binding ToursToday}" SelectedItem="{Binding SelectedTour}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ᑎᗩᗰE" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="ᑕITY" Binding="{Binding Location.City}"/>
@@ -93,10 +93,10 @@
             <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
             <Label Grid.Row="0" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
             </Label>
-            <Button x:Name="ButtonMenu" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Height="50" Width="50">
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
             </Button>
-            <Button  Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,20,5">
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">

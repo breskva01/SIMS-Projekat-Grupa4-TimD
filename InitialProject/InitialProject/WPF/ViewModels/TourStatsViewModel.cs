@@ -28,6 +28,13 @@ namespace InitialProject.WPF.ViewModels
         private LocationService _locationService;
 
         public ICommand BackCommand { get; set; }
+        public ICommand HomeCommand { get; set; }
+        public ICommand CreateTourCommand { get; set; }
+        public ICommand LiveTrackingCommand { get; set; }
+        public ICommand CancelTourCommand { get; set; }
+        public ICommand TourStatsCommand { get; set; }
+        public ICommand RatingsViewCommand { get; set; }
+        public ICommand SignOutCommand { get; set; }
 
         private string _selectedYear;
         public string SelectedYear
@@ -174,7 +181,13 @@ namespace InitialProject.WPF.ViewModels
         private void InitializeCommands()
         { 
             BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
-
+            HomeCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+            CreateTourCommand = new ExecuteMethodCommand(ShowTourCreationView);
+            LiveTrackingCommand = new ExecuteMethodCommand(ShowToursTodayView);
+            CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
+            TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
+            RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
+            SignOutCommand = new ExecuteMethodCommand(SignOut);
         }
 
         private void ShowGuideMenuView()
@@ -210,6 +223,47 @@ namespace InitialProject.WPF.ViewModels
             WithVoucher += "%";
             WithoutVoucher += "%";
         }
+        private void SignOut()
+        {
+            SignInViewModel signInViewModel = new SignInViewModel(_navigationStore);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, signInViewModel));
 
+            navigate.Execute(null);
+        }
+        private void ShowTourCreationView()
+        {
+            TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowToursTodayView()
+        {
+            ToursTodayViewModel viewModel = new ToursTodayViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourCancellationView()
+        {
+            AllToursViewModel viewModel = new AllToursViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourStatsView()
+        {
+            TourStatsViewModel viewModel = new TourStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideRatingsView()
+        {
+            GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
     }
 }

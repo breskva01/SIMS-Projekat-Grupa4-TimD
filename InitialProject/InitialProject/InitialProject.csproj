@@ -44,6 +44,7 @@
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="MaterialDesignThemes" Version="2.4.0.1044" />
+    <PackageReference Include="Microsoft.Toolkit" Version="7.1.2" />
   </ItemGroup>
 
   <ItemGroup>

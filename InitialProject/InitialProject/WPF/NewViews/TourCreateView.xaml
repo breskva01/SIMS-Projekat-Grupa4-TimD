@@ -12,6 +12,13 @@
         <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundLP.jpg"/>
     </UserControl.Background>
     <UserControl.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+        </ControlTemplate>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
@@ -61,83 +68,10 @@
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0"/>
             <Label Grid.Row="0" Content="CREATE TOUR" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
             </Label>
-            <Button Grid.Row="0" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7,10,5,0"  Height="40" Width="48">
+            <Button   BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="48">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
             </Button>
-            
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="330"/>
-                    <ColumnDefinition Width="380"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="1" Grid.Column="0" Content="Name" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="2" Grid.Column="0" Content="Location" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="3" Grid.Column="0" Content="Check Points" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="4" Grid.Column="0" Content="Date and Time" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="5" Grid.Column="0" Content="Guest Capacity" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="6" Grid.Column="0" Content="Language" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="7" Grid.Column="0" Content="Duration" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="8" Grid.Column="0" Content="Image" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="9" Grid.Column="0" Content="Description" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-
-                <TextBox  Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28" IsEnabled="False" IsReadOnly="True" />
-                <ComboBox FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" IsEditable="True" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"/>
-                <ComboBox FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" IsEditable="True" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
-                <ComboBox FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" />
-                <ComboBox FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding KeyPointPlaces}" SelectedItem="{Binding SelectedKeyPointPlace}" IsEditable="True"/>
-                <xctk:DateTimePicker  FontSize="28" Grid.Row="4" Grid.Column="1" Margin="5"/>
-                <TextBox FontSize="28" Grid.Row="5" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=MaximumGuests,UpdateSourceTrigger=PropertyChanged}"/>
-                <ComboBox FontSize="28" Grid.Row="6" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=LanguageType, UpdateSourceTrigger=PropertyChanged}">
-                    <ComboBoxItem>English</ComboBoxItem>
-                    <ComboBoxItem>Serbian</ComboBoxItem>
-                </ComboBox>
-                <TextBox FontSize="28" Grid.Row="7" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox FontSize="28" Grid.Row="8" Grid.Column="1" Margin="5" Text="{Binding Path=PictureUrl, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox FontSize="28" Grid.Row="9" Grid.Column="1" Margin="5,5,5,30" Grid.RowSpan="3"  Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <Button Grid.Row="3" Grid.Column="3" Height="30" Width="30" HorizontalAlignment="Left" Margin="15" VerticalAlignment="Center" Content="+" FontSize="30" VerticalContentAlignment="Center" Command="{Binding AddKeyPointCommand}">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button Grid.Column="2" Content="CREATE" HorizontalAlignment="Left" Margin="115,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="139" FontSize="25" Command="{Binding ConfirmCommand}" />
-            </Grid>
-        </Grid>
-
-        <Grid x:Name="InterfaceGrid" Opacity="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
-            <Label Grid.Row="0" Content="ᑕᖇEᗩTE TOᑌᖇ" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
-            </Label>
-            <Button x:Name="ButtonMenu" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Height="50" Width="50">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
-            </Button>
-            <Button Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,20,5">
+            <Button BorderBrush="Transparent" Cursor="Hand" Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">
@@ -160,30 +94,55 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="1" Grid.Column="0" Content="ᑎᗩᗰE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="2" Grid.Column="0" Content="ᒪOᑕᗩTIOᑎ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="3" Grid.Column="0" Content="ᑕᕼEᑕK ᑭOIᑎTS" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="4" Grid.Column="0" Content="ᗪᗩTE ᗩᑎᗪ TIᗰE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="5" Grid.Column="0" Content="GᑌEST ᑕᗩᑭᗩᑕITY" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="6" Grid.Column="0" Content="ᒪᗩᑎGᑌᗩGE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="7" Grid.Column="0" Content="ᗪᑌᖇᗩTIOᑎ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="8" Grid.Column="0" Content="IᗰᗩGE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-                <Label Grid.Row="9" Grid.Column="0" Content="ᗪESᑕᖇIᑭTIOᑎ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="ᑎᗩᗰE" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="ᒪOᑕᗩTIOᑎ" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="ᑕᕼEᑕK ᑭOIᑎTS" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="ᗪᗩTE ᗩᑎᗪ TIᗰE" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="GᑌEST ᑕᗩᑭᗩᑕITY" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="ᒪᗩᑎGᑌᗩGE" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="7" Grid.Column="0" Content="ᗪᑌᖇᗩTIOᑎ" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="8" Grid.Column="0" Content="IᗰᗩGE" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="9" Grid.Column="0" Content="ᗪESᑕᖇIᑭTIOᑎ" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0" />
 
-                <TextBox BorderThickness="2" BorderBrush="Black" Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28"/>
-                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" IsEditable="True" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"/>
-                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" IsEditable="True" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
-                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" />
-                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding KeyPointPlaces}" SelectedItem="{Binding SelectedKeyPointPlace}" IsEditable="True"/>
-                <xctk:DateTimePicker BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="4" Grid.Column="1"  x:Name="dateTimePicker" Margin="5" Text="{Binding Start, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="5" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=MaximumGuests,UpdateSourceTrigger=PropertyChanged}"/>
-                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="6" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=LanguageType, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox  Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28" IsEnabled="False" IsReadOnly="True" />
+                <ComboBox FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" IsEditable="True" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" IsEditable="True" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" />
+                <ComboBox FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding KeyPointPlaces}" SelectedItem="{Binding SelectedKeyPointPlace}" IsEditable="True"/>
+                <xctk:DateTimePicker  FontSize="28" Grid.Row="4" Grid.Column="1" Margin="5"/>
+                <ComboBox FontSize="28" Grid.Row="6" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=LanguageType, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem>English</ComboBoxItem>
                     <ComboBoxItem>Serbian</ComboBoxItem>
                 </ComboBox>
-                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="7" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="8" Grid.Column="1" Margin="5" Text="{Binding Path=PictureUrl, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="9" Grid.Column="1" Margin="5,5,5,30" Grid.RowSpan="3"  Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
+                <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="158"/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" FontSize="24"  Text="{Binding Path=MaximumGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True" Background="#ECE3F1 "/>
+                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2"/>
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <Button Content="+" Foreground="White" FontSize="14" FontWeight="Bold" Background="#270138" Command="{Binding IncreaseGuestsCommand}" />
+                        <Button Content="-" FontSize="14" FontWeight="Bold" Background="#E5B1FD" Command="{Binding DecreaseGuestsCommand}" />
+                    </StackPanel>
+                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" />
+                </Grid>
+
+                <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="158"/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" FontSize="24"  Text="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True" Background="#ECE3F1 "/>
+                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2"/>
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <Button Content="+" Foreground="White" FontSize="14" FontWeight="Bold" Background="#270138" Command="{Binding IncreaseDurationCommand}" />
+                        <Button Content="-" FontSize="14" FontWeight="Bold" Background="#E5B1FD" Command="{Binding DecreaseDurationCommand}" />
+                    </StackPanel>
+                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" />
+                </Grid>
+                <TextBox FontSize="28" Grid.Row="8" Grid.Column="1" Margin="5" Text="{Binding Path=PictureUrl, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox FontSize="28" Grid.Row="9" Grid.Column="1" Margin="5,5,5,30" Grid.RowSpan="3"  Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Button Grid.Row="3" Grid.Column="3" Height="30" Width="30" HorizontalAlignment="Left" Margin="15" VerticalAlignment="Center" Content="+" FontSize="30" VerticalContentAlignment="Center" Command="{Binding AddKeyPointCommand}">
                     <Button.Template>
@@ -197,7 +156,136 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="ᑕᖇEᗩTE" HorizontalAlignment="Left" Margin="115,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="139" FontSize="25" Command="{Binding ConfirmCommand}" />
+                <Button Grid.Row="8" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Grid.Column="3" Height="40" Width="40" HorizontalAlignment="Left" Margin="15,0,15,0" VerticalAlignment="Center"  FontSize="30" VerticalContentAlignment="Center">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Margin="10" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\plus-16.png"/>
+                </Button>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="ᑕᖇEᗩTE" HorizontalAlignment="Left" Margin="133,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25" Command="{Binding ConfirmCommand}" />
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="TᑌTOᖇIᗩᒪ" HorizontalAlignment="Left" Margin="133,30,0,0" Grid.Row="8" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25"/>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="InterfaceGrid" Opacity="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
+            <Label Grid.Row="0" Content="ᑕᖇEᗩTE TOᑌᖇ" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            </Label>
+            <Button  BorderBrush="Transparent" Cursor="Hand" x:Name="ButtonMenu" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button BorderBrush="Transparent" Cursor="Hand" Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="330"/>
+                    <ColumnDefinition Width="380"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="0" Content="ᑎᗩᗰE" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="ᒪOᑕᗩTIOᑎ" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="ᑕᕼEᑕK ᑭOIᑎTS" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="ᗪᗩTE ᗩᑎᗪ TIᗰE" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="GᑌEST ᑕᗩᑭᗩᑕITY" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="ᒪᗩᑎGᑌᗩGE" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="7" Grid.Column="0" Content="ᗪᑌᖇᗩTIOᑎ" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="8" Grid.Column="0" Content="IᗰᗩGE" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0"/>
+                <Label Grid.Row="9" Grid.Column="0" Content="ᗪESᑕᖇIᑭTIOᑎ" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Margin="50,0,0,0" />
+
+                <TextBox BorderThickness="2" BorderBrush="Black" Grid.Row="1" Grid.Column="1" Margin="5"  Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" FontSize="28"/>
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" IsEditable="True" Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" IsEditable="True" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" />
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding KeyPointPlaces}" SelectedItem="{Binding SelectedKeyPointPlace}" IsEditable="True"/>
+                <xctk:DateTimePicker BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="4" Grid.Column="1"  x:Name="dateTimePicker" Margin="5" Text="{Binding Start, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="6" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=LanguageType, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>English</ComboBoxItem>
+                    <ComboBoxItem>Serbian</ComboBoxItem>
+                </ComboBox>
+                <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="158"/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" FontSize="24"  Text="{Binding Path=MaximumGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True" Background="#ECE3F1 "/>
+                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2"/>
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <Button Content="+" Foreground="White" FontSize="14" FontWeight="Bold" Background="#270138" Command="{Binding IncreaseGuestsCommand}" />
+                        <Button Content="-" FontSize="14" FontWeight="Bold" Background="#E5B1FD" Command="{Binding DecreaseGuestsCommand}" />
+                    </StackPanel>
+                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" />
+                </Grid>
+
+                <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="158"/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" FontSize="24"  Text="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True" Background="#ECE3F1 "/>
+                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2"/>
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <Button Content="+" Foreground="White" FontSize="14" FontWeight="Bold" Background="#270138" Command="{Binding IncreaseDurationCommand}" />
+                        <Button Content="-" FontSize="14" FontWeight="Bold" Background="#E5B1FD" Command="{Binding DecreaseDurationCommand}" />
+                    </StackPanel>
+                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" />
+                </Grid>
+
+                <TextBox BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="8" Grid.Column="1" Margin="5" Text="{Binding Path=PictureUrl, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox TextWrapping="Wrap" BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="9" Grid.Column="1" Margin="5,5,5,30" Grid.RowSpan="3"  Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Row="3" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Grid.Column="3" Height="40" Width="40" HorizontalAlignment="Left" Margin="15,0,15,0" VerticalAlignment="Center"  FontSize="30" VerticalContentAlignment="Center" Command="{Binding AddKeyPointCommand}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Margin="10" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\plus-16.png"/>
+                </Button>
+                <Button Grid.Row="8" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Grid.Column="3" Height="40" Width="40" HorizontalAlignment="Left" Margin="15,0,15,0" VerticalAlignment="Center"  FontSize="30" VerticalContentAlignment="Center">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Margin="10" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\plus-16.png"/>
+                </Button>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="ᑕᖇEᗩTE" HorizontalAlignment="Left" Margin="133,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25" Command="{Binding ConfirmCommand}" />
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="TᑌTOᖇIᗩᒪ" HorizontalAlignment="Left" Margin="133,30,0,0" Grid.Row="8" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25"/>
             </Grid>
         </Grid>
         <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
@@ -220,7 +308,7 @@
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Command="{Binding RatingsViewCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>

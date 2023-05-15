@@ -42,6 +42,10 @@ namespace InitialProject.WPF.ViewModels
         public ICommand TourStatsCommand { get; set; }
         public ICommand RatingsViewCommand { get; set; }
         public ICommand SignOutCommand { get; set; }
+        public ICommand IncreaseDurationCommand { get; set; }
+        public ICommand DecreaseDurationCommand { get; set; }
+        public ICommand IncreaseGuestsCommand { get; set; }
+        public ICommand DecreaseGuestsCommand { get; set; }
 
         private List<string> _countries;
         public List<string> Countries
@@ -163,13 +167,13 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        private string _maximumGuests;
-        public string MaximumGuests
+        private int _maximumGuests;
+        public int MaximumGuests
         {
             get => _maximumGuests;
             set
             {
-                if (value != _maximumGuests)
+                if (value != _maximumGuests && value >= 0)
                 {
                     _maximumGuests = value;
                     OnPropertyChanged();
@@ -189,13 +193,13 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        private string _duration;
-        public string Duration
+        private int _duration;
+        public int Duration
         {
             get => _duration;
             set
             {
-                if (value != _duration)
+                if (value != _duration && value>= 0)
                 {
                     _duration = value;
                     OnPropertyChanged();
@@ -290,6 +294,10 @@ namespace InitialProject.WPF.ViewModels
             TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
             RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
+            IncreaseDurationCommand = new ExecuteMethodCommand(IncreaseDuration);
+            DecreaseDurationCommand = new ExecuteMethodCommand(DecreaseDuration);
+            IncreaseGuestsCommand = new ExecuteMethodCommand(IncreaseGuests);
+            DecreaseGuestsCommand = new ExecuteMethodCommand(DecreaseGuests);
         }
         public void CreateTour()
         {
@@ -298,8 +306,10 @@ namespace InitialProject.WPF.ViewModels
             Location.City = City;
             Location.Id = Locations.Where(c => c.City == City).Select(c => c.Id).FirstOrDefault();
             GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
-            int TourDuration = int.Parse(Duration);
-            int MaxGuests = int.Parse(MaximumGuests);
+            //int TourDuration = int.Parse(Duration);
+           // int MaxGuests = int.Parse(MaximumGuests);
+            int MaxGuests = MaximumGuests;
+            int TourDuration = Duration;
 
             foreach (KeyPoint ky in _tourKeyPoints)
             {
@@ -319,9 +329,9 @@ namespace InitialProject.WPF.ViewModels
             SelectedKeyPointCity = null;
             SelectedKeyPointPlace = null;
             Description = null;
-            MaximumGuests = null;
+            MaximumGuests = 0;
             PictureUrl = null;
-            Duration = null;
+            Duration = 0;
             LanguageType = null;
             Start = null;
             _tourKeyPoints.Clear();
@@ -424,8 +434,23 @@ namespace InitialProject.WPF.ViewModels
         {
             GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-
             navigate.Execute(null);
+        }
+        private void IncreaseDuration()
+        {
+            Duration++;
+        }
+        private void DecreaseDuration()
+        {
+            Duration--;
+        }
+        private void IncreaseGuests()
+        {
+            MaximumGuests++;
+        }
+        private void DecreaseGuests()
+        {
+            MaximumGuests--;
         }
 
 

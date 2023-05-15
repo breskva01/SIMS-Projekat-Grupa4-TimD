@@ -59,10 +59,10 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Label Content="All Tours" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
-            <Button Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Height="50" Width="50">
+            <Button Grid.Row="0" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
             </Button>
-            <Button Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,20,5">
+            <Button Grid.Row="0" BorderBrush="Transparent" Cursor="Hand" Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
             </Button>
 
@@ -74,6 +74,11 @@
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="BorderBrush" Value="Black" />
                         <Setter Property="Padding" Value="15" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
@@ -108,7 +113,7 @@
             <Button Command="{Binding BackCommand}" Content="BACK" HorizontalAlignment="Left" Margin="58,615,0,0" Grid.Row="2" VerticalAlignment="Top" Height="56" Width="150" FontSize="20"/>
 
         </Grid>
-        <Grid x:Name="InterfaceGrid" Margin="-9,0,9,0" >
+        <Grid x:Name="InterfaceGrid" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="620"></RowDefinition>
@@ -117,14 +122,14 @@
             <Border Grid.Row="0" Background="#270138"/>
 
             <Label Content="ᗩᒪᒪ TOᑌᖇS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
-            <Button x:Name="ButtonMenu" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Height="50" Width="50">
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
             </Button>
-            <Button Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,20,5">
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
             </Button>
 
-            <ListBox SelectedItem="{Binding SelectedTour}" Cursor="Hand" BorderBrush="Black" BorderThickness="5" Grid.Row="1" Name="lbTours" Padding="15,15,5,5" Margin="40,0,40,0" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Height="500" VerticalAlignment="Center">
+            <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectedItem="{Binding SelectedTour}" Cursor="Hand" BorderBrush="Black" BorderThickness="5" Grid.Row="1" Name="lbTours" Padding="15,15,5,5" Margin="40,0,40,0" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Height="500" VerticalAlignment="Center">
                 <ListBox.Background>
                     #C7B2D1
                 </ListBox.Background>
@@ -188,7 +193,7 @@
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Command="{Binding RatingsViewCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>
