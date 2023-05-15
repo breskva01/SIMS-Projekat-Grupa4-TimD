@@ -27,7 +27,7 @@
                     </Image.InputBindings>
                 </Image>
                 <TextBlock Text="Filter" VerticalAlignment="Center" FontSize="30" Foreground="#FF6092CC"  FontFamily="Segoe UI" Margin="10 0 0 0"/>
-                <Image Source="/Resources/Images/checkmark.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="240 0 0 0" >
+                <Image Source="/Resources/Images/blueCheck.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="240 0 0 0" >
                     <Image.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding FilterCommand}" />
                     </Image.InputBindings>
@@ -43,11 +43,11 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Country:" Margin="40 35" FontSize="24" Foreground="#FF6092CC" />
-                        <ComboBox x:Name="cmbCountry" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Width="150" Height="35" Margin="20,0,0,0"  />
+                        <ComboBox  FontSize="22" HorizontalAlignment="Center" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Width="150" Height="35" Margin="20,0,0,0"  />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="City:" Margin="40 35" FontSize="24" Foreground="#FF6092CC"/>
-                        <ComboBox  ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" Width="150" Height="35" Margin="63,0,0,0" />
+                        <ComboBox  FontSize="22" HorizontalAlignment="Center" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" Width="150" Height="35" Margin="63,0,0,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Duration min:" Margin="40,35,85,35" FontSize="24" Foreground="#FF6092CC" />
@@ -81,7 +81,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Language:" Margin="40 35 27 35" FontSize="24" Foreground="#FF6092CC" />
-                        <ComboBox x:Name="cmbLanguage" SelectedIndex="{Binding SelectedLanguageIndex}" Width="150" Height="35" FontSize="24" Margin="20,0,0,0" >
+                        <ComboBox x:Name="cmbLanguage" SelectedIndex="{Binding SelectedLanguageIndex}" Width="150" Height="35" FontSize="22" Margin="20,0,0,0" >
                             <ComboBoxItem IsSelected="True" Content="All"/>
                             <ComboBoxItem Content="Serbian"/>
                             <ComboBoxItem Content="English"/>

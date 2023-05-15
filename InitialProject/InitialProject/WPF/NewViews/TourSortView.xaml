@@ -26,7 +26,7 @@
                     </Image.InputBindings>
                 </Image>
                 <TextBlock Text="Sort By" VerticalAlignment="Center" FontSize="30"  FontFamily="Segoe UI" Margin="10 0 0 0"/>
-                <Image Source="/Resources/Images/checkmark.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="210 0 0 0" >
+                <Image Source="/Resources/Images/blueCheck.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="210 0 0 0" >
                     <Image.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" />
                     </Image.InputBindings>

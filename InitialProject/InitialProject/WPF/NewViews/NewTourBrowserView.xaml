@@ -32,7 +32,7 @@
                     </Image.InputBindings>
                 </Image>
                 <Image Source="/Resources/Images/notify.png" Height="30" Width="30" Margin="5 0 50 0" VerticalAlignment="Center"/>
-                <TextBlock Text="Tourist Tours" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center"/>
+                <TextBlock Text="Tourist Tours" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Foreground="#333333"/>
                 <Image Source="/Resources/Images/logo.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="70 0 0 0" VerticalAlignment="Center" />
             </StackPanel>
 
@@ -40,13 +40,13 @@
             <Separator Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
 
             <!-- Blank bottom part -->
-            <Grid Grid.Row="2" Background="#e6e6fa" Grid.ColumnSpan="2" Margin="0 5">
+            <Grid Grid.Row="2" Background="White" Grid.ColumnSpan="2" Margin="0 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="202*"/>
                     <ColumnDefinition Width="11*"/>
                 </Grid.ColumnDefinitions>
                 <!-- Add your content here -->
-                <ListBox SelectedItem="{Binding SelectedTour}" Name="lbTours" Grid.Row ="0" Margin="10,10,10,3" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Grid.ColumnSpan="2" Background="#e6e6fa" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <ListBox SelectedItem="{Binding SelectedTour}" Name="lbTours" Grid.Row ="0" Margin="10,10,10,3" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Grid.ColumnSpan="2" Background="White" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Setter Property="Template">
@@ -122,7 +122,7 @@
                         <MouseBinding MouseAction="LeftClick" Command="{Binding FilterCommand}" />
                     </Image.InputBindings>
                 </Image>
-                <TextBlock Text="FILTER"  FontSize="24" VerticalAlignment="Center" Margin="0,0,30,0">
+                <TextBlock Text="FILTER" Foreground="#333333" FontSize="24" VerticalAlignment="Center" Margin="0,0,30,0">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding FilterCommand}" />
                     </TextBlock.InputBindings>
@@ -132,7 +132,7 @@
                         <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" />
                     </Image.InputBindings>
                 </Image>
-                <TextBlock Text="SORT BY" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center">
+                <TextBlock Text="SORT BY" Foreground="#333333" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" />
                     </TextBlock.InputBindings>
