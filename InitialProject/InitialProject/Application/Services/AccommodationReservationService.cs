@@ -44,7 +44,7 @@ namespace InitialProject.Application.Services
                 Save(new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
         }
-        public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, User guest)
+        public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, Guest1 guest)
         {
             var reservationAvailabilityHandler = new AccommodationReservationAvailabilityHandler(_repository);
             return reservationAvailabilityHandler.GetAvailable(startDate, endDate, stayLength, accommodation, guest);

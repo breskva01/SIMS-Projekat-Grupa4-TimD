@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.GuestOne.ImageBrowser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Black"/> 
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="30">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#424241" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+
+        <Image 
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="32"
+            Height="32"
+            Grid.Column="0"
+            Margin="10"
+            Source="../../../Resources/Images/go_back.png"
+            Cursor="Hand">
+            <Image.InputBindings>
+                <MouseBinding 
+                    MouseAction="LeftClick"
+                    Command="{Binding NavigateReservationFormCommand}"/>
+            </Image.InputBindings>
+        </Image>
+
+        <Image
+            Margin="0 50"
+            Source="{Binding CurrentImageUrl}"/>
+
+        <Button
+            FontSize="24"
+            Content="❮"
+            Width="30"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="10 0 0 0"
+            Command="{Binding PreviousImageCommand}"/>
+
+        <Button
+            FontSize="24"
+            Content="❯"
+            Width="30"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Margin="0 0 10 0"
+            Command="{Binding NextImageCommand}"/>
+
+    </Grid>
+</UserControl>

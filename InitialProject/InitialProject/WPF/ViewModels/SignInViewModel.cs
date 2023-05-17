@@ -3,7 +3,7 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
-using InitialProject.WPF.ViewModels.Guest1;
+using InitialProject.WPF.ViewModels.GuestOne;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,7 +106,7 @@ namespace InitialProject.WPF.ViewModels
 
                 OwnerNavigateCommand.Execute(null);
             }
-            else if(user is Domain.Models.Guest1)
+            else if(user is Guest1)
                 Guest1NavigateCommand.Execute(null);
             else if(user is TourGuide)
                 GuideNavigateCommand.Execute(null);
@@ -115,8 +115,9 @@ namespace InitialProject.WPF.ViewModels
         }
         private ViewModelBase NavigateAccommodationBrowser()
         {
-            var accommodationBrowserViewModel = new AccommodationBrowserViewModel(_navigationStore, _user);
-            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _user);
+            var accommodationBrowserViewModel = 
+                new AccommodationBrowserViewModel(_navigationStore, (Guest1)_user);
+            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, (Guest1)_user);
             return new LayoutViewModel(navigationBarViewModel, accommodationBrowserViewModel);
         }
         private ViewModelBase CreateGuest2VM()
