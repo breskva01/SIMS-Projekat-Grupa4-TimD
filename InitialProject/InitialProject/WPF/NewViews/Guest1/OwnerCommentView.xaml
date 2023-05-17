@@ -17,18 +17,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Image 
+        <Button
+            Style="{StaticResource BackButton}"
             Grid.Row="0"
             Grid.Column="0"
             Margin="20 20 20 0"
-            Source="../../../Resources/Images/go_back.png"
-            Cursor="Hand">
-            <Image.InputBindings>
-                <MouseBinding 
-                    MouseAction="LeftClick"
-                    Command="{Binding NavigateMyRequestsCommand}"/>
-            </Image.InputBindings>
-        </Image>
+            Content="🡄"
+            FontSize="24"
+            Command="{Binding NavigateMyRequestsCommand}"/>
 
         <StackPanel
             Grid.Row="0"

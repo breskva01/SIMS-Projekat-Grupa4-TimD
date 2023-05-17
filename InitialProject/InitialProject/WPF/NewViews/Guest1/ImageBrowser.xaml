@@ -23,7 +23,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#424241" />
+                                <Setter Property="Background" Value="#999997" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -33,21 +33,15 @@
     </UserControl.Resources>
     <Grid>
 
-        <Image 
+        <Button
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
-            Width="32"
-            Height="32"
+            Style="{StaticResource BackButton}"
             Grid.Column="0"
             Margin="10"
-            Source="../../../Resources/Images/go_back.png"
-            Cursor="Hand">
-            <Image.InputBindings>
-                <MouseBinding 
-                    MouseAction="LeftClick"
-                    Command="{Binding NavigateReservationFormCommand}"/>
-            </Image.InputBindings>
-        </Image>
+            Content="🡄"
+            FontSize="24"
+            Command="{Binding NavigateReservationFormCommand}"/>
 
         <Image
             Margin="0 50"

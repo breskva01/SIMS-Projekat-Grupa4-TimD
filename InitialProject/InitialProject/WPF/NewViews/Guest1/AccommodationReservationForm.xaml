@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             xmlns:dummyVM="clr-namespace:InitialProject.WPF.ViewModels.Guest1"
              xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
@@ -15,17 +16,19 @@
     <UserControl.Resources>
         <converters:AccommodationTypeConverter x:Key="AccommodationTypeConverter"/>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#deb93e"/> 
+            <Setter Property="Background" Value="#deb93e"/>
             <Setter Property="Foreground" Value="White" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="10">
+                        <Border 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10"
+                            Padding="0 2 0 4">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -37,9 +40,34 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
-
+        <Style TargetType="Button" x:Key="HelpButton">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="3" />
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="20"
+                            Padding="9 0 9 1.5">
+                            <ContentPresenter 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#999997" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid
         Margin="0 20 0 0">
@@ -49,20 +77,14 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Image 
-            VerticalAlignment="Top"
-            Width="32"
-            Height="32"
-            Grid.Column="0"
+        <Button
+            Style="{StaticResource BackButton}"
             Margin="20 0"
-            Source="../../../Resources/Images/go_back.png"
-            Cursor="Hand">
-            <Image.InputBindings>
-                <MouseBinding 
-                    MouseAction="LeftClick"
-                    Command="{Binding NavigateAccommodationBrowserCommand}"/>
-            </Image.InputBindings>
-        </Image>
+            Grid.Column="0"
+            VerticalAlignment="Top"
+            Content="🡄"
+            FontSize="24"
+            Command="{Binding NavigateAccommodationBrowserCommand}"/>
 
         <Grid
             Margin="0 10"
@@ -311,7 +333,7 @@
                     HorizontalAlignment="Right"
                     Grid.Column="1"
                     BorderBrush="#999997"
-                    CornerRadius="10"
+                    CornerRadius="20"
                     BorderThickness="2"
                     Background="White">
                     <Grid>
@@ -371,7 +393,6 @@
                             Text="{Binding Path=Days, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Button 
-                            Height="25"
                             Grid.Row="3"
                             Grid.ColumnSpan="2"
                             Content="Pronađi slobodne termine"  
@@ -385,16 +406,15 @@
 
         </Grid>
 
-        <Image 
+        <Button
             VerticalAlignment="Top"
-            Width="32"
-            Height="32"
-            Grid.Column="2"
+            FontWeight="Bold"
+            Style="{StaticResource HelpButton}"
             Margin="20 0"
-            Source="../../../Resources/Images/help.png"
-            Cursor="Hand"
-            ToolTip="PDF dokumentacija o rezervisanju smeštaja">
-        </Image>
+            Grid.Column="2"
+            Content="?"
+            FontSize="22"
+            ToolTip="PDF dokumentacija o rezervisanju smeštaja"/>
             
     </Grid>
 </UserControl>
