@@ -81,8 +81,6 @@
     <Resource Include="Resources\Images\comment.png" />
     <Resource Include="Resources\Images\cross.png" />
     <Resource Include="Resources\Images\dash-line.png" />
-    <Resource Include="Resources\Images\go_back.png" />
-    <Resource Include="Resources\Images\help.png" />
     <Resource Include="Resources\Images\info-icon.png" />
     <Resource Include="Resources\Images\moon.png" />
     <Resource Include="Resources\Images\moscow.png" />

@@ -19,8 +19,8 @@ namespace InitialProject.Domain.Models
             }
 
             var csvValues = base.ToCSV();
-            csvValues.Append(voucherIds);
             csvValues = ArrayHandler.AddObjectToArrayStart(csvValues, "Guest2");
+            csvValues = ArrayHandler.AddObjectToArrayEnd(csvValues, voucherIds);
             return csvValues;
         }
         public override void FromCSV(string[] values)

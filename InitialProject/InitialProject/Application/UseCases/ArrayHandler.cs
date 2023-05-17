@@ -15,6 +15,14 @@ namespace InitialProject.Application.UseCases
             Array.Copy(array, 0, newArray, 1, array.Length);
             return newArray;
         }
+        public static T[] AddObjectToArrayEnd<T>(T[] array, T newObject)
+        {
+            T[] newArray = new T[array.Length + 1];
+            Array.Copy(array, newArray, array.Length);
+            newArray[array.Length] = newObject;
+            return newArray;
+        }
+
         public static T[] RemoveFirstElement<T>(T[] array)
         {
             T[] newArray = new T[array.Length - 1];

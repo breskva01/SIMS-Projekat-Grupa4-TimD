@@ -14,8 +14,8 @@ namespace InitialProject.Domain.Models
         public override string[] ToCSV()
         {
             var csvValues = base.ToCSV();
-            csvValues.Append(SuperGuest.ToString());
             csvValues = ArrayHandler.AddObjectToArrayStart(csvValues, "Guest1");
+            csvValues = ArrayHandler.AddObjectToArrayEnd(csvValues, SuperGuest.ToString());
             return csvValues;
         }
         public override void FromCSV(string[] values)
