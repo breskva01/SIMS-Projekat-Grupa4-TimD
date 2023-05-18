@@ -28,12 +28,13 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetById(tourRequestId);
         }
-        public TourRequest CreateTourRequest(Location Location, string Description, GuideLanguage Language,
+        public TourRequest CreateTourRequest(Location Location, string Description,RequestStatus Status, GuideLanguage Language,
             int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate)
         {
             TourRequest TourRequest = new TourRequest();
             TourRequest.Location = Location;
             TourRequest.Description = Description;
+            TourRequest.Status = Status;
             TourRequest.Language = Language;
             TourRequest.NumberOfGuests = NumberOfGuests;
             TourRequest.EarliestDate = EarliestDate;
