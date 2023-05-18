@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.GuestTwo
 {
     public class TourSortViewModel : ViewModelBase
     {

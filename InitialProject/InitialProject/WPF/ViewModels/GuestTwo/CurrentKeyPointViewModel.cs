@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.GuestTwo
 {
     public class CurrentKeyPointViewModel : ViewModelBase
     {
@@ -22,7 +22,7 @@ namespace InitialProject.WPF.ViewModels
         public string TourName { get; set; }
 
         public ICommand MenuCommand { get; }
-        
+
         public CurrentKeyPointViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;

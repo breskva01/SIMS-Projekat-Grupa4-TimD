@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.GuestTwo
 {
     public class Guest2InfoMenuViewModel : ViewModelBase
     {

@@ -2,6 +2,7 @@
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.WPF.ViewModels.GuestTwo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.GuestTwo
 {
     public class VoucherBrowserViewModel : ViewModelBase
     {

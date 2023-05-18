@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using InitialProject.WPF.ViewModels.GuestTwo;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.GuestTwo
 {
     public class NewTourBrowserViewModel : ViewModelBase
     {

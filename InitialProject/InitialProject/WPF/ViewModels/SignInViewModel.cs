@@ -4,6 +4,7 @@ using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
 using InitialProject.WPF.ViewModels.GuestOne;
+using InitialProject.WPF.ViewModels.GuestTwo;
 using System;
 using System.Collections.Generic;
 using System.Linq;

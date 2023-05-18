@@ -61,7 +61,6 @@
     <None Remove="Resources\Images\view.png" />
     <None Remove="Resources\Images\vila_italija.jpg" />
     <None Remove="Resources\Images\vila_slap.jpg" />
-    <None Remove="WPF\NewViews\TravelBuddy.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -88,7 +87,6 @@
   <ItemGroup>
     <Resource Include="Resources\Images\berlin.jpg" />
     <Resource Include="Resources\Images\blueCheck.png" />
-    <Resource Include="Resources\Images\brvnara_tara.jpg" />
     <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\checkmark.png" />
     <Resource Include="Resources\Images\filter.png" />
@@ -127,8 +125,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Factories\" />
-    <Resource Include="Resources\Images\vila_slap.jpg" />
-    <Resource Include="WPF\NewViews\TravelBuddy.png" />
   </ItemGroup>
 
 </Project>
