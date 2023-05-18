@@ -58,7 +58,7 @@
                 <RowDefinition Height="620"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Content="All Tours" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+            <Label Content="ᗩᒪᒪ TOᑌᖇS" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" />
             <Button Grid.Row="0" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
             </Button>
@@ -171,7 +171,6 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#270138" Command="{Binding CancelCommand}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ" HorizontalAlignment="Left" Margin="827,590,0,0" Grid.Row="1" VerticalAlignment="Top" Height="56" Width="160" RenderTransformOrigin="2.495,0.335" FontSize="20" Grid.RowSpan="2"/>
-            <Button Command="{Binding BackCommand}" Content="BACK" HorizontalAlignment="Left" Margin="58,590,0,0" Grid.Row="1" VerticalAlignment="Top" Height="56" Width="150" FontSize="20" Grid.RowSpan="2" IsEnabled="False"/>
         </Grid>
         <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
             <Grid.RenderTransform>
