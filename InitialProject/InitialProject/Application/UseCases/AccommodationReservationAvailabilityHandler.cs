@@ -15,7 +15,7 @@ namespace InitialProject.Application.UseCases
         private DateOnly _endDate;
         private int _stayLength;
         private Accommodation _accommodation;
-        private User _guest;
+        private Guest1 _guest;
         private List<AccommodationReservation> _existingReservations;
         private List<AccommodationReservation> _availableReservations;
         private DateOnly _currentDate => DateOnly.FromDateTime(DateTime.Now);
@@ -25,7 +25,7 @@ namespace InitialProject.Application.UseCases
         {
             _repository = repository;
         }
-        private void StoreParamaters(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, User guest)
+        private void StoreParamaters(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, Guest1 guest)
         {
             _startDate = startDate;
             _endDate = endDate;
@@ -36,7 +36,7 @@ namespace InitialProject.Application.UseCases
             _availableReservations = new List<AccommodationReservation>();
         }
         public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength,
-            Accommodation accommodation, User guest, int maxReservationCount = 3)
+            Accommodation accommodation, Guest1 guest, int maxReservationCount = 3)
         {
             StoreParamaters(startDate, endDate, stayLength, accommodation, guest);
             FindInsideDateRange(maxReservationCount);

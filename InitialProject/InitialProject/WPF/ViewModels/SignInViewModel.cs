@@ -3,6 +3,7 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
+using InitialProject.WPF.ViewModels.GuestOne;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,10 +45,9 @@ namespace InitialProject.WPF.ViewModels
         public ICommand Guest2NavigateCommand => 
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuest2VM()));
         public ICommand Guest1NavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, CreateAccommodationBrowserViewModel()));
+            new NavigateCommand(new NavigationService(_navigationStore, NavigateAccommodationBrowser()));
         public ICommand GuideNavigateCommand =>
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuideVM()));
-        //public ICommand Guest1NavigateCommand { get; }
 
         public ICommand OwnerNavigateCommand =>
             new NavigateCommand(new NavigationService(_navigationStore, OwnerVM()));
@@ -64,7 +64,7 @@ namespace InitialProject.WPF.ViewModels
             _navigationStore = navigationStore;
         }
 
-        private void SignIn(String password)
+        private void SignIn(string password)
         {
             _user = _userService.GetByUsername(Username);
             if (_user != null)
@@ -86,49 +86,39 @@ namespace InitialProject.WPF.ViewModels
         }
         private void OpenAppropriateWindow(User user)
         {
-            switch (user.Type)
+            if (user is Owner owner)
             {
-                case UserType.Owner:
+                int UnratedGuests = 0;
+                bool IsNotified = true;
+                _reservations = _reservationService.FindCompletedAndUnrated(owner.Id);
+                foreach (AccommodationReservation res in _reservations)
+                {
+                    if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
                     {
-                        int UnratedGuests = 0;
-                        bool IsNotified = true;
-                        _reservations = _reservationService.FindCompletedAndUnrated(user.Id);
-                        foreach (AccommodationReservation res in _reservations)
-                        {
-                            if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
-                            {
-                                _reservationService.updateLastNotification(res);
-                                UnratedGuests++;
-                                IsNotified= false;
-                            }
+                        _reservationService.updateLastNotification(res);
+                        UnratedGuests++;
+                        IsNotified = false;
+                    }
 
-                        }
-                        if (UnratedGuests > 0 && !IsNotified)
-                            MessageBox.Show("You have " + UnratedGuests.ToString() + " unrated guests!");
+                }
+                if (UnratedGuests > 0 && !IsNotified)
+                    MessageBox.Show("You have " + UnratedGuests.ToString() + " unrated guests!");
 
-                        OwnerNavigateCommand.Execute(null);
-                        break;
-                    }
-                case UserType.Guest1:
-                    {
-                        Guest1NavigateCommand.Execute(null);
-                        break;
-                    }
-                case UserType.TourGuide:
-                    {
-                        GuideNavigateCommand.Execute(null);
-                        break;
-                    }
-                case UserType.Guest2:
-                    {
-                        Guest2NavigateCommand.Execute(null);
-                        break;
-                    }
+                OwnerNavigateCommand.Execute(null);
             }
+            else if(user is Guest1)
+                Guest1NavigateCommand.Execute(null);
+            else if(user is TourGuide)
+                GuideNavigateCommand.Execute(null);
+            else
+                Guest2NavigateCommand.Execute(null);
         }
-        private AccommodationBrowserViewModel CreateAccommodationBrowserViewModel()
+        private ViewModelBase NavigateAccommodationBrowser()
         {
-            return new AccommodationBrowserViewModel(_navigationStore, _user);
+            var accommodationBrowserViewModel = 
+                new AccommodationBrowserViewModel(_navigationStore, (Guest1)_user);
+            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, (Guest1)_user);
+            return new LayoutViewModel(navigationBarViewModel, accommodationBrowserViewModel);
         }
         private ViewModelBase CreateGuest2VM()
         {

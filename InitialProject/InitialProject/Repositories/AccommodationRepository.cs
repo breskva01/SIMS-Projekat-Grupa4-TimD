@@ -37,18 +37,30 @@ namespace InitialProject.Repository
             return _accommodations.FindAll
                 (a => a.MatchesFilters(keyWords, type, guestNumber, numberOfDays));
         }
-        public List<Accommodation> Sort(List<Accommodation> accommodations, string criterium)
+        public List<Accommodation> Sort(List<Accommodation> accommodations, string criterion)
         {
-            switch (criterium)
+            switch (criterion)
             {
                 case "Name":
                     return SortByName(accommodations);
                 case "Location":
                     return SortByLocation(accommodations);
-                case "MaxGuestNumber":
-                    return SortByMaxGuestNumber(accommodations);
-                case "MinDaysNumber":
+                case "MaxGuestCountAsc":
+                    return SortByMaxGuestCount(accommodations);
+                case "MaxGuestCountDesc":
+                    {
+                        var sortedList = SortByMaxGuestCount(accommodations);
+                        sortedList.Reverse();
+                        return sortedList;
+                    }
+                case "MinDaysNumberAsc":
                     return SortByMinDaysNumber(accommodations);
+                case "MinDaysNumberDesc":
+                    {
+                        var sortedList = SortByMinDaysNumber(accommodations);
+                        sortedList.Reverse();
+                        return sortedList;
+                    }
                 default:
                     return accommodations;
             }
@@ -63,7 +75,7 @@ namespace InitialProject.Repository
                                           .ThenBy(a => a.City)
                                           .ToList();
         }
-        private List<Accommodation> SortByMaxGuestNumber(List<Accommodation> accommodations)
+        private List<Accommodation> SortByMaxGuestCount(List<Accommodation> accommodations)
         {
             return accommodations.OrderBy(a => a.MaximumGuests).ToList();
         }
@@ -72,12 +84,12 @@ namespace InitialProject.Repository
             return accommodations.OrderBy(a => a.MinimumDays).ToList();
         }
         public void Add(string name, string country, string city, string address, AccommodationType type,
-            int maximumGuests, int minimumDays, int minimumCancelationNotice, string pictureURL, User owner)
+            int maximumGuests, int minimumDays, int minimumCancelationNotice, List<string> pictureURLs, User owner)
         {
             GetAll();
             int accommodationId = NextId();
             Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address,
-                type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, owner);
+                type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, (Owner)owner);
             _accommodations.Add(accommodation);
             _fileHandler.Save(_accommodations);
         }

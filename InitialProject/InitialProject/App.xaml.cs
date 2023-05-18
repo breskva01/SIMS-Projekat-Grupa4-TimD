@@ -27,6 +27,12 @@ namespace InitialProject
         protected override void OnStartup(StartupEventArgs e)
         {
             _navigationStore.CurrentViewModel = new SignInViewModel(_navigationStore);
+
+            //Adding global styles to app resources
+            var stylesResourceDictionary = new ResourceDictionary();
+            stylesResourceDictionary.Source = new Uri("Resources/Styles/Styles.xaml", UriKind.RelativeOrAbsolute);
+            Resources.MergedDictionaries.Add(stylesResourceDictionary);
+
             MainWindow = new MainWindow()
             {
                 DataContext = new MainWindowViewModel(_navigationStore)
@@ -35,7 +41,5 @@ namespace InitialProject
 
             base.OnStartup(e);
         }
-
-
     }
 }

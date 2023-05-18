@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
-        xmlns:views="clr-namespace:InitialProject.WPF.NewViews" 
+        xmlns:views="clr-namespace:InitialProject.WPF.NewViews"
+        xmlns:viewsg1="clr-namespace:InitialProject.WPF.NewViews.GuestOne" 
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
+        xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.GuestOne"
         mc:Ignorable="d"
         Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
@@ -55,14 +57,14 @@
             <DataTemplate DataType="{x:Type vms:AccommodationRegistrationViewModel}">
                 <views:AccommodationRegistrationView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:AccommodationBrowserViewModel}">
-                <views:AccommodationBrowserView />
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationBrowserViewModel}">
+                <viewsg1:AccommodationBrowser />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:AccommodationReservationViewModel}">
-                <views:AccommodationReservationView />
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationViewModel}">
+                <viewsg1:AccommodationReservationForm />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:AccommodationReservationDatePickerViewModel}">
-                <views:AccommodationReservationDatePickerView />
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationDatePickerViewModel}">
+                <viewsg1:AccommodationReservationDatePicker />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:GuestRatingViewModel}">
                 <views:GuestRatingView />
@@ -88,20 +90,20 @@
             <DataTemplate DataType="{x:Type vms:TourStatsViewModel}">
                 <views:TourStatsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:AccommodationRatingViewModel}">
-                <views:AccommodationRatingView />
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationRatingViewModel}">
+                <viewsg1:AccommodationRatingView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:RateAccommodationViewModel}">
-                <views:RateAccommodationView />
+            <DataTemplate DataType="{x:Type vmsg1:RateAccommodationViewModel}">
+                <viewsg1:RateAccommodationForm />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:AccommodationReservationMoveRequestViewModel}">
-                <views:AccommodationReservationMoveRequestView />
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationMoveRequestViewModel}">
+                <viewsg1:AccommodationReservationMoveRequestForm />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:MyAccommodationReservationRequestsViewModel}">
-                <views:MyAccommodationReservationRequestsView />
+            <DataTemplate DataType="{x:Type vmsg1:MyAccommodationReservationRequestsViewModel}">
+                <viewsg1:MyAccommodationReservationRequestsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:OwnerCommentViewModel}">
-                <views:OwnerCommentView />
+            <DataTemplate DataType="{x:Type vmsg1:OwnerCommentViewModel}">
+                <viewsg1:OwnerCommentView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:GuideRatingsViewModel}">
                 <views:GuideRatingsView />
@@ -118,11 +120,29 @@
             <DataTemplate DataType="{x:Type vms:OwnerViewModel}">
                 <views:OwnerView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:MyAccommodationReservationsViewModel}">
-                <views:MyAccommodationReservationsView />
+            <DataTemplate DataType="{x:Type vmsg1:MyAccommodationReservationsViewModel}">
+                <viewsg1:MyAccommodationReservationsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:LayoutViewModel}">
+                <viewsg1:LayoutPanel />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:UnratedAccommodationsViewModel}">
+                <viewsg1:UnratedAccommodationsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:NavigationBarViewModel}">
+                <viewsg1:NavigationBar/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:ReceivedRatingsViewModel}">
+                <viewsg1:ReceivedRatingsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:GuestRatingDetailsViewModel}">
+                <viewsg1:GuestRatingDetailsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:ImageBrowserViewModel}">
+                <viewsg1:ImageBrowser/>
             </DataTemplate>
         </Grid.Resources>
 
-        <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="{Binding CurrentViewModel}" />
+        <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

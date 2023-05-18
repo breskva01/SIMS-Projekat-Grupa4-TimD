@@ -16,7 +16,7 @@ namespace InitialProject.WPF.ViewModels
     public class VoucherBrowserViewModel : ViewModelBase
     {
         public ObservableCollection<Voucher> Vouchers { get; set; }
-        private User _user;
+        private Guest2 _user;
         public Tour SelectedTour;
         public int NumberOfGuests;
         private readonly NavigationStore _navigationStore;
@@ -29,7 +29,7 @@ namespace InitialProject.WPF.ViewModels
         public VoucherBrowserViewModel(NavigationStore navigationStore, User user, Tour tour, int numberOfGuests)
         {
             _navigationStore = navigationStore;
-            _user = user;
+            _user = (Guest2)user;
             SelectedTour = tour;
             NumberOfGuests = numberOfGuests;
             _voucherService = new VoucherService();

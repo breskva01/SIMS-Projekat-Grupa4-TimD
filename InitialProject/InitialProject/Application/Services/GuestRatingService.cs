@@ -12,20 +12,24 @@ namespace InitialProject.Application.Services
 {
     public class GuestRatingService
     {
-        private readonly IGuestRatingRepository _repository;
+        private readonly IGuestRatingRepository _ratingRepository;
 
         public GuestRatingService()
         {
-            _repository = RepositoryInjector.Get<IGuestRatingRepository>();
+            _ratingRepository = RepositoryInjector.Get<IGuestRatingRepository>();
         }
 
         public List<GuestRating> GetAll()
         {
-            return _repository.GetAll();
+            return _ratingRepository.GetAll();
         }
         public GuestRating RateGuest(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperience, string comment)
         {
-            return _repository.Add(ownerId, guestId, hygiene, respectsRules, communication, timeliness, noiseLevel, overallExperience, comment);
+            return _ratingRepository.Add(ownerId, guestId, hygiene, respectsRules, communication, timeliness, noiseLevel, overallExperience, comment);
+        }
+        public List<GuestRating> GetEligibleForDisplay(int guestId)
+        {
+            return _ratingRepository.GetEligibleForDisplay(guestId);
         }
     }
 }
