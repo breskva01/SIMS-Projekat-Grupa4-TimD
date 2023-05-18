@@ -2,6 +2,7 @@
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.WPF.ViewModels.GuestTwo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.GuestTwo
 {
     public class VoucherBrowserViewModel : ViewModelBase
     {
@@ -49,8 +50,8 @@ namespace InitialProject.WPF.ViewModels
 
         private void ShowTourBrowserView()
         {
-            TourBrowserViewModel tourBrowserViewModel = new TourBrowserViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourBrowserViewModel));
+            NewTourBrowserViewModel newTourBrowserViewModel = new NewTourBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, newTourBrowserViewModel));
             navigate.Execute(null);
         }
 

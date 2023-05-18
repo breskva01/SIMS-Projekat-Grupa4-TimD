@@ -54,6 +54,7 @@ namespace InitialProject.Application.Injector
             Map<IAccommodationReservationCancellationNotificationRepository, AccommodationReservationCancellationNotificationRepository>();
             Map<IAccommodationReservationMoveRequestRepository, AccommodationReservationMoveRequestRepository>();
             Map<ITourRepository, TourRepository>();
+            Map<ITourRequestRepository, TourRequestRepository>();
             Map<ITourReservationRepository, TourReservationRepository>();
             Map<ITourRatingRepository, TourRatingRepository>();
             Map<IVoucherRepository, VoucherRepository>();

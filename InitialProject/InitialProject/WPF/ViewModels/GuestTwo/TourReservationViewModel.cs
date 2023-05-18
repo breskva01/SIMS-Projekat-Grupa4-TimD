@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace InitialProject.WPF.ViewModels
+namespace InitialProject.WPF.ViewModels.GuestTwo
 {
     public class TourReservationViewModel : ViewModelBase
     {
@@ -22,10 +22,10 @@ namespace InitialProject.WPF.ViewModels
         private readonly TourReservationService _tourReservationService;
 
         private string _numberOfGuests;
-        public  string NumberOfGuests
+        public string NumberOfGuests
         {
             get
-            { 
+            {
                 return _numberOfGuests;
             }
             set
@@ -98,10 +98,10 @@ namespace InitialProject.WPF.ViewModels
 
         private void ShowTourBrowserView()
         {
-            TourBrowserViewModel tourBrowserViewModel = new TourBrowserViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourBrowserViewModel));
+            NewTourBrowserViewModel newTourBrowserViewModel = new NewTourBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, newTourBrowserViewModel));
             navigate.Execute(null);
         }
-        
+
     }
 }

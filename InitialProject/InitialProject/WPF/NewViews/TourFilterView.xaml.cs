@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace InitialProject.WPF.NewViews
 {
     /// <summary>
-    /// Interaction logic for TourBrowserView.xaml
+    /// Interaction logic for TourFilterView.xaml
     /// </summary>
-    public partial class TourBrowserView : UserControl
+    public partial class TourFilterView : UserControl
     {
-        public TourBrowserView()
+        public TourFilterView()
         {
             InitializeComponent();
         }

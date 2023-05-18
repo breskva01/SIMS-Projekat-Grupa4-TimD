@@ -87,7 +87,7 @@ namespace InitialProject.Repositories
         {
             return GetById(tourId).State == TourState.Started;
         }
-        public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int numberOfGuests)
+        public List<Tour> GetFiltered(TourFilterSort tourFilterSort)
         {
             _tours = _tourFileHandler.Load();
             _locations = _locationFileHandler.Load();
@@ -100,30 +100,66 @@ namespace InitialProject.Repositories
             List<Tour> filteredTours = new();
             foreach (Tour tour in _tours)
             {
-                if (MatchesFilters(tour, country, city, duration, language, numberOfGuests))
+                if (MatchesFilters(tour, tourFilterSort.FilterCountry, tourFilterSort.FilterCity, tourFilterSort.FilterMinDuration,
+                    tourFilterSort.FilterMaxDuration, tourFilterSort.FilterLanguage, tourFilterSort.FilterNumberOfGuests))
                 {
                     filteredTours.Add(tour);
                 }
             }
             return filteredTours;
         }
-        public bool MatchesFilters(Tour tour, string country, string city, int duration, GuideLanguage language, int numberOfGuests)
+        public bool MatchesFilters(Tour tour, string country, string city, int durationMin, int durationMax, GuideLanguage language, int numberOfGuests)
         {
             bool countryMatch = tour.Location.Country == country || country == "";
             bool cityMatch = tour.Location.City == city || city == "";
-            bool durationMatch = tour.Duration == duration || duration == 0;
+            bool durationMinMatch = tour.Duration >= durationMin || durationMin == 0;
+            bool durationMaxMatch = tour.Duration <= durationMax || durationMax == 0;
             bool languageMatch = tour.Language == language || language == GuideLanguage.All;
             bool numberOfGuestsMatch = tour.MaximumGuests - tour.CurrentNumberOfGuests >= numberOfGuests || numberOfGuests == 0;
 
-            return countryMatch && cityMatch && durationMatch && languageMatch && numberOfGuestsMatch;
+            return countryMatch && cityMatch && durationMinMatch && durationMaxMatch && languageMatch && numberOfGuestsMatch;
         }
-        public List<Tour> SortByName(List<Tour> tours)
+
+        public List<Tour> GetSorted(List<Tour> tours, TourFilterSort tourFilterSort)
         {
-            return tours.OrderBy(t => t.Name).ToList();
+            IOrderedEnumerable<Tour> orderedTours = null;
+
+            if (tourFilterSort.SortCountry)
+            {
+                orderedTours = tours.OrderBy(t => t.Location.Country);
+            }
+
+            if (tourFilterSort.SortCity)
+            {
+                orderedTours = orderedTours == null ? tours.OrderBy(t => t.Location.City) : orderedTours.ThenBy(t => t.Location.City);
+            }
+
+            if (tourFilterSort.SortDuration)
+            {
+                orderedTours = orderedTours == null ? tours.OrderBy(t => t.Duration) : orderedTours.ThenBy(t => t.Duration);
+            }
+
+            if (tourFilterSort.SortLanguage)
+            {
+                orderedTours = orderedTours == null ? tours.OrderBy(t => t.Language) : orderedTours.ThenBy(t => t.Language);
+            }
+
+            if (tourFilterSort.SortSpaces)
+            {
+                orderedTours = orderedTours == null ? tours.OrderByDescending(t => (t.MaximumGuests - t.CurrentNumberOfGuests)) : orderedTours.ThenByDescending(t => (t.MaximumGuests - t.CurrentNumberOfGuests));
+            }
+
+            return orderedTours?.ToList() ?? tours;
         }
-        public List<Tour> SortByLocation(List<Tour> tours)
+    
+
+        public List<Tour> SortByCountry(List<Tour> tours)
         {
-            return tours.OrderBy(t => t.Location.Country).ThenBy(t => t.Location.City).ToList();
+            return tours.OrderBy(t => t.Location.Country).ToList();
+        }
+        public List<Tour> SortByCity(List<Tour> tours)
+        {
+            return tours.OrderBy(t => t.Location.City).ToList();
         }
         public List<Tour> SortByDuration(List<Tour> tours)
         {
@@ -132,6 +168,10 @@ namespace InitialProject.Repositories
         public List<Tour> SortByLanguage(List<Tour> tours)
         {
             return tours.OrderBy(t => t.Language).ToList();
+        }
+        public List<Tour> SortBySpaces(List<Tour> tours)
+        {
+            return tours.OrderByDescending(t => (t.MaximumGuests-t.CurrentNumberOfGuests)).ToList();
         }
         public Tour GetMostVisited(String selectedYear)
         {
