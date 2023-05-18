@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Navigation;
 using System.Xml.Linq;
 
 namespace InitialProject.Domain.Models
@@ -69,12 +70,12 @@ namespace InitialProject.Domain.Models
         {
             if (string.IsNullOrEmpty(keyWords))
                 return true;
-            string[] splitKeyWords = keyWords.Split(" ");
+            string[] splitKeyWords = keyWords.ToLower().Split(" ");
             foreach (string keyWord in splitKeyWords)
             {
-                if (!(Name.ToLower().Contains(keyWord.ToLower()) ||
-                    City.ToLower().Contains(keyWord.ToLower()) ||
-                    Country.ToLower().Contains(keyWord.ToLower())))
+                if (! (Name.ToLower().Contains(keyWord) ||
+                       City.ToLower().Contains(keyWord) ||
+                       Country.ToLower().Contains(keyWord) ))
                 {
                     return false;
                 }

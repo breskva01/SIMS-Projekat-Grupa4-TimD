@@ -42,6 +42,14 @@ namespace InitialProject.Domain.Models
             IsOwnerRated = false;
             Status = AccommodationReservationStatus.Active;
         }
+        public bool HappenedInLastYear()
+        {
+            DateOnly todaysDate = DateOnly.FromDateTime(DateTime.Now);
+            TimeSpan difference = todaysDate.ToDateTime(TimeOnly.MinValue) -
+                                  CheckOut.ToDateTime(TimeOnly.MinValue);
+            int differenceInDays = (int)difference.TotalDays;
+            return differenceInDays <= 365 && Status == AccommodationReservationStatus.Finished;
+        }
         public bool Overlaps(DateOnly checkIn, DateOnly checkOut)
         {
             return CheckIn < checkOut && checkIn < CheckOut;
