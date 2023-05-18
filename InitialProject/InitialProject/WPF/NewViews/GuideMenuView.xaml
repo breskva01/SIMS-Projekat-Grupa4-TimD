@@ -66,7 +66,7 @@
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
             <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
             <Label Content="ᗯEᒪᑕOᗰE TO TᖇᗩᐯEᒪᗷᑌᗪᗪY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60"/>
-            <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Integer quis consequat ante, nec accumsan elit. Donec rutrum, nunc ultrices porttitor malesuada, ante nisi efficitur turpis, et pulvinar enim elit in sapien. Duis non tempor ligula. In hac habitasse platea dictumst. Vestibulum sodales nulla enim, et condimentum elit luctus in. Vivamus dui mauris, egestas sed nibh id, cursus imperdiet dolor. Morbi quis mattis quam. Donec et dui sodales, congue nisi fermentum, elementum ex. Maecenas vitae nisi non sapien commodo aliquet vitae et tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam eu elit et risus fermentum iaculis vel eu ligula. Mauris posuere dui eget blandit finibus. Donec tellus velit, maximus et scelerisque vel, ultrices a neque." VerticalAlignment="Top" Height="212" Width="656" FontSize="20"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="ᖴOᑌᑎᗪEᗪ Iᑎ 1996 Iᑎ ᑎOᐯI Sᗩᗪ, .TᖇᗩᐯEᒪᗷᑌᗪᗪY ᕼᗩS GᖇOᗯᑎ ᖴᖇOᗰ ᗩ Sᗰᗩᒪᒪ SEᖇᗷIᗩᑎ STᗩᖇTᑌᑭ TO OᑎE Oᖴ TᕼE ᗯOᖇᒪᗪ’S ᒪEᗩᗪIᑎG ᗪIGITᗩᒪ TᖇᗩᐯEᒪ ᑕOᗰᑭᗩᑎIES. TᖇᗩᐯEᒪᗷᑌᗪᗪY’S ᗰISSIOᑎ IS TO ᗰᗩKE IT EᗩSIEᖇ ᖴOᖇ EᐯEᖇYOᑎE TO E᙭ᑭEᖇIEᑎᑕE TᕼE ᗯOᖇᒪᗪ. TᖇᗩᐯEᒪᗷᑌᗪᗪY IS ᗩᐯᗩIᒪᗩᗷᒪE Iᑎ 43 ᒪᗩᑎGᑌᗩGES ᗩᑎᗪ OᖴᖴEᖇS ᗰOᖇE Tᕼᗩᑎ 28 ᗰIᒪᒪIOᑎ TOTᗩᒪ ᖇEᑭOᖇTEᗪ ᗩᑕᑕOᗰᗰOᗪᗩTIOᑎ ᒪISTIᑎGS, IᑎᑕᒪᑌᗪIᑎG OᐯEᖇ 6.6 ᗰIᒪᒪIOᑎ ᒪISTIᑎGS ᗩᒪOᑎE Oᖴ ᕼOᗰES, ᗩᑭᗩᖇTᗰEᑎTS ᗩᑎᗪ OTᕼEᖇ ᑌᑎIᑫᑌE ᑭᒪᗩᑕES TO STᗩY." VerticalAlignment="Top" Height="270" Width="656" FontSize="20"/>
         </Grid>
 
         <Grid x:Name="InterfaceGrid" >
@@ -89,13 +89,13 @@
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
-                <Image Height="40" Width="35" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\user-64.png"></Image>
+                <Image Height="40" Width="35" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\profileWhite.png"></Image>
             </Button>
             <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
             <Label Foreground="Black"  Content="ᗯEᒪᑕOᗰE TO TᖇᗩᐯEᒪᗷᑌᗪᗪY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
 
             </Label>
-            <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Integer quis consequat ante, nec accumsan elit. Donec rutrum, nunc ultrices porttitor malesuada, ante nisi efficitur turpis, et pulvinar enim elit in sapien. Duis non tempor ligula. In hac habitasse platea dictumst. Vestibulum sodales nulla enim, et condimentum elit luctus in. Vivamus dui mauris, egestas sed nibh id, cursus imperdiet dolor. Morbi quis mattis quam. Donec et dui sodales, congue nisi fermentum, elementum ex. Maecenas vitae nisi non sapien commodo aliquet vitae et tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam eu elit et risus fermentum iaculis vel eu ligula. Mauris posuere dui eget blandit finibus. Donec tellus velit, maximus et scelerisque vel, ultrices a neque." VerticalAlignment="Top" Height="212" Width="656" FontSize="20"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="ᖴOᑌᑎᗪEᗪ Iᑎ 1996 Iᑎ ᑎOᐯI Sᗩᗪ, .TᖇᗩᐯEᒪᗷᑌᗪᗪY ᕼᗩS GᖇOᗯᑎ ᖴᖇOᗰ ᗩ Sᗰᗩᒪᒪ SEᖇᗷIᗩᑎ STᗩᖇTᑌᑭ TO OᑎE Oᖴ TᕼE ᗯOᖇᒪᗪ’S ᒪEᗩᗪIᑎG ᗪIGITᗩᒪ TᖇᗩᐯEᒪ ᑕOᗰᑭᗩᑎIES. TᖇᗩᐯEᒪᗷᑌᗪᗪY’S ᗰISSIOᑎ IS TO ᗰᗩKE IT EᗩSIEᖇ ᖴOᖇ EᐯEᖇYOᑎE TO E᙭ᑭEᖇIEᑎᑕE TᕼE ᗯOᖇᒪᗪ. TᖇᗩᐯEᒪᗷᑌᗪᗪY IS ᗩᐯᗩIᒪᗩᗷᒪE Iᑎ 43 ᒪᗩᑎGᑌᗩGES ᗩᑎᗪ OᖴᖴEᖇS ᗰOᖇE Tᕼᗩᑎ 28 ᗰIᒪᒪIOᑎ TOTᗩᒪ ᖇEᑭOᖇTEᗪ ᗩᑕᑕOᗰᗰOᗪᗩTIOᑎ ᒪISTIᑎGS, IᑎᑕᒪᑌᗪIᑎG OᐯEᖇ 6.6 ᗰIᒪᒪIOᑎ ᒪISTIᑎGS ᗩᒪOᑎE Oᖴ ᕼOᗰES, ᗩᑭᗩᖇTᗰEᑎTS ᗩᑎᗪ OTᕼEᖇ ᑌᑎIᑫᑌE ᑭᒪᗩᑕES TO STᗩY." VerticalAlignment="Top" Height="270" Width="656" FontSize="20"/>
 
         </Grid>
 
