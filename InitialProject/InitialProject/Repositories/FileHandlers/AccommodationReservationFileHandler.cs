@@ -31,7 +31,7 @@ namespace InitialProject.Repositories.FileHandlers
         {
             var users = new UserFileHandler().Load();
             reservations.ForEach(r =>
-                r.Guest = users.Find(u => u.Id == r.Guest.Id));
+                r.Guest = (Guest1)users.Find(u => u.Id == r.Guest.Id));
         }
         private void FillInAccommodations(List<AccommodationReservation> reservations)
         {

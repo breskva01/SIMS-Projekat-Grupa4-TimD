@@ -33,6 +33,11 @@ namespace InitialProject.Repositories
             GetAll();
             return _ratings.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId);
         }
+        public List<AccommodationRating> GetByAccommodationId(int accommodationId)
+        {
+            GetAll();
+            return _ratings.FindAll(r => r.Reservation.Accommodation.Id == accommodationId);
+        }
         public List<AccommodationRating> GetEligibleForDisplay(int ownerId)
         {
             GetAll();
@@ -67,10 +72,10 @@ namespace InitialProject.Repositories
         }
         public void UpdateSuperOwnerStatus(int ownerId, double[] totalAverageRating)
         {
-            User newOwner = new User();
+            Owner newOwner = new Owner();
             _users = _userFileHandler.Load();
             _ratings = GetByOwnerId(ownerId);
-            User owner = _users.Find(o => o.Id == ownerId);
+            Owner owner = (Owner)_users.Find(o => o.Id == ownerId);
             double OwnerRatingsCount = totalAverageRating[1];
             owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 2) ? true : false;  
 
