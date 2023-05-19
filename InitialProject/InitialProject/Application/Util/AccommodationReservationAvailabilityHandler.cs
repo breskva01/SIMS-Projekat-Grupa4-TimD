@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InitialProject.Application.UseCases
+namespace InitialProject.Application.Util
 {
     public class AccommodationReservationAvailabilityHandler
     {
