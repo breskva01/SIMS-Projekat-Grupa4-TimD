@@ -28,6 +28,7 @@ namespace InitialProject.Domain.Models
         public int NumberOfGuests { get; set; }
         public DateTime EarliestDate { get; set; }
         public DateTime LatestDate { get; set; } 
+        public int TourId { get; set; }
 
         public TourRequest()
         {
@@ -62,6 +63,7 @@ namespace InitialProject.Domain.Models
             NumberOfGuests = Convert.ToInt32(values[5]);
             EarliestDate = DateTime.ParseExact(values[6], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             LatestDate = DateTime.ParseExact(values[7], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
+            TourId = Convert.ToInt32(values[8]);
         }
 
         public string[] ToCSV()
@@ -76,6 +78,7 @@ namespace InitialProject.Domain.Models
                 NumberOfGuests.ToString(),
                 EarliestDate.ToString("dd.MM.yyyy. HH:mm:ss"),
                 LatestDate.ToString("dd.MM.yyyy. HH:mm:ss"),
+                TourId.ToString(),
             };
             return csvValues;
         }

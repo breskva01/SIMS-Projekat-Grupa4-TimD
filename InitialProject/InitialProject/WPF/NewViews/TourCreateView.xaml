@@ -223,7 +223,7 @@
                 <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="2" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" IsEditable="True" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
                 <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding KeyPointCities}" SelectedItem="{Binding SelectedKeyPointCity}" IsEditable="True" />
                 <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="3" Grid.Column="1" Width="178" HorizontalAlignment="Right" Margin="5" ItemsSource="{Binding KeyPointPlaces}" SelectedItem="{Binding SelectedKeyPointPlace}" IsEditable="True"/>
-                <xctk:DateTimePicker BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="4" Grid.Column="1"  x:Name="dateTimePicker" Margin="5" Text="{Binding Start, UpdateSourceTrigger=PropertyChanged}" />
+                <xctk:DateTimePicker BorderThickness="2" BorderBrush="Black" FontSize="28" Grid.Row="4" Grid.Column="1"  x:Name="dateTimePicker" Margin="5" Text="{Binding Start, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                 <ComboBox BorderThickness="5" BorderBrush="Black" FontSize="28" Grid.Row="6" Grid.Column="1" Width="178" HorizontalAlignment="Left" Margin="5" Text="{Binding Path=LanguageType, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem>English</ComboBoxItem>
                     <ComboBoxItem>Serbian</ComboBoxItem>

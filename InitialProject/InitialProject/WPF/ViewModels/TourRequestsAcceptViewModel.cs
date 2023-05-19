@@ -209,7 +209,9 @@ namespace InitialProject.WPF.ViewModels
         private void AcceptTourRequest()
         {
             SelectedTourRequest.Status = RequestStatus.Accepted;
-            _tourRequestService.Update(SelectedTourRequest);
+            TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user, SelectedTourRequest);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
         }
     }
 }

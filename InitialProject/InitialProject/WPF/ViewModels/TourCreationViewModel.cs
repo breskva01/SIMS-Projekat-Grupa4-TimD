@@ -5,6 +5,7 @@ using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Diagnostics.Metrics;
 using System.Linq;
@@ -15,11 +16,13 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class TourCreationViewModel : ViewModelBase
+    public class TourCreationViewModel : ViewModelBase, IDataErrorInfo
     {
 
         private readonly NavigationStore _navigationStore;
         private User _user;
+
+        public TourRequest TourRequest { get; set; }
 
         public ObservableCollection<Location> Locations { get; set; }
         public ObservableCollection<KeyPoint> KeyPoints { get; set; }
@@ -30,6 +33,7 @@ namespace InitialProject.WPF.ViewModels
         private LocationService _locationService;
         private KeyPointService _keyPointService;
         private TourService _tourService;
+        private TourRequestService _tourRequestService;
 
         public ICommand ConfirmCommand { get; set; }
         public ICommand CancelCommand { get; }
@@ -115,7 +119,7 @@ namespace InitialProject.WPF.ViewModels
 
             }
         }
-        
+
         private string _selectedKeyPointCity;
         public string SelectedKeyPointCity
         {
@@ -181,7 +185,7 @@ namespace InitialProject.WPF.ViewModels
             }
         }
         private string _start;
-        public string Start 
+        public string Start
         {
             get => _start;
             set
@@ -199,7 +203,7 @@ namespace InitialProject.WPF.ViewModels
             get => _duration;
             set
             {
-                if (value != _duration && value>= 0)
+                if (value != _duration && value >= 0)
                 {
                     _duration = value;
                     OnPropertyChanged();
@@ -248,7 +252,7 @@ namespace InitialProject.WPF.ViewModels
         private string _city;
         public string City
         {
-            
+
             get => _city;
             set
             {
@@ -261,15 +265,44 @@ namespace InitialProject.WPF.ViewModels
 
         }
 
+        public TourCreationViewModel(NavigationStore navigationStore, User user, TourRequest request)
+        {
+            _navigationStore = navigationStore;
+            _user = user;
+
+            _tourService = new TourService();
+            _locationService = new LocationService();
+            _keyPointService = new KeyPointService();
+            _tourRequestService = new TourRequestService();
+
+            Locations = new ObservableCollection<Location>(_locationService.GetAll());
+            KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
+            KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
+
+            Country = request.Location.Country;
+            City = request.Location.City;
+            SelectedCity = request.Location.City;
+            LanguageType = request.Language.ToString();
+            MaximumGuests = request.NumberOfGuests;
+            Description = request.Description;
+
+            AddKeyPointCommand = new AddKeyPointCommand(this);
+
+            TourRequest = request;
+
+            InitializeCommands();
+
+        }
+
         public TourCreationViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
             _user = user;
 
-            _tourService = new TourService();    
+            _tourService = new TourService();
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
-            
+
             AddKeyPointCommand = new AddKeyPointCommand(this);
 
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
@@ -307,7 +340,7 @@ namespace InitialProject.WPF.ViewModels
             Location.Id = Locations.Where(c => c.City == City).Select(c => c.Id).FirstOrDefault();
             GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
             //int TourDuration = int.Parse(Duration);
-           // int MaxGuests = int.Parse(MaximumGuests);
+            // int MaxGuests = int.Parse(MaximumGuests);
             int MaxGuests = MaximumGuests;
             int TourDuration = Duration;
 
@@ -316,7 +349,13 @@ namespace InitialProject.WPF.ViewModels
                 _keyPointIds.Add(ky.Id);
             }
 
-            _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
+            Tour tour = _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
+
+            if(TourRequest != null)
+            {
+                TourRequest.TourId = tour.Id;
+                _tourRequestService.Update(TourRequest);
+            }
 
             ClearOutTextBoxes();
 
@@ -453,6 +492,41 @@ namespace InitialProject.WPF.ViewModels
             MaximumGuests--;
         }
 
+        public string this[string columnName]
+        {
+            get
+            {
+                string? error = null;
+                string requiredMessage = "Obavezno polje";
+                switch (columnName)
+                {
+                    case nameof(Start):
+                        if (TourRequest != null)
+                        {
+                            if (Convert.ToDateTime(Start) < TourRequest.EarliestDate || Convert.ToDateTime(Start) > TourRequest.LatestDate) error = "NOPE";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return error;
 
+            }
+        }
+        public string Error => null;
+        public bool IsTourValid
+        {
+            get
+            {
+                foreach (var property in new string[]
+                {
+                    nameof(Start) })
+                {
+                    if (this[property] != null) return false;
+                }
+                return true;
+            }
+
+        }
     }
 }
