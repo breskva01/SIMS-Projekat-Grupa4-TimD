@@ -38,7 +38,7 @@ namespace InitialProject.Application.Services
             return _repository.GetApproved(tourRequests);
         }
         public TourRequest CreateTourRequest(Location Location, string Description,RequestStatus Status, GuideLanguage Language,
-            int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate)
+            int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate, int TourId)
         {
             TourRequest TourRequest = new TourRequest();
             TourRequest.Location = Location;
@@ -48,6 +48,7 @@ namespace InitialProject.Application.Services
             TourRequest.NumberOfGuests = NumberOfGuests;
             TourRequest.EarliestDate = EarliestDate;
             TourRequest.LatestDate = LatestDate;
+            TourRequest.TourId = TourId;
 
             return _repository.Save(TourRequest);
         }

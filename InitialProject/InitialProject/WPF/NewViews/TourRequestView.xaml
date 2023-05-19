@@ -26,7 +26,11 @@
                         <MouseBinding MouseAction="LeftClick" Command="{Binding MenuCommand}" />
                     </Image.InputBindings>
                 </Image>
-                <Image Source="/Resources/Images/notify.png" Height="30" Width="30" Margin="5 0 50 0" VerticalAlignment="Center"/>
+                <Image Source="/Resources/Images/notify.png" Height="30" Width="30" Margin="5 0 50 0" VerticalAlignment="Center">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NotificationCommand}" />
+                    </Image.InputBindings>
+                </Image>
                 <TextBlock Text="Request Tour" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Foreground="#333333"/>
                 <Image Source="/Resources/Images/logo.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="70 0 0 0" VerticalAlignment="Center" />
             </StackPanel>

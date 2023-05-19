@@ -28,6 +28,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
      
         public ICommand BackCommand { get; }
         public ICommand MenuCommand { get; }
+        public ICommand NotificationCommand { get; }
 
 
         public TourRequestBrowserViewModel(NavigationStore navigationStore, User user)
@@ -45,9 +46,10 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
                 TourRequests.Add(t);
             }
 
-            FilterCommand = new ExecuteMethodCommand(ShowTourRequestFilteredView);
+            FilterCommand = new ExecuteMethodCommand(ShowApprovedTourRequestView);
             BackCommand = new ExecuteMethodCommand(ShowGuest2InfoMenuView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
+            NotificationCommand = new ExecuteMethodCommand(ShowNotificationsView);
         }
 
         private void ShowGuest2MenuView()
@@ -63,15 +65,19 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             navigate.Execute(null);
         }
 
-        private void ShowTourRequestFilteredView()
+        private void ShowApprovedTourRequestView()
         {
-            List<TourRequest> unfilteredRequests = TourRequests.ToList();
-            TourRequests.Clear();
-            foreach (var t in _tourRequestService.GetApproved(unfilteredRequests))
-            {
-                t.Location = Locations.FirstOrDefault(l => l.Id == t.Location.Id);
-                TourRequests.Add(t);
-            }
+            ApprovedTourRequestsViewModel approvedTourRequestsViewModel = new ApprovedTourRequestsViewModel(_navigationStore, _user, TourRequests.ToList());
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, approvedTourRequestsViewModel));
+            navigate.Execute(null);
+        }
+
+        private void ShowNotificationsView()
+        {
+            NotificationBrowserViewModel notificationBrowserViewModel = new NotificationBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, notificationBrowserViewModel));
+
+            navigate.Execute(null);
         }
 
     }

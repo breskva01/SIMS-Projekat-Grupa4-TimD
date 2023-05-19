@@ -20,7 +20,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         public ICommand MyVouchersCommand { get; }
         public ICommand MyRequestsCommand { get; }
         public ICommand MyComplexRequestsCommand { get; }
-        public ICommand NotificationsCommand { get; }
+        public ICommand MyNotificationsCommand { get; }
         public ICommand MenuCommand { get; }
         public Guest2InfoMenuViewModel(NavigationStore navigationStore, User user)
         {
@@ -31,7 +31,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             MyVouchersCommand = new ExecuteMethodCommand(ShowMyVouchersView);
             MyRequestsCommand = new ExecuteMethodCommand(ShowMyRequestsView);
             //MyComplexRequestsCommand = new TourTrackingCommand(ShowMyComplexRequestsView, user);
-            //NotificationsCommand = new TourTrackingCommand(ShowNotificationsView, user);
+            MyNotificationsCommand = new ExecuteMethodCommand(ShowNotificationsView);
             MenuCommand = new ExecuteMethodCommand(ShowMainMenuView);
         }
 
@@ -47,6 +47,14 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         {
             TourRequestBrowserViewModel tourRequestBrowserViewModel = new TourRequestBrowserViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourRequestBrowserViewModel));
+
+            navigate.Execute(null);
+        }
+
+        private void ShowNotificationsView()
+        {
+            NotificationBrowserViewModel notificationBrowserViewModel = new NotificationBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, notificationBrowserViewModel));
 
             navigate.Execute(null);
         }

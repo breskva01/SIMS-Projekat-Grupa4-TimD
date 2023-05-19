@@ -163,6 +163,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         public ICommand RequestCommand { get; }
         public ICommand BackCommand { get; }
         public ICommand MenuCommand { get; }
+        public ICommand NotificationCommand { get; }
         public TourRequestViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
@@ -183,6 +184,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             RequestCommand = new ExecuteMethodCommand(CreateTourRequest);
             BackCommand = new ExecuteMethodCommand(ShowGuest2RequestMenuView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
+            NotificationCommand = new ExecuteMethodCommand(ShowNotificationsView);
         }
 
         private void ShowGuest2MenuView()
@@ -199,6 +201,14 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             navigate.Execute(null);
         }
 
+        private void ShowNotificationsView()
+        {
+            NotificationBrowserViewModel notificationBrowserViewModel = new NotificationBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, notificationBrowserViewModel));
+
+            navigate.Execute(null);
+        }
+
         public void CreateTourRequest()
         {
             Location Location = new Location();
@@ -207,7 +217,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             Location.Id = Locations.Where(c => c.City == SelectedCity).Select(c => c.Id).FirstOrDefault();
             GuideLanguage Language = GetLanguage();
 
-            _tourRequestService.CreateTourRequest(Location, Description, RequestStatus.OnHold, Language, SelectedNumberOfGuests, SelectedEarliestDate, SelectedLatestDate);
+            _tourRequestService.CreateTourRequest(Location, Description, RequestStatus.OnHold, Language, SelectedNumberOfGuests, SelectedEarliestDate, SelectedLatestDate, 0);
             ShowGuest2RequestMenuView();
         }
         
