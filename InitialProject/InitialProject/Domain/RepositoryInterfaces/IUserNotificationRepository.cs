@@ -13,6 +13,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public List<UserNotification> GetByUser(int userId);
         public UserNotification Update(UserNotification notification);
         public UserNotification Save(UserNotification notification);
+        public void NotifyApprovedRequest(Tour tour, int userId);
         public int NextId();
         public void Delete(UserNotification notification);
     }

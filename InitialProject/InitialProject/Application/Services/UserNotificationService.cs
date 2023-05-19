@@ -15,6 +15,7 @@ namespace InitialProject.Application.Services
     {
         private readonly List<IObserver> _observers;
         private readonly IUserNotificationRepository _repository;
+        private readonly UserService _userService;
         public UserNotificationService()
         {
             _observers = new List<IObserver>();
@@ -25,6 +26,12 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetAll();
         }
+
+        public void NotifyApprovedRequest(Tour tour, int userId)
+        {
+            _repository.NotifyApprovedRequest(tour, userId);
+        }
+
         public UserNotification GetById(int notificationId)
         {
             return _repository.GetById(notificationId);

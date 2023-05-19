@@ -64,6 +64,17 @@ namespace InitialProject.Repositories
             return _notifications.Max(t => t.Id) + 1;
         }
 
+        public void NotifyApprovedRequest(Tour tour, int userId)
+        {
+            UserNotification notification = new UserNotification();
+            notification.UserId = userId;
+            notification.Message = "Tour " + tour.Location.City + " - " + tour.Location.Country + " that you requested has been approved." +
+                "For more details go to: " +
+                "MyInfo/Requests";
+            notification.Time = DateTime.Now;
+            Save(notification);
+        }
+
         public UserNotification Save(UserNotification notification)
         {
             notification.Id = NextId();
