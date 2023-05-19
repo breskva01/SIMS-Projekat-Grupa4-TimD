@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace InitialProject.Repositories
 {
@@ -38,10 +39,52 @@ namespace InitialProject.Repositories
             return _tourRequestFileHandler.Load();
         }
 
+        public List<TourRequest> GetApproved(List<TourRequest> userRequests)
+        { 
+            List<TourRequest> ApprovedRequests = new List<TourRequest>();
+            foreach (TourRequest t in userRequests)
+            {
+                if (t.Status == RequestStatus.Approved)
+                {
+                    ApprovedRequests.Add(t);
+                }
+            }
+            return ApprovedRequests;
+        }
+
         public TourRequest GetById(int tourRequestId)
         {
             _tourRequests = _tourRequestFileHandler.Load();
             return _tourRequests.Find(v => v.Id == tourRequestId);
+        }
+
+        public List<TourRequest> GetByUser(int userId)
+        {
+            List<TourRequest> tourRequests = GetAll();
+            foreach (TourRequest t in tourRequests)
+            {
+                if (t.UserId == userId)
+                {
+                    tourRequests.Add(t);
+                }
+            }
+
+            tourRequests = CheckIfInvalid(tourRequests);
+            return tourRequests;
+        }
+
+        public List<TourRequest> CheckIfInvalid(List<TourRequest> tourRequests)
+        {
+            TimeSpan timeDifference;
+            foreach (TourRequest t in tourRequests)
+            {
+                timeDifference = t.EarliestDate - DateTime.Now;
+                if(timeDifference.TotalHours < 48)
+                {
+                    t.Status = RequestStatus.Invalid;
+                }
+            }
+            return tourRequests;
         }
 
         public int NextId()

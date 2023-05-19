@@ -21,7 +21,7 @@
             <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
                 <Button Command="{Binding TourRatingCommand}" Content="Rate tours" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
                 <Button Command="{Binding MyVouchersCommand}" Content="Vouchers" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
-                <Button Content="Requests" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Command="{Binding MyRequestsCommand}" Content="Requests" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
                 <Button Content="Complex requests" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
                 <Button Content="Notifications" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
             </StackPanel>

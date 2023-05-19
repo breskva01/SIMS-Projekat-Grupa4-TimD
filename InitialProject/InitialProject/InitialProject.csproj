@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\backSquare.png" />
     <None Remove="Resources\Images\berlin.jpg" />
     <None Remove="Resources\Images\blueCheck.png" />
     <None Remove="Resources\Images\brazil_cottage.jpg" />
@@ -85,6 +86,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\backSquare.png" />
     <Resource Include="Resources\Images\berlin.jpg" />
     <Resource Include="Resources\Images\blueCheck.png" />
     <Resource Include="Resources\Images\check.png" />

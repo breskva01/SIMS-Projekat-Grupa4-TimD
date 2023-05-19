@@ -4,6 +4,7 @@ using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,14 @@ namespace InitialProject.Application.Services
         public TourRequest GetById(int tourRequestId)
         {
             return _repository.GetById(tourRequestId);
+        }
+        public List<TourRequest> GetByUser(int userId)
+        {
+            return _repository.GetByUser(userId);
+        }
+        public List<TourRequest> GetApproved(List<TourRequest> tourRequests)
+        {
+            return _repository.GetApproved(tourRequests);
         }
         public TourRequest CreateTourRequest(Location Location, string Description,RequestStatus Status, GuideLanguage Language,
             int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate)

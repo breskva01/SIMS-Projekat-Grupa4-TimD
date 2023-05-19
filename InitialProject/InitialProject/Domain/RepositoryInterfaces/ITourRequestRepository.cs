@@ -10,6 +10,9 @@ namespace InitialProject.Domain.RepositoryInterfaces
     public interface ITourRequestRepository : IRepository<TourRequest>
     {
         public TourRequest GetById(int tourRequestId);
+        public List<TourRequest> GetByUser(int userId);
+        public List<TourRequest> GetApproved(List<TourRequest> tourRequests);
+        public List<TourRequest> CheckIfInvalid(List<TourRequest> tourRequests);
         public TourRequest Update(TourRequest tourRequest);
         public TourRequest Save(TourRequest tourRequest);
         public int NextId();

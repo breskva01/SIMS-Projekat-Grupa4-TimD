@@ -29,7 +29,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
 
             TourRatingCommand = new TourRatingCommand(ShowTourRatingView, user);
             MyVouchersCommand = new ExecuteMethodCommand(ShowMyVouchersView);
-            //MyRequestsCommand = new TourTrackingCommand(ShowMyRequesstView, user);
+            MyRequestsCommand = new ExecuteMethodCommand(ShowMyRequestsView);
             //MyComplexRequestsCommand = new TourTrackingCommand(ShowMyComplexRequestsView, user);
             //NotificationsCommand = new TourTrackingCommand(ShowNotificationsView, user);
             MenuCommand = new ExecuteMethodCommand(ShowMainMenuView);
@@ -42,6 +42,15 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
 
             navigate.Execute(null);
         }
+
+        private void ShowMyRequestsView()
+        {
+            TourRequestBrowserViewModel tourRequestBrowserViewModel = new TourRequestBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourRequestBrowserViewModel));
+
+            navigate.Execute(null);
+        }
+
         /*
         private void ShowComplexRequestView()
         {

@@ -15,11 +15,12 @@ namespace InitialProject.Domain.Models
     {
         OnHold,
         Invalid,
-        Accepted
+        Approved
     }
     public class TourRequest : ISerializable
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public Location Location { get; set; }
         public string Description { get; set; }
         public RequestStatus Status { get; set; }
@@ -40,9 +41,10 @@ namespace InitialProject.Domain.Models
             LatestDate = DateTime.MaxValue;
         }
 
-        public TourRequest(int id, Location location, string description, RequestStatus status, GuideLanguage language, int numberOfGuests, DateTime earliestDate, DateTime latestDate)
+        public TourRequest(int id, int userId, Location location, string description, RequestStatus status, GuideLanguage language, int numberOfGuests, DateTime earliestDate, DateTime latestDate)
         {
             Id = id;
+            UserId = userId;
             Location = location;
             Description = description;
             Status = status;
@@ -55,13 +57,14 @@ namespace InitialProject.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            Location.Id = Convert.ToInt32(values[1]);
-            Description = values[2];
-            Status = (RequestStatus)Enum.Parse(typeof(RequestStatus), values[3]);
-            Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[4]);
-            NumberOfGuests = Convert.ToInt32(values[5]);
-            EarliestDate = DateTime.ParseExact(values[6], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
-            LatestDate = DateTime.ParseExact(values[7], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
+            UserId = Convert.ToInt32(values[1]);
+            Location.Id = Convert.ToInt32(values[2]);
+            Description = values[3];
+            Status = (RequestStatus)Enum.Parse(typeof(RequestStatus), values[4]);
+            Language = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), values[5]);
+            NumberOfGuests = Convert.ToInt32(values[6]);
+            EarliestDate = DateTime.ParseExact(values[7], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
+            LatestDate = DateTime.ParseExact(values[8], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
         }
 
         public string[] ToCSV()
@@ -69,6 +72,7 @@ namespace InitialProject.Domain.Models
             string[] csvValues =
             {
                 Id.ToString(),
+                UserId.ToString(),
                 Location.Id.ToString(),
                 Description,
                 Status.ToString(),
