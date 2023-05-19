@@ -34,6 +34,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         public ICommand SortCommand { get; }
         public ICommand MakeReservationCommand { get; }
         public ICommand MenuCommand { get; }
+        public ICommand NotificationCommand { get; }
 
 
         public NewTourBrowserViewModel(NavigationStore navigationStore, User user, TourFilterSort tourFilterSort = null)
@@ -66,6 +67,8 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             SortCommand = new ExecuteMethodCommand(ShowTourSortView);
             MakeReservationCommand = new TourClickCommand(ShowTourReservationView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
+            NotificationCommand = new ExecuteMethodCommand(ShowNotificationsView);
+
         }
 
         private void ShowGuest2MenuView()
@@ -74,6 +77,14 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guest2MenuViewModel));
             navigate.Execute(null);
         }
+        private void ShowNotificationsView()
+        {
+            NotificationBrowserViewModel notificationBrowserViewModel = new NotificationBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, notificationBrowserViewModel));
+
+            navigate.Execute(null);
+        }
+
 
         private void ShowTourReservationView(Tour tour)
         {

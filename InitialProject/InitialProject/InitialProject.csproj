@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\backSquare.png" />
     <None Remove="Resources\Images\berlin.jpg" />
     <None Remove="Resources\Images\blueCheck.png" />
     <None Remove="Resources\Images\brazil_cottage.jpg" />
@@ -33,6 +34,7 @@
     <None Remove="Resources\Images\help.png" />
     <None Remove="Resources\Images\info-icon.png" />
     <None Remove="Resources\Images\kuca_jadran.jpg" />
+    <None Remove="Resources\Images\message.png" />
     <None Remove="Resources\Images\moon.png" />
     <None Remove="Resources\Images\filter.png" />
     <None Remove="Resources\Images\left_arrow.png" />
@@ -87,6 +89,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\backSquare.png" />
     <Resource Include="Resources\Images\berlin.jpg" />
     <Resource Include="Resources\Images\blueCheck.png" />
     <Resource Include="Resources\Images\check.png" />
@@ -103,6 +106,7 @@
     <Resource Include="Resources\Images\cross.png" />
     <Resource Include="Resources\Images\dash-line.png" />
     <Resource Include="Resources\Images\info-icon.png" />
+    <Resource Include="Resources\Images\message.png" />
     <Resource Include="Resources\Images\moon.png" />
     <Resource Include="Resources\Images\moscow.png" />
     <Resource Include="Resources\Images\new-page.png" />

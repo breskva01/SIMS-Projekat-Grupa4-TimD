@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace InitialProject.Repositories
 {
@@ -37,6 +38,19 @@ namespace InitialProject.Repositories
         public List<TourRequest> GetAll()
         {
             return _tourRequestFileHandler.Load();
+        }
+
+        public List<TourRequest> GetApproved(List<TourRequest> userRequests)
+        { 
+            List<TourRequest> ApprovedRequests = new List<TourRequest>();
+            foreach (TourRequest t in userRequests)
+            {
+                if (t.Status == RequestStatus.Approved)
+                {
+                    ApprovedRequests.Add(t);
+                }
+            }
+            return ApprovedRequests;
         }
 
         public TourRequest GetById(int tourRequestId)
@@ -78,10 +92,37 @@ namespace InitialProject.Repositories
             bool durationMatch = tour.Duration == duration || duration == 0;
             bool languageMatch = tour.Language == language || language == GuideLanguage.All;
             bool numberOfGuestsMatch = tour.MaximumGuests - tour.CurrentNumberOfGuests >= numberOfGuests || numberOfGuests == 0;
-
-            return countryMatch && cityMatch && durationMatch && languageMatch && numberOfGuestsMatch;
             */
         }
+        public List<TourRequest> GetByUser(int userId)
+        {
+            List<TourRequest> tourRequests = GetAll();
+            foreach (TourRequest t in tourRequests)
+            {
+                if (t.UserId == userId)
+                {
+                    tourRequests.Add(t);
+                }
+            }
+
+            tourRequests = CheckIfInvalid(tourRequests);
+            return tourRequests;
+        }
+
+        public List<TourRequest> CheckIfInvalid(List<TourRequest> tourRequests)
+        {
+            TimeSpan timeDifference;
+            foreach (TourRequest t in tourRequests)
+            {
+                timeDifference = t.EarliestDate - DateTime.Now;
+                if(timeDifference.TotalHours < 48)
+                {
+                    t.Status = RequestStatus.Invalid;
+                }
+            }
+            return tourRequests;
+        }
+
         public int NextId()
         {
             _tourRequests = _tourRequestFileHandler.Load();
