@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace InitialProject.Repositories
 {
@@ -43,7 +44,44 @@ namespace InitialProject.Repositories
             _tourRequests = _tourRequestFileHandler.Load();
             return _tourRequests.Find(v => v.Id == tourRequestId);
         }
+        public List<TourRequest> GetFiltered(string country, string city, DateTime date1, DateTime date2, int numberOfGuests, string language)
+        {
+            _tourRequests = _tourRequestFileHandler.Load();
+            _locations = _locationFileHandler.Load();
 
+            foreach (TourRequest t in _tourRequests)
+            {
+                t.Location = _locations.FirstOrDefault(l => l.Id == t.Location.Id);
+            }
+            List<TourRequest> filteredTourRequests = new();
+            foreach (TourRequest request in _tourRequests)
+            {
+                if (MatchesFilters(request, country, city, date1, date2, numberOfGuests, language))
+                {
+                    filteredTourRequests.Add(request);
+                }
+            }
+            return filteredTourRequests;
+        }
+        public bool MatchesFilters(TourRequest tourRequest, string country, string city, DateTime earliestDate, DateTime latestDate, int numberOfGuests, string language)
+        {
+            bool countryMatch = tourRequest.Location.Country == country || country == null;
+            bool cityMatch = tourRequest.Location.City == city || city == null;
+            bool dateMatch = (tourRequest.EarliestDate > earliestDate && tourRequest.LatestDate < latestDate) || earliestDate == Convert.ToDateTime("01/01/0001 00:00:00") && latestDate == Convert.ToDateTime("01/01/0001 00:00:00");
+            bool numberMatch = tourRequest.NumberOfGuests == numberOfGuests || numberOfGuests == 0;
+            bool languageMatch = tourRequest.Language.ToString() == language || language == null;
+
+            return countryMatch && cityMatch && dateMatch && numberMatch && languageMatch;
+            /*
+            bool countryMatch = tour.Location.Country == country || country == "";
+            bool cityMatch = tour.Location.City == city || city == "";
+            bool durationMatch = tour.Duration == duration || duration == 0;
+            bool languageMatch = tour.Language == language || language == GuideLanguage.All;
+            bool numberOfGuestsMatch = tour.MaximumGuests - tour.CurrentNumberOfGuests >= numberOfGuests || numberOfGuests == 0;
+
+            return countryMatch && cityMatch && durationMatch && languageMatch && numberOfGuestsMatch;
+            */
+        }
         public int NextId()
         {
             _tourRequests = _tourRequestFileHandler.Load();
@@ -67,7 +105,7 @@ namespace InitialProject.Repositories
         {
             _tourRequests = _tourRequestFileHandler.Load();
             TourRequest updated = _tourRequests.Find(t => t.Id == tourRequest.Id);
-            _tourRequests.Remove(tourRequest);
+            _tourRequests.Remove(updated);
             _tourRequests.Add(tourRequest);
             _tourRequestFileHandler.Save(_tourRequests);
             return tourRequest;

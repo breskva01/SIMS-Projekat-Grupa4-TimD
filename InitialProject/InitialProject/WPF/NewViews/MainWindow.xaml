@@ -147,6 +147,9 @@
             <DataTemplate DataType="{x:Type vmsg1:ImageBrowserViewModel}">
                 <viewsg1:ImageBrowser/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourRequestsAcceptViewModel}">
+                <views:TourRequestsAcceptView/>
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />

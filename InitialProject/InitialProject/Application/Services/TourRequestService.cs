@@ -42,6 +42,10 @@ namespace InitialProject.Application.Services
 
             return _repository.Save(TourRequest);
         }
+        public List<TourRequest> GetFiltered(string country, string city, DateTime date1, DateTime date2, int number, string language)
+        {
+            return _repository.GetFiltered(country, city, date1, date2, number, language);
+        }
         public TourRequest Update(TourRequest tourRequest)
         {
             return _repository.Update(tourRequest);

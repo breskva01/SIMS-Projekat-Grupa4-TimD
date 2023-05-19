@@ -14,6 +14,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public TourRequest Save(TourRequest tourRequest);
         public int NextId();
         public void Delete(TourRequest tourRequest);
+        public List<TourRequest> GetFiltered(string country, string city, DateTime date1, DateTime date2, int number, string language);
 
     }
 }

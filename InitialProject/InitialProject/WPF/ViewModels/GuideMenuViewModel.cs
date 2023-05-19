@@ -27,6 +27,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand TourStatsCommand { get; }
         public ICommand RatingsViewCommand { get; }
         public ICommand SignOutCommand { get; }
+        public ICommand TourRequestsCommand { get; }
 
         public GuideMenuViewModel(NavigationStore navigationStore, User user)
         {
@@ -39,6 +40,7 @@ namespace InitialProject.WPF.ViewModels
             TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
             RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
+            TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
         }
         
         private void SignOut()
@@ -79,6 +81,13 @@ namespace InitialProject.WPF.ViewModels
         private void ShowGuideRatingsView()
         {
             GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsView()
+        {
+            TourRequestsAcceptViewModel viewModel = new TourRequestsAcceptViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
 
             navigate.Execute(null);
