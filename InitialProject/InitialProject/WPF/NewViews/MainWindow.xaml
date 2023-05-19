@@ -150,6 +150,9 @@
             <DataTemplate DataType="{x:Type vms:TourRequestsAcceptViewModel}">
                 <views:TourRequestsAcceptView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourRequestsStatsViewModel}">
+                <views:TourRequestsStatsView/>
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />

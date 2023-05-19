@@ -19,6 +19,8 @@ namespace InitialProject.WPF.ViewModels
     public class TourCreationViewModel : ViewModelBase, IDataErrorInfo
     {
 
+        private bool IsCreatedBasedOnStats; 
+
         private readonly NavigationStore _navigationStore;
         private User _user;
 
@@ -264,7 +266,39 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
+        public TourCreationViewModel(NavigationStore navigationStore, User user, string parameter, bool isParameterLanguage)
+        {
+            _navigationStore = navigationStore;
+            _user = user;
 
+            _tourService = new TourService();
+            _locationService = new LocationService();
+            _keyPointService = new KeyPointService();
+            _tourRequestService = new TourRequestService();
+
+            Locations = new ObservableCollection<Location>(_locationService.GetAll());
+            KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
+            KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
+
+            if(isParameterLanguage == true)
+            {
+                LanguageType = parameter;
+            }
+            else
+            {
+                Country = parameter.Split(" ")[0];
+                City = parameter.Split(" ")[1];
+                SelectedCity = City;
+            }
+
+            AddKeyPointCommand = new AddKeyPointCommand(this);
+
+
+            InitializeCommands();
+
+            IsCreatedBasedOnStats = true;
+
+        }
         public TourCreationViewModel(NavigationStore navigationStore, User user, TourRequest request)
         {
             _navigationStore = navigationStore;
@@ -292,6 +326,8 @@ namespace InitialProject.WPF.ViewModels
 
             InitializeCommands();
 
+            IsCreatedBasedOnStats = false;
+
         }
 
         public TourCreationViewModel(NavigationStore navigationStore, User user)
@@ -312,6 +348,9 @@ namespace InitialProject.WPF.ViewModels
             KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
 
             InitializeCommands();
+
+            IsCreatedBasedOnStats = false;
+
 
             //Start = new DateTime(2023, 4, 15);
         }
@@ -356,6 +395,8 @@ namespace InitialProject.WPF.ViewModels
                 TourRequest.TourId = tour.Id;
                 _tourRequestService.Update(TourRequest);
             }
+
+
 
             ClearOutTextBoxes();
 
