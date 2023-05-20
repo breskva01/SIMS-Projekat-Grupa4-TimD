@@ -23,6 +23,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         public ICommand MyReservationsCommand { get; }
         public ICommand RequestMenuCommand { get; }
         public ICommand MyInfoCommand { get; }
+        
 
         public ICommand SignOutCommand { get; }
         public Guest2MenuViewModel(NavigationStore navigationStore, User user)

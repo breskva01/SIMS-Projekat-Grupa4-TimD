@@ -20,7 +20,7 @@
             <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
                 <Button Command ="{Binding TourRequestCommand}" Content="Request a tour" Background="#779ecb" Foreground="White" Padding="10" Margin="10,90,10,10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
                 <Button Content="Request a complex tour" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
-                <Button Content="Request stats" Background="#779ecb" Foreground="White" Padding="10" Margin="10,10,10,90" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Command="{Binding RequestStatsCommand}" Content="Request stats" Background="#779ecb" Foreground="White" Padding="10" Margin="10,10,10,90" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
                 <Button Command="{Binding MenuCommand}" Content="Main menu" Background="#FAA0A0" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="200" BorderBrush="Transparent" Cursor="Hand"  />

@@ -37,6 +37,31 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetApproved(tourRequests);
         }
+        public List<TourRequest> GetOnHold()
+        {
+            return _repository.GetOnHold();
+        }
+
+        public int GetApprovedForYear(string year)
+        {
+            return _repository.GetApprovedForYear(year);
+        }
+        public int GetApprovedGeneral()
+        {
+            return _repository.GetApprovedGeneral();
+        }
+        public List<string> GetAvailableYears()
+        {
+            return _repository.GetAvailableYears();
+        }
+        public int GetGeneralNumberOfGuests()
+        {
+            return _repository.GetGeneralNumberOfGuests();
+        }
+        public int GetYearNumberOfGuests(string year)
+        {
+            return _repository.GetYearNumberOfGuests(year);
+        }
         public TourRequest CreateTourRequest(Location Location, string Description,RequestStatus Status, GuideLanguage Language,
             int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate, int TourId)
         {

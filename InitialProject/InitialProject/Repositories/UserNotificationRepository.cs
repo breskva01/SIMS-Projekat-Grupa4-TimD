@@ -4,6 +4,7 @@ using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,6 +63,27 @@ namespace InitialProject.Repositories
                 return 1;
             }
             return _notifications.Max(t => t.Id) + 1;
+        }
+
+        public void NotifySimilarRequests(Tour tour, List<TourRequest> requests)
+        {
+            foreach (TourRequest request in requests)
+            {
+                if(request.Language == tour.Language || request.Location == tour.Location)
+                {
+                    UserNotification notification = new UserNotification();
+                    notification.UserId = request.UserId;
+                    notification.Message = "Tour " + tour.Name + ", similar to a request you've made has just been created." +
+                        "Location: " + tour.Location.City + " - " + tour.Location.Country + "" +
+                        "Duration: " + tour.Duration.ToString() + "" +
+                        "Date: " + tour.Start.ToString("dd-mm-yyyy") + "" +
+                        "Language: " + tour.Language + "" +
+                        "If you want to reserve spots on the tour, check MainMenu/TourReservation";
+
+                    notification.Time = DateTime.Now;
+                    Save(notification);
+                }
+            }
         }
 
         public void NotifyApprovedRequest(Tour tour, int userId)
