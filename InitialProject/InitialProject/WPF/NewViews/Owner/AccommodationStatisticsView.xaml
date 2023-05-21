@@ -67,10 +67,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <oxy:PlotView Height="250" Width="250" Grid.Row="0" Grid.Column="0" Background="LightBlue"  Model="{Binding Reservations}" />
-                <oxy:PlotView Height="250" Width="250" Grid.Row="0" Grid.Column="1" Background="LightBlue"  Model="{Binding Cancellations}" />
-                <oxy:PlotView Height="250" Width="250" Grid.Row="1" Grid.Column="0" Background="LightBlue"  Model="{Binding MovedReservations}" />
-                <oxy:PlotView Height="250" Width="250" Grid.Row="1" Grid.Column="1" Background="LightBlue"  Model="{Binding ReservationsPlotModel}" />
+                <oxy:PlotView Width="250" Height="250" Grid.Row="0" Grid.Column="0" Background="LightBlue" FontFamily="Impact" Foreground="DarkCyan"  Model="{Binding Reservations}" />
+                <oxy:PlotView Width="250" Height="250" Grid.Row="0" Grid.Column="1" Background="LightBlue"  Model="{Binding Cancellations}" />
+                <oxy:PlotView Width="250" Height="250" Grid.Row="1" Grid.Column="0" Background="LightBlue"  Model="{Binding MovedReservations}" />
+                <oxy:PlotView Width="250" Height="250" Grid.Row="1" Grid.Column="1" Background="LightBlue"  Model="{Binding RenovationReccommendations}" />
             </Grid>
         </Grid>
         <Grid Grid.Column="1">

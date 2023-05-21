@@ -24,9 +24,11 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public LineSeries GetYearlyReservations(int id);
         public LineSeries GetYearlyCancellations(int id);
         public LineSeries GetYearlyMovedReservations(int id);
+        public LineSeries GetYearlyRenovationReccommendations(int id);
         public LineSeries GetMonthlyReservations(int id, int year);
         public LineSeries GetMonthlyCancellations(int id, int year);
         public LineSeries GetMonthlyMovedReservations(int id, int year);
+        public LineSeries GetMonthlyRenovationReccommendations(int id, int year);
         public string GetMostBookedYear(int id);
         public string GetMostBookedMonth(int id, int year);
     }

@@ -20,6 +20,7 @@ namespace InitialProject.WPF.ViewModels
         public PlotModel Reservations { get; set; }
         public PlotModel Cancellations { get; set; }
         public PlotModel MovedReservations { get; set; }
+        public PlotModel RenovationReccommendations { get; set; }
         private string _mostBooked;
         public string MostBooked 
         {
@@ -96,6 +97,7 @@ namespace InitialProject.WPF.ViewModels
             Reservations = new PlotModel { Title = "Reservations" };
             Cancellations = new PlotModel { Title = "Cancellations" };
             MovedReservations = new PlotModel { Title = "Moved reservations" };
+            RenovationReccommendations = new PlotModel { Title = "Reccommendations" };
             _accommodationReservationService = new AccommodationReservationService();
             ShowYearlyGraphs();
 
@@ -105,25 +107,31 @@ namespace InitialProject.WPF.ViewModels
             Reservations.Series.Clear();
             Cancellations.Series.Clear();
             MovedReservations.Series.Clear();
+            RenovationReccommendations.Series.Clear();
             var series = _accommodationReservationService.GetYearlyReservations(_selectedAccommodation.Id);
             Reservations.Series.Add(series);
             series = _accommodationReservationService.GetYearlyCancellations(_selectedAccommodation.Id);
             Cancellations.Series.Add(series);
             series = _accommodationReservationService.GetYearlyMovedReservations(_selectedAccommodation.Id);
             MovedReservations.Series.Add(series);
+            series = _accommodationReservationService.GetYearlyRenovationReccommendations(_selectedAccommodation.Id);
+            RenovationReccommendations.Series.Add(series);
             Reservations.Axes.Clear();
             Cancellations.Axes.Clear();
             MovedReservations.Axes.Clear();
+            RenovationReccommendations.Axes.Clear();
             Reservations.InvalidatePlot(true);
             Cancellations.InvalidatePlot(true);
             MovedReservations.InvalidatePlot(true);
+            RenovationReccommendations.InvalidatePlot(true);
         }
         private void ShowMonthlyGraphs()
         {
             Reservations.Series.Clear();
             Cancellations.Series.Clear();
             MovedReservations.Series.Clear();
-            if (Year == null)
+            RenovationReccommendations.Series.Clear();
+            /*if (Year == null)
             {
                 var series = _accommodationReservationService.GetMonthlyReservations(_selectedAccommodation.Id, DateTime.Now.Year);
                 Reservations.Series.Add(series);
@@ -131,24 +139,29 @@ namespace InitialProject.WPF.ViewModels
                 Cancellations.Series.Add(series);
                 series = _accommodationReservationService.GetMonthlyMovedReservations(_selectedAccommodation.Id, DateTime.Now.Year);
                 MovedReservations.Series.Add(series);
+                series = _accommodationReservationService.GetMonthlyRenovationReccommendations(_selectedAccommodation.Id, DateTime.Now.Year);
+                RenovationReccommendations.Series.Add(series);
                 addXAxisLabels();
                 Reservations.InvalidatePlot(true);
                 Cancellations.InvalidatePlot(true);
                 MovedReservations.InvalidatePlot(true);
-            }
-            else
-            {
+            }*/
+            /*else
+            {*/
                 var series = _accommodationReservationService.GetMonthlyReservations(_selectedAccommodation.Id, int.Parse(Year));
                 Reservations.Series.Add(series);
                 series = _accommodationReservationService.GetMonthlyCancellations(_selectedAccommodation.Id, int.Parse(Year));
                 Cancellations.Series.Add(series);
                 series = _accommodationReservationService.GetMonthlyMovedReservations(_selectedAccommodation.Id, int.Parse(Year));
                 MovedReservations.Series.Add(series);
+                series = _accommodationReservationService.GetMonthlyRenovationReccommendations(_selectedAccommodation.Id, int.Parse(Year));
+                RenovationReccommendations.Series.Add(series);
                 addXAxisLabels();
                 Reservations.InvalidatePlot(true);
                 Cancellations.InvalidatePlot(true);
                 MovedReservations.InvalidatePlot(true);
-            }
+                RenovationReccommendations.InvalidatePlot(true);
+            //}
         }
         private void addXAxisLabels()
         {
@@ -170,6 +183,12 @@ namespace InitialProject.WPF.ViewModels
                     Title = "Month",
                     Angle = 45
                 };
+                var xRenovationReccommendations = new CategoryAxis
+                {
+                    Position = AxisPosition.Bottom,
+                    Title = "Month",
+                    Angle = 45
+                };
                 List<string> months = new List<string>
                 {
                     "January", "February", "March", "April", "May", "June",
@@ -178,14 +197,17 @@ namespace InitialProject.WPF.ViewModels
                 xReservations.Labels.AddRange(months);
                 xCancellations.Labels.AddRange(months);
                 xMovedReservations.Labels.AddRange(months);
-
+                xRenovationReccommendations.Labels.AddRange(months);
+                
                 Reservations.Axes.Clear();
                 Cancellations.Axes.Clear();
                 MovedReservations.Axes.Clear();
+                RenovationReccommendations.Axes.Clear();
 
                 Reservations.Axes.Add(xReservations);
                 Cancellations.Axes.Add(xCancellations);
                 MovedReservations.Axes.Add(xMovedReservations);
+                RenovationReccommendations.Axes.Add(xRenovationReccommendations);
         }
         private void DisplayMostBookedYear()
         {

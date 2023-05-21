@@ -21,10 +21,12 @@ namespace InitialProject.Repositories
         private List<AccommodationReservation> _reservations;
         private readonly AccommodationReservationFileHandler _fileHandler;
         private AccommodationReservationMoveRequestRepository _moveRequestRepository;
+        private AccommodationRatingRepository _ratingRepository; 
         public AccommodationReservationRepository()
         {
             _fileHandler = new AccommodationReservationFileHandler();
             _moveRequestRepository = new AccommodationReservationMoveRequestRepository();
+            _ratingRepository = new AccommodationRatingRepository();
         }
         public List<AccommodationReservation> GetAll()
         {
@@ -220,6 +222,30 @@ namespace InitialProject.Repositories
             }
             return series;
         }
+        public LineSeries GetYearlyRenovationReccommendations(int id) 
+        {
+            GetAll();
+            var series = new LineSeries();
+            DateOnly start = new DateOnly(2020, 1, 1);
+            List<AccommodationReservation> renovationReccommendationsPerYear = new List<AccommodationReservation>();
+            List<AccommodationRating> ratings = _ratingRepository.GetAll();
+            for (int i = start.Year; i <= DateTime.Now.Year; i++)
+            {
+                foreach (AccommodationReservation res in _reservations)
+                {
+                    foreach (AccommodationRating rating in ratings)
+                    {
+                        if (res.Accommodation.Id == id && res.CheckIn.Year == i && res.Id == rating.Reservation.Id && rating.RenovationUrgency>0)
+                        {
+                            renovationReccommendationsPerYear.Add(res);
+                        }
+                    }
+                }
+                series.Points.Add(new DataPoint(i, renovationReccommendationsPerYear.Count));
+                renovationReccommendationsPerYear.Clear();
+            }
+            return series;
+        }
         public LineSeries GetMonthlyReservations(int id, int year)
         {
             GetAll();
@@ -284,6 +310,31 @@ namespace InitialProject.Repositories
                 }
                 series.Points.Add(new DataPoint(i, movedReservationsPerMonth.Count));
                 movedReservationsPerMonth.Clear();
+            }
+            return series;
+        }
+        public LineSeries GetMonthlyRenovationReccommendations(int id, int year)
+        {
+            GetAll();
+            var series = new LineSeries();
+            DateOnly start = new DateOnly(year, 1, 1);
+            DateOnly end = new DateOnly(year, 12, 31);
+            List<AccommodationReservation> renovationReccommendationsPerMonth = new List<AccommodationReservation>();
+            List<AccommodationRating> ratings = _ratingRepository.GetAll();
+            for (int i = start.Month; i <= end.Month; i++)
+            {
+                foreach (AccommodationReservation res in _reservations)
+                {
+                    foreach (AccommodationRating rating in ratings)
+                    {
+                        if (res.Accommodation.Id == id && res.CheckIn.Month == i && res.Id == rating.Reservation.Id && rating.RenovationUrgency > 0)
+                        {
+                            renovationReccommendationsPerMonth.Add(res);
+                        }
+                    }
+                }
+                series.Points.Add(new DataPoint(i, renovationReccommendationsPerMonth.Count));
+                renovationReccommendationsPerMonth.Clear();
             }
             return series;
         }

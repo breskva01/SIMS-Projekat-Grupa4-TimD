@@ -105,6 +105,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetYearlyMovedReservations(id);
         }
+        public LineSeries GetYearlyRenovationReccommendations(int id)
+        {
+            return _repository.GetYearlyRenovationReccommendations(id);
+        }
         public LineSeries GetMonthlyReservations(int id, int year)
         {
             return _repository.GetMonthlyReservations(id, year);
@@ -116,6 +120,10 @@ namespace InitialProject.Application.Services
         public LineSeries GetMonthlyMovedReservations(int id, int year)
         {
             return _repository.GetMonthlyMovedReservations(id, year);
+        }
+        public LineSeries GetMonthlyRenovationReccommendations(int id, int year)
+        {
+            return _repository.GetMonthlyRenovationReccommendations(id, year);
         }
         public string GetMostBookedYear(int id)
         {
