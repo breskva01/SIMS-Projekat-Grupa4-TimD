@@ -13,6 +13,9 @@
         Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.Resources>
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestStats2ViewModel}">
+                <views:TourRequestStats2View />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg2:TourRequestStats3ViewModel}">
                 <views:TourRequestStats3View />
             </DataTemplate>

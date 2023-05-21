@@ -55,14 +55,17 @@ namespace InitialProject.Repositories
         {
             List<TourRequest> allRequests = GetAll();
             double approvedCounter = 0;
+            int allRequestsCounter = 0;
             foreach (TourRequest t in allRequests)
             {
-                if (t.EarliestDate.Year.ToString().Equals(year) && t.Status == RequestStatus.Approved)
+                if (t.EarliestDate.Year.ToString().Equals(year))
                 {
-                    approvedCounter++;
+                    allRequestsCounter++;
+                    if(t.Status == RequestStatus.Approved) approvedCounter++;
+
                 }
             }
-            double result = approvedCounter / allRequests.Count * 100;
+            double result = approvedCounter / allRequestsCounter * 100;
             int roundedResult = (int)Math.Round(result);
             return roundedResult;
         }
@@ -137,6 +140,82 @@ namespace InitialProject.Repositories
             }
 
             return (int)Math.Round(totalGuests / numberOfApprovedRequests);
+        }
+
+        public List<int> GetAllYears()
+        {
+            List<int> years = new List<int>();
+            foreach(TourRequest t in GetAll())
+            {
+                if (!years.Contains(t.EarliestDate.Year))
+                {
+                    years.Add(t.EarliestDate.Year);
+                }
+            }
+            if(years.Count == 0)
+            {
+                years.Add(0);
+                return years;
+            }
+            return years;
+        }
+
+        public List<string> GetAllLocations(List<TourRequest> tourRequests)
+        {
+            List<string> locations = new List<string>();
+            foreach (TourRequest t in tourRequests)
+            {
+                if (!locations.Contains(t.Location.City))
+                {
+                    locations.Add(t.Location.City);
+                }
+            }
+            if (locations.Count == 0)
+            {
+                locations.Add("");
+                return locations;
+            }
+            return locations;
+        }
+
+        public int GetLocationNumberOfRequests(string city, List<TourRequest> tourRequests)
+        {
+            int numberOfRequests = 0;
+            foreach (TourRequest t in tourRequests)
+            {
+                if (t.Location.City == city)
+                {
+                    numberOfRequests++;
+                }
+            }
+            return numberOfRequests;
+        }
+
+
+        public int GetYearNumberOfRequests(int year)
+        {
+            int numberOfRequests = 0;
+            foreach (TourRequest t in GetAll())
+            {
+                if(t.EarliestDate.Year == year)
+                {
+                    numberOfRequests++;
+                }
+            }
+            return numberOfRequests;
+        }
+
+        public int GetLanguageNumberOfRequests(GuideLanguage guideLanguage)
+        {
+            int numberOfRequests = 0;
+            foreach (TourRequest t in GetAll())
+            {
+                if (t.Language == guideLanguage)
+                {
+                    numberOfRequests++;
+                }
+            }
+            return numberOfRequests;
         }
 
 

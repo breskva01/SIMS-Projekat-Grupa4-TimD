@@ -15,6 +15,7 @@ namespace InitialProject.Application.Services
     {
         private readonly List<IObserver> _observers;
         private readonly ITourRequestRepository _repository;
+
         public TourRequestService()
         {
             _observers = new List<IObserver>();
@@ -41,7 +42,27 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetOnHold();
         }
+        public List<int> GetAllYears()
+        {
+            return _repository.GetAllYears();
+        }
+        public List<string> GetAllLocations(List<TourRequest> tourRequests)
+        {
+            return _repository.GetAllLocations(tourRequests);
+        }
+        public int GetLocationNumberOfRequests(string city, List<TourRequest> tourRequests)
+        {
+            return _repository.GetLocationNumberOfRequests(city, tourRequests);
+        }
 
+        public int GetYearNumberOfRequests(int year)
+        {
+            return _repository.GetYearNumberOfRequests(year);
+        }
+        public int GetLanguageNumberOfRequests(GuideLanguage guideLanguage)
+        {
+            return _repository.GetLanguageNumberOfRequests(guideLanguage);
+        }
         public int GetApprovedForYear(string year)
         {
             return _repository.GetApprovedForYear(year);

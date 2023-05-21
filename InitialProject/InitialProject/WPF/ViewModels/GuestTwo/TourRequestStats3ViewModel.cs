@@ -84,20 +84,20 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
 
             AvailableYears = _tourRequestService.GetAvailableYears();
 
-            //BackCommand = new ExecuteMethodCommand(ShowTourRequestStats2View);
+            BackCommand = new ExecuteMethodCommand(ShowTourRequestStats2View);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
             NotificationCommand = new ExecuteMethodCommand(ShowNotificationBrowserView);
 
         }
 
-        /*
+        
         private void ShowTourRequestStats2View()
         {
             TourRequestStats2ViewModel tourRequestStats2ViewModel = new TourRequestStats2ViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourRequestStats2ViewModel));
             navigate.Execute(null);
         }
-        */
+        
 
         private void ShowGuest2MenuView()
         {

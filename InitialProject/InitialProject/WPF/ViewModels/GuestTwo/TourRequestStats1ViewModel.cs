@@ -128,8 +128,8 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         }
         private void ShowTourRequestStats2View()
         {
-            TourRequestStats3ViewModel tourRequestStats3ViewModel = new TourRequestStats3ViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourRequestStats3ViewModel));
+            TourRequestStats2ViewModel tourRequestStats2ViewModel = new TourRequestStats2ViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, tourRequestStats2ViewModel));
             navigate.Execute(null);
         }
 
