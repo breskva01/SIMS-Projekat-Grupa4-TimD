@@ -1,5 +1,4 @@
 ﻿using InitialProject.Application.Stores;
-using InitialProject.Application.Stores;
 using InitialProject.Application.Observer;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;

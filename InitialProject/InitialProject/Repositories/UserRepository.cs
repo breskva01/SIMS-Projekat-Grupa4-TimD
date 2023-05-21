@@ -28,6 +28,13 @@ namespace InitialProject.Repository
         {
             return _users = _fileHandler.Load();
         }
+
+        public List<Guest1> GetAllGuest1s()
+        {
+            GetAll();
+            return _users.OfType<Guest1>().ToList();
+        }
+
         public User GetById(int id)
         {
             GetAll();
@@ -38,6 +45,7 @@ namespace InitialProject.Repository
             GetAll();
             return _users.FirstOrDefault(u => u.Username == username);
         }
+
         public User Update(User user)
         {
             GetAll();

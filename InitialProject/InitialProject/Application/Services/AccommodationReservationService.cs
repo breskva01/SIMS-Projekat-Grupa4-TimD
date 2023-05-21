@@ -1,7 +1,7 @@
 ﻿using InitialProject.Application.Injector;
 using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
-using InitialProject.Application.UseCases;
+using InitialProject.Application.Util;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
@@ -21,6 +21,16 @@ namespace InitialProject.Application.Services
         public AccommodationReservationService()
         {
             _repository = RepositoryInjector.Get<IAccommodationReservationRepository>();
+        }
+        public bool IsDiscountAvailable(Guest1 guest)
+        {
+            bool discountAvailable = guest.SpendABonusPoint();
+            if (discountAvailable)
+            {
+                var userRepository = RepositoryInjector.Get<IUserRepository>();
+                userRepository.Update(guest);
+            }
+            return discountAvailable;
         }
         public void Save(AccommodationReservation accommodationReservation)
         {
