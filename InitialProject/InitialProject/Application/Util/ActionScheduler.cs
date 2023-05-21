@@ -15,7 +15,7 @@ namespace InitialProject.Application.Util
         public ActionScheduler(TimeSpan interval, Action action)
         {
             _timer = new Timer(interval.TotalMilliseconds);
-            _timer.Elapsed += Timer_Elapsed;
+            _timer.Elapsed += OnTimer_Elapsed;
             _action = action;
         }
 
@@ -25,7 +25,7 @@ namespace InitialProject.Application.Util
             _timer.Start();
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void OnTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             _action.Invoke();
         }

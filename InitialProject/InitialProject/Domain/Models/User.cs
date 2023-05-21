@@ -27,7 +27,6 @@ namespace InitialProject.Domain.Models
 
         public virtual void FromCSV(string[] values)
         {
-            
             Id = Convert.ToInt32(values[1]);
             Username = values[2];
             Password = values[3];
