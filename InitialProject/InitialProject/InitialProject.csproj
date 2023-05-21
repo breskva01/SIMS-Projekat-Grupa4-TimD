@@ -73,11 +73,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Images\apartman_liman.jpg" />
     <Resource Include="Resources\Images\berlin.jpg" />
-    <Resource Include="Resources\Images\brazil_cottage.jpg" />
-    <Resource Include="Resources\Images\brvnara_rumunija.jpg" />
-    <Resource Include="Resources\Images\brvnara_tara.jpg" />
     <Resource Include="Resources\Images\calendar-edit.png" />
     <Resource Include="Resources\Images\clipboard_check.png" />
     <Resource Include="Resources\Images\clipboard_question.png" />
@@ -85,28 +81,21 @@
     <Resource Include="Resources\Images\comment.png" />
     <Resource Include="Resources\Images\cross.png" />
     <Resource Include="Resources\Images\dash-line.png" />
-    <Resource Include="Resources\Images\go_back.png" />
-    <Resource Include="Resources\Images\help.png" />
     <Resource Include="Resources\Images\info-icon.png" />
-    <Resource Include="Resources\Images\kuca_jadran.jpg" />
     <Resource Include="Resources\Images\moon.png" />
     <Resource Include="Resources\Images\moscow.png" />
     <Resource Include="Resources\Images\new-page.png" />
     <Resource Include="Resources\Images\next.png" />
     <Resource Include="Resources\Images\novi_sad.jpg" />
-    <Resource Include="Resources\Images\novi_sad_brvnara.jpg" />
     <Resource Include="Resources\Images\paper-plane100.png" />
     <Resource Include="Resources\Images\paper-plane50.png" />
     <Resource Include="Resources\Images\paris.png" />
     <Resource Include="Resources\Images\person.png" />
     <Resource Include="Resources\Images\petrovaradin.png" />
     <Content Include="Resources\Images\search.png" />
-    <Resource Include="Resources\Images\soba_novi_sad.jpg" />
     <Resource Include="Resources\Images\sun.png" />
     <Resource Include="Resources\Images\urgent-message.png" />
     <Resource Include="Resources\Images\vienna.jpeg" />
-    <Resource Include="Resources\Images\vila_italija.jpg" />
-    <Resource Include="Resources\Images\vila_slap.jpg" />
   </ItemGroup>
 
   <ItemGroup>

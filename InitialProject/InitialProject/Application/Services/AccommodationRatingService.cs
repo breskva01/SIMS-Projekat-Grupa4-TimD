@@ -28,6 +28,20 @@ namespace InitialProject.Application.Services
         {
             return _ratingRepository.GetByOwnerId(ownerId);
         }
+        public double CalculateAccommodationAverageRating(int accommodationId)
+        {
+            var ratings = _ratingRepository.GetByAccommodationId(accommodationId);
+            if (!ratings.Any())
+                return 0.0;
+            return ratings.Average(r => r.AverageRating);
+        }
+        public double CalculateOwnerAverageRating(int ownerId)
+        {
+            var ratings = _ratingRepository.GetByOwnerId(ownerId);
+            if (!ratings.Any())
+                return 0.0;
+            return ratings.Average(r => r.AverageRating);
+        }
         public List<AccommodationRating> GetEligibleForDisplay(int ownerId)
         {
             return _ratingRepository.GetEligibleForDisplay(ownerId);

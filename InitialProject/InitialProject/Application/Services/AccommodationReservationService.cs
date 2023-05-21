@@ -1,7 +1,7 @@
 ﻿using InitialProject.Application.Injector;
 using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
-using InitialProject.Application.UseCases;
+using InitialProject.Application.Util;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
@@ -20,6 +20,16 @@ namespace InitialProject.Application.Services
         public AccommodationReservationService()
         {
             _repository = RepositoryInjector.Get<IAccommodationReservationRepository>();
+        }
+        public bool IsDiscountAvailable(Guest1 guest)
+        {
+            bool discountAvailable = guest.SpendABonusPoint();
+            if (discountAvailable)
+            {
+                var userRepository = RepositoryInjector.Get<IUserRepository>();
+                userRepository.Update(guest);
+            }
+            return discountAvailable;
         }
         public void Save(AccommodationReservation accommodationReservation)
         {
@@ -44,7 +54,7 @@ namespace InitialProject.Application.Services
                 Save(new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
         }
-        public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, User guest)
+        public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, Guest1 guest)
         {
             var reservationAvailabilityHandler = new AccommodationReservationAvailabilityHandler(_repository);
             return reservationAvailabilityHandler.GetAvailable(startDate, endDate, stayLength, accommodation, guest);

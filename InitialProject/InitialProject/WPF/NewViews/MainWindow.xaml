@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
         xmlns:views="clr-namespace:InitialProject.WPF.NewViews"
-        xmlns:viewsg1="clr-namespace:InitialProject.WPF.NewViews.Guest1" 
+        xmlns:viewsg1="clr-namespace:InitialProject.WPF.NewViews.GuestOne" 
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
-        xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.Guest1"
+        xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.GuestOne"
         mc:Ignorable="d"
         Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
@@ -125,6 +125,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:GuestRatingDetailsViewModel}">
                 <viewsg1:GuestRatingDetailsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:ImageBrowserViewModel}">
+                <viewsg1:ImageBrowser/>
             </DataTemplate>
         </Grid.Resources>
 

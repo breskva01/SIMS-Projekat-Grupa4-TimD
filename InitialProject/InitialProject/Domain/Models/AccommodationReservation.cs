@@ -15,7 +15,7 @@ namespace InitialProject.Domain.Models
     {
         public int Id { get; set; }
         public Accommodation Accommodation { get; set; }
-        public User Guest { get; set; }
+        public Guest1 Guest { get; set; }
         public int NumberOfDays => (CheckOut.ToDateTime(TimeOnly.MinValue) - 
                                     CheckIn.ToDateTime(TimeOnly.MinValue)).Days;
         public int DaysLeftForRating => CalculateDaysLeftForRating();
@@ -28,10 +28,10 @@ namespace InitialProject.Domain.Models
         public AccommodationReservationStatus Status { get; set; }
         public AccommodationReservation() 
         {
-            Guest = new User();
+            Guest = new Guest1();
             Accommodation = new Accommodation();
         }
-        public AccommodationReservation(Accommodation accommodation, User guest,
+        public AccommodationReservation(Accommodation accommodation, Guest1 guest,
             DateOnly checkIn, DateOnly checkOut)
         {
             Accommodation = accommodation;
@@ -41,6 +41,14 @@ namespace InitialProject.Domain.Models
             IsGuestRated = false;
             IsOwnerRated = false;
             Status = AccommodationReservationStatus.Active;
+        }
+        public bool HappenedInLastYear()
+        {
+            DateOnly todaysDate = DateOnly.FromDateTime(DateTime.Now);
+            TimeSpan difference = todaysDate.ToDateTime(TimeOnly.MinValue) -
+                                  CheckOut.ToDateTime(TimeOnly.MinValue);
+            int differenceInDays = (int)difference.TotalDays;
+            return differenceInDays <= 365 && Status == AccommodationReservationStatus.Finished;
         }
         public bool Overlaps(DateOnly checkIn, DateOnly checkOut)
         {

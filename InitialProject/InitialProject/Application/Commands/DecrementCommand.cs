@@ -1,4 +1,4 @@
-﻿using InitialProject.WPF.ViewModels.Guest1;
+﻿using InitialProject.WPF.ViewModels.GuestOne;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

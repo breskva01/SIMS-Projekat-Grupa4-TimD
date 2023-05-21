@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:InitialProject">
     <Application.Resources>
-     
+        <Style TargetType="Button" x:Key="BackButton">
+            <Setter Property="Visibility" Value="Visible" />
+        </Style>
     </Application.Resources>
 </Application>

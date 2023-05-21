@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
 namespace InitialProject.Domain.Models
 {
@@ -20,6 +21,7 @@ namespace InitialProject.Domain.Models
         public bool RenovatingNeeded => RenovationUrgency > 0;
         public string RenovationComment { get; set; }
         public int RenovationUrgency { get; set; }
+        public double AverageRating => CalculateAverageRating();
         public AccommodationRating() 
         {
             Comment = "";
@@ -40,6 +42,12 @@ namespace InitialProject.Domain.Models
             PictureURLs = pictureURLs;
             RenovationComment = renovationComment;
             RenovationUrgency = renovationUrgency;
+        }
+        private double CalculateAverageRating()
+        {
+            int[] ratings = { Location, Hygiene, Pleasantness, Fairness, Parking };
+            double averageRating = ratings.Average();
+            return averageRating;
         }
         public void FromCSV(string[] values)
         {

@@ -36,7 +36,11 @@ namespace InitialProject.Application.Services
         public void RegisterAccommodation(string name, string country, string city, string address, AccommodationType type, int maximumGuests,
             int minimumDays, int minimumCancelationNotice, string pictureURL, User user)
         {
-            _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, user);
+            List<string> pictureURLs = new List<string>
+            {
+                pictureURL
+            };
+            _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, user);
         }
     }
 }
