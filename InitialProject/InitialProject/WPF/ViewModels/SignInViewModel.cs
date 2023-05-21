@@ -132,7 +132,7 @@ namespace InitialProject.WPF.ViewModels
                 }
 
             }
-            return new OwnerMainMenuViewModel(_navigationStore, _user, IsNotified);
+            return new OwnerMainMenuViewModel(_navigationStore, (Owner)_user, IsNotified);
         }
     }
 }

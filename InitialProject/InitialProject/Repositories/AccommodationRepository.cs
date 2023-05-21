@@ -95,10 +95,11 @@ namespace InitialProject.Repository
         }
         public List<Accommodation> GetAllOwnersAccommodations(int id)
         {
+            GetAll();
             List<Accommodation> allOwnersAccommodations= new List<Accommodation>();
             foreach(Accommodation accommodation in _accommodations)
             {
-                if(accommodation.OwnerId==id)
+                if(accommodation.Owner.Id==id)
                     allOwnersAccommodations.Add(accommodation);
             }
             return allOwnersAccommodations;

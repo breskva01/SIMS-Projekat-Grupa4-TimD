@@ -1,4 +1,5 @@
 ﻿using InitialProject.Domain.Models;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,13 @@ namespace InitialProject.Domain.RepositoryInterfaces
         void MarkOwnerAsRated(int reservationId);
         public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly newCheckout);
         public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut);
+        public LineSeries GetYearlyReservations(int id);
+        public LineSeries GetYearlyCancellations(int id);
+        public LineSeries GetYearlyMovedReservations(int id);
+        public LineSeries GetMonthlyReservations(int id, int year);
+        public LineSeries GetMonthlyCancellations(int id, int year);
+        public LineSeries GetMonthlyMovedReservations(int id, int year);
+        public string GetMostBookedYear(int id);
+        public string GetMostBookedMonth(int id, int year);
     }
 }

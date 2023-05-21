@@ -21,7 +21,7 @@ namespace InitialProject.WPF.ViewModels
         private readonly AccommodationService _accommodationService;
         private readonly UserService _userService;
         private readonly GuestRatingService _guestRatingService;
-        private readonly User _owner;
+        private readonly User _user;
         public readonly Accommodation Accommodation;
         private List<Accommodation> _accommodations;
         private List<User> _users;
@@ -128,9 +128,9 @@ namespace InitialProject.WPF.ViewModels
             _guestRatingService = new GuestRatingService();
             _navigationStore = navigationStore;
             _accommodations = _accommodationService.GetAll();
-            _owner = user;
+            _user = user;
             IsNotified = true;
-            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_owner.Id));
+            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_user.Id));
             InitializeCommands();
         }
         
@@ -169,7 +169,7 @@ namespace InitialProject.WPF.ViewModels
         }
         private OwnerProfileViewModel GoBack()
         {
-            return new OwnerProfileViewModel(_navigationStore, _owner, IsNotified);
+            return new OwnerProfileViewModel(_navigationStore, (Owner)_user, IsNotified);
         }
 
 

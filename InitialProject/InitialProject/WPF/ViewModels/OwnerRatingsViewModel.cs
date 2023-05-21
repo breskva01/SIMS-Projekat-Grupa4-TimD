@@ -18,27 +18,14 @@ namespace InitialProject.WPF.ViewModels
     {
         public ObservableCollection<AccommodationRating> OwnerRatings { get; set; }
         private AccommodationRatingService _accommodatonRatingService;
-        private readonly User _owner;
+        private readonly User _user;
         private readonly NavigationStore _navigationStore;
         public OwnerRatingsViewModel(NavigationStore navigationStore, User user)
         {
-            _owner = user;
+            _user = user;
             _navigationStore = navigationStore;
             _accommodatonRatingService= new AccommodationRatingService();
-            OwnerRatings = new ObservableCollection<AccommodationRating>(_accommodatonRatingService.GetEligibleForDisplay(_owner.Id));
-            InitializeCommands();
-        }
-        private void InitializeCommands()
-        {
-            BackCommand = new ExecuteMethodCommand(Back);
-        }
-        private void Back()
-        {
-            BackNavigateCommand.Execute(null);
-        }
-        private OwnerViewModel GoBack()
-        {
-            return new OwnerViewModel(_navigationStore, _owner);
+            OwnerRatings = new ObservableCollection<AccommodationRating>(_accommodatonRatingService.GetEligibleForDisplay(_user.Id));
         }
     }
 }

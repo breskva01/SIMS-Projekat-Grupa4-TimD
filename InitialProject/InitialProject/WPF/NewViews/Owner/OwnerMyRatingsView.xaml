@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
         mc:Ignorable="d"
-        Title="OwnerMyRatingsView" Height="550" Width="900">
+        Title="OwnerMyRatingsView" Height="550" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush ImageSource="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\OwnerLightBlue.jpg"/>
     </Window.Background>

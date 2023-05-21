@@ -62,38 +62,12 @@ namespace InitialProject.WPF.ViewModels
 
             navigate.Execute(null);
         }
-
-        /*private void ShowAccommodationRegistrationView()
-        {
-            AccommodationRegistrationViewModel accommodationRegistrationViewModel = new AccommodationRegistrationViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, accommodationRegistrationViewModel));
-
-            navigate.Execute(null);
-        }*/
-
         private void ShowOwnerProfileView()
         {
-            OwnerProfileViewModel ownerProfileViewModel = new OwnerProfileViewModel(_navigationStore, _user, IsNotified);
+            OwnerProfileViewModel ownerProfileViewModel = new OwnerProfileViewModel(_navigationStore, (Owner)_user, IsNotified);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, ownerProfileViewModel));
 
             navigate.Execute(null);
         }
-        /*
-        private void ShowReservationMoveRequestsView()
-        {
-            ReservationMoveRequestsViewModel reservationMoveRequestsViewModel = new ReservationMoveRequestsViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, reservationMoveRequestsViewModel));
-
-            navigate.Execute(null);
-        }
-
-        private void ShowOwnerRatingsView()
-        {
-            OwnerRatingsViewModel ownerRatingsViewModel = new OwnerRatingsViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, ownerRatingsViewModel));
-
-            navigate.Execute(null);
-        }
-        */
     }
 }

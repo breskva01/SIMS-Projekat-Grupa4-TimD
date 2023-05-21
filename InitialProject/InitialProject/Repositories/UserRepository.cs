@@ -47,6 +47,5 @@ namespace InitialProject.Repository
             _fileHandler.Save(_users);
             return user;
         }
-        
     }
 }

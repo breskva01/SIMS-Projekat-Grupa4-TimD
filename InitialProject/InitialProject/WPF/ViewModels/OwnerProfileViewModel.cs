@@ -14,7 +14,7 @@ namespace InitialProject.WPF.ViewModels
 {
     public class OwnerProfileViewModel : ViewModelBase
     {
-        private User _user;
+        private Owner _owner;
         private readonly NavigationStore _navigationStore;
         public ICommand SignOutCommand { get; }
         public ICommand BackCommand { get; }
@@ -126,18 +126,18 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
-        public OwnerProfileViewModel(NavigationStore navigationStore, User user, bool isNotified)
+        public OwnerProfileViewModel(NavigationStore navigationStore, Owner owner, bool isNotified)
         {
             _navigationStore = navigationStore;
-            _user = user;
+            _owner = owner;
             IsNotified= isNotified;
-            FirstName= user.FirstName;
-            LastName= user.LastName;
-            Username= _user.Username;
-            Email= _user.Email;
-            Rating = _user.Rating.ToString();
-            PhoneNumber= _user.PhoneNumber;
-            if(_user.SuperOwner)
+            FirstName= _owner.FirstName;
+            LastName= _owner.LastName;
+            Username= _owner.Username;
+            Email= _owner.Email;
+            Rating = _owner.Rating.ToString();
+            PhoneNumber= _owner.PhoneNumber;
+            if(_owner.SuperOwner)
             {
                 Status = "Super owner";
             }
@@ -161,28 +161,28 @@ namespace InitialProject.WPF.ViewModels
         }
         private void Back()
         {
-            OwnerMainMenuViewModel ownerMainMenuViewModel = new OwnerMainMenuViewModel(_navigationStore, _user, IsNotified);
+            OwnerMainMenuViewModel ownerMainMenuViewModel = new OwnerMainMenuViewModel(_navigationStore, _owner, IsNotified);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, ownerMainMenuViewModel));
 
             navigate.Execute(null);
         }
         private void ShowRateGuestsView()
         {
-            GuestRatingViewModel guestRatingViewModel = new GuestRatingViewModel(_navigationStore, _user, IsNotified);
+            GuestRatingViewModel guestRatingViewModel = new GuestRatingViewModel(_navigationStore, _owner, IsNotified);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guestRatingViewModel));
 
             navigate.Execute(null);
         }
         private void ShowMyAccommodationsView()
         {
-            AccommodationsViewModel accommodationsViewModel = new AccommodationsViewModel(_navigationStore, _user, IsNotified);
+            AccommodationsViewModel accommodationsViewModel = new AccommodationsViewModel(_navigationStore, _owner, IsNotified);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, accommodationsViewModel));
 
             navigate.Execute(null);
         }
         private void ShowMyRatingsView()
         {
-            OwnerMyRatingsView ownerMyRatingsView = new OwnerMyRatingsView(_navigationStore, _user);
+            OwnerMyRatingsView ownerMyRatingsView = new OwnerMyRatingsView(_navigationStore, _owner);
             ownerMyRatingsView.Show();
         }
     }

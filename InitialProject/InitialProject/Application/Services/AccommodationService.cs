@@ -37,28 +37,15 @@ namespace InitialProject.Application.Services
             int minimumDays, int minimumCancelationNotice, string pictureURL, User user)
         {
             List<string> pictureURLs = new List<string>
-            _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURL, user, ownerId);
+            {
+                pictureURL
+            };
+            _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, user);
         }
         public List<Accommodation> GetAllOwnersAccommodations(int id)
         {
            return _repository.GetAllOwnersAccommodations(id);
         }
-        public void Subscribe(IObserver observer)
-        {
-            _observers.Add(observer);
-        }
 
-        public void Unsubscribe(IObserver observer)
-        {
-            _observers.Remove(observer);
-        }
-
-        public void NotifyObservers()
-        {
-            foreach (var observer in _observers)
-            {
-                observer.Update();
-            }
-        }
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using InitialProject.Application.Services;
 using System.Collections.ObjectModel;
+using InitialProject.WPF.NewViews.Owner;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -35,6 +36,7 @@ namespace InitialProject.WPF.ViewModels
 
         }
         public ICommand BackCommand { get; }
+        public ICommand ShowAccommodationStatisticsViewCommand { get; }
         public AccommodationsViewModel(NavigationStore navigationStore, User user, bool isNotified) 
         {
             _navigationStore = navigationStore;
@@ -43,13 +45,19 @@ namespace InitialProject.WPF.ViewModels
             _accommodationService = new AccommodationService();
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetAllOwnersAccommodations(_user.Id));
             BackCommand = new ExecuteMethodCommand(Back);
+            ShowAccommodationStatisticsViewCommand = new ExecuteMethodCommand(ShowAccommodationStatisticsView);
         }
         private void Back()
         {
-            OwnerProfileViewModel ownerProfileViewModel = new OwnerProfileViewModel(_navigationStore, _user, IsNotified);
+            OwnerProfileViewModel ownerProfileViewModel = new OwnerProfileViewModel(_navigationStore, (Owner)_user, IsNotified);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, ownerProfileViewModel));
 
             navigate.Execute(null);
+        }
+        private void ShowAccommodationStatisticsView() 
+        {
+            AccommodationStatisticsView accommodationStatisticsView = new AccommodationStatisticsView(SelectedAccommodation);
+            accommodationStatisticsView.Show();
         }
     }
 }

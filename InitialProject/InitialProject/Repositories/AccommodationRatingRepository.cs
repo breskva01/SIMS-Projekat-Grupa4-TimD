@@ -3,6 +3,7 @@ using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
+using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace InitialProject.Repositories
     {
         private readonly AccommodationRatingFileHandler _fileHandler;
         private readonly UserFileHandler _userFileHandler;
+        private readonly IAccommodationRepository _accommodationRepository;
         private List<AccommodationRating> _ratings;
         private List<User> _users;
 
@@ -50,7 +52,7 @@ namespace InitialProject.Repositories
             _ratings.Add(rating);
             _fileHandler.Save(_ratings);
             var accommodations = _accommodationRepository.GetAll();
-            _ratings.ForEach(r => r.Reservation.Accommodation = accommodations.Find(acc => acc.Id == r.Reservation.AccommodationId));
+            _ratings.ForEach(r => r.Reservation.Accommodation = accommodations.Find(acc => acc.Id == r.Reservation.Accommodation.Id));
             double[] totalAverageRating = CalculateTotalAverageOwnerRating(rating);
             UpdateSuperOwnerStatus(rating.Reservation.Accommodation.Owner.Id, totalAverageRating);
         }
