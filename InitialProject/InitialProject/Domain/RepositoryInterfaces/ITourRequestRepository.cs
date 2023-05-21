@@ -29,6 +29,9 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public int NextId();
         public void Delete(TourRequest tourRequest);
         public List<TourRequest> GetFiltered(string country, string city, DateTime date1, DateTime date2, int number, string language);
-
+        public List<TourRequest> GetForChosenLocation(List<TourRequest> requests, string country, string city);
+        public List<int> GetRangeOfYears(List<TourRequest> requests);
+        public int GetYearNumberOfRequestsForChosenLocation(int year, string country, string city, List<TourRequest> requests);
+        public int GetMonthNumberOfRequests(int month, string country, string city, int year, List<TourRequest> requests);
     }
 }

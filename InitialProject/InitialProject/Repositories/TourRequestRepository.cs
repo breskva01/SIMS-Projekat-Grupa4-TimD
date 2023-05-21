@@ -41,7 +41,7 @@ namespace InitialProject.Repositories
         }
 
         public List<TourRequest> GetApproved(List<TourRequest> userRequests)
-        { 
+        {
             List<TourRequest> ApprovedRequests = new List<TourRequest>();
             foreach (TourRequest t in userRequests)
             {
@@ -52,6 +52,31 @@ namespace InitialProject.Repositories
             }
             return ApprovedRequests;
         }
+        public int GetMonthNumberOfRequests(int month, string country, string city,int year, List<TourRequest> requests)
+        {
+            int numberOfRequests = 0;
+            foreach (TourRequest t in requests)
+            {
+                if (t.EarliestDate.Year == year && t.Location.Country == country && t.Location.City == city && t.EarliestDate.Month == month)
+                {
+                    numberOfRequests++;
+                }
+            }
+            return numberOfRequests;
+        }
+        public int GetYearNumberOfRequestsForChosenLocation(int year, string country, string city, List<TourRequest> requests)
+        {
+            int numberOfRequests = 0;
+            foreach (TourRequest t in  requests)
+            {
+                if (t.EarliestDate.Year == year && t.Location.Country == country && t.Location.City == city)
+                {
+                    numberOfRequests++;
+                }
+            }
+            return numberOfRequests;
+        }
+
         public int GetApprovedForYear(string year)
         {
             List<TourRequest> allRequests = GetAll();
@@ -141,6 +166,34 @@ namespace InitialProject.Repositories
             }
 
             return (int)Math.Round(totalGuests / numberOfApprovedRequests);
+        }
+        public List<TourRequest> GetForChosenLocation(List<TourRequest> requests ,string country, string city)
+        {
+            List<TourRequest> tourRequests = new List<TourRequest>();
+            foreach (TourRequest t in requests)
+            {
+                if(t.Location.Country == country && t.Location.City == city)
+                {
+                    tourRequests.Add(t);
+                }
+            }
+            return tourRequests;
+        }
+        public List<int> GetRangeOfYears(List<TourRequest> requests)
+        {
+            List<int> allYears = new List<int>();
+            List<int> range = new List<int>();
+            foreach(TourRequest t in requests)
+            {
+                allYears.Add(t.EarliestDate.Year);
+            }
+            int min = allYears.Min();
+            int max = allYears.Max();
+            for(int i = min; i <= max; i++)
+            {
+                range.Add(i);
+            }
+            return range;
         }
 
         public List<int> GetAllYears()
