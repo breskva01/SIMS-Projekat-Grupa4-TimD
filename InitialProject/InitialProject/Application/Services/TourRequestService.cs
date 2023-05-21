@@ -15,6 +15,7 @@ namespace InitialProject.Application.Services
     {
         private readonly List<IObserver> _observers;
         private readonly ITourRequestRepository _repository;
+
         public TourRequestService()
         {
             _observers = new List<IObserver>();
@@ -36,6 +37,51 @@ namespace InitialProject.Application.Services
         public List<TourRequest> GetApproved(List<TourRequest> tourRequests)
         {
             return _repository.GetApproved(tourRequests);
+        }
+        public List<TourRequest> GetOnHold()
+        {
+            return _repository.GetOnHold();
+        }
+        public List<int> GetAllYears()
+        {
+            return _repository.GetAllYears();
+        }
+        public List<string> GetAllLocations(List<TourRequest> tourRequests)
+        {
+            return _repository.GetAllLocations(tourRequests);
+        }
+        public int GetLocationNumberOfRequests(string city, List<TourRequest> tourRequests)
+        {
+            return _repository.GetLocationNumberOfRequests(city, tourRequests);
+        }
+
+        public int GetYearNumberOfRequests(int year)
+        {
+            return _repository.GetYearNumberOfRequests(year);
+        }
+        public int GetLanguageNumberOfRequests(GuideLanguage guideLanguage)
+        {
+            return _repository.GetLanguageNumberOfRequests(guideLanguage);
+        }
+        public int GetApprovedForYear(string year)
+        {
+            return _repository.GetApprovedForYear(year);
+        }
+        public int GetApprovedGeneral()
+        {
+            return _repository.GetApprovedGeneral();
+        }
+        public List<string> GetAvailableYears()
+        {
+            return _repository.GetAvailableYears();
+        }
+        public int GetGeneralNumberOfGuests()
+        {
+            return _repository.GetGeneralNumberOfGuests();
+        }
+        public int GetYearNumberOfGuests(string year)
+        {
+            return _repository.GetYearNumberOfGuests(year);
         }
         public TourRequest CreateTourRequest(Location Location, string Description,RequestStatus Status, GuideLanguage Language,
             int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate, int TourId)

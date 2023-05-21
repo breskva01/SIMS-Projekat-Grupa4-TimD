@@ -18,6 +18,15 @@
     </Window.Icon>
     <Grid>
         <Grid.Resources>
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestStats2ViewModel}">
+                <views:TourRequestStats2View />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestStats3ViewModel}">
+                <views:TourRequestStats3View />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestStats1ViewModel}">
+                <views:TourRequestStats1View/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg2:NotificationBrowserViewModel}">
                 <views:NotificationBrowserView />
             </DataTemplate>

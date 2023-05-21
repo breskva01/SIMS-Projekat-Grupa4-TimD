@@ -15,16 +15,30 @@ namespace InitialProject.Application.Services
     {
         private readonly List<IObserver> _observers;
         private readonly IUserNotificationRepository _repository;
+        private readonly UserService _userService;
+        private readonly TourRequestService _tourRequestService;
         public UserNotificationService()
         {
             _observers = new List<IObserver>();
             _repository = RepositoryInjector.Get<IUserNotificationRepository>();
+            _tourRequestService = new TourRequestService();
         }
 
         public List<UserNotification> GetAll()
         {
             return _repository.GetAll();
         }
+
+        public void NotifySimilarRequests(Tour tour)
+        {
+            _repository.NotifySimilarRequests(tour, _tourRequestService.GetOnHold());
+        }
+
+        public void NotifyApprovedRequest(Tour tour, int userId)
+        {
+            _repository.NotifyApprovedRequest(tour, userId);
+        }
+
         public UserNotification GetById(int notificationId)
         {
             return _repository.GetById(notificationId);
