@@ -23,6 +23,8 @@ namespace InitialProject.WPF.Converters
                         return "Apartman";
                     case AccommodationType.Cottage:
                         return "Koliba";
+                    case AccommodationType.Everything:
+                        return "Sve";
                     default:
                         return "";
                 }

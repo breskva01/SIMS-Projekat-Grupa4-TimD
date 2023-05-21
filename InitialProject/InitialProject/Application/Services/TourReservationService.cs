@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -21,7 +22,7 @@ namespace InitialProject.Application.Services
         public TourReservationService()
         {
             _observers = new List<IObserver>();
-            _repository = RepositoryStore.GetITourReservationRepository;
+            _repository = RepositoryInjector.Get<ITourReservationRepository>();
             _reservations = new List<TourReservation>();
             _tourService = new TourService();
         }

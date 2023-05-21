@@ -19,7 +19,15 @@ namespace InitialProject.Repositories.FileHandlers
         }
         public List<Accommodation> Load()
         {
-            return _serializer.FromCSV(_accommodationsFilePath);
+            var accommodations = _serializer.FromCSV(_accommodationsFilePath);
+            FillInOwners(accommodations);
+            return accommodations;
+        }
+        private void FillInOwners(List<Accommodation> accommodations)
+        {
+            var users = new UserFileHandler().Load();
+            accommodations.ForEach(a =>
+                a.Owner = (Owner)users.Find(u => u.Id == a.Owner.Id));
         }
         public void Save(List<Accommodation> accommmodations)
         {

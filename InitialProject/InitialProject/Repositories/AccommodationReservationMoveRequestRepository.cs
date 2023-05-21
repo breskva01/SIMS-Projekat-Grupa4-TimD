@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Stores;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
@@ -13,62 +14,51 @@ namespace InitialProject.Repositories
     public class AccommodationReservationMoveRequestRepository : IAccommodationReservationMoveRequestRepository
     {
         private readonly AccommodationReservationMoveRequestFileHandler _fileHandler;
-        private readonly AccommodationReservationFileHandler _reservationFileHandler;
         private List<AccommodationReservationMoveRequest> _requests;
-        private List<AccommodationReservation> _reservations;
-
 
         public AccommodationReservationMoveRequestRepository()
         {
             _fileHandler = new AccommodationReservationMoveRequestFileHandler();
-            _reservationFileHandler= new AccommodationReservationFileHandler();
-            _requests = _fileHandler.Load();
         }
         public List<AccommodationReservationMoveRequest> GetAll()
         {
-            _requests = _fileHandler.Load();
-            var reservations = RepositoryStore.GetIAccommodationReservationRepository.GetAll();
-            _requests.ForEach(req => 
-                                req.Reservation = reservations.Find
-                                    (res => res.Id == req.ReservationId)
-                             );
-            return _requests;
+            return _requests = _fileHandler.Load();
         }
         public List<AccommodationReservationMoveRequest> GetByOwnerId(int ownerId)
         {
             GetAll();
-            return _requests.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId);
+            return _requests.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId);
         }
         public List<AccommodationReservationMoveRequest> GetByGuestId(int guestId)
         {
             GetAll();
-            return _requests.FindAll(r => r.Reservation.GuestId == guestId);
+            return _requests.FindAll(r => r.Reservation.Guest.Id == guestId);
         }
         public List<AccommodationReservationMoveRequest> GetAllNewlyAnswered(int guestId)
         {
             GetAll();
-            var answeredRequests = _requests.FindAll(r => r.Reservation.GuestId == guestId &&
+            return _requests.FindAll(r => r.Reservation.Guest.Id == guestId &&
                                           r.Status != ReservationMoveRequestStatus.Pending &&
                                           r.GuestNotified == false);
-            UpdateGuestNotifiedField(guestId);
-            return answeredRequests;
         }
-        private void UpdateGuestNotifiedField(int guestId)
+        public void UpdateGuestNotifiedField(int guestId)
         {
-            _requests.FindAll(request => request.Reservation.GuestId == guestId &&
-                                         request.Status != ReservationMoveRequestStatus.Pending)
-                     .ForEach(request => request.GuestNotified = true);
+            GetAll();
+            _requests.FindAll(r => r.Reservation.Guest.Id == guestId &&
+                                   r.Status != ReservationMoveRequestStatus.Pending)
+                     .ForEach(r => r.GuestNotified = true);
             _fileHandler.Save(_requests);
         }
         public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId)
         {
             GetAll();
-            return _requests.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId && r.Status == ReservationMoveRequestStatus.Pending);
+            return _requests.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId && 
+                                          r.Status == ReservationMoveRequestStatus.Pending);
         }
         public void ApproveRequest(int reservationId)
         {
             GetAll();
-            AccommodationReservationMoveRequest request = _requests.Find(r => r.ReservationId == reservationId);
+            AccommodationReservationMoveRequest request = _requests.Find(r => r.Reservation.Id == reservationId);
             AccommodationReservationMoveRequest newRequest = request;
             newRequest.Status = ReservationMoveRequestStatus.Accepted;
             _requests.Remove(request);
@@ -77,7 +67,8 @@ namespace InitialProject.Repositories
         }
         public void DenyRequest(int reservationId, string comment)
         {
-            AccommodationReservationMoveRequest request = _requests.Find(r => r.ReservationId == reservationId);
+            GetAll();
+            AccommodationReservationMoveRequest request = _requests.Find(r => r.Reservation.Id == reservationId);
             AccommodationReservationMoveRequest newRequest = request;
             newRequest.Status = ReservationMoveRequestStatus.Declined;
             newRequest.Comment = comment;

@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
         User GetByUsername(string username);
-        List<User> GetAll();
         User Update(User user);
         User GetById(int id);
     }

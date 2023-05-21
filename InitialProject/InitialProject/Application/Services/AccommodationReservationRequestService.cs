@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Observer;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
@@ -16,7 +17,7 @@ namespace InitialProject.Application.Services
         private readonly IAccommodationReservationMoveRequestRepository _repository;
         public AccommodationReservationRequestService()
         {
-            _repository = RepositoryStore.GetIAccommodationReservationMoveRequestRepository;
+            _repository = RepositoryInjector.Get<IAccommodationReservationMoveRequestRepository>();
         }
         public List<AccommodationReservationMoveRequest> GetAll()
         {
@@ -34,10 +35,14 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetAllNewlyAnswered(guestId);
         }
+        public void UpdateGuestNotifiedField(int guestId)
+        {
+            _repository.UpdateGuestNotifiedField(guestId);
+        }
         public bool HasPendingMoveRequest(int reservationId)
         {
             var requests = _repository.GetAll();
-            return requests.Any(r => r.ReservationId == reservationId &&
+            return requests.Any(r => r.Reservation.Id == reservationId &&
                                      r.Status == ReservationMoveRequestStatus.Pending);
         }
         public List<AccommodationReservationMoveRequest> GetPendingRequestsByOwnerId(int ownerId)

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
 namespace InitialProject.Domain.Models
 {
     public class AccommodationRating : ISerializable
     {
-        public int ReservationId { get; set; }
         public AccommodationReservation Reservation { get; set; }
         public int Location { get; set; }
         public int Hygiene { get; set; }
@@ -18,15 +18,20 @@ namespace InitialProject.Domain.Models
         public int Parking { get; set; }
         public string Comment { get; set; }
         public List<string> PictureURLs { get; set; }
+        public bool RenovatingNeeded => RenovationUrgency > 0;
+        public string RenovationComment { get; set; }
+        public int RenovationUrgency { get; set; }
+        public double AverageRating => CalculateAverageRating();
         public AccommodationRating() 
         {
             Comment = "";
             PictureURLs = new List<string>();
+            Reservation = new AccommodationReservation();
         }
         public AccommodationRating(AccommodationReservation reservation, int location, int hygiene, 
-            int pleasantness, int fairness, int parking, string comment, List<string> pictureURLs)
+            int pleasantness, int fairness, int parking, string comment, List<string> pictureURLs,
+            string renovationComment, int renovationUrgency)
         {
-            ReservationId = reservation.Id;
             Reservation = reservation;
             Location = location;
             Hygiene = hygiene;
@@ -35,10 +40,18 @@ namespace InitialProject.Domain.Models
             Parking = parking;
             Comment = comment;
             PictureURLs = pictureURLs;
+            RenovationComment = renovationComment;
+            RenovationUrgency = renovationUrgency;
+        }
+        private double CalculateAverageRating()
+        {
+            int[] ratings = { Location, Hygiene, Pleasantness, Fairness, Parking };
+            double averageRating = ratings.Average();
+            return averageRating;
         }
         public void FromCSV(string[] values)
         {
-            ReservationId = int.Parse(values[0]);
+            Reservation.Id = int.Parse(values[0]);
             Location = int.Parse(values[1]);
             Hygiene = int.Parse(values[2]);
             Pleasantness = int.Parse(values[3]);
@@ -46,6 +59,8 @@ namespace InitialProject.Domain.Models
             Parking = int.Parse(values[5]);
             Comment = values[6];
             PictureURLs = new List<string>(values[7].Split(','));
+            RenovationComment = values[8];
+            RenovationUrgency = int.Parse(values[9]);
         }
 
         public string[] ToCSV()
@@ -53,14 +68,16 @@ namespace InitialProject.Domain.Models
             string pictureURLs = string.Join(",", PictureURLs);
             string[] csvValues =
             {
-                ReservationId.ToString(),
+                Reservation.Id.ToString(),
                 Location.ToString(),
                 Hygiene.ToString(),
                 Pleasantness.ToString(),
                 Fairness.ToString(),
                 Parking.ToString(),
                 Comment,
-                pictureURLs
+                pictureURLs,
+                RenovationComment,
+                RenovationUrgency.ToString()
             };
             return csvValues;
         }

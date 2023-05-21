@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IAccommodationReservationCancellationNotificationRepository
+    public interface IAccommodationReservationCancellationNotificationRepository : IRepository<AccommodationReservationCancellationNotification>
     {
         List<AccommodationReservationCancellationNotification> GetByOwnerId(int ownerId);
         void Save(AccommodationReservationCancellationNotification notification);

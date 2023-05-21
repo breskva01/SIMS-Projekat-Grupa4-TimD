@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IKeyPointRepository
+    public interface IKeyPointRepository : IRepository<KeyPoint>
     {
-        public List<KeyPoint> GetAll();
         public KeyPoint GetById(int id);
     }
 }

@@ -19,7 +19,15 @@ namespace InitialProject.Repositories.FileHandlers
         }
         public List<AccommodationRating> Load()
         {
-            return _serializer.FromCSV(_ratingsFilePath);
+            var ratings = _serializer.FromCSV(_ratingsFilePath);
+            FillInReservations(ratings);
+            return ratings;
+        }
+        private void FillInReservations(List<AccommodationRating> ratings)
+        {
+            var reservations = new AccommodationReservationFileHandler().Load();
+            ratings.ForEach(r =>
+                r.Reservation = reservations.Find(res => res.Id == r.Reservation.Id));
         }
         public void Save(List<AccommodationRating> ratings)
         {

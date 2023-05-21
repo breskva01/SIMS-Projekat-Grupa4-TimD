@@ -46,7 +46,8 @@ namespace InitialProject.WPF.ViewModels
                 {
                     _selectedRequest = value;
                     OnPropertyChanged();
-                    Availability = CheckAvailability(_selectedRequest.Reservation.AccommodationId, _selectedRequest.RequestedCheckIn, _selectedRequest.RequestedCheckOut);
+                    if(_selectedRequest != null)
+                    Availability = CheckAvailability(_selectedRequest.Reservation.Accommodation.Id, _selectedRequest.RequestedCheckIn, _selectedRequest.RequestedCheckOut);
                 }
             }
         }
@@ -89,13 +90,13 @@ namespace InitialProject.WPF.ViewModels
 
         private void Approve()
         {
-            _reservationService.MoveReservation(SelectedRequest.ReservationId, SelectedRequest.RequestedCheckIn, SelectedRequest.RequestedCheckOut);
-            _requestService.ApproveRequest(SelectedRequest.ReservationId);
+            _reservationService.MoveReservation(SelectedRequest.Reservation.Id, SelectedRequest.RequestedCheckIn, SelectedRequest.RequestedCheckOut);
+            _requestService.ApproveRequest(SelectedRequest.Reservation.Id);
             MoveRequests.Remove(SelectedRequest);
         }
         private void Deny()
         {
-            _requestService.DenyRequest(SelectedRequest.ReservationId, Comment);
+            _requestService.DenyRequest(SelectedRequest.Reservation.Id, Comment);
             Comment = "";
             MoveRequests.Remove(SelectedRequest);
         }

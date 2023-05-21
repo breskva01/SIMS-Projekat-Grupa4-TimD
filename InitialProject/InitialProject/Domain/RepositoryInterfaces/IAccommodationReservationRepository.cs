@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IAccommodationReservationRepository
+    public interface IAccommodationReservationRepository : IRepository<AccommodationReservation>
     {
-        List<AccommodationReservation> GetAll();
         AccommodationReservation GetById(int reservationId);
-        List<AccommodationReservation> GetAllNewlyCancelled(int ownerId);
-        List<AccommodationReservation> GetConfirmed(int guestId);
-        List<AccommodationReservation> GetEgligibleForRating(int guestId);
-        List<AccommodationReservation> GetExisting(int accommodationId);
-        List<AccommodationReservation> GetExistingInsideDateRange(int accommodationId, DateOnly startDate, DateOnly endDate);
+        List<AccommodationReservation> GetFilteredReservations(int? guestId = null, int? accommodationId = null, DateOnly? startDate = null,
+            DateOnly? endDate = null, AccommodationReservationStatus status = AccommodationReservationStatus.Active);
         public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId);
         public void updateLastNotification(AccommodationReservation accommodationReservation);
         public void updateRatingStatus(AccommodationReservation accommodationReservation);

@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface ITourReservationRepository
+    public interface ITourReservationRepository : IRepository<TourReservation>
     {
         public TourReservation Update(TourReservation tourReservation);
-        public List<TourReservation> GetAll();
         public TourReservation GetById(int id);
         public List<TourReservation> GetPresent(List<TourReservation> reservations);
         public List<TourReservation> GetPending(List<TourReservation> reservations);

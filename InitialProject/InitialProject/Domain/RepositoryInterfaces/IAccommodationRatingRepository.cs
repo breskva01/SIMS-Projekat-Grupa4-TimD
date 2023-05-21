@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IAccommodationRatingRepository
+    public interface IAccommodationRatingRepository : IRepository<AccommodationRating>
     {
-        List<AccommodationRating> GetAll();
         List<AccommodationRating> GetByOwnerId(int ownerId);
-        List<AccommodationRating> GetEgligibleForDisplay(int ownerId);
+        List<AccommodationRating> GetByAccommodationId(int accommodationId);
+        List<AccommodationRating> GetEligibleForDisplay(int ownerId);
         void Save(AccommodationRating rating);
     }
 

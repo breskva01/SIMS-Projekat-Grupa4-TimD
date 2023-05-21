@@ -12,20 +12,23 @@ namespace InitialProject.Domain.Models
     public class AccommodationReservationMoveRequest : ISerializable
     {
         public AccommodationReservation Reservation { get; set; }
-        public int ReservationId { get; set; }
         public DateOnly RequestedCheckIn { get; set; }
         public DateOnly RequestedCheckOut { get; set; }
+        public int NumberOfDays => (RequestedCheckOut.ToDateTime(TimeOnly.MinValue) -
+                                    RequestedCheckIn.ToDateTime(TimeOnly.MinValue)).Days;
         public string Comment { get; set; }
         public ReservationMoveRequestStatus Status { get; set; }
         public bool GuestNotified { get; set; }
 
-        public AccommodationReservationMoveRequest() { }
+        public AccommodationReservationMoveRequest() 
+        {
+            Reservation = new AccommodationReservation();
+        }
 
         public AccommodationReservationMoveRequest(AccommodationReservation reservation,
             DateOnly requestedCheckIn, DateOnly requestedCheckOut)
         {
             Reservation = reservation;
-            ReservationId = reservation.Id;
             RequestedCheckIn = requestedCheckIn;
             RequestedCheckOut = requestedCheckOut;
             Status = ReservationMoveRequestStatus.Pending;
@@ -34,7 +37,7 @@ namespace InitialProject.Domain.Models
 
         public void FromCSV(string[] values)
         {
-            ReservationId = int.Parse(values[0]);
+            Reservation.Id = int.Parse(values[0]);
             RequestedCheckIn = DateOnly.ParseExact(values[1], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             RequestedCheckOut = DateOnly.ParseExact(values[2], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             Comment = values[3];
@@ -46,7 +49,7 @@ namespace InitialProject.Domain.Models
         {
             string[] csvValues =
             {
-                ReservationId.ToString(),
+                Reservation.Id.ToString(),
                 RequestedCheckIn.ToString("dd/MM/yyyy"),
                 RequestedCheckOut.ToString("dd/MM/yyyy"),
                 Comment,

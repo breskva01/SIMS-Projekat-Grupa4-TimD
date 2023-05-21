@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Stores;
+﻿using InitialProject.Application.Injector;
+using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
@@ -16,47 +17,42 @@ namespace InitialProject.Repositories
         private readonly UserFileHandler _userFileHandler;
         private List<AccommodationRating> _ratings;
         private List<User> _users;
-        private readonly IAccommodationReservationRepository _reservationRepository;
-        private readonly IAccommodationRepository _accommodationRepository;
-        private readonly IUserRepository _userRepository;
 
         public AccommodationRatingRepository()
         {
             _fileHandler = new AccommodationRatingFileHandler();
             _userFileHandler = new UserFileHandler();
-            _ratings = _fileHandler.Load();
-            _reservationRepository = RepositoryStore.GetIAccommodationReservationRepository;
-            _userRepository = RepositoryStore.GetIUserRepository;
-            _accommodationRepository = RepositoryStore.GetIAccommodationRepository;
         }
 
         public List<AccommodationRating> GetAll()
         {
-            _ratings = _fileHandler.Load();
-            var reservations = _reservationRepository.GetAll();
-            _ratings.ForEach(r => r.Reservation = reservations.Find(res => res.Id == r.ReservationId));
-            return _ratings;
+            return _ratings = _fileHandler.Load();
         }
         public List<AccommodationRating> GetByOwnerId(int ownerId)
         {
-            _ratings = GetAll();
-            return _ratings.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId);
+            GetAll();
+            return _ratings.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId);
         }
-        public List<AccommodationRating> GetEgligibleForDisplay(int ownerId)
+        public List<AccommodationRating> GetByAccommodationId(int accommodationId)
         {
-            _ratings = GetAll();
-            return _ratings.FindAll(r => r.Reservation.Accommodation.OwnerId == ownerId &&
+            GetAll();
+            return _ratings.FindAll(r => r.Reservation.Accommodation.Id == accommodationId);
+        }
+        public List<AccommodationRating> GetEligibleForDisplay(int ownerId)
+        {
+            GetAll();
+            return _ratings.FindAll(r => r.Reservation.Accommodation.Owner.Id == ownerId &&
                                          r.Reservation.IsGuestRated);
         }
         public void Save(AccommodationRating rating)
         {
-            _ratings = GetAll();
+            GetAll();
             _ratings.Add(rating);
             _fileHandler.Save(_ratings);
             var accommodations = _accommodationRepository.GetAll();
             _ratings.ForEach(r => r.Reservation.Accommodation = accommodations.Find(acc => acc.Id == r.Reservation.AccommodationId));
             double[] totalAverageRating = CalculateTotalAverageOwnerRating(rating);
-            UpdateSuperOwnerStatus(rating.Reservation.Accommodation.OwnerId, totalAverageRating);
+            UpdateSuperOwnerStatus(rating.Reservation.Accommodation.Owner.Id, totalAverageRating);
         }
         private double[] CalculateTotalAverageOwnerRating(AccommodationRating rating)
         {
@@ -78,10 +74,10 @@ namespace InitialProject.Repositories
         }
         public void UpdateSuperOwnerStatus(int ownerId, double[] totalAverageRating)
         {
-            User newOwner = new User();
+            Owner newOwner = new Owner();
             _users = _userFileHandler.Load();
             _ratings = GetByOwnerId(ownerId);
-            User owner = _users.Find(o => o.Id == ownerId);
+            Owner owner = (Owner)_users.Find(o => o.Id == ownerId);
             double OwnerRatingsCount = totalAverageRating[1];
             owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 2) ? true : false;
             owner.Rating = Math.Round(totalAverageRating[0],2); 

@@ -9,6 +9,7 @@ namespace InitialProject.Domain.Models
 {
     public class GuestRating : ISerializable
     {
+        public AccommodationReservation Reservation { get; set; }
         public int OwnerId { get; set; }
         public int GuestId { get; set; }
         public int Hygiene { get; set; }
@@ -18,8 +19,12 @@ namespace InitialProject.Domain.Models
         public int NoiseLevel { get; set; }
         public int OverallExperience { get; set; }
         public string Comment { get; set; }
+        public double AverageRating => CalculateAverageRating();
 
-        public GuestRating() { }
+        public GuestRating() 
+        {
+            Reservation = new AccommodationReservation();
+        }
 
         public GuestRating(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperince, string comment)
         {
@@ -33,7 +38,12 @@ namespace InitialProject.Domain.Models
             OverallExperience= overallExperince;
             Comment = comment;
         }
-
+        private double CalculateAverageRating()
+        {
+            int[] ratings = { Hygiene, RespectsRules, Communication, Timeliness, NoiseLevel, OverallExperience };
+            double averageRating = ratings.Average();
+            return averageRating;
+        }
         public void FromCSV(string[] values)
         {
             OwnerId = int.Parse(values[0]);
@@ -44,7 +54,8 @@ namespace InitialProject.Domain.Models
             Timeliness= int.Parse(values[5]);
             NoiseLevel  = int.Parse(values[6]);
             OverallExperience= int.Parse(values[7]);
-            Comment = values[4];
+            Comment = values[8];
+            Reservation.Id = int.Parse(values[9]);
         }
 
         public string[] ToCSV()
@@ -59,7 +70,8 @@ namespace InitialProject.Domain.Models
                 Timeliness.ToString(),
                 NoiseLevel.ToString(),
                 OverallExperience.ToString(),
-                Comment
+                Comment,
+                Reservation.Id.ToString()
             };
             return csvValues;
         }

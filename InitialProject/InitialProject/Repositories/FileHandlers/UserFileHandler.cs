@@ -10,12 +10,12 @@ namespace InitialProject.Repositories.FileHandlers
 {
     public class UserFileHandler
     {
-        private const string _usersFilePath = "../../../Resources/Data/users.csv";
-        private readonly Serializer<User> _serializer;
+        private const string _usersFilePath = "../../../Resources/Data/usersTest.csv";
+        private readonly UserSerializer _serializer;
 
         public UserFileHandler()
         {
-            _serializer = new Serializer<User>();
+            _serializer = new UserSerializer();
         }
         public List<User> Load()
         {
