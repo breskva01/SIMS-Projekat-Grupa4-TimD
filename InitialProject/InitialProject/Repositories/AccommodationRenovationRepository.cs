@@ -37,9 +37,48 @@ namespace InitialProject.Repositories
         {
             GetAll();
             Accommodation accommodation = _accommodations.Find(a => a.Id == id);
-            AccommodationRenovation renovation = new AccommodationRenovation(NextId(), accommodation, start, end, description, end.AddYears(1));
+            AccommodationRenovation renovation = new AccommodationRenovation(NextId(), accommodation, start, end, description, end.AddYears(1), AppointmentStatus.Reserved);
             _renovations.Add(renovation);
             _fileHandler.Save(_renovations);
+        }
+        public List<AccommodationRenovation> GetAllAppointmentsByOwner(int id)
+        {
+            GetAll();
+            List<AccommodationRenovation> renovations = new List<AccommodationRenovation>();
+            foreach(AccommodationRenovation renovation in _renovations)
+            {
+                if(renovation.Accommodation.Owner.Id == id && !(renovation.Status == AppointmentStatus.Cancelled))
+                {
+                    renovations.Add(renovation);
+                }
+            }
+            return renovations;
+        }
+        public void UpdateStatus(int id)
+        {
+            GetAll();
+            AccommodationRenovation renovation = _renovations.Find(r => r.Id == id);
+            AccommodationRenovation newRenovation = renovation;
+            if (renovation.Status == AppointmentStatus.Reserved)
+            {
+                newRenovation.Status = AppointmentStatus.Finished;
+                _renovations.Remove(renovation);
+                _renovations.Add(newRenovation);
+                _fileHandler.Save(_renovations);
+            }
+        }
+        public void CancelAppointment(int id)
+        {
+            GetAll();
+            AccommodationRenovation renovation = _renovations.Find(r => r.Id == id);
+            AccommodationRenovation newRenovation = renovation;
+            if (DateTime.Now <= renovation.Start.AddDays(-5))
+            {
+                newRenovation.Status = AppointmentStatus.Cancelled;
+                _renovations.Remove(renovation);
+                _renovations.Add(newRenovation);
+                _fileHandler.Save(_renovations);
+            }
         }
     }
 }

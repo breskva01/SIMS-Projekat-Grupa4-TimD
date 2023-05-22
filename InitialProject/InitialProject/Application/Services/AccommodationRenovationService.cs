@@ -24,5 +24,17 @@ namespace InitialProject.Application.Services
         {
             _repository.ScheduleRenovation(id, start, end, description);
         }
+        public List<AccommodationRenovation> GetAllAppointmentsByOwner(int id)
+        {
+            return _repository.GetAllAppointmentsByOwner(id);
+        }
+        public void UpdateStatus(int id)
+        {
+            _repository.UpdateStatus(id);
+        }
+        public void CancelAppointment(int id) 
+        {
+            _repository.CancelAppointment(id);
+        }
     }
 }

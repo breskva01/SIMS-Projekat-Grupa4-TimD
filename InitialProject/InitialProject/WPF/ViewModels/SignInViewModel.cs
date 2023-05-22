@@ -149,10 +149,12 @@ namespace InitialProject.WPF.ViewModels
                         if (DateTime.Now >= renovation.RenovationExpiration)
                         {
                             _accommodationService.UpdateRenovationStatus(accommodation.Id);
+                            _renovationService.UpdateStatus(renovation.Id);
                         }
                         else if (DateTime.Now >= renovation.End)
                         {
                             _accommodationService.UpdateRenovationStatus(accommodation.Id);
+                            _renovationService.UpdateStatus(renovation.Id);
                         }
                         
                     }

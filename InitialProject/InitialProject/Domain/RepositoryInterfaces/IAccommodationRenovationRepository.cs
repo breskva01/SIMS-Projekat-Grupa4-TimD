@@ -11,5 +11,8 @@ namespace InitialProject.Domain.RepositoryInterfaces
     {
         public List<AccommodationRenovation> GetAll();
         public void ScheduleRenovation(int id, DateTime start, DateTime end, string description);
+        public List<AccommodationRenovation> GetAllAppointmentsByOwner(int id);
+        public void UpdateStatus(int id);
+        public void CancelAppointment(int id);
     }
 }

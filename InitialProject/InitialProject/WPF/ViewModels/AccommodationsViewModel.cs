@@ -38,6 +38,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand BackCommand { get; }
         public ICommand ShowAccommodationStatisticsViewCommand { get; }
         public ICommand ShowScheduleRenovationViewCommand { get; }
+        public ICommand ShowMyRenovationAppointmentsViewCommand { get; }
         public AccommodationsViewModel(NavigationStore navigationStore, User user, bool isNotified)
         {
             _navigationStore = navigationStore;
@@ -48,6 +49,7 @@ namespace InitialProject.WPF.ViewModels
             BackCommand = new ExecuteMethodCommand(Back);
             ShowAccommodationStatisticsViewCommand = new ExecuteMethodCommand(ShowAccommodationStatisticsView);
             ShowScheduleRenovationViewCommand = new ExecuteMethodCommand(ShowScheduleRenovationView);
+            ShowMyRenovationAppointmentsViewCommand = new ExecuteMethodCommand(ShowMyRenovationAppointmentsView);
         }
         private void Back()
         {
@@ -65,6 +67,11 @@ namespace InitialProject.WPF.ViewModels
         {
             ScheduleRenovationView scheduleRenovationView = new ScheduleRenovationView(SelectedAccommodation);
             scheduleRenovationView.Show();
+        }
+        private void ShowMyRenovationAppointmentsView()
+        {
+            MyRenovationAppointmentsView myRenovationAppointmentsView = new MyRenovationAppointmentsView(_user.Id);
+            myRenovationAppointmentsView.Show();
         }
     }
 }

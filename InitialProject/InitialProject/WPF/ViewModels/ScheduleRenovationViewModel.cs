@@ -66,7 +66,7 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        private AccommodationReservationService _acoommodationReservationService;
+        private AccommodationReservationService _acommodationReservationService;
         private AccommodationRenovationService _accommodationRenovationService;
         private AccommodationService _accommodationService;
         public ObservableCollection<TimeSlot> AvailableDates { get; set; }
@@ -76,7 +76,7 @@ namespace InitialProject.WPF.ViewModels
         public ScheduleRenovationViewModel(Accommodation selectedAccommodation) 
         {
             _selectedAccommodation = selectedAccommodation;
-            _acoommodationReservationService = new AccommodationReservationService();
+            _acommodationReservationService = new AccommodationReservationService();
             _accommodationRenovationService = new AccommodationRenovationService();
             _accommodationService = new AccommodationService();
             AvailableDates = new ObservableCollection<TimeSlot>();
@@ -85,7 +85,7 @@ namespace InitialProject.WPF.ViewModels
         }
         private void Search()
         {
-            var availableDates = _acoommodationReservationService.GetAvailableDates(Start, End, int.Parse(Duration)-1, _selectedAccommodation.Id);
+            var availableDates = _acommodationReservationService.GetAvailableDates(Start, End, int.Parse(Duration)-1, _selectedAccommodation.Id);
             AvailableDates.Clear();
             foreach (var date in availableDates)
             {
