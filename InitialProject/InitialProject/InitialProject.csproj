@@ -12,6 +12,7 @@
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
     <None Remove="Resources\Images\appLogo.png" />
+    <None Remove="Resources\Images\bell.png" />
     <None Remove="Resources\Images\berlin.jpg" />
     <None Remove="Resources\Images\brazil_cottage.jpg" />
     <None Remove="Resources\Images\brvnara_rumunija.jpg" />
@@ -37,11 +38,12 @@
     <None Remove="Resources\Images\moscow.png" />
     <None Remove="Resources\Images\new-page.png" />
     <None Remove="Resources\Images\next.png" />
+    <None Remove="Resources\Images\notificationBell1.png" />
     <None Remove="Resources\Images\novi_sad.jpg" />
     <None Remove="Resources\Images\novi_sad_brvnara.jpg" />
+    <None Remove="Resources\Images\OwnerLightBlueNew.jpg" />
     <None Remove="Resources\Images\paper-plane100.png" />
     <None Remove="Resources\Images\paper-plane50.png" />
-    <None Remove="Resources\Images\OwnerLightBlue.jpg" />
     <None Remove="Resources\Images\paris.png" />
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
@@ -61,6 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\bell.png" />
     <Resource Include="Resources\Images\berlin.jpg" />
     <Resource Include="Resources\Images\calendar-edit.png" />
     <Resource Include="Resources\Images\clipboard_check.png" />
@@ -74,7 +77,13 @@
     <Resource Include="Resources\Images\moscow.png" />
     <Resource Include="Resources\Images\new-page.png" />
     <Resource Include="Resources\Images\next.png" />
+    <Content Include="Resources\Images\notificationBell1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\novi_sad.jpg" />
+    <Content Include="Resources\Images\OwnerLightBlueNew.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\paper-plane100.png" />
     <Resource Include="Resources\Images\paper-plane50.png" />
     <Resource Include="Resources\Images\paris.png" />

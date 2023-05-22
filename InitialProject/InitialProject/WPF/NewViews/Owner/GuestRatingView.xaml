@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="670" d:DesignWidth="1030">
     <UserControl.Background>
-        <ImageBrush ImageSource="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\OwnerLightBlue.jpg"/>
+        <ImageBrush ImageSource="../../../Resources/Images/OwnerLightBlueNew.jpg"/>
     </UserControl.Background>
     <UserControl.Resources>
         <Style TargetType="Button">

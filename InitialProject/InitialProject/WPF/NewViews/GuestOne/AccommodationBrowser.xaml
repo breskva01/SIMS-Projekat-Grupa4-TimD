@@ -37,7 +37,7 @@
 
                     <TextBlock
                         VerticalAlignment="Center"
-                        FontSize="20"
+                        FontSize="14"
                         Text="★ ">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">

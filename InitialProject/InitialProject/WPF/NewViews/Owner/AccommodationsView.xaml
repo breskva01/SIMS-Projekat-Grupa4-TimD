@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="670" d:DesignWidth="1030">
     <UserControl.Background>
-        <ImageBrush ImageSource="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\OwnerLightBlue.jpg"/>
+        <ImageBrush ImageSource="../../../Resources/Images/OwnerLightBlueNew.jpg"/>
     </UserControl.Background>
     <UserControl.Resources>
         <Style TargetType="Button">
@@ -59,7 +59,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Row="2" Width="415" Height="40" Content="Back" Command="{Binding BackCommand}" FontSize="32" Margin="308,209,307,56"/>
-        <Image Grid.Row="2" Width="25" Source="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\notificationBell1.png" Margin="973,2,32,-2"></Image>
+        <Image Grid.Row="2" Width="25" Source="../../../Resources/Images/notificationBell1.png" Margin="973,2,32,-2"></Image>
         <Ellipse Grid.Row="2" Width="10" Height="10" Margin="986,143,34,152"></Ellipse>
         <Button Grid.Row="2" Width="415" Height="40" Content="Reservation move requests" FontSize="32" Margin="558,144,57,121"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Renovation appointments" Command="{Binding ShowMyRenovationAppointmentsViewCommand}" FontSize="32" Margin="558,79,57,186"/>

@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="670" d:DesignWidth="1030">
     <UserControl.Background>
-        <ImageBrush ImageSource="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\OwnerLightBlue.jpg"/>
+        <ImageBrush ImageSource="../../../Resources/Images/OwnerLightBlueNew.jpg"/>
     </UserControl.Background>
     <UserControl.Resources>
         <Style TargetType="Button">
@@ -40,8 +40,8 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Width="350" FontSize="60" Foreground="DarkBlue">𝘛𝘳𝘢𝘷𝘦𝘭𝘉𝘶𝘥𝘥𝘺
         </Label>
-        <Image Grid.Row="1" Width="120" Source="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\appLogo1.png"></Image>
-        <Image Grid.Row="2" Width="25" Margin="659,5,286,75" Source="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\notificationBell1.png" Grid.RowSpan="2"></Image>
+        <Image Grid.Row="1" Width="120" Source="../../../Resources/Images/appLogo1.png"></Image>
+        <Image Grid.Row="2" Width="25" Margin="659,5,286,75" Source="../../../Resources/Images/notificationBell1.png" Grid.RowSpan="2"></Image>
         <Ellipse Width="10" Height="10"  Grid.Row="2" Margin="380,0,0,0"></Ellipse>
         <Button Grid.Row="2" Width="348" FontSize="32" Content="Profile" Command="{Binding ViewProfileCommand}" Margin="0,17,0,17" Foreground="White" FontFamily="Impact"></Button>
         <Button Grid.Row="3" Width="348" FontSize="32" Content="Forums" Margin="0,17,0,17" Foreground="White" FontFamily="Impact"></Button>

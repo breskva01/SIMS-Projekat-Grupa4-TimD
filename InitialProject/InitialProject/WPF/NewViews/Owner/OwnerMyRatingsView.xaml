@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="OwnerMyRatingsView" Height="550" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\OwnerLightBlue.jpg"/>
+        <ImageBrush ImageSource="../../../Resources/Images/OwnerLightBlueNew.jpg"/>
     </Window.Background>
     <Window.Resources>
         <Style TargetType="Button">
