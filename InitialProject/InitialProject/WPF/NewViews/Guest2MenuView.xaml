@@ -5,27 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid VerticalAlignment="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Text="TravelBuddy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="64" Foreground="#007ACC" FontFamily="Segoe UI"/>
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command="{Binding MyVouchersCommand}" Content="My vouchers" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand" />
-            <Button Command="{Binding TourBrowserCommand}" Content="Tour browser" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command="{Binding TrackingCommand}" Content="Tour live tracking" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand" />
-            <Button Command="{Binding RatingCommand}" Content="Tour rating" Background="#007ACC" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand"/>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
-            <Button Command="{Binding SignOutCommand}" Content="Sign out" Background="#FF632305" Foreground="White" Padding="10" Margin="10" FontSize="16" FontWeight="Bold" Height="50" Width="200" BorderBrush="Transparent" Cursor="Hand" />
-        </StackPanel>
-    </Grid>
+             d:DesignHeight="750" d:DesignWidth="430">
+    
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="#d7e5ec">
+        <Grid VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
+                <Image Source="/Resources/Images/logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                <TextBlock Text="TravelBuddy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#779ecb" FontFamily="Segoe UI"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+                <Button Command="{Binding TourBrowserCommand}" Content="Book a tour" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Command="{Binding TrackingCommand}" Content="Active tour" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
+                <Button Content="My reservations" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
+                <Button Command ="{Binding RequestMenuCommand}" Content="Make a request" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
+                <Button Command="{Binding MyInfoCommand}" Content="My info" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
+                <Button Command="{Binding SignOutCommand}" Content="Log out" Background="#FF632305" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="200" BorderBrush="Transparent" Cursor="Hand"  />
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

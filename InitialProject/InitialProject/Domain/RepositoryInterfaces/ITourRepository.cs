@@ -18,12 +18,13 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public int NextId();
         public void Delete(Tour tour);
         public bool IsActive(int tourId);
-        public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int numberOfGuests);
-        public bool MatchesFilters(Tour tour, string country, string city, int duration, GuideLanguage language, int numberOfGuests);
-        public List<Tour> SortByName(List<Tour> tours);
-        public List<Tour> SortByLocation(List<Tour> tours);
+        public List<Tour> GetFiltered(TourFilterSort tourFilterSort);
+        public List<Tour> GetSorted(List<Tour> tours, TourFilterSort tourFilterSort);
+        public List<Tour> SortByCountry(List<Tour> tours);
+        public List<Tour> SortByCity(List<Tour> tours);
         public List<Tour> SortByDuration(List<Tour> tours);
         public List<Tour> SortByLanguage(List<Tour> tours);
+        public List<Tour> SortBySpaces(List<Tour> tours);
         public Tour GetMostVisited(String selectedYear);
         public List<string> GetAvailableYears();
         public List<string> GetFinishedTourNames();

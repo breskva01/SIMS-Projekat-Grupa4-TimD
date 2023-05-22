@@ -11,9 +11,13 @@
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\backgroundLP.jpg" />
+    <None Remove="Resources\Images\backSquare.png" />
+    <None Remove="Resources\Images\backW.jpg" />
     <None Remove="Resources\Images\appLogo.png" />
     <None Remove="Resources\Images\bell.png" />
     <None Remove="Resources\Images\berlin.jpg" />
+    <None Remove="Resources\Images\blueCheck.png" />
     <None Remove="Resources\Images\brazil_cottage.jpg" />
     <None Remove="Resources\Images\brvnara_rumunija.jpg" />
     <None Remove="Resources\Images\brvnara_tara.jpg" />
@@ -29,13 +33,24 @@
     <None Remove="Resources\Images\dash-line.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\forwardSquare.png" />
     <None Remove="Resources\Images\go-back.png" />
     <None Remove="Resources\Images\go_back.png" />
     <None Remove="Resources\Images\help.png" />
+    <None Remove="Resources\Images\homeWhite.png" />
     <None Remove="Resources\Images\info-icon.png" />
     <None Remove="Resources\Images\kuca_jadran.jpg" />
+    <None Remove="Resources\Images\logoB.png" />
+    <None Remove="Resources\Images\menuW.png" />
+    <None Remove="Resources\Images\message.png" />
     <None Remove="Resources\Images\moon.png" />
+    <None Remove="Resources\Images\filter.png" />
+    <None Remove="Resources\Images\left_arrow.png" />
+    <None Remove="Resources\Images\logo.png" />
+    <None Remove="Resources\Images\menu.png" />
     <None Remove="Resources\Images\moscow.png" />
+    <None Remove="Resources\Images\notification.png" />
+    <None Remove="Resources\Images\notify.png" />
     <None Remove="Resources\Images\new-page.png" />
     <None Remove="Resources\Images\next.png" />
     <None Remove="Resources\Images\notificationBell1.png" />
@@ -47,7 +62,12 @@
     <None Remove="Resources\Images\paris.png" />
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
+    <None Remove="Resources\Images\plus.png" />
+    <None Remove="Resources\Images\profileWhite.png" />
     <None Remove="Resources\Images\search.png" />
+    <None Remove="Resources\Images\sort.png" />
+    <None Remove="Resources\Images\tourist.png" />
+    <None Remove="Resources\Images\TravelBuddy.png" />
     <None Remove="Resources\Images\soba_novi_sad.jpg" />
     <None Remove="Resources\Images\sun.png" />
     <None Remove="Resources\Images\urgent-message.png" />
@@ -58,13 +78,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="2.4.0.1044" />
+    <PackageReference Include="Microsoft.Toolkit" Version="7.1.2" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Images\bell.png" />
+    <Resource Include="Resources\Images\backgroundLP.jpg" />
+    <Resource Include="Resources\Images\backSquare.png" />
+    <Resource Include="Resources\Images\backW.jpg" />
     <Resource Include="Resources\Images\berlin.jpg" />
+    <Resource Include="Resources\Images\blueCheck.png" />
+    <Resource Include="Resources\Images\check.png" />
+    <Resource Include="Resources\Images\checkmark.png" />
+    <Resource Include="Resources\Images\filter.png" />
+    <Resource Include="Resources\Images\forwardSquare.png" />
+    <Resource Include="Resources\Images\homeWhite.png" />
+    <Resource Include="Resources\Images\left_arrow.png" />
+    <Resource Include="Resources\Images\logo.png" />
+    <Resource Include="Resources\Images\logoB.png" />
+    <Resource Include="Resources\Images\menu.png" />
     <Resource Include="Resources\Images\calendar-edit.png" />
     <Resource Include="Resources\Images\clipboard_check.png" />
     <Resource Include="Resources\Images\clipboard_question.png" />
@@ -73,6 +111,8 @@
     <Resource Include="Resources\Images\cross.png" />
     <Resource Include="Resources\Images\dash-line.png" />
     <Resource Include="Resources\Images\info-icon.png" />
+    <Resource Include="Resources\Images\menuW.png" />
+    <Resource Include="Resources\Images\message.png" />
     <Resource Include="Resources\Images\moon.png" />
     <Resource Include="Resources\Images\moscow.png" />
     <Resource Include="Resources\Images\new-page.png" />
@@ -80,6 +120,8 @@
     <Content Include="Resources\Images\notificationBell1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\notification.png" />
+    <Resource Include="Resources\Images\notify.png" />
     <Resource Include="Resources\Images\novi_sad.jpg" />
     <Content Include="Resources\Images\OwnerLightBlueNew.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -90,13 +132,22 @@
     <Resource Include="Resources\Images\person.png" />
     <Resource Include="Resources\Images\petrovaradin.png" />
     <Content Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\profileWhite.png" />
     <Resource Include="Resources\Images\sun.png" />
     <Resource Include="Resources\Images\urgent-message.png" />
+    <Resource Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\sort.png" />
+    <Resource Include="Resources\Images\tourist.png" />
+    <Resource Include="Resources\Images\TravelBuddy.png" />
     <Resource Include="Resources\Images\vienna.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Application\Factories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\plus.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -37,7 +37,7 @@ namespace InitialProject.Application.Services
             return _repository.GetByName(name);
         }
         public Tour CreateTour(string Name, Location Location, string Description, GuideLanguage Language,
-            int MaximumGuests, DateTime Start, int Duration, string PictureUrl, List<KeyPoint> ky, List<int> kyIds)
+            int MaximumGuests, DateTime Start, int Duration, string PictureUrl, List<KeyPoint> ky, List<int> kyIds, int userId)
         {
             int LocationId = Location.Id;
             Tour Tour = new Tour();
@@ -53,6 +53,7 @@ namespace InitialProject.Application.Services
             Tour.CurrentNumberOfGuests = 0;
             Tour.KeyPoints = ky;
             Tour.KeyPointIds = kyIds;
+            Tour.GuideId = userId;
 
             return _repository.Save(Tour);
         }
@@ -65,17 +66,22 @@ namespace InitialProject.Application.Services
         {
             return _repository.IsActive(tourId);
         }
-        public List<Tour> GetFiltered(string country, string city, int duration, GuideLanguage language, int NumberOfGuests)
+        public List<Tour> GetFiltered(TourFilterSort tourFilterSort)
         {
-            return _repository.GetFiltered(country, city, duration, language, NumberOfGuests);
+            return _repository.GetFiltered(tourFilterSort);
         }
-        public List<Tour> SortByName(List<Tour> tours)
+
+        public List<Tour> GetSorted(List<Tour> tours, TourFilterSort tourFilterSort)
         {
-            return _repository.SortByName(tours);
+            return _repository.GetSorted(tours, tourFilterSort);
         }
-        public List<Tour> SortByLocation(List<Tour> tours)
+        public List<Tour> SortByCountry(List<Tour> tours)
         {
-            return _repository.SortByLocation(tours);
+            return _repository.SortByCountry(tours);
+        }
+        public List<Tour> SortByCity(List<Tour> tours)
+        {
+            return _repository.SortByCity(tours);
         }
         public List<Tour> SortByDuration(List<Tour> tours)
         {
@@ -84,6 +90,10 @@ namespace InitialProject.Application.Services
         public List<Tour> SortByLanguage(List<Tour> tours)
         {
             return _repository.SortByLanguage(tours);
+        }
+        public List<Tour> SortBySpaces(List<Tour> tours)
+        {
+            return _repository.SortBySpaces(tours);
         }
 
         public Tour GetMostVisited(String selectedYear)

@@ -6,45 +6,188 @@
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="20"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="300"/>
-        </Grid.ColumnDefinitions>
-        <DataGrid Grid.Row="0" Grid.Column="0" Margin="30" ItemsSource="{Binding ToursShow}" SelectedItem="{Binding SelectedTour}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="City" Binding="{Binding Location.City}"/>
-                <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                <DataGridTextColumn Header="Language" Binding="{Binding Language}"/>
-                <DataGridTextColumn Header="Maximum guests" Binding="{Binding MaximumGuests}"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding Start}"/>
-                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <DataGrid Grid.Row="2" Grid.Column="0" Margin="30" ItemsSource="{Binding Ratings}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGuestRating}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="Knowledge" Binding="{Binding GuideKnowledge}"/>
-                <DataGridTextColumn Header="Language" Binding="{Binding GuideLanguage}"/>
-                <DataGridTextColumn Header="Informative" Binding="{Binding TourInformative}"/>
-                <DataGridTextColumn Header="Interesting" Binding="{Binding TourInteresting}"/>
-                <DataGridTextColumn Header="Content" Binding="{Binding TourContent}"/>
-                <DataGridTextColumn Header="Comment" Binding="{Binding Comment}"/>
-                <DataGridTextColumn Header="KeyPoint" Binding="{Binding Place}"/>
-                <DataGridCheckBoxColumn Header="Is Valid" Binding="{Binding IsValid}"  />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Grid.Column="1" Grid.Row="0" Height="50" Width="200" Content="Choose" FontSize="30" Command="{Binding ChooseTourCommand}"></Button>
-        <Button Grid.Column="1" Grid.Row="2" Height="50" Width="200" Content="Report" FontSize="30" Command="{Binding ReportGuestRatingCommand}"></Button>
-        <Button Grid.Column="1" Content="Back" HorizontalAlignment="Center" Margin="0,278,0,0" Grid.Row="2" VerticalAlignment="Top" Height="38" Width="91" FontSize="20"  Command="{Binding BackCommand}"/>
 
+    <UserControl.Resources>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="250" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryBoard" Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonMenu" >
+            <BeginStoryboard  Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid>
+        <Grid  x:Name="GridBackground" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
+            <Label Grid.Row="0" Content="TOᑌᖇ ᖇEᐯIEᗯS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            </Label>
+            <Button  BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button  BorderBrush="Transparent" Cursor="Hand" Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="ᖴIᑎISᕼEᗪ TOᑌᖇS" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="1" Content="TOᑌᖇ ᖇᗩTIᑎGS" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="0" Margin="20" FontSize="20" FontWeight="Bold" AutoGenerateColumns="False" ItemsSource="{Binding ToursShow}" SelectedItem="{Binding SelectedTour}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="City" Binding="{Binding Location.City}"/>
+                        <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"/>
+                        <DataGridTextColumn Header="Language" Binding="{Binding Language}"/>
+                        <DataGridTextColumn Header="Maximum guests" Binding="{Binding MaximumGuests}"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Start}"/>
+                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="20" FontSize="20" FontWeight="Bold" ItemsSource="{Binding Ratings}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGuestRating}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
+                        <DataGridTextColumn Header="Knowledge" Binding="{Binding GuideKnowledge}"/>
+                        <DataGridTextColumn Header="Language" Binding="{Binding GuideLanguage}"/>
+                        <DataGridTextColumn Header="Informative" Binding="{Binding TourInformative}"/>
+                        <DataGridTextColumn Header="Interesting" Binding="{Binding TourInteresting}"/>
+                        <DataGridTextColumn Header="Content" Binding="{Binding TourContent}"/>
+                        <DataGridTextColumn Header="Comment" Binding="{Binding Comment}"/>
+                        <DataGridTextColumn Header="KeyPoint" Binding="{Binding Place}"/>
+                        <DataGridCheckBoxColumn Header="Is Valid" Binding="{Binding IsValid}"  />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button  BorderBrush="Transparent" Cursor="Hand" Command="{Binding ChooseTourCommand}" Content="ᑕᕼOOSE" Style="{StaticResource RoundButtonStyle}"  Background="#270138" Foreground="White" FontSize="30" FontWeight="Bold" Grid.Row="2" Grid.Column="0" Margin="20" Width="250" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button  BorderBrush="Transparent" Cursor="Hand" Command="{Binding ReportGuestRatingCommand}" Content="ᖇEᑭOᖇT GᑌEST" Style="{StaticResource RoundButtonStyle}"  Background="#270138" Foreground="White" FontSize="30" FontWeight="Bold" Grid.Row="2" Grid.Column="1" Margin="20" Width="250" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            </Grid>
+        </Grid>
+        <Grid x:Name="InterfaceGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
+            <Label Grid.Row="0" Content="TOᑌᖇ ᖇEᐯIEᗯS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            </Label>
+            <Button  BorderBrush="Transparent" Cursor="Hand" x:Name="ButtonMenu" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button  BorderBrush="Transparent" Cursor="Hand" Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="ᖴIᑎISᕼEᗪ TOᑌᖇS" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="1" Content="TOᑌᖇ ᖇᗩTIᑎGS" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <DataGrid Grid.Row="1" Grid.Column="0" Margin="20" FontSize="20" FontWeight="Bold" AutoGenerateColumns="False" ItemsSource="{Binding ToursShow}" SelectedItem="{Binding SelectedTour}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="City" Binding="{Binding Location.City}"/>
+                        <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"/>
+                        <DataGridTextColumn Header="Language" Binding="{Binding Language}"/>
+                        <DataGridTextColumn Header="Maximum guests" Binding="{Binding MaximumGuests}"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Start}"/>
+                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid Grid.Row="1" Grid.Column="1" Margin="20" FontSize="20" FontWeight="Bold" ItemsSource="{Binding Ratings}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGuestRating}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
+                        <DataGridTextColumn Header="Knowledge" Binding="{Binding GuideKnowledge}"/>
+                        <DataGridTextColumn Header="Language" Binding="{Binding GuideLanguage}"/>
+                        <DataGridTextColumn Header="Informative" Binding="{Binding TourInformative}"/>
+                        <DataGridTextColumn Header="Interesting" Binding="{Binding TourInteresting}"/>
+                        <DataGridTextColumn Header="Content" Binding="{Binding TourContent}"/>
+                        <DataGridTextColumn Header="Comment" Binding="{Binding Comment}"/>
+                        <DataGridTextColumn Header="KeyPoint" Binding="{Binding Place}"/>
+                        <DataGridCheckBoxColumn Header="Is Valid" Binding="{Binding IsValid}"  />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button  BorderBrush="Transparent" Cursor="Hand" Command="{Binding ChooseTourCommand}" Content="ᑕᕼOOSE" Style="{StaticResource RoundButtonStyle}"  Background="#270138" Foreground="White" FontSize="30" FontWeight="Bold" Grid.Row="2" Grid.Column="0" Margin="20" Width="250" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button  BorderBrush="Transparent" Cursor="Hand" Command="{Binding ReportGuestRatingCommand}" Content="ᖇEᑭOᖇT GᑌEST" Style="{StaticResource RoundButtonStyle}"  Background="#270138" Foreground="White" FontSize="30" FontWeight="Bold" Grid.Row="2" Grid.Column="1" Margin="20" Width="250" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            </Grid>
+        </Grid>
+        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <StackPanel>
+                <Border Height="80" Width="80" Margin="10">
+                    <Image Source="\Resources\Images\logoB.png"/>
+                </Border>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Command="{Binding RatingsViewCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+            </StackPanel>
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
+                <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

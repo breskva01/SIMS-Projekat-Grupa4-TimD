@@ -1,10 +1,13 @@
-﻿using InitialProject.Application.Commands;
+﻿using ControlzEx.Standard;
+using InitialProject.Application.Commands;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
@@ -14,11 +17,16 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class TourCreationViewModel : ViewModelBase
+    public class TourCreationViewModel : ViewModelBase, IDataErrorInfo
     {
+
+        private bool IsCreatedBasedOnStats;
+        private bool IsCreatedBasedOnSignleRequest;
 
         private readonly NavigationStore _navigationStore;
         private User _user;
+
+        public TourRequest TourRequest { get; set; }
 
         public ObservableCollection<Location> Locations { get; set; }
         public ObservableCollection<KeyPoint> KeyPoints { get; set; }
@@ -29,11 +37,24 @@ namespace InitialProject.WPF.ViewModels
         private LocationService _locationService;
         private KeyPointService _keyPointService;
         private TourService _tourService;
+        private TourRequestService _tourRequestService;
+        private UserNotificationService _userNotificationService;
 
         public ICommand ConfirmCommand { get; set; }
         public ICommand CancelCommand { get; }
         public ICommand AddKeyPointCommand { get; }
         public ICommand BackCommand { get; set; }
+        public ICommand HomeCommand { get; set; }
+        public ICommand CreateTourCommand { get; set; }
+        public ICommand LiveTrackingCommand { get; set; }
+        public ICommand CancelTourCommand { get; set; }
+        public ICommand TourStatsCommand { get; set; }
+        public ICommand RatingsViewCommand { get; set; }
+        public ICommand SignOutCommand { get; set; }
+        public ICommand IncreaseDurationCommand { get; set; }
+        public ICommand DecreaseDurationCommand { get; set; }
+        public ICommand IncreaseGuestsCommand { get; set; }
+        public ICommand DecreaseGuestsCommand { get; set; }
 
         private List<string> _countries;
         public List<string> Countries
@@ -103,7 +124,7 @@ namespace InitialProject.WPF.ViewModels
 
             }
         }
-        
+
         private string _selectedKeyPointCity;
         public string SelectedKeyPointCity
         {
@@ -155,21 +176,21 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        private string _maximumGuests;
-        public string MaximumGuests
+        private int _maximumGuests;
+        public int MaximumGuests
         {
             get => _maximumGuests;
             set
             {
-                if (value != _maximumGuests)
+                if (value != _maximumGuests && value >= 0)
                 {
                     _maximumGuests = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private DateTime _start;
-        public DateTime Start 
+        private string _start;
+        public string Start
         {
             get => _start;
             set
@@ -181,13 +202,13 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        private string _duration;
-        public string Duration
+        private int _duration;
+        public int Duration
         {
             get => _duration;
             set
             {
-                if (value != _duration)
+                if (value != _duration && value >= 0)
                 {
                     _duration = value;
                     OnPropertyChanged();
@@ -236,7 +257,7 @@ namespace InitialProject.WPF.ViewModels
         private string _city;
         public string City
         {
-            
+
             get => _city;
             set
             {
@@ -249,15 +270,88 @@ namespace InitialProject.WPF.ViewModels
 
         }
 
+        public TourCreationViewModel(NavigationStore navigationStore, User user, string parameter, bool isParameterLanguage)
+        {
+            _navigationStore = navigationStore;
+            _user = user;
+
+            _tourService = new TourService();
+            _locationService = new LocationService();
+            _keyPointService = new KeyPointService();
+            _tourRequestService = new TourRequestService();
+            _userNotificationService = new UserNotificationService();
+
+            Locations = new ObservableCollection<Location>(_locationService.GetAll());
+            KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
+            KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
+            Countries = Locations.Select(l => l.Country).Distinct().ToList();
+
+            if (isParameterLanguage == true)
+            {
+                LanguageType = parameter;
+            }
+            else
+            {
+                string[] parts = parameter.Split(' ');
+                Country = parts[0];
+                City = string.Join(" ", parts.Skip(1));
+                SelectedCity = City;
+            }
+
+            AddKeyPointCommand = new AddKeyPointCommand(this);
+
+
+            InitializeCommands();
+
+            IsCreatedBasedOnStats = true;
+            IsCreatedBasedOnSignleRequest = false;
+
+
+        }
+        public TourCreationViewModel(NavigationStore navigationStore, User user, TourRequest request)
+        {
+            _navigationStore = navigationStore;
+            _user = user;
+
+            _tourService = new TourService();
+            _locationService = new LocationService();
+            _keyPointService = new KeyPointService();
+            _tourRequestService = new TourRequestService();
+            _userNotificationService = new UserNotificationService();
+
+            Locations = new ObservableCollection<Location>(_locationService.GetAll());
+            KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
+            KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
+
+            Country = request.Location.Country;
+            City = request.Location.City;
+            SelectedCity = request.Location.City;
+            LanguageType = request.Language.ToString();
+            MaximumGuests = request.NumberOfGuests;
+            Description = request.Description;
+
+            AddKeyPointCommand = new AddKeyPointCommand(this);
+
+            TourRequest = request;
+
+            InitializeCommands();
+
+            IsCreatedBasedOnStats = false;
+            IsCreatedBasedOnSignleRequest = true;
+
+        }
+
         public TourCreationViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
             _user = user;
 
-            _tourService = new TourService();    
+            _tourService = new TourService();
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
-            
+            _userNotificationService = new UserNotificationService();
+
+
             AddKeyPointCommand = new AddKeyPointCommand(this);
 
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
@@ -268,14 +362,28 @@ namespace InitialProject.WPF.ViewModels
 
             InitializeCommands();
 
-            Start = new DateTime(2023, 4, 19);
+            IsCreatedBasedOnStats = false;
+            IsCreatedBasedOnSignleRequest = false;
+
+
+            //Start = new DateTime(2023, 4, 15);
         }
 
         private void InitializeCommands()
         {
             ConfirmCommand = new ExecuteMethodCommand(CreateTour);
-            BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
-
+            //BackCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+            HomeCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+            CreateTourCommand = new ExecuteMethodCommand(ShowTourCreationView);
+            LiveTrackingCommand = new ExecuteMethodCommand(ShowToursTodayView);
+            CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
+            TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
+            RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
+            SignOutCommand = new ExecuteMethodCommand(SignOut);
+            IncreaseDurationCommand = new ExecuteMethodCommand(IncreaseDuration);
+            DecreaseDurationCommand = new ExecuteMethodCommand(DecreaseDuration);
+            IncreaseGuestsCommand = new ExecuteMethodCommand(IncreaseGuests);
+            DecreaseGuestsCommand = new ExecuteMethodCommand(DecreaseGuests);
         }
         public void CreateTour()
         {
@@ -284,15 +392,31 @@ namespace InitialProject.WPF.ViewModels
             Location.City = City;
             Location.Id = Locations.Where(c => c.City == City).Select(c => c.Id).FirstOrDefault();
             GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
-            int TourDuration = int.Parse(Duration);
-            int MaxGuests = int.Parse(MaximumGuests);
+            //int TourDuration = int.Parse(Duration);
+            // int MaxGuests = int.Parse(MaximumGuests);
+            int MaxGuests = MaximumGuests;
+            int TourDuration = Duration;
 
             foreach (KeyPoint ky in _tourKeyPoints)
             {
                 _keyPointIds.Add(ky.Id);
             }
 
-            _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Start, TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
+            Tour tour = _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds, _user.Id);
+
+            if(TourRequest != null)
+            {
+                TourRequest.TourId = tour.Id;
+                _tourRequestService.Update(TourRequest);
+            }
+            if(IsCreatedBasedOnStats)
+            {
+                _userNotificationService.NotifySimilarRequests(tour);
+            }
+            if(IsCreatedBasedOnSignleRequest)
+            {
+                _userNotificationService.NotifyApprovedRequest(tour, TourRequest.UserId);
+            }
 
             ClearOutTextBoxes();
 
@@ -305,10 +429,11 @@ namespace InitialProject.WPF.ViewModels
             SelectedKeyPointCity = null;
             SelectedKeyPointPlace = null;
             Description = null;
-            MaximumGuests = null;
+            MaximumGuests = 0;
             PictureUrl = null;
-            Duration = null;
+            Duration = 0;
             LanguageType = null;
+            Start = null;
             _tourKeyPoints.Clear();
             _keyPointIds.Clear();
         }
@@ -370,7 +495,99 @@ namespace InitialProject.WPF.ViewModels
             }
             KeyPointPlaces = keyPointsShow.Select(l => l.Place).Distinct().ToList();
         }
+        private void SignOut()
+        {
+            SignInViewModel signInViewModel = new SignInViewModel(_navigationStore);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, signInViewModel));
 
+            navigate.Execute(null);
+        }
+        private void ShowTourCreationView()
+        {
+            TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
 
+            navigate.Execute(null);
+        }
+        private void ShowToursTodayView()
+        {
+            ToursTodayViewModel viewModel = new ToursTodayViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourCancellationView()
+        {
+            AllToursViewModel viewModel = new AllToursViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourStatsView()
+        {
+            TourStatsViewModel viewModel = new TourStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideRatingsView()
+        {
+            GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
+        }
+        private void IncreaseDuration()
+        {
+            Duration++;
+        }
+        private void DecreaseDuration()
+        {
+            Duration--;
+        }
+        private void IncreaseGuests()
+        {
+            MaximumGuests++;
+        }
+        private void DecreaseGuests()
+        {
+            MaximumGuests--;
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string? error = null;
+                string requiredMessage = "Obavezno polje";
+                switch (columnName)
+                {
+                    case nameof(Start):
+                        if (TourRequest != null)
+                        {
+                            if (Convert.ToDateTime(Start) < TourRequest.EarliestDate || Convert.ToDateTime(Start) > TourRequest.LatestDate) error = "NOPE";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return error;
+
+            }
+        }
+        public string Error => null;
+        public bool IsTourValid
+        {
+            get
+            {
+                foreach (var property in new string[]
+                {
+                    nameof(Start) })
+                {
+                    if (this[property] != null) return false;
+                }
+                return true;
+            }
+
+        }
     }
 }

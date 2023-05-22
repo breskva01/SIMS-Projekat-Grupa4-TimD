@@ -5,40 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
         xmlns:views="clr-namespace:InitialProject.WPF.NewViews"
-        xmlns:viewsg1="clr-namespace:InitialProject.WPF.NewViews.GuestOne" 
+        xmlns:viewsg1="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
         xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.GuestOne"
+        xmlns:vmsg2="clr-namespace:InitialProject.WPF.ViewModels.GuestTwo"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="670" Width="1030" WindowStartupLocation="CenterScreen"
+        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowState="Normal">
+    <Window.Icon>
+        <BitmapImage UriSource="\Resources\Images\logoB.png"/>
+    </Window.Icon>
     <Grid>
         <Grid.Resources>
-            <DataTemplate DataType="{x:Type vms:RateTourViewModel}">
-                <views:RateTourView />
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestStats2ViewModel}">
+                <views:TourRequestStats2View />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:TourRatingViewModel}">
-                <views:TourRatingView />
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestStats3ViewModel}">
+                <views:TourRequestStats3View />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:PresenceConfirmationViewModel}">
-                <views:PresenceConfirmationView />
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestStats1ViewModel}">
+                <views:TourRequestStats1View/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:CurrentKeyPointViewModel}">
+            <DataTemplate DataType="{x:Type vmsg2:NotificationBrowserViewModel}">
+                <views:NotificationBrowserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:ApprovedTourRequestsViewModel}">
+                <views:ApprovedTourRequestsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestViewModel}">
+                <views:TourRequestView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:TourRequestBrowserViewModel}">
+                <views:TourRequestBrowserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:CurrentKeyPointViewModel}">
                 <views:CurrentKeyPointView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:Guest2MenuViewModel}">
+            <DataTemplate DataType="{x:Type vmsg2:NewTourBrowserViewModel}">
+                <views:NewTourBrowserView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:TourSortViewModel}">
+                <views:TourSortView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:TourFilterViewModel}">
+                <views:TourFilterView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:Guest2RequestMenuViewModel}">
+                <views:Guest2RequestMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:Guest2InfoMenuViewModel}">
+                <views:Guest2InfoMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:RateTourViewModel}">
+                <views:RateTourView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:TourRatingViewModel}">
+                <views:TourRatingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:PresenceConfirmationViewModel}">
+                <views:PresenceConfirmationView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:Guest2MenuViewModel}">
                 <views:Guest2MenuView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:MyVouchersViewModel}">
+            <DataTemplate DataType="{x:Type vmsg2:MyVouchersViewModel}">
                 <views:MyVouchersView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:TourBrowserViewModel}">
-                <views:TourBrowserView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:TourReservationViewModel}">
+            <DataTemplate DataType="{x:Type vmsg2:TourReservationViewModel}">
                 <views:TourReservationView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:VoucherBrowserViewModel}">
+            <DataTemplate DataType="{x:Type vmsg2:VoucherBrowserViewModel}">
                 <views:VoucherBrowserView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:SignInViewModel}">
@@ -137,7 +174,12 @@
             <DataTemplate DataType="{x:Type vmsg1:ImageBrowserViewModel}">
                 <viewsg1:ImageBrowser/>
             </DataTemplate>
-            
+            <DataTemplate DataType="{x:Type vms:TourRequestsAcceptViewModel}">
+                <views:TourRequestsAcceptView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourRequestsStatsViewModel}">
+                <views:TourRequestsStatsView/>
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />

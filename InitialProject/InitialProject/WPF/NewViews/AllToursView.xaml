@@ -8,57 +8,195 @@
         xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
         mc:Ignorable="d" Height="768" Width="1024">
 
-    <Grid RenderTransformOrigin="0.507,0.5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="620"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Label Content="All Tours" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
-        <Button Background="White" Height="40" Width="48" Grid.Row="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="-0.066,-0.073">
-            <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
-        </Button>
+    <UserControl.Resources>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="250" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryBoard" Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonMenu" >
+            <BeginStoryboard  Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid>
+        <Grid x:Name="GridBackground">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="620"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Content="ᗩᒪᒪ TOᑌᖇS" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" />
+            <Button Grid.Row="0" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button Grid.Row="0" BorderBrush="Transparent" Cursor="Hand" Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
 
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
-        <ListBox SelectedItem="{Binding SelectedTour}" BorderBrush="Black" BorderThickness="2" Grid.Row="1" Name="lbTours" Padding="15,15,5,5" Margin="40,10,40,10" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Margin" Value="0,5,10,15" />
-                    <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="BorderBrush" Value="Black" />
-                    <Setter Property="Padding" Value="15" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="0,0,10,0" />
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"/>
-                            <TextBlock>
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
+            <ListBox SelectedItem="{Binding SelectedTour}" BorderBrush="Black" BorderThickness="2" Grid.Row="1" Padding="15,15,5,5" Margin="40,10,40,10" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Height="500">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="0,5,10,15" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="BorderBrush" Value="Black" />
+                        <Setter Property="Padding" Value="15" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="0,0,10,0" />
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"/>
+                                <TextBlock>
                                 <Run Text="{Binding Location.Country}" FontSize="20"/> -
                                 <Run Text="{Binding Location.City}" FontSize="20" />
-                            </TextBlock>
-                            <TextBlock>
+                                </TextBlock>
+                                <TextBlock>
                                  <TextBlock FontSize="20">Tour Duration : </TextBlock> 
                                 <Run Text="{Binding Duration}" FontSize="20"/>
                                  h
                             </TextBlock>
-                            <TextBlock>
+                                <TextBlock>
                                 <TextBlock FontSize="20">Language: </TextBlock>
                                 <Run Text="{Binding Language}" FontSize="20"/>
                             </TextBlock>
-                            <TextBlock>
+                                <TextBlock>
                                  <TextBlock FontSize="20">Spaces filled : </TextBlock>
                                 <Run Text="{Binding CurrentNumberOfGuests}" FontSize="20"/>
                             </TextBlock>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Command="{Binding CancelTourCommand}" Content="CANCEL" HorizontalAlignment="Left" Margin="891,0,0,0" Grid.Row="2" VerticalAlignment="Top" Height="55" Width="93" RenderTransformOrigin="2.495,0.335" FontSize="20"/>
-        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="40,8,0,0" Grid.Row="2" VerticalAlignment="Top" Height="47" Width="108" FontSize="20"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding CancelTourCommand}" Content="CANCEL" HorizontalAlignment="Left" Margin="827,615,0,0" Grid.Row="2" VerticalAlignment="Top" Height="56" Width="150" RenderTransformOrigin="2.495,0.335" FontSize="20"/>
+            <Button Command="{Binding BackCommand}" Content="BACK" HorizontalAlignment="Left" Margin="58,615,0,0" Grid.Row="2" VerticalAlignment="Top" Height="56" Width="150" FontSize="20"/>
 
+        </Grid>
+        <Grid x:Name="InterfaceGrid" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="620"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="#270138"/>
+
+            <Label Content="ᗩᒪᒪ TOᑌᖇS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+
+            <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectedItem="{Binding SelectedTour}" Cursor="Hand" BorderBrush="Black" BorderThickness="5" Grid.Row="1" Name="lbTours" Padding="15,15,5,5" Margin="40,0,40,0" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Height="500" VerticalAlignment="Center">
+                <ListBox.Background>
+                    #C7B2D1
+                </ListBox.Background>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="0,5,10,15" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="BorderBrush" Value="Black" />
+                        <Setter Property="Padding" Value="15" />
+                        <Setter Property="Background" Value="LightYellow"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="0,0,10,0" />
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"/>
+                                <TextBlock>
+                                <Run Text="{Binding Location.Country}" FontSize="20"/> -
+                                <Run Text="{Binding Location.City}" FontSize="20" />
+                                </TextBlock>
+                                <TextBlock>
+                                 <TextBlock FontSize="20">Tour Duration : </TextBlock> 
+                                <Run Text="{Binding Duration}" FontSize="20"/>
+                                 h
+                            </TextBlock>
+                                <TextBlock>
+                                <TextBlock FontSize="20">Language: </TextBlock>
+                                <Run Text="{Binding Language}" FontSize="20"/>
+                            </TextBlock>
+                                <TextBlock>
+                                 <TextBlock FontSize="20">Spaces filled : </TextBlock>
+                                <Run Text="{Binding CurrentNumberOfGuests}" FontSize="20"/>
+                            </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#270138" Command="{Binding CancelCommand}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ" HorizontalAlignment="Left" Margin="827,590,0,0" Grid.Row="1" VerticalAlignment="Top" Height="56" Width="160" RenderTransformOrigin="2.495,0.335" FontSize="20" Grid.RowSpan="2"/>
+        </Grid>
+        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <StackPanel>
+                <Border Height="80" Width="80" Margin="10">
+                    <Image Source="\Resources\Images\logoB.png"/>
+                </Border>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Command="{Binding RatingsViewCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+            </StackPanel>
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
+                <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>
