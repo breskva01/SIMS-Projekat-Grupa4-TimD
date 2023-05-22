@@ -445,5 +445,31 @@ namespace InitialProject.Repositories
                     return "December";
             }
         }
+        public List<TimeSlot> GetAvailableDates(DateTime start, DateTime end, int duration, int id)
+        {
+            GetAll();
+            List<TimeSlot> timeSlots = new List<TimeSlot>();
+            
+            for(DateTime begin = start; begin <= end.AddDays(-duration); begin=begin.AddDays(1))
+            {
+                TimeSlot timeSlot = new TimeSlot();
+                timeSlot.Start = begin;
+                timeSlot.End = begin.AddDays(duration);
+                timeSlots.Add(timeSlot);
+            }
+            foreach(AccommodationReservation res in _reservations)
+            {
+                DateTime CheckIn = new DateTime(res.CheckIn.Year, res.CheckIn.Month, res.CheckIn.Day);
+                DateTime CheckOut= new DateTime(res.CheckOut.Year, res.CheckOut.Month, res.CheckOut.Day); ;
+                foreach (TimeSlot slot in timeSlots.ToList())
+                {
+                    if (res.Accommodation.Id == id && res.Status == AccommodationReservationStatus.Active && ((slot.Start>=CheckIn.AddDays(-duration) && slot.Start<=CheckOut)))
+                    {
+                        timeSlots.Remove(slot);
+                    }
+                }
+            }
+            return timeSlots;
+        }
     }
 }

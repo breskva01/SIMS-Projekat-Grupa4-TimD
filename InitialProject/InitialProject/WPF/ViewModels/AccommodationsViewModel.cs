@@ -37,7 +37,8 @@ namespace InitialProject.WPF.ViewModels
         }
         public ICommand BackCommand { get; }
         public ICommand ShowAccommodationStatisticsViewCommand { get; }
-        public AccommodationsViewModel(NavigationStore navigationStore, User user, bool isNotified) 
+        public ICommand ShowScheduleRenovationViewCommand { get; }
+        public AccommodationsViewModel(NavigationStore navigationStore, User user, bool isNotified)
         {
             _navigationStore = navigationStore;
             _user = user;
@@ -46,6 +47,7 @@ namespace InitialProject.WPF.ViewModels
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetAllOwnersAccommodations(_user.Id));
             BackCommand = new ExecuteMethodCommand(Back);
             ShowAccommodationStatisticsViewCommand = new ExecuteMethodCommand(ShowAccommodationStatisticsView);
+            ShowScheduleRenovationViewCommand = new ExecuteMethodCommand(ShowScheduleRenovationView);
         }
         private void Back()
         {
@@ -54,10 +56,15 @@ namespace InitialProject.WPF.ViewModels
 
             navigate.Execute(null);
         }
-        private void ShowAccommodationStatisticsView() 
+        private void ShowAccommodationStatisticsView()
         {
             AccommodationStatisticsView accommodationStatisticsView = new AccommodationStatisticsView(SelectedAccommodation);
             accommodationStatisticsView.Show();
+        }
+        private void ShowScheduleRenovationView()
+        {
+            ScheduleRenovationView scheduleRenovationView = new ScheduleRenovationView(SelectedAccommodation);
+            scheduleRenovationView.Show();
         }
     }
 }

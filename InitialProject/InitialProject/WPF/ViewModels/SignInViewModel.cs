@@ -4,6 +4,7 @@ using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
 using InitialProject.WPF.ViewModels.GuestOne;
+using InitialProject.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace InitialProject.WPF.ViewModels
 
         private readonly AccommodationReservationService _reservationService;
         private List<AccommodationReservation> _reservations;
+        private readonly AccommodationService _accommodationService;
+        private List<Accommodation> _accommodations;
+        private readonly AccommodationRenovationService _renovationService;
+        private List<AccommodationRenovation> _renovations;
 
         public SecureString Password { get; set; }
         private string _username;
@@ -61,6 +66,8 @@ namespace InitialProject.WPF.ViewModels
             _tourReservationService = new TourReservationService();
             SignInCommand = new SignInCommand(SignIn);
             _reservationService = new AccommodationReservationService();
+            _accommodationService = new AccommodationService();
+            _renovationService = new AccommodationRenovationService();
             _navigationStore = navigationStore;
         }
 
@@ -130,7 +137,26 @@ namespace InitialProject.WPF.ViewModels
                     _reservationService.updateLastNotification(res);
                     IsNotified = false;
                 }
-
+            }
+            _accommodations = _accommodationService.GetAllOwnersAccommodations(_user.Id);
+            _renovations = _renovationService.GetAll();
+            foreach(Accommodation accommodation in _accommodations)
+            {
+                foreach(AccommodationRenovation renovation in _renovations)
+                {
+                    if(renovation.Accommodation.Id == accommodation.Id)
+                    {
+                        if (DateTime.Now >= renovation.RenovationExpiration)
+                        {
+                            _accommodationService.UpdateRenovationStatus(accommodation.Id);
+                        }
+                        else if (DateTime.Now >= renovation.End)
+                        {
+                            _accommodationService.UpdateRenovationStatus(accommodation.Id);
+                        }
+                        
+                    }
+                }
             }
             return new OwnerMainMenuViewModel(_navigationStore, (Owner)_user, IsNotified);
         }

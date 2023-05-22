@@ -23,18 +23,18 @@ namespace InitialProject.WPF.ViewModels
         private User _user;
         private readonly NavigationStore _navigationStore;
         private bool _isNotified;
-        public bool IsNotified 
+        public bool IsNotified
         {
             get => _isNotified;
             set
             {
-                if(value != _isNotified)
+                if (value != _isNotified)
                 {
                     _isNotified = value;
                     OnPropertyChanged(nameof(IsNotified));
                 }
             }
-                
+
         }
 
         /*public ICommand AccommodationRegistrationCommand { get; }

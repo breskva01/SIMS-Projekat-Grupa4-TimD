@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class OwnerViewModel: ViewModelBase
+    public class OwnerViewModel : ViewModelBase
     {
         private User _user;
         private readonly NavigationStore _navigationStore;

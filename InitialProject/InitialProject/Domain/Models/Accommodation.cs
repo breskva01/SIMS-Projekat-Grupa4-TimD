@@ -13,6 +13,10 @@ using System.Xml.Linq;
 
 namespace InitialProject.Domain.Models
 {
+    public enum RenovationStatus
+    {
+        Available, Renovating
+    }
     public enum AccommodationType
     {
         [Display(Name = "Kuća")]
@@ -38,13 +42,15 @@ namespace InitialProject.Domain.Models
         public List<string> PictureURLs { get; set; }
         public string MainPictureURL => PictureURLs[0];
         public Owner Owner { get; set; }
+        public RenovationStatus Status { get; set; }
+        public bool RecentlyRenovated { get; set; }
         public Accommodation() 
         {
             Owner = new Owner();
             PictureURLs = new List<string>();
         }
         public Accommodation(int id, string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays,
-                             int minimumCancelationNotice, List<string> pictureURLs, Owner owner)
+                             int minimumCancelationNotice, List<string> pictureURLs, Owner owner, RenovationStatus status, bool recentlyRenovated)
         {
             Id = id;
             Name = name;
@@ -57,6 +63,8 @@ namespace InitialProject.Domain.Models
             MinimumCancelationNotice = minimumCancelationNotice;
             PictureURLs = pictureURLs;
             Owner = owner;
+            Status = status;
+            RecentlyRenovated = recentlyRenovated;
         }
         public bool MatchesFilters(string keyWords, AccommodationType type, int guestNumber, int numberOfDays)
         {
@@ -104,6 +112,8 @@ namespace InitialProject.Domain.Models
                 PictureURLs.Add(imagePath);
             }
             Owner.Id = Convert.ToInt32(values[10]);
+            Status = (RenovationStatus)Enum.Parse(typeof(RenovationStatus), values[11]);
+            RecentlyRenovated = bool.Parse(values[12]);
         }
 
         public string[] ToCSV()
@@ -123,7 +133,9 @@ namespace InitialProject.Domain.Models
                 MinimumDays.ToString(),
                 MinimumCancelationNotice.ToString(),
                 pictureURLs,
-                Owner.Id.ToString()
+                Owner.Id.ToString(),
+                Status.ToString(),
+                RecentlyRenovated.ToString(),
             };
             return csvValues;
         }

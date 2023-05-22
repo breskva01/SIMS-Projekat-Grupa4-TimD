@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class GuestRatingViewModel: ViewModelBase
+    public class GuestRatingViewModel : ViewModelBase
     {
         private readonly AccommodationReservationService _accommodationReservationService;
         private readonly NavigationStore _navigationStore;
@@ -133,7 +133,7 @@ namespace InitialProject.WPF.ViewModels
             AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_user.Id));
             InitializeCommands();
         }
-        
+
         public ICommand RateGuestCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand BackNavigateCommand =>

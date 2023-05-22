@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class OwnerRatingsViewModel: ViewModelBase
+    public class OwnerRatingsViewModel : ViewModelBase
     {
         public ObservableCollection<AccommodationRating> OwnerRatings { get; set; }
         private AccommodationRatingService _accommodatonRatingService;
@@ -24,7 +24,7 @@ namespace InitialProject.WPF.ViewModels
         {
             _user = user;
             _navigationStore = navigationStore;
-            _accommodatonRatingService= new AccommodationRatingService();
+            _accommodatonRatingService = new AccommodationRatingService();
             OwnerRatings = new ObservableCollection<AccommodationRating>(_accommodatonRatingService.GetEligibleForDisplay(_user.Id));
         }
     }

@@ -14,5 +14,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public void Add(string name, string country, string city, string address, AccommodationType type, 
             int maximumGuests, int minimumDays, int minimumCancelationNotice, List<string> pictureURLs, User owner);
         public List<Accommodation> GetAllOwnersAccommodations(int id);
+        public void UpdateRenovationStatus(int id);
     }
 }

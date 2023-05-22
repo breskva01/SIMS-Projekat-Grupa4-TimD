@@ -46,6 +46,9 @@ namespace InitialProject.Application.Services
         {
            return _repository.GetAllOwnersAccommodations(id);
         }
-
+        public void UpdateRenovationStatus(int id)
+        {
+            _repository.UpdateRenovationStatus(id);
+        }
     }
 }

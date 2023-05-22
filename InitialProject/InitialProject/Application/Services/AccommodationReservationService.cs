@@ -133,5 +133,9 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetMostBookedMonth(id, year);
         }
+        public List<TimeSlot> GetAvailableDates(DateTime start, DateTime end, int duration, int id)
+        {
+            return _repository.GetAvailableDates(start, end, duration, id);
+        }
     }
 }

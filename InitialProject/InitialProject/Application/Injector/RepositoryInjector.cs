@@ -60,6 +60,7 @@ namespace InitialProject.Application.Injector
             Map<ILocationRepository, LocationRepository>();
             Map<IKeyPointRepository, KeyPointRepository>();
             Map<IGuestRatingRepository, GuestRatingRepository>();
+            Map<IAccommodationRenovationRepository, AccommodationRenovationRepository>();
         }
     }
 

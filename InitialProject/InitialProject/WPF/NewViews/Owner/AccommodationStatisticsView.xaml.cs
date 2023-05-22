@@ -1,5 +1,4 @@
 ﻿using InitialProject.Domain.Models;
-using InitialProject.WPF.ViewModels;
 using OxyPlot.Series;
 using OxyPlot;
 using System;
@@ -15,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using InitialProject.WPF.ViewModels;
 
 namespace InitialProject.WPF.NewViews.Owner
 {

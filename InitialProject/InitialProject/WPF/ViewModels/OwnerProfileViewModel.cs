@@ -48,10 +48,10 @@ namespace InitialProject.WPF.ViewModels
             }
         }
         private string _username;
-        public string Username 
+        public string Username
         {
             get => _username;
-            set 
+            set
             {
                 if (value != _username)
                 {
@@ -130,18 +130,18 @@ namespace InitialProject.WPF.ViewModels
         {
             _navigationStore = navigationStore;
             _owner = owner;
-            IsNotified= isNotified;
-            FirstName= _owner.FirstName;
-            LastName= _owner.LastName;
-            Username= _owner.Username;
-            Email= _owner.Email;
+            IsNotified = isNotified;
+            FirstName = _owner.FirstName;
+            LastName = _owner.LastName;
+            Username = _owner.Username;
+            Email = _owner.Email;
             Rating = _owner.Rating.ToString();
-            PhoneNumber= _owner.PhoneNumber;
-            if(_owner.SuperOwner)
+            PhoneNumber = _owner.PhoneNumber;
+            if (_owner.SuperOwner)
             {
                 Status = "Super owner";
             }
-            else 
+            else
             {
                 Status = "Owner";
             }
