@@ -9,7 +9,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
 {
     public interface IGuestRatingRepository : IRepository<GuestRating>
     {
-        public GuestRating Add(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperience, string comment);
+        public GuestRating Add(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperience, string comment, AccommodationReservation reservation);
         List<GuestRating> GetEligibleForDisplay(int guestId);
     }
 }

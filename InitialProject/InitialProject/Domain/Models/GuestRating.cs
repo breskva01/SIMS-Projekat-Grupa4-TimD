@@ -26,7 +26,9 @@ namespace InitialProject.Domain.Models
             Reservation = new AccommodationReservation();
         }
 
-        public GuestRating(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperince, string comment)
+        public GuestRating(int ownerId, int guestId, int hygiene, int respectsRules, 
+            int communication, int timeliness, int noiseLevel, int overallExperince, 
+            string comment, AccommodationReservation reservation)
         {
             OwnerId = ownerId;
             GuestId = guestId;
@@ -37,6 +39,7 @@ namespace InitialProject.Domain.Models
             NoiseLevel = noiseLevel;
             OverallExperience= overallExperince;
             Comment = comment;
+            Reservation = reservation;
         }
         private double CalculateAverageRating()
         {

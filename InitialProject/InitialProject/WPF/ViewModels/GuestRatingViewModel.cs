@@ -148,7 +148,7 @@ namespace InitialProject.WPF.ViewModels
         {
             int ownerId = SelectedReservation.Accommodation.Owner.Id;
             int guestId = SelectedReservation.Guest.Id;
-            GuestRating guestRating = _guestRatingService.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), int.Parse(Communication), int.Parse(Timeliness), int.Parse(NoiseLevel), int.Parse(OverallExperience), Comment);
+            GuestRating guestRating = _guestRatingService.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), int.Parse(Communication), int.Parse(Timeliness), int.Parse(NoiseLevel), int.Parse(OverallExperience), Comment, SelectedReservation);
             _accommodationReservationService.updateRatingStatus(SelectedReservation);
             AccommodationReservations.Remove(SelectedReservation);
             ResetData();

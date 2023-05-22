@@ -24,6 +24,7 @@ namespace InitialProject.Repositories
         {
             _fileHandler = new AccommodationRatingFileHandler();
             _userFileHandler = new UserFileHandler();
+            _accommodationRepository = RepositoryInjector.Get<IAccommodationRepository>();
         }
 
         public List<AccommodationRating> GetAll()

@@ -32,10 +32,10 @@ namespace InitialProject.Repositories
             _fileHandler.Save(_guestRatings);
             return guestRating;
         }
-        public GuestRating Add(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperience, string comment)
+        public GuestRating Add(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperience, string comment, AccommodationReservation reservation)
         {
             _guestRatings = _fileHandler.Load();
-            GuestRating guestRating = new GuestRating(ownerId, guestId, hygiene, respectsRules, communication, timeliness, noiseLevel, overallExperience, comment);
+            GuestRating guestRating = new GuestRating(ownerId, guestId, hygiene, respectsRules, communication, timeliness, noiseLevel, overallExperience, comment, reservation);
             _guestRatings.Add(guestRating);
             _fileHandler.Save(_guestRatings);
             return guestRating;
