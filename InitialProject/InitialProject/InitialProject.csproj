@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\appLogo.png" />
     <None Remove="Resources\Images\berlin.jpg" />
     <None Remove="Resources\Images\brazil_cottage.jpg" />
     <None Remove="Resources\Images\brvnara_rumunija.jpg" />
@@ -40,6 +41,7 @@
     <None Remove="Resources\Images\novi_sad_brvnara.jpg" />
     <None Remove="Resources\Images\paper-plane100.png" />
     <None Remove="Resources\Images\paper-plane50.png" />
+    <None Remove="Resources\Images\OwnerLightBlue.jpg" />
     <None Remove="Resources\Images\paris.png" />
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
@@ -54,22 +56,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Images\add.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\delete.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\edit.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\view.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -100,6 +88,12 @@
 
   <ItemGroup>
     <Folder Include="Application\Factories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Xceed.Wpf.Toolkit.NET5">
+      <HintPath>bin\Debug\net6.0-windows\Xceed.Wpf.Toolkit.NET5.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

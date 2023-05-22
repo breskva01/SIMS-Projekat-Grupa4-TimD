@@ -89,10 +89,49 @@ namespace InitialProject.Repository
             GetAll();
             int accommodationId = NextId();
             Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address,
-                type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, (Owner)owner);
+                type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, (Owner)owner, RenovationStatus.Available, false);
             _accommodations.Add(accommodation);
             _fileHandler.Save(_accommodations);
         }
-
+        public List<Accommodation> GetAllOwnersAccommodations(int id)
+        {
+            GetAll();
+            List<Accommodation> allOwnersAccommodations= new List<Accommodation>();
+            foreach(Accommodation accommodation in _accommodations)
+            {
+                if(accommodation.Owner.Id==id)
+                    allOwnersAccommodations.Add(accommodation);
+            }
+            return allOwnersAccommodations;
+        }
+        public void UpdateRenovationStatus(int id)
+        {
+            GetAll();
+            Accommodation newAccommodation = new Accommodation();
+            Accommodation accommodation = _accommodations.Find(a => a.Id == id);
+            newAccommodation = accommodation;
+            if (accommodation.Status == RenovationStatus.Available && !accommodation.RecentlyRenovated)
+            {
+                _accommodations.Remove(accommodation);
+                newAccommodation.Status = RenovationStatus.Renovating;
+                _accommodations.Add(newAccommodation);
+                _fileHandler.Save(_accommodations);
+            }
+            else if(accommodation.Status == RenovationStatus.Renovating && !accommodation.RecentlyRenovated)
+            {
+                _accommodations.Remove(accommodation);
+                newAccommodation.Status = RenovationStatus.Available;
+                newAccommodation.RecentlyRenovated= true;
+                _accommodations.Add(newAccommodation);
+                _fileHandler.Save(_accommodations);
+            }
+            else 
+            {
+                _accommodations.Remove(accommodation);
+                newAccommodation.RecentlyRenovated = false;
+                _accommodations.Add(newAccommodation);
+                _fileHandler.Save(_accommodations);
+            }
+        }
     }
 }

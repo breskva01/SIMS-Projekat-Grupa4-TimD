@@ -1,0 +1,59 @@
+﻿<Window x:Class="InitialProject.WPF.NewViews.OwnerMyRatingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+        mc:Ignorable="d"
+        Title="OwnerMyRatingsView" Height="550" Width="900" WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\OwnerLightBlue.jpg"/>
+    </Window.Background>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF286DBB" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Aqua" />
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="Width" Value="260"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="85"/>
+            <RowDefinition Height="260"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" FontSize="48" Width="170" Height="75">Ratings</Label>
+        <DataGrid Grid.Row="1" x:Name="reservationsDataGrid" Foreground="DarkCyan" FontFamily="Impact" FontSize="18" Background="LightBlue" AutoGenerateColumns="False" IsReadOnly="True"
+                  ItemsSource="{Binding Path=OwnerRatings, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="128" Header="First Name" Binding="{Binding Reservation.Guest.FirstName}"/>
+                <DataGridTextColumn Width="128" Header="Last Name" Binding="{Binding Reservation.Guest.LastName}"/>
+                <DataGridTextColumn Width="128" Header="Location" Binding="{Binding Location}"/>
+                <DataGridTextColumn Width="128" Header="Hygiene" Binding="{Binding Hygiene}"/>
+                <DataGridTextColumn Width="128" Header="Pleasantness" Binding="{Binding Pleasantness}"/>
+                <DataGridTextColumn Width="128" Header="Fairness" Binding="{Binding Fairness}"/>
+                <DataGridTextColumn Width="*" Header="Parking" Binding="{Binding Parking}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="Generate PDF" FontSize="28" Height="40" Width="180"/>
+            <Button Grid.Row="1" Content="Close" FontSize="28" Width="180" Height="40" Click="Close_Click"/>
+        </Grid>
+    </Grid>
+</Window>

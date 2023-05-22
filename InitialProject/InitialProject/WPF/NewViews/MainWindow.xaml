@@ -9,7 +9,9 @@
         xmlns:vms="clr-namespace:InitialProject.WPF.ViewModels"
         xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.GuestOne"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
+        Title="TravelBuddy" Height="670" Width="1030" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowState="Normal">
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:RateTourViewModel}">
@@ -105,8 +107,14 @@
             <DataTemplate DataType="{x:Type vms:ReservationMoveRequestsViewModel}">
                 <views:ReservationsMoveRequestsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:OwnerViewModel}">
-                <views:OwnerView />
+            <DataTemplate DataType="{x:Type vms:OwnerMainMenuViewModel}">
+                <views:OwnerMainMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerProfileViewModel}">
+                <views:OwnerProfileView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationsViewModel}">
+                <views:AccommodationsView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:MyAccommodationReservationsViewModel}">
                 <viewsg1:MyAccommodationReservationsView />
@@ -129,6 +137,7 @@
             <DataTemplate DataType="{x:Type vmsg1:ImageBrowserViewModel}">
                 <viewsg1:ImageBrowser/>
             </DataTemplate>
+            
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />

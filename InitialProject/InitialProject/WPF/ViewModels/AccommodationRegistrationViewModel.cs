@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class AccommodationRegistrationViewModel: ViewModelBase
+    public class AccommodationRegistrationViewModel : ViewModelBase
     {
         public List<Location> Locations { get; set; }
         private readonly User _loggedInUser;
@@ -182,9 +182,9 @@ namespace InitialProject.WPF.ViewModels
         public ICommand BackCommand { get; set; }
         public ICommand RegisterAccommodationCommand { get; set; }
         public ICommand BackNavigateCommand =>
-new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
+        new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
 
-        public AccommodationRegistrationViewModel(NavigationStore navigationStore ,User user) 
+        public AccommodationRegistrationViewModel(NavigationStore navigationStore, User user)
         {
             _loggedInUser = user;
             _accommodationService = new AccommodationService();
@@ -195,17 +195,17 @@ new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
             Cities = Locations.Select(c => c.City).Distinct().ToList();
             InitializeCommands();
         }
-        private void InitializeCommands() 
+        private void InitializeCommands()
         {
             RegisterAccommodationCommand = new ExecuteMethodCommand(RegisterAccommodation);
             BackCommand = new ExecuteMethodCommand(Back);
         }
-        private void RegisterAccommodation() 
+        private void RegisterAccommodation()
         {
             int maximumGuests = int.Parse(MaximumGuests);
             int minimumDays = int.Parse(MinimumDays);
             int minimumCancellationNotice = int.Parse(MinimumCancellationNotice);
-            _accommodationService.RegisterAccommodation(AccommodationName, SelectedCountry, SelectedCity, Address, Type, maximumGuests, minimumDays, minimumCancellationNotice, 
+            _accommodationService.RegisterAccommodation(AccommodationName, SelectedCountry, SelectedCity, Address, Type, maximumGuests, minimumDays, minimumCancellationNotice,
                 PictureURL, _loggedInUser);
             AccommodationName = null;
             SelectedCountry = null;

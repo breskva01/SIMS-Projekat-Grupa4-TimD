@@ -1,0 +1,130 @@
+﻿<Window x:Class="InitialProject.WPF.NewViews.Owner.AccommodationStatisticsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.WPF.NewViews.Owner"
+        xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+        mc:Ignorable="d"
+        Title="AccommodationStatisticsView" Height="660" Width="840" WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\ntaso.ANJA-10\Documents\Visual Studio 2022\SIMS_projekat\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\OwnerLightBlue.jpg"/>
+    </Window.Background>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF286DBB" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="27"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Aqua" />
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="Width" Value="260"/>
+        </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="120"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="Width" Value="250"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="550"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,3,0"></Border>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Width="170" Height="50" FontSize="40">Statistics</Label>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <oxy:PlotView Width="250" Height="250" Grid.Row="0" Grid.Column="0" Background="LightBlue" FontFamily="Impact" Foreground="DarkCyan"  Model="{Binding Reservations}" />
+                <oxy:PlotView Width="250" Height="250" Grid.Row="0" Grid.Column="1" Background="LightBlue"  Model="{Binding Cancellations}" />
+                <oxy:PlotView Width="250" Height="250" Grid.Row="1" Grid.Column="0" Background="LightBlue"  Model="{Binding MovedReservations}" />
+                <oxy:PlotView Width="250" Height="250" Grid.Row="1" Grid.Column="1" Background="LightBlue"  Model="{Binding RenovationReccommendations}" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RadioButton Grid.Row="0" Grid.Column="0" Content="Per year" Margin="0,10,15,10" IsChecked="{Binding PerYearSelected}"/>
+                <RadioButton Grid.Row="1" Grid.Column="0" Content="Per month" Margin="0,10,15,10" IsChecked="{Binding PerMonthSelected}"/>
+                <Label Grid.Row="2" Grid.Column="0" FontSize="24" Grid.ColumnSpan="2" Margin="0,0,20,0">Choose year</Label>
+                <Label Grid.Row="3" Grid.Column="0" FontSize="24" Grid.ColumnSpan="2" Margin="0,0,20,0">Most booked:</Label>
+                <ComboBox x:Name="yearsComboBox" Grid.Row="2" Grid.Column="1" FontSize="18" FontFamily="Impact" Margin="0,5,0,10" Text="{Binding Year}"></ComboBox>
+                <TextBlock Grid.Row="3" Grid.Column="1" FontFamily="Impact" FontSize="24" Width="140" Height="40" Foreground="#FF286DBB" Text="{Binding MostBooked}"></TextBlock>
+            </Grid>
+            <Border BorderBrush="Black" Grid.Row="0" BorderThickness="0,0,0,3"/>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="57"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Foreground="DarkCyan" FontFamily="Impact" FontSize="24" Width="220" TextWrapping="Wrap" >Popular locations for new accommodations</TextBlock>
+                <DataGrid Grid.Row="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Country" Width="125"></DataGridTextColumn>
+                        <DataGridTextColumn Header="City" Width="*"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Grid.Row="2" Content="New accommodation"></Button>
+                <Label Grid.Row="3" FontSize="24" Margin="20,10,10,53" Grid.RowSpan="2">Least popular locations</Label>
+                <DataGrid Grid.Row="4">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Country" Width="125"></DataGridTextColumn>
+                        <DataGridTextColumn Header="City" Width="*"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Grid.Row="5" Content="Remove accommodation"></Button>
+                <Button Grid.Row="6" Content="Close" Click="Close_Click"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

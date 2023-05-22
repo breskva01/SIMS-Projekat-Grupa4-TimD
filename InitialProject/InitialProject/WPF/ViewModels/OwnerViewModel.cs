@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class OwnerViewModel: ViewModelBase
+    public class OwnerViewModel : ViewModelBase
     {
         private User _user;
         private readonly NavigationStore _navigationStore;
@@ -34,7 +34,7 @@ namespace InitialProject.WPF.ViewModels
             AccommodationRegistrationCommand = new ExecuteMethodCommand(ShowAccommodationRegistrationView);
             ViewRatingsCommand = new ExecuteMethodCommand(ShowOwnerRatingsView);
             MoveRequestsCommand = new ExecuteMethodCommand(ShowReservationMoveRequestsView);
-            RateGuestCommand = new ExecuteMethodCommand(ShowGuestRatingView);
+            //RateGuestCommand = new ExecuteMethodCommand(ShowGuestRatingView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
 
         }
@@ -55,13 +55,13 @@ namespace InitialProject.WPF.ViewModels
             navigate.Execute(null);
         }
 
-        private void ShowGuestRatingView()
+        /*private void ShowGuestRatingView()
         {
             GuestRatingViewModel guestRatingViewModel = new GuestRatingViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guestRatingViewModel));
 
             navigate.Execute(null);
-        }
+        }*/
 
         private void ShowReservationMoveRequestsView()
         {

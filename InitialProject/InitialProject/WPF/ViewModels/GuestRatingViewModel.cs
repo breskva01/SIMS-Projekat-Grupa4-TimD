@@ -14,17 +14,18 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class GuestRatingViewModel: ViewModelBase
+    public class GuestRatingViewModel : ViewModelBase
     {
         private readonly AccommodationReservationService _accommodationReservationService;
         private readonly NavigationStore _navigationStore;
         private readonly AccommodationService _accommodationService;
         private readonly UserService _userService;
         private readonly GuestRatingService _guestRatingService;
-        private readonly User _owner;
+        private readonly User _user;
         public readonly Accommodation Accommodation;
         private List<Accommodation> _accommodations;
         private List<User> _users;
+        public bool IsNotified { get; set; }
         public ObservableCollection<AccommodationReservation> AccommodationReservations { get; set; }
         public AccommodationReservation SelectedReservation { get; set; }
 
@@ -120,22 +121,23 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        public GuestRatingViewModel(NavigationStore navigationStore, User user)
+        public GuestRatingViewModel(NavigationStore navigationStore, User user, bool isNotified)
         {
             _accommodationReservationService = new AccommodationReservationService();
             _accommodationService = new AccommodationService();
             _guestRatingService = new GuestRatingService();
             _navigationStore = navigationStore;
             _accommodations = _accommodationService.GetAll();
-            _owner = user;
-            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_owner.Id));
+            _user = user;
+            IsNotified = true;
+            AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_user.Id));
             InitializeCommands();
         }
-        
+
         public ICommand RateGuestCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand BackNavigateCommand =>
-new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
+            new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
         private void InitializeCommands()
         {
             RateGuestCommand = new ExecuteMethodCommand(RateGuest);
@@ -149,14 +151,25 @@ new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
             GuestRating guestRating = _guestRatingService.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), int.Parse(Communication), int.Parse(Timeliness), int.Parse(NoiseLevel), int.Parse(OverallExperience), Comment);
             _accommodationReservationService.updateRatingStatus(SelectedReservation);
             AccommodationReservations.Remove(SelectedReservation);
+            ResetData();
         }
         private void Back()
         {
             BackNavigateCommand.Execute(null);
         }
-        private OwnerViewModel GoBack()
+        private void ResetData()
         {
-            return new OwnerViewModel(_navigationStore, _owner);
+            Hygiene = null;
+            RespectsRules = null;
+            Communication = null;
+            Timeliness = null;
+            NoiseLevel = null;
+            OverallExperience = null;
+            Comment = "";
+        }
+        private OwnerProfileViewModel GoBack()
+        {
+            return new OwnerProfileViewModel(_navigationStore, (Owner)_user, IsNotified);
         }
 
 
