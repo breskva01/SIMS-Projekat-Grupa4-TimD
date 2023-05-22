@@ -1,4 +1,5 @@
-﻿using InitialProject.Application.Commands;
+﻿using ControlzEx.Standard;
+using InitialProject.Application.Commands;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
@@ -290,8 +291,9 @@ namespace InitialProject.WPF.ViewModels
             }
             else
             {
-                Country = parameter.Split(" ")[0];
-                City = parameter.Split(" ")[1];
+                string[] parts = parameter.Split(' ');
+                Country = parts[0];
+                City = string.Join(" ", parts.Skip(1));
                 SelectedCity = City;
             }
 

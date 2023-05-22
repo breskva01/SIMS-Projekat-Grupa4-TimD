@@ -8,9 +8,7 @@
         xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
         mc:Ignorable="d" 
         d:DesignHeight="768" d:DesignWidth="1024">
-    <UserControl.Background>
-        <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundLP.jpg"/>
-    </UserControl.Background>
+
     <UserControl.Resources>
         <ControlTemplate x:Key="ValidationTemplate">
             <StackPanel>
@@ -69,10 +67,10 @@
             <Label Grid.Row="0" Content="CREATE TOUR" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
             </Label>
             <Button   BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="48">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menu.png"></Image>
+                <Image Source="\Resources\Images\menu.png"></Image>
             </Button>
             <Button BorderBrush="Transparent" Cursor="Hand" Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -183,10 +181,10 @@
             <Label Grid.Row="0" Content="ᑕᖇEᗩTE TOᑌᖇ" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
             </Label>
             <Button  BorderBrush="Transparent" Cursor="Hand" x:Name="ButtonMenu" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
+                <Image Source="\Resources\Images\menuW.png"></Image>
             </Button>
             <Button BorderBrush="Transparent" Cursor="Hand" Command="{Binding HomeCommand}" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -269,7 +267,7 @@
                             </Border>
                         </ControlTemplate>
                     </Button.Template>
-                    <Image Margin="10" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\plus.png"/>
+                    <Image Margin="10" Source="\Resources\Images\plus.png"/>
                 </Button>
                 <Button Grid.Row="8" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Grid.Column="3" Height="40" Width="40" HorizontalAlignment="Left" Margin="15,0,15,0" VerticalAlignment="Center"  FontSize="30" VerticalContentAlignment="Center">
                     <Button.Template>
@@ -282,7 +280,7 @@
                             </Border>
                         </ControlTemplate>
                     </Button.Template>
-                    <Image Margin="10" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\plus.png"/>
+                    <Image Margin="10" Source="\Resources\Images\plus.png"/>
                 </Button>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="ᑕᖇEᗩTE" HorizontalAlignment="Left" Margin="133,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25" Command="{Binding ConfirmCommand}" />
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="TᑌTOᖇIᗩᒪ" HorizontalAlignment="Left" Margin="133,30,0,0" Grid.Row="8" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25"/>
@@ -299,7 +297,7 @@
             </Grid.RenderTransform>
             <StackPanel>
                 <Border Height="80" Width="80" Margin="10">
-                    <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png"/>
+                    <Image Source="\Resources\Images\logoB.png"/>
                 </Border>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
@@ -313,7 +311,7 @@
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>
             <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
-                <Image Height="30" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backW.jpg"></Image>
+                <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
             </Button>
         </Grid>
     </Grid>

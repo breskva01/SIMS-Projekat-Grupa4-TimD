@@ -7,9 +7,7 @@
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
         mc:Ignorable="d" Height="768" Width="1024">
-    <UserControl.Background>
-        <ImageBrush ImageSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backgroundLP.jpg"/>
-    </UserControl.Background>
+
     <UserControl.Resources>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
@@ -60,10 +58,10 @@
             </Grid.RowDefinitions>
             <Label Content="ᗩᒪᒪ TOᑌᖇS" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" />
             <Button Grid.Row="0" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
+                <Image Source="\Resources\Images\menuW.png"></Image>
             </Button>
             <Button Grid.Row="0" BorderBrush="Transparent" Cursor="Hand" Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
             </Button>
 
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
@@ -123,10 +121,10 @@
 
             <Label Content="ᗩᒪᒪ TOᑌᖇS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
             <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\menuW.png"></Image>
+                <Image Source="\Resources\Images\menuW.png"></Image>
             </Button>
             <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
-                <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\homeW.jpg.png"></Image>
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
             </Button>
 
             <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectedItem="{Binding SelectedTour}" Cursor="Hand" BorderBrush="Black" BorderThickness="5" Grid.Row="1" Name="lbTours" Padding="15,15,5,5" Margin="40,0,40,0" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Height="500" VerticalAlignment="Center">
@@ -183,7 +181,7 @@
             </Grid.RenderTransform>
             <StackPanel>
                 <Border Height="80" Width="80" Margin="10">
-                    <Image Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png"/>
+                    <Image Source="\Resources\Images\logoB.png"/>
                 </Border>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
@@ -197,7 +195,7 @@
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>
             <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
-                <Image Height="30" Source="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\backW.jpg"></Image>
+                <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
             </Button>
         </Grid>
     </Grid>
