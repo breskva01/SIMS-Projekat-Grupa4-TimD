@@ -6,6 +6,7 @@ participant App
 participant "ActionScheduler" as AS
 participant "SuperGuestHandler" as SGH
 participant Guest1
+participant "AccommodationReservation" as AR
 database "IUserRepository" as UR
 database "IAccommodationReservationRepository" as ARR
 
@@ -25,6 +26,10 @@ loop OnTimer_Elapsed()
           SGH -> SGH: ShouldActivateSuperGuest(guest)
           SGH -> ARR: GetFilteredReservations(guestId, status)
           ARR --> SGH: reservations
+          loop foreach reservation
+            SGH -> AR: HappenedInLastYear()
+            AR --> SGH: happenedInLastYear
+          end
           return shouldActivate
           alt shouldActivate
               SGH -> Guest1: ActivateSuperGuest()
