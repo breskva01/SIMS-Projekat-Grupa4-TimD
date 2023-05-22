@@ -25,7 +25,7 @@ namespace InitialProject.Domain.Models
             PictureURLs = new List<string>();
             IsValid = true;
         }
-
+        /*
         public TourRating(int guideKnowledge, int guideLanguage, int tourInteresting, int tourInformative,
             int tourContent, string comment, List<string> pictureURLs)
         {
@@ -37,7 +37,7 @@ namespace InitialProject.Domain.Models
             Comment = comment;
             PictureURLs = pictureURLs;
         }
-
+        */
         public void FromCSV(string[] values)
         {
             Id = int.Parse(values[0]);

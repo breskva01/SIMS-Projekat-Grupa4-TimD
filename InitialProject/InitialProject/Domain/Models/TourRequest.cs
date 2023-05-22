@@ -42,7 +42,7 @@ namespace InitialProject.Domain.Models
             LatestDate = DateTime.MaxValue;
             TourId = 0;
         }
-
+        /*
         public TourRequest(int id, int userId, Location location, string description, RequestStatus status, GuideLanguage language, int numberOfGuests, DateTime earliestDate, DateTime latestDate, int tourId)
         {
             Id = id;
@@ -56,6 +56,7 @@ namespace InitialProject.Domain.Models
             LatestDate = latestDate;
             TourId = tourId;
         }
+        */
 
         public void FromCSV(string[] values)
         {

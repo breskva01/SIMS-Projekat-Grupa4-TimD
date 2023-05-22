@@ -22,7 +22,9 @@ namespace InitialProject.Domain.Models
         public bool SortSpaces;
 
 
-        public TourFilterSort(string filterCountry = "", string filterCity = "", int filterMinDuration = 0, int filterMaxDuration = 0, GuideLanguage filterLanguage = GuideLanguage.All, int filterNumberOfGuests = 0, bool sortCountry = false, bool sortCity = false, bool sortDuration = false, bool sortLanguage = false, bool sortSpaces = false)
+        public TourFilterSort(string filterCountry = "", string filterCity = "", int filterMinDuration = 0,
+            int filterMaxDuration = 0, GuideLanguage filterLanguage = GuideLanguage.All, int filterNumberOfGuests = 0,
+            bool sortCountry = false, bool sortCity = false, bool sortDuration = false, bool sortLanguage = false, bool sortSpaces = false)
         {
             FilterCountry = filterCountry;
             FilterCity = filterCity;

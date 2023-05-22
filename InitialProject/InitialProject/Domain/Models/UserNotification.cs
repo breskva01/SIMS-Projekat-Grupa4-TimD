@@ -22,6 +22,7 @@ namespace InitialProject.Domain.Models
             Time = DateTime.Now;
         }
 
+        /*
         public UserNotification(int id, int userId, string message, DateTime time)
         {
             Id = id;
@@ -29,6 +30,7 @@ namespace InitialProject.Domain.Models
             Message = message;
             Time = time;
         }
+        */
 
         public void FromCSV(string[] values)
         {
