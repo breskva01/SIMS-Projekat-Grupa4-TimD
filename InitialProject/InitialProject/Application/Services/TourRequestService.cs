@@ -38,6 +38,14 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetApproved(tourRequests);
         }
+        public int GetMonthNumberOfRequests(int month, string country, string city,int year, List<TourRequest> requests)
+        {
+            return _repository.GetMonthNumberOfRequests(month, country, city,year, requests);
+        }
+        public int GetMonthNumberOfRequestsLanguage(int month, string language, int year, List<TourRequest> requests)
+        {
+            return _repository.GetMonthNumberOfRequestsLanguage(month, language, year, requests);
+        }
         public List<TourRequest> GetOnHold()
         {
             return _repository.GetOnHold();
@@ -59,6 +67,14 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetYearNumberOfRequests(year);
         }
+        public int GetYearNumberOfRequestsForChosenLocation(int year, string country, string city, List<TourRequest> requests)
+        {
+            return _repository.GetYearNumberOfRequestsForChosenLocation(year, country, city, requests);
+        }
+        public int GetYearNumberOfRequestsForChosenLanguage(int year, string language, List<TourRequest> requests)
+        {
+            return _repository.GetYearNumberOfRequestsForChosenLanguage(year, language, requests);
+        }
         public int GetLanguageNumberOfRequests(GuideLanguage guideLanguage)
         {
             return _repository.GetLanguageNumberOfRequests(guideLanguage);
@@ -79,9 +95,21 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetGeneralNumberOfGuests();
         }
+        public List<TourRequest> GetForChosenLocation(List<TourRequest> requests, string country, string city)
+        {
+            return _repository.GetForChosenLocation(requests,country, city);
+        }
+        public List<int> GetRangeOfYears(List<TourRequest> requests) 
+        {
+            return _repository.GetRangeOfYears(requests);
+        }
         public int GetYearNumberOfGuests(string year)
         {
             return _repository.GetYearNumberOfGuests(year);
+        }
+        public List<TourRequest> GetForChosenLanguage(List<TourRequest> requests, string langauge)
+        {
+            return _repository.GetForChosenLanguage(requests, langauge);
         }
         public TourRequest CreateTourRequest(Location Location, string Description,RequestStatus Status, GuideLanguage Language,
             int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate, int TourId)
@@ -97,6 +125,10 @@ namespace InitialProject.Application.Services
             TourRequest.TourId = TourId;
 
             return _repository.Save(TourRequest);
+        }
+        public List<TourRequest> GetFiltered(string country, string city, DateTime date1, DateTime date2, int number, string language)
+        {
+            return _repository.GetFiltered(country, city, date1, date2, number, language);
         }
         public TourRequest Update(TourRequest tourRequest)
         {

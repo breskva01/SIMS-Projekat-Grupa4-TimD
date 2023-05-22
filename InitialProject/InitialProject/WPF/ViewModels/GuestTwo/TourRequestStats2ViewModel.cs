@@ -65,6 +65,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             LocationsAxes = new string[Locations.Count];
             LocationNumberOfRequests = new List<int>();
 
+            // Years 
             foreach (string location in Locations)
             {
                 LocationNumberOfRequests.Add(_tourRequestService.GetLocationNumberOfRequests(location, tourRequests));
@@ -76,6 +77,8 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
                 LocationsAxes[i] = location;
                 i++;
             }
+            // nadjem sve requeste za odabranu lokaciju
+            // 
 
             LineSeries LocationNumberOfRequestsAxes = new LineSeries();
             LocationNumberOfRequestsAxes.Title = "locationRequests";

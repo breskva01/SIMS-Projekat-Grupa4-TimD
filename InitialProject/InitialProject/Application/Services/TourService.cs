@@ -37,7 +37,7 @@ namespace InitialProject.Application.Services
             return _repository.GetByName(name);
         }
         public Tour CreateTour(string Name, Location Location, string Description, GuideLanguage Language,
-            int MaximumGuests, DateTime Start, int Duration, string PictureUrl, List<KeyPoint> ky, List<int> kyIds)
+            int MaximumGuests, DateTime Start, int Duration, string PictureUrl, List<KeyPoint> ky, List<int> kyIds, int userId)
         {
             int LocationId = Location.Id;
             Tour Tour = new Tour();
@@ -53,6 +53,7 @@ namespace InitialProject.Application.Services
             Tour.CurrentNumberOfGuests = 0;
             Tour.KeyPoints = ky;
             Tour.KeyPointIds = kyIds;
+            Tour.GuideId = userId;
 
             return _repository.Save(Tour);
         }

@@ -10,7 +10,12 @@
         xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.GuestOne"
         xmlns:vmsg2="clr-namespace:InitialProject.WPF.ViewModels.GuestTwo"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
+        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowState="Normal">
+    <Window.Icon>
+        <BitmapImage UriSource="\Resources\Images\logoB.png"/>
+    </Window.Icon>
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vmsg2:TourRequestStats2ViewModel}">
@@ -162,6 +167,12 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:ImageBrowserViewModel}">
                 <viewsg1:ImageBrowser/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourRequestsAcceptViewModel}">
+                <views:TourRequestsAcceptView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourRequestsStatsViewModel}">
+                <views:TourRequestsStatsView/>
             </DataTemplate>
         </Grid.Resources>
 

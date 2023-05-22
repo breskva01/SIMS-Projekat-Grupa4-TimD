@@ -89,7 +89,7 @@ namespace InitialProject.WPF.ViewModels
             {
                 if (res.GuestId == SelectedGuest.Id && res.TourId == _tour.Id)
                 {
-                    _tour.NumberOfArrivedGeusts += res.NumberOfGuests;
+                    //_tour.NumberOfArrivedGeusts += res.NumberOfGuests;
                     _tourService.Update(_tour);
                     res.Presence = Presence.Pending;
                     res.ArrivedAtKeyPoint = _tour.CurrentKeyPoint;
