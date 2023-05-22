@@ -18,7 +18,16 @@ namespace InitialProject.WPF.ViewModels
         private readonly NavigationStore _navigationStore;
         private User _user;
 
-        public ObservableCollection<TourRequest> TourRequests { get; set; }
+        private ObservableCollection<TourRequest> _requests;
+        public ObservableCollection<TourRequest> TourRequests 
+        {
+            get { return _requests; } 
+            set
+            {
+                _requests = value;
+                OnPropertyChanged(nameof(TourRequests));
+            }
+        }
 
         private TourRequestService _tourRequestService;
         private LocationService _locationService;
@@ -196,7 +205,18 @@ namespace InitialProject.WPF.ViewModels
         }
         private void ResetFilter()
         {
+            SelectedCity = null;
+            SelectedCountry = null;
+            Language = null;
+            EarliestDate = null;
+            LatestDate = null;
+            NumberOfGuests = 0;
+            TourRequests = new ObservableCollection<TourRequest>(_tourRequestService.GetAll());
 
+            foreach (TourRequest tourRequest in TourRequests)
+            {
+                tourRequest.Location = _locationService.GetById(tourRequest.Location.Id);
+            }
         }
         private void IncreaseGuests()
         {

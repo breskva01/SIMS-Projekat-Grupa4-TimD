@@ -16,53 +16,89 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourRequestsStatsViewModel : ViewModelBase
     {
-        private bool _isFirstGraphVisible;
-        public bool IsFirstGraphVisible
+
+        private SeriesCollection _seriesCollectionYearLocation;
+        public SeriesCollection SeriesCollectionYearLocation
         {
-            get { return _isFirstGraphVisible; }
+            get { return _seriesCollectionYearLocation; }
             set
             {
-                _isFirstGraphVisible = value;
-                OnPropertyChanged(nameof(IsFirstGraphVisible));
+                _seriesCollectionYearLocation = value;
+                OnPropertyChanged(nameof(SeriesCollectionYearLocation));
+            }
+        }
+        private SeriesCollection _seriesCollectionMonthLocation;
+        public SeriesCollection SeriesCollectionMonthLocation
+        {
+            get { return _seriesCollectionMonthLocation; }
+            set
+            {
+                _seriesCollectionMonthLocation = value;
+                OnPropertyChanged(nameof(SeriesCollectionMonthLocation));
+            }
+        }
+        private SeriesCollection _seriesCollectionYearLanguage;
+        public SeriesCollection SeriesCollectionYearLanguage
+        {
+            get { return _seriesCollectionYearLanguage; }
+            set
+            {
+                _seriesCollectionYearLanguage = value;
+                OnPropertyChanged(nameof(SeriesCollectionYearLanguage));
+            }
+        }
+        private SeriesCollection _seriesCollectionMonthLanguage;
+        public SeriesCollection SeriesCollectionMonthLanguage
+        {
+            get { return _seriesCollectionMonthLanguage; }
+            set
+            {
+                _seriesCollectionMonthLanguage = value;
+                OnPropertyChanged(nameof(SeriesCollectionMonthLanguage));
             }
         }
 
-        private bool _isSecondGraphVisible;
-        public bool IsSecondGraphVisible
+        private bool _isFirstLocationGraphVisible;
+        public bool IsFirstLocationGraphVisible
         {
-            get { return _isSecondGraphVisible; }
+            get { return _isFirstLocationGraphVisible; }
             set
             {
-                _isSecondGraphVisible = value;
-                OnPropertyChanged(nameof(IsSecondGraphVisible));
+                _isFirstLocationGraphVisible = value;
+                OnPropertyChanged(nameof(IsFirstLocationGraphVisible));
             }
         }
 
-        public ObservableCollection<TourRequest> Requests { get; set; }
-
-        private TourRequestService _tourRequestService;
-        private LocationService _locationService;
-
-        public ObservableCollection<Location> Locations { get; set; }
-
-        private SeriesCollection _seriesCollectionYear;
-        public SeriesCollection SeriesCollectionYear
+        private bool _isSecondLocationGraphVisible;
+        public bool IsSecondLocationGraphVisible
         {
-            get { return _seriesCollectionYear; }
+            get { return _isSecondLocationGraphVisible; }
             set
             {
-                _seriesCollectionYear = value;
-                OnPropertyChanged(nameof(SeriesCollectionYear));
+                _isSecondLocationGraphVisible = value;
+                OnPropertyChanged(nameof(IsSecondLocationGraphVisible));
             }
         }
-        private SeriesCollection _seriesCollectionMonth;
-        public SeriesCollection SeriesCollectionMonth
+
+        private bool _isFirstLanguageGraphVisible;
+        public bool IsFirstLanguageGraphVisible
         {
-            get { return _seriesCollectionMonth; }
+            get { return _isFirstLanguageGraphVisible; }
             set
             {
-                _seriesCollectionMonth = value;
-                OnPropertyChanged(nameof(SeriesCollectionMonth));
+                _isFirstLanguageGraphVisible = value;
+                OnPropertyChanged(nameof(IsFirstLanguageGraphVisible));
+            }
+        }
+
+        private bool _isSecondLanguageGraphVisible;
+        public bool IsSecondLanguageGraphVisible
+        {
+            get { return _isSecondLanguageGraphVisible; }
+            set
+            {
+                _isSecondLanguageGraphVisible = value;
+                OnPropertyChanged(nameof(IsSecondLanguageGraphVisible));
             }
         }
 
@@ -70,9 +106,10 @@ namespace InitialProject.WPF.ViewModels
         public List<string> Months { get; set; }
 
         public List<int> YearNumberOfRequests { get; set; }
+        public List<int> MonthsNumberOfRequests { get; set; }
 
         private string[] _yearsAxes;
-        public string[] YearsAxes 
+        public string[] YearsAxes
         {
             get { return _yearsAxes; }
             set
@@ -91,7 +128,6 @@ namespace InitialProject.WPF.ViewModels
                 OnPropertyChanged(nameof(MonthsAxes));
             }
         }
-
 
         private List<string> _countries;
         public List<string> Countries
@@ -138,6 +174,18 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
+        private string _selectedLanguage;
+        public string SelectedLanguage
+        {
+            get { return _selectedLanguage; }
+            set
+            {
+                _selectedLanguage = value;
+                OnPropertyChanged(nameof(SelectedLanguage));
+
+            }
+        }
+
         private bool _isCheckedYears;
         public bool IsCheckedYears
         {
@@ -145,10 +193,18 @@ namespace InitialProject.WPF.ViewModels
             set
             {
                  _isCheckedYears = value;
+                OnPropertyChanged(nameof(IsCheckedYears));
                 if (_isCheckedYears == true)
                 {
-                    OnPropertyChanged(nameof(IsCheckedYears));
-                    InitializeYearsGraph();
+                    if(SelectedCity != null && SelectedCountry != null && SelectedLanguage == null)
+                    {
+                        InitializeLocationYearsGraph();
+                    }
+                    else if(SelectedLanguage != null && SelectedCountry == null && SelectedCity == null)
+                    {
+                        InitializeLanguageYearsGraph();
+                    }
+                    
                 }
             }
         }
@@ -159,27 +215,34 @@ namespace InitialProject.WPF.ViewModels
             set
             {
                 _isCheckedMonths = value;
+                OnPropertyChanged(nameof(IsCheckedMonths));
                 if (_isCheckedMonths == true)
                 {
-                    OnPropertyChanged(nameof(IsCheckedMonths));
                     PopulateYearsComboBox();
                 }
             }
         }
 
-        private int _selectedYear;
-        public int SelectedYear
+        private string _selectedYear;
+        public string SelectedYear
         {
             get { return _selectedYear; }
             set
             {
                 _selectedYear = value;
-                OnPropertyChanged(nameof(SelectedCity));
-                InitializeMonthsGraph();
+                OnPropertyChanged(nameof(SelectedYear));
+                if (SelectedCity != null && SelectedCountry != null && SelectedLanguage == null)
+                {
+                    InitializeLocationMonthsGraph();
+                }
+                else if (SelectedLanguage != null && SelectedCountry == null && SelectedCity == null)
+                {
+                    InitializeLanguageMonthsGraph();
+                }
             }
         }
-        private List<int> _allYears;
-        public List<int> AllYears
+        private List<string> _allYears;
+        public List<string> AllYears
         {
             get { return _allYears; }
             set
@@ -246,12 +309,21 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
+        public ObservableCollection<TourRequest> Requests { get; set; }
+        public ObservableCollection<Location> Locations { get; set; }
+        public List<string> Languages { get; set; }
+
+        private TourRequestService _tourRequestService;
+        private LocationService _locationService;
+
         private readonly NavigationStore _navigationStore;
         private User _user;
 
         public Func<double, string> YFormatter { get; }
 
         public ICommand CreateCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
+
 
         public TourRequestsStatsViewModel(NavigationStore navigationStore, User user)
         {
@@ -270,23 +342,39 @@ namespace InitialProject.WPF.ViewModels
                 tourRequest.Location = _locationService.GetById(tourRequest.Location.Id);
             }
             CreateCommand = new ExecuteMethodCommand(CreateTour);
+            ResetCommand = new ExecuteMethodCommand(ResetFilters);
 
             YearsAxes = new string[] { };
             MonthsAxes = new string[] { };
             Months = new List<string>();
+            Years = new List<int>();
 
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
 
-            _seriesCollectionYear = new SeriesCollection();
-            _seriesCollectionMonth = new SeriesCollection();
+            _seriesCollectionYearLocation = new SeriesCollection();
+            _seriesCollectionMonthLocation = new SeriesCollection();
+            _seriesCollectionYearLanguage = new SeriesCollection();
+            _seriesCollectionMonthLanguage = new SeriesCollection();
 
-            AllYears = new List<int>();
-            /*
-            SelectedCity = "Beograd";
-            SelectedCountry = "Srbija";
-            InitializeYearsGraph();
-            */
+            AllYears = new List<string>();
+
+            Languages = new List<string>();
+            Languages.Add("Serbian");
+            Languages.Add("English");
+
+            Months.Add("January");
+            Months.Add("February");
+            Months.Add("March");
+            Months.Add("April");
+            Months.Add("May");
+            Months.Add("June");
+            Months.Add("July");
+            Months.Add("August");
+            Months.Add("September");
+            Months.Add("October");
+            Months.Add("November");
+            Months.Add("December");
 
         }
         private void PopulateLocationTextBox()
@@ -330,16 +418,20 @@ namespace InitialProject.WPF.ViewModels
         }
         private void PopulateYearsComboBox()
         {
-            SeriesCollectionYear.Clear();
-            AllYears = _tourRequestService.GetAllYears();
+            SeriesCollectionYearLocation.Clear();
+            List<int> AllYearsInt = _tourRequestService.GetAllYears();
+            foreach (int year in AllYearsInt)
+            {
+                AllYears.Add(year.ToString());
+            }
         }
-        private void InitializeYearsGraph()
+        private void InitializeLocationYearsGraph()
         {
-            // SeriesCollectionYear.Clear();
-            //SeriesCollectionYear = new SeriesCollection();
-            SeriesCollectionMonth.Clear();
-            IsFirstGraphVisible = true;
-            IsSecondGraphVisible = false;
+            IsFirstLocationGraphVisible = true;
+            IsSecondLocationGraphVisible = false;
+
+            SeriesCollectionYearLocation.Clear();
+            SeriesCollectionMonthLocation.Clear();
 
             List<TourRequest> allTourRequests = _tourRequestService.GetAll();
             foreach (TourRequest request in allTourRequests)
@@ -363,21 +455,23 @@ namespace InitialProject.WPF.ViewModels
                 YearsAxes[i] = year.ToString();
                 i++;
             }
-            // za izabranu lokaciju treba da nadjem sve godine requestova
 
             LineSeries YearNumberOfRequestAxes = new LineSeries();
             YearNumberOfRequestAxes.Title = "yearRequests";
             YearNumberOfRequestAxes.Values = new ChartValues<int>(YearNumberOfRequests);
             YearNumberOfRequestAxes.LineSmoothness = 0;
-            SeriesCollectionYear = new SeriesCollection();
-            SeriesCollectionYear.Add(YearNumberOfRequestAxes);
-        }
-        private void InitializeMonthsGraph()
-        {
-            IsFirstGraphVisible = false;
-            IsSecondGraphVisible = true;
+            SeriesCollectionYearLocation = new SeriesCollection();
+            SeriesCollectionYearLocation.Add(YearNumberOfRequestAxes);
 
-            SeriesCollectionYear.Clear();
+
+        }
+        private void InitializeLocationMonthsGraph()
+        {
+            IsFirstLocationGraphVisible = false;
+            IsSecondLocationGraphVisible = true;
+
+            SeriesCollectionYearLocation.Clear();
+            SeriesCollectionMonthLocation.Clear();
             List<TourRequest> allTourRequests = _tourRequestService.GetAll();
             foreach (TourRequest request in allTourRequests)
             {
@@ -386,25 +480,92 @@ namespace InitialProject.WPF.ViewModels
 
             List<TourRequest> requests = _tourRequestService.GetForChosenLocation(allTourRequests, SelectedCountry, SelectedCity);
 
-            Months.Add("January");
-            Months.Add("February");
-            Months.Add("March");
-            Months.Add("April");
-            Months.Add("May");
-            Months.Add("June");
-            Months.Add("July");
-            Months.Add("August");
-            Months.Add("September");
-            Months.Add("October");
-            Months.Add("November");
-            Months.Add("December");
 
             MonthsAxes = new string[Months.Count];
-            List<int> MonthsNumberOfRequests = new List<int>();
+            MonthsNumberOfRequests = new List<int>();
 
             for (int j = 1; j <= Months.Count(); j++)
             {
-                MonthsNumberOfRequests.Add(_tourRequestService.GetMonthNumberOfRequests(j, SelectedCountry, SelectedCity,SelectedYear, requests)); 
+                MonthsNumberOfRequests.Add(_tourRequestService.GetMonthNumberOfRequests(j, SelectedCountry, SelectedCity,Convert.ToInt32(SelectedYear), requests)); 
+            }
+
+            int i = 0;
+            
+            foreach (string month in Months)
+            {
+                MonthsAxes[i] = month;
+                i++;
+            }
+
+            LineSeries MonthNumberOfRequestAxes = new LineSeries();
+            MonthNumberOfRequestAxes.Title = "monthsRequests";
+            MonthNumberOfRequestAxes.Values = new ChartValues<int>(MonthsNumberOfRequests);
+            MonthNumberOfRequestAxes.LineSmoothness = 0;
+            SeriesCollectionMonthLocation = new SeriesCollection();
+            SeriesCollectionMonthLocation.Add(MonthNumberOfRequestAxes);
+
+
+        }
+
+        private void InitializeLanguageYearsGraph()
+        {
+
+            IsFirstLanguageGraphVisible = true;
+            IsSecondLanguageGraphVisible = false;
+
+            List<TourRequest> allTourRequests = _tourRequestService.GetAll();
+            foreach (TourRequest request in allTourRequests)
+            {
+                request.Location = _locationService.GetById(request.Location.Id);
+            }
+
+            List<TourRequest> requests = _tourRequestService.GetForChosenLanguage(allTourRequests, SelectedLanguage.ToString());
+
+            Years = _tourRequestService.GetRangeOfYears(requests);
+            YearsAxes = new string[Years.Count];
+            YearNumberOfRequests = new List<int>();
+
+            foreach (int year in Years)
+            {
+                YearNumberOfRequests.Add(_tourRequestService.GetYearNumberOfRequestsForChosenLanguage(year, SelectedLanguage, requests));
+            }
+            int i = 0;
+            foreach (int year in Years)
+            {
+                YearsAxes[i] = year.ToString();
+                i++;
+            }
+            // za izabranu lokaciju treba da nadjem sve godine requestova
+
+            LineSeries YearNumberOfRequestAxes = new LineSeries();
+            YearNumberOfRequestAxes.Title = "yearRequests";
+            YearNumberOfRequestAxes.Values = new ChartValues<int>(YearNumberOfRequests);
+            YearNumberOfRequestAxes.LineSmoothness = 0;
+            SeriesCollectionYearLanguage = new SeriesCollection();
+            SeriesCollectionYearLanguage.Add(YearNumberOfRequestAxes);
+
+
+        }
+        private void InitializeLanguageMonthsGraph()
+        {
+            IsFirstLanguageGraphVisible = false;
+            IsSecondLanguageGraphVisible = true;
+
+            SeriesCollectionYearLanguage.Clear();
+            List<TourRequest> allTourRequests = _tourRequestService.GetAll();
+            foreach (TourRequest request in allTourRequests)
+            {
+                request.Location = _locationService.GetById(request.Location.Id);
+            }
+
+            List<TourRequest> requests = _tourRequestService.GetForChosenLanguage(allTourRequests, SelectedLanguage);
+
+            MonthsAxes = new string[Months.Count];
+            MonthsNumberOfRequests = new List<int>();
+
+            for (int j = 1; j <= Months.Count(); j++)
+            {
+                MonthsNumberOfRequests.Add(_tourRequestService.GetMonthNumberOfRequestsLanguage(j, SelectedLanguage, Convert.ToInt32(SelectedYear), requests));
             }
 
             int i = 0;
@@ -418,10 +579,11 @@ namespace InitialProject.WPF.ViewModels
             MonthNumberOfRequestAxes.Title = "monthsRequests";
             MonthNumberOfRequestAxes.Values = new ChartValues<int>(MonthsNumberOfRequests);
             MonthNumberOfRequestAxes.LineSmoothness = 0;
-            SeriesCollectionMonth = new SeriesCollection();
-            SeriesCollectionMonth.Add(MonthNumberOfRequestAxes);
+            SeriesCollectionMonthLanguage = new SeriesCollection();
+            SeriesCollectionMonthLanguage.Add(MonthNumberOfRequestAxes);
 
         }
+
         private void PopulateCitiesComboBox()
         {
             if (string.IsNullOrEmpty(SelectedCountry))
@@ -454,6 +616,25 @@ namespace InitialProject.WPF.ViewModels
                 
             }
             
+        }
+        private void ResetFilters()
+        {
+            SelectedLanguage = null;
+            SelectedYear = null;
+            SelectedCountry = null;
+            SelectedCity = null;
+            IsCheckedMonths = false;
+            IsCheckedYears = false;
+            AllYears.Clear();
+            
+            SeriesCollectionMonthLanguage.Clear();
+            SeriesCollectionMonthLocation.Clear();
+            SeriesCollectionYearLanguage.Clear();
+            SeriesCollectionYearLocation.Clear();
+            Years.Clear();
+            YearsAxes = new string[] { };
+            MonthsAxes = new string[] { };
+
         }
     }
 }

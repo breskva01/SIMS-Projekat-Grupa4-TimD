@@ -3,6 +3,7 @@ using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -311,6 +312,20 @@ namespace InitialProject.Repositories
             }
             return filteredTourRequests;
         }
+
+        public int GetMonthNumberOfRequestsLanguage(int month, string language, int year, List<TourRequest> requests)
+        {
+            int numberOfRequests = 0;
+            foreach (TourRequest t in requests)
+            {
+                if (t.EarliestDate.Year == year && t.Language.ToString() == language && t.EarliestDate.Month == month)
+                {
+                    numberOfRequests++;
+                }
+            }
+            return numberOfRequests;
+        }
+
         public bool MatchesFilters(TourRequest tourRequest, string country, string city, DateTime earliestDate, DateTime latestDate, int numberOfGuests, string language)
         {
             bool countryMatch = tourRequest.Location.Country == country || country == null;
@@ -320,13 +335,7 @@ namespace InitialProject.Repositories
             bool languageMatch = tourRequest.Language.ToString() == language || language == null;
 
             return countryMatch && cityMatch && dateMatch && numberMatch && languageMatch;
-            /*
-            bool countryMatch = tour.Location.Country == country || country == "";
-            bool cityMatch = tour.Location.City == city || city == "";
-            bool durationMatch = tour.Duration == duration || duration == 0;
-            bool languageMatch = tour.Language == language || language == GuideLanguage.All;
-            bool numberOfGuestsMatch = tour.MaximumGuests - tour.CurrentNumberOfGuests >= numberOfGuests || numberOfGuests == 0;
-            */
+
         }
         public List<TourRequest> GetByUser(int userId)
         {
@@ -356,7 +365,31 @@ namespace InitialProject.Repositories
             }
             return tourRequests;
         }
+        public List<TourRequest> GetForChosenLanguage(List<TourRequest> requests, string langauge)
+        {
+            List<TourRequest> tourRequests = new List<TourRequest>();
+            foreach (TourRequest item in requests)
+            {
+                if(item.Language.ToString() == langauge.ToString())
+                {
+                    tourRequests.Add(item);
+                }
+            }
+            return tourRequests;
+        }
 
+        public int GetYearNumberOfRequestsForChosenLanguage(int year, string language, List<TourRequest> requests)
+        {
+            int numberOfRequests = 0;
+            foreach (TourRequest t in requests)
+            {
+                if (t.EarliestDate.Year == year && t.Language.ToString() == language)
+                {
+                    numberOfRequests++;
+                }
+            }
+            return numberOfRequests;
+        }
         public int NextId()
         {
             _tourRequests = _tourRequestFileHandler.Load();
