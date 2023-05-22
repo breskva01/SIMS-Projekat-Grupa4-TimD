@@ -19,7 +19,8 @@ namespace InitialProject.WPF.ViewModels
     public class TourCreationViewModel : ViewModelBase, IDataErrorInfo
     {
 
-        private bool IsCreatedBasedOnStats; 
+        private bool IsCreatedBasedOnStats;
+        private bool IsCreatedBasedOnSignleRequest;
 
         private readonly NavigationStore _navigationStore;
         private User _user;
@@ -36,6 +37,7 @@ namespace InitialProject.WPF.ViewModels
         private KeyPointService _keyPointService;
         private TourService _tourService;
         private TourRequestService _tourRequestService;
+        private UserNotificationService _userNotificationService;
 
         public ICommand ConfirmCommand { get; set; }
         public ICommand CancelCommand { get; }
@@ -266,6 +268,7 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
+
         public TourCreationViewModel(NavigationStore navigationStore, User user, string parameter, bool isParameterLanguage)
         {
             _navigationStore = navigationStore;
@@ -275,6 +278,7 @@ namespace InitialProject.WPF.ViewModels
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
             _tourRequestService = new TourRequestService();
+            _userNotificationService = new UserNotificationService();
 
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
@@ -297,6 +301,8 @@ namespace InitialProject.WPF.ViewModels
             InitializeCommands();
 
             IsCreatedBasedOnStats = true;
+            IsCreatedBasedOnSignleRequest = false;
+
 
         }
         public TourCreationViewModel(NavigationStore navigationStore, User user, TourRequest request)
@@ -308,6 +314,7 @@ namespace InitialProject.WPF.ViewModels
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
             _tourRequestService = new TourRequestService();
+            _userNotificationService = new UserNotificationService();
 
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
@@ -327,6 +334,7 @@ namespace InitialProject.WPF.ViewModels
             InitializeCommands();
 
             IsCreatedBasedOnStats = false;
+            IsCreatedBasedOnSignleRequest = true;
 
         }
 
@@ -338,6 +346,8 @@ namespace InitialProject.WPF.ViewModels
             _tourService = new TourService();
             _locationService = new LocationService();
             _keyPointService = new KeyPointService();
+            _userNotificationService = new UserNotificationService();
+
 
             AddKeyPointCommand = new AddKeyPointCommand(this);
 
@@ -350,6 +360,7 @@ namespace InitialProject.WPF.ViewModels
             InitializeCommands();
 
             IsCreatedBasedOnStats = false;
+            IsCreatedBasedOnSignleRequest = false;
 
 
             //Start = new DateTime(2023, 4, 15);
@@ -395,8 +406,14 @@ namespace InitialProject.WPF.ViewModels
                 TourRequest.TourId = tour.Id;
                 _tourRequestService.Update(TourRequest);
             }
-
-
+            if(IsCreatedBasedOnStats)
+            {
+                _userNotificationService.NotifySimilarRequests(tour);
+            }
+            if(IsCreatedBasedOnSignleRequest)
+            {
+                _userNotificationService.NotifyApprovedRequest(tour, TourRequest.UserId);
+            }
 
             ClearOutTextBoxes();
 

@@ -7,6 +7,9 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid x:Name="InterfaceGrid">
             <Grid.RowDefinitions>
@@ -24,7 +27,7 @@
             </Button>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="500"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -58,22 +61,29 @@
                         </StackPanel>
                     </DockPanel>
                 </Border>
-                <lvc:CartesianChart  Visibility="Visible" Grid.Row="0" Grid.Column="1" Series="{Binding SeriesCollectionYear}" Margin="12,10,26,200">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Years" Labels="{Binding YearsAxes}"/>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY >
-                        <lvc:Axis Title="Number of Requests" LabelFormatter="{Binding YFormatter}"/>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
-                <lvc:CartesianChart  Visibility="Visible" Grid.Row="0" Grid.Column="1" Series="{Binding SeriesCollectionMonth}" Margin="10,200,28,10">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Years" Labels="{Binding MonthsAxes}"/>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY >
-                        <lvc:Axis Title="Number of Requests" LabelFormatter="{Binding YFormatter}"/>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
+                <Grid  Grid.Row="0" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <lvc:CartesianChart  Visibility="{Binding IsFirstGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}"  Grid.Row="0" Series="{Binding SeriesCollectionYear}" Margin="2">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Years" Labels="{Binding YearsAxes}"/>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY >
+                            <lvc:Axis Title="Number of Requests" LabelFormatter="{Binding YFormatter}"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                    <lvc:CartesianChart Visibility="{Binding IsSecondGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="0" Series="{Binding SeriesCollectionMonth}" Margin="2">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Years" Labels="{Binding MonthsAxes}"/>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY >
+                            <lvc:Axis Title="Number of Requests" LabelFormatter="{Binding YFormatter}"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Grid>
+                    
                 <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,5,0,0"/>
                 <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5">
                     <Grid.ColumnDefinitions>
@@ -101,7 +111,7 @@
                         <Label Margin="20,0,5,0" Content="Most requested language is: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBox Margin="0,0,40,0" Height="30" Width="96" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}"/>
                     </DockPanel>
-                    <Button Grid.Column="2" Content="CREATE" Command="{Binding CreateCommand}" HorizontalAlignment="Left" Margin="129,122,0,0" VerticalAlignment="Top" Height="54" Grid.RowSpan="2" Width="123"/>
+                    <Button Grid.Column="2" Content="CREATE" Command="{Binding CreateCommand}" HorizontalAlignment="Left" Margin="129,80,0,20" VerticalAlignment="Top" Height="54" Grid.RowSpan="2" Width="123" />
                 </Grid>
 
             </Grid>

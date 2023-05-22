@@ -16,6 +16,28 @@ namespace InitialProject.WPF.ViewModels
 {
     public class TourRequestsStatsViewModel : ViewModelBase
     {
+        private bool _isFirstGraphVisible;
+        public bool IsFirstGraphVisible
+        {
+            get { return _isFirstGraphVisible; }
+            set
+            {
+                _isFirstGraphVisible = value;
+                OnPropertyChanged(nameof(IsFirstGraphVisible));
+            }
+        }
+
+        private bool _isSecondGraphVisible;
+        public bool IsSecondGraphVisible
+        {
+            get { return _isSecondGraphVisible; }
+            set
+            {
+                _isSecondGraphVisible = value;
+                OnPropertyChanged(nameof(IsSecondGraphVisible));
+            }
+        }
+
         public ObservableCollection<TourRequest> Requests { get; set; }
 
         private TourRequestService _tourRequestService;
@@ -316,6 +338,8 @@ namespace InitialProject.WPF.ViewModels
             // SeriesCollectionYear.Clear();
             //SeriesCollectionYear = new SeriesCollection();
             SeriesCollectionMonth.Clear();
+            IsFirstGraphVisible = true;
+            IsSecondGraphVisible = false;
 
             List<TourRequest> allTourRequests = _tourRequestService.GetAll();
             foreach (TourRequest request in allTourRequests)
@@ -350,6 +374,9 @@ namespace InitialProject.WPF.ViewModels
         }
         private void InitializeMonthsGraph()
         {
+            IsFirstGraphVisible = false;
+            IsSecondGraphVisible = true;
+
             SeriesCollectionYear.Clear();
             List<TourRequest> allTourRequests = _tourRequestService.GetAll();
             foreach (TourRequest request in allTourRequests)

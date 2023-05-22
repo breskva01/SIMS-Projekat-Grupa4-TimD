@@ -50,7 +50,7 @@
                 <!-- Add your content here -->
                 <Image Source="/Resources/Images/notification.png" Height="140" Width="140" HorizontalAlignment="Center" Margin="0 0 0 0" VerticalAlignment="Center" />
                 <ListBox Name="lbNotifications" Grid.Row ="1" Margin="10,10,10,3" ItemsSource="{Binding Notifications, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Grid.ColumnSpan="2" Background="White" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                    <ListBox.ItemContainerStyle>
+                    <ListBox.ItemContainerStyle >
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -67,7 +67,7 @@
                                 <StackPanel Orientation="Vertical" Margin="5 0" VerticalAlignment="Center">
                                     <StackPanel Orientation="Horizontal" Margin="5 5" VerticalAlignment="Center">
                                         <Image Source="/Resources/Images/message.png" Width="100" Height="100" Margin="5,10,10,10" VerticalAlignment="Center"  />
-                                        <TextBlock FontSize="18" Text="{Binding Message}" Width="240" Height="140" />
+                                        <TextBlock  TextWrapping="Wrap" FontSize="18" Text="{Binding Message}" Width="240" Height="140" />
                                     </StackPanel>
                                     
 
