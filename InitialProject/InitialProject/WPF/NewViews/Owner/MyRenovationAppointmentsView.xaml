@@ -1,0 +1,60 @@
+﻿<Window x:Class="InitialProject.WPF.NewViews.Owner.MyRenovationAppointmentsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.WPF.NewViews.Owner"
+        mc:Ignorable="d"
+        Title="MyRenovationAppointmentsView" Height="550" Width="900">
+    <Window.Background>
+        <ImageBrush ImageSource="../../../Resources/Images/OwnerLightBlueNew.jpg"/>
+    </Window.Background>
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="Width" Value="480"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF286DBB" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Aqua" />
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="240"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" FontSize="40" Margin="210,28,210,189" Grid.RowSpan="2" >My renovation appoinmtents</Label>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Appointments}" SelectedItem="{Binding SelectedAppointment}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="180" Header="Accommodation" Binding="{Binding Accommodation.Name}"/>
+                <DataGridTextColumn Width="180" Header="Type of renovation" Binding="{Binding Description}"/>
+                <DataGridTextColumn Width="180" Header="Start date" Binding="{Binding Start}"/>
+                <DataGridTextColumn Width="180" Header="End date" Binding="{Binding End}"/>
+                <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Row="2" Content="Cancel appointment" Command="{Binding CancelAppointmentCommand}" ></Button>
+        <Button Grid.Row="3" Content="Close" Click="Close_Click"></Button>
+    </Grid>
+</Window>

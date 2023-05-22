@@ -42,5 +42,13 @@ namespace InitialProject.Application.Services
             };
             _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, user);
         }
+        public List<Accommodation> GetAllOwnersAccommodations(int id)
+        {
+           return _repository.GetAllOwnersAccommodations(id);
+        }
+        public void UpdateRenovationStatus(int id)
+        {
+            _repository.UpdateRenovationStatus(id);
+        }
     }
 }

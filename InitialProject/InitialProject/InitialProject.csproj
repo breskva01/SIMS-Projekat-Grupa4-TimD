@@ -14,6 +14,8 @@
     <None Remove="Resources\Images\backgroundLP.jpg" />
     <None Remove="Resources\Images\backSquare.png" />
     <None Remove="Resources\Images\backW.jpg" />
+    <None Remove="Resources\Images\appLogo.png" />
+    <None Remove="Resources\Images\bell.png" />
     <None Remove="Resources\Images\berlin.jpg" />
     <None Remove="Resources\Images\blueCheck.png" />
     <None Remove="Resources\Images\brazil_cottage.jpg" />
@@ -51,8 +53,10 @@
     <None Remove="Resources\Images\notify.png" />
     <None Remove="Resources\Images\new-page.png" />
     <None Remove="Resources\Images\next.png" />
+    <None Remove="Resources\Images\notificationBell1.png" />
     <None Remove="Resources\Images\novi_sad.jpg" />
     <None Remove="Resources\Images\novi_sad_brvnara.jpg" />
+    <None Remove="Resources\Images\OwnerLightBlueNew.jpg" />
     <None Remove="Resources\Images\paper-plane100.png" />
     <None Remove="Resources\Images\paper-plane50.png" />
     <None Remove="Resources\Images\paris.png" />
@@ -74,30 +78,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Images\add.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\delete.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\edit.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\view.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="MaterialDesignThemes" Version="2.4.0.1044" />
     <PackageReference Include="Microsoft.Toolkit" Version="7.1.2" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\bell.png" />
     <Resource Include="Resources\Images\backgroundLP.jpg" />
     <Resource Include="Resources\Images\backSquare.png" />
     <Resource Include="Resources\Images\backW.jpg" />
@@ -126,9 +117,15 @@
     <Resource Include="Resources\Images\moscow.png" />
     <Resource Include="Resources\Images\new-page.png" />
     <Resource Include="Resources\Images\next.png" />
+    <Content Include="Resources\Images\notificationBell1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\notification.png" />
     <Resource Include="Resources\Images\notify.png" />
     <Resource Include="Resources\Images\novi_sad.jpg" />
+    <Content Include="Resources\Images\OwnerLightBlueNew.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\paper-plane100.png" />
     <Resource Include="Resources\Images\paper-plane50.png" />
     <Resource Include="Resources\Images\paris.png" />
@@ -151,6 +148,12 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\plus.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Xceed.Wpf.Toolkit.NET5">
+      <HintPath>bin\Debug\net6.0-windows\Xceed.Wpf.Toolkit.NET5.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

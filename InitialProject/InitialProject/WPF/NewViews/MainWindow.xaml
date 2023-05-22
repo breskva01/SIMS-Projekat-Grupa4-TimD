@@ -144,8 +144,14 @@
             <DataTemplate DataType="{x:Type vms:ReservationMoveRequestsViewModel}">
                 <views:ReservationsMoveRequestsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:OwnerViewModel}">
-                <views:OwnerView />
+            <DataTemplate DataType="{x:Type vms:OwnerMainMenuViewModel}">
+                <views:OwnerMainMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerProfileViewModel}">
+                <views:OwnerProfileView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationsViewModel}">
+                <views:AccommodationsView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:MyAccommodationReservationsViewModel}">
                 <viewsg1:MyAccommodationReservationsView />

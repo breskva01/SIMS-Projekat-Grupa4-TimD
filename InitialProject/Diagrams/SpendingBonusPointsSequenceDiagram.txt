@@ -1,0 +1,39 @@
+@startuml
+autoactivate on
+title Spending Bonus Points on a Reservation
+
+actor User
+participant "AccommodationReservationDatePickerViewModel" as VM
+participant "AccommodationReservationService" as Service
+participant Guest1
+participant "IUserRepository" as UR
+participant "MessageBox" as MB
+
+User -> VM: Clicks on make reservation button
+VM -> VM: ReserveAccommodation()
+VM -> VM: IsValidReservation()
+return isValid
+opt isValid
+    VM -> Service: Save(reservation)
+    deactivate Service
+    VM -> Service: IsDiscountAvailable(guest)
+    Service -> Guest1: SpendABonusPoint()
+    return discountAvailable
+    opt discountAvailable
+      Service -> UR: Update(guest)
+      deactivate UR
+    end
+    return discountAvailable
+    alt discountAvailable
+      VM -> MB: Show("Bonus point spent message")
+      deactivate MB
+    else
+      VM -> MB: Show("Regular reservation created message")
+      deactivate MB
+    end
+    VM -> VM: NavigateAccommodationBrowser()
+    deactivate VM
+end
+deactivate VM
+
+@enduml

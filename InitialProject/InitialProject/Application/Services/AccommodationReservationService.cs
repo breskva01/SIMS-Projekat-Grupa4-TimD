@@ -1,11 +1,12 @@
 ﻿using InitialProject.Application.Injector;
 using InitialProject.Application.Observer;
 using InitialProject.Application.Stores;
-using InitialProject.Application.UseCases;
+using InitialProject.Application.Util;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using InitialProject.Repositories.FileHandlers;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,16 @@ namespace InitialProject.Application.Services
         public AccommodationReservationService()
         {
             _repository = RepositoryInjector.Get<IAccommodationReservationRepository>();
+        }
+        public bool IsDiscountAvailable(Guest1 guest)
+        {
+            bool discountAvailable = guest.SpendABonusPoint();
+            if (discountAvailable)
+            {
+                var userRepository = RepositoryInjector.Get<IUserRepository>();
+                userRepository.Update(guest);
+            }
+            return discountAvailable;
         }
         public void Save(AccommodationReservation accommodationReservation)
         {
@@ -81,6 +92,50 @@ namespace InitialProject.Application.Services
                 cancelledReservatons.Add(_repository.GetById(n.ReservationId));
             });
             return cancelledReservatons;
+        }
+        public LineSeries GetYearlyReservations(int id)
+        {
+            return _repository.GetYearlyReservations(id);
+        }
+        public LineSeries GetYearlyCancellations(int id) 
+        {
+            return _repository.GetYearlyCancellations(id);
+        }
+        public LineSeries GetYearlyMovedReservations(int id)
+        {
+            return _repository.GetYearlyMovedReservations(id);
+        }
+        public LineSeries GetYearlyRenovationReccommendations(int id)
+        {
+            return _repository.GetYearlyRenovationReccommendations(id);
+        }
+        public LineSeries GetMonthlyReservations(int id, int year)
+        {
+            return _repository.GetMonthlyReservations(id, year);
+        }
+        public LineSeries GetMonthlyCancellations(int id, int year)
+        {
+            return _repository.GetMonthlyCancellations(id, year);
+        }
+        public LineSeries GetMonthlyMovedReservations(int id, int year)
+        {
+            return _repository.GetMonthlyMovedReservations(id, year);
+        }
+        public LineSeries GetMonthlyRenovationReccommendations(int id, int year)
+        {
+            return _repository.GetMonthlyRenovationReccommendations(id, year);
+        }
+        public string GetMostBookedYear(int id)
+        {
+            return _repository.GetMostBookedYear(id);
+        }
+        public string GetMostBookedMonth(int id, int year)
+        {
+            return _repository.GetMostBookedMonth(id, year);
+        }
+        public List<TimeSlot> GetAvailableDates(DateTime start, DateTime end, int duration, int id)
+        {
+            return _repository.GetAvailableDates(start, end, duration, id);
         }
     }
 }
