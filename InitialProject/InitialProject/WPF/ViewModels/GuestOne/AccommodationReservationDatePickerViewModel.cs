@@ -16,6 +16,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
     public class AccommodationReservationDatePickerViewModel : ViewModelBase
     {
         private readonly AccommodationReservationService _reservationService;
+        private readonly UserService _userService;
         private readonly NavigationStore _navigationStore;
         public AccommodationReservation SelectedReservation { get; set; }
         public List<AccommodationReservation> Reservations { get; set; }
@@ -28,6 +29,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         {
             _navigationStore = navigationStore;
             _reservationService = new AccommodationReservationService();
+            _userService = new UserService();
             Reservations = reservations;
             Accommodation = reservations[0].Accommodation;
             ConfirmReservationCommand = new ExecuteMethodCommand(ReserveAccommodation);
@@ -41,7 +43,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 SelectedReservation.GuestCount = GuestCount;
                 _reservationService.Save(SelectedReservation);
 
-                if (_reservationService.IsDiscountAvailable(SelectedReservation.Guest))
+                if (_userService.IsDiscountAvailable(SelectedReservation.Guest))
                 {
                     MessageBox.Show("Rezervacija uspešno kreirana.\n" +
                                     "Iskoristili ste jedan bonus poen i time ostvarili popust.\n" +

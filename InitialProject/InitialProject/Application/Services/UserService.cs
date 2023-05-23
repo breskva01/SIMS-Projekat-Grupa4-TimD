@@ -20,6 +20,15 @@ namespace InitialProject.Application.Services
         {
             _repository = RepositoryInjector.Get<IUserRepository>();
         }
+        public bool IsDiscountAvailable(Guest1 guest)
+        {
+            bool discountAvailable = guest.SpendABonusPoint();
+            if (discountAvailable)
+            {
+                _repository.Update(guest);
+            }
+            return discountAvailable;
+        }
         public User GetByUsername(string username)
         {
             return _repository.GetByUsername(username);

@@ -22,16 +22,6 @@ namespace InitialProject.Application.Services
         {
             _repository = RepositoryInjector.Get<IAccommodationReservationRepository>();
         }
-        public bool IsDiscountAvailable(Guest1 guest)
-        {
-            bool discountAvailable = guest.SpendABonusPoint();
-            if (discountAvailable)
-            {
-                var userRepository = RepositoryInjector.Get<IUserRepository>();
-                userRepository.Update(guest);
-            }
-            return discountAvailable;
-        }
         public void Save(AccommodationReservation accommodationReservation)
         {
             _repository.Save(accommodationReservation);
@@ -50,7 +40,9 @@ namespace InitialProject.Application.Services
         }
         public void Cancel(int reservationId, int ownerId)
         {
-            _repository.Cancel(reservationId);
+            var reservation = _repository.GetById(reservationId);
+            reservation.Status = AccommodationReservationStatus.Cancelled;
+            _repository.Update(reservation);
             RepositoryInjector.Get<IAccommodationReservationCancellationNotificationRepository>().
                 Save(new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
@@ -66,17 +58,20 @@ namespace InitialProject.Application.Services
         }
         public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly newCheckout)
         {
-            _repository.MoveReservation(reservationId, newCheckIn, newCheckout);
+            var reservation = _repository.GetById(reservationId);
+            reservation.CheckIn = newCheckIn;
+            reservation.CheckOut = newCheckout;
+            _repository.Update(reservation);
         }
-        public void updateLastNotification(AccommodationReservation accommodationReservation)
+        public void UpdateLastNotification(AccommodationReservation accommodationReservation)
         {
-            _repository.updateLastNotification(accommodationReservation);
-            NotifyObservers();
+            accommodationReservation.LastNotification = accommodationReservation.LastNotification.AddDays(1);
+            _repository.Update(accommodationReservation);
         }
-        public void updateRatingStatus(AccommodationReservation accommodationReservation)
+        public void MarkGuestAsRated(AccommodationReservation accommodationReservation)
         {
-            _repository.updateRatingStatus(accommodationReservation);
-            NotifyObservers();
+            accommodationReservation.IsGuestRated = true;
+            _repository.Update(accommodationReservation);
         }
         public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut)
         {

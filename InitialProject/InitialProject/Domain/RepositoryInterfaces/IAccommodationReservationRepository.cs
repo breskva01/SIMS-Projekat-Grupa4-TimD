@@ -14,12 +14,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         List<AccommodationReservation> GetFilteredReservations(int? guestId = null, int? accommodationId = null, DateOnly? startDate = null,
             DateOnly? endDate = null, AccommodationReservationStatus status = AccommodationReservationStatus.Active);
         public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId);
-        public void updateLastNotification(AccommodationReservation accommodationReservation);
-        public void updateRatingStatus(AccommodationReservation accommodationReservation);
-        void Cancel(int reservationId);
         void Save(AccommodationReservation reservation);
-        void MarkOwnerAsRated(int reservationId);
-        public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly newCheckout);
         public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut);
         public LineSeries GetYearlyReservations(int id);
         public LineSeries GetYearlyCancellations(int id);
@@ -32,5 +27,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public string GetMostBookedYear(int id);
         public string GetMostBookedMonth(int id, int year);
         public List<TimeSlot> GetAvailableDates(DateTime start, DateTime end, int duration, int id);
+        void Update(AccommodationReservation reservation);
     }
 }

@@ -58,12 +58,6 @@ namespace InitialProject.Repositories
 
             return reservations.OrderBy(r => r.CheckIn).ToList();
         }
-        public void Cancel(int reservationId)
-        {
-            var reservation = GetById(reservationId);
-            reservation.Status = AccommodationReservationStatus.Cancelled;
-            _fileHandler.Save(_reservations);
-        }
         private bool IsCompleted(AccommodationReservation accommodationReservation, int ownerId)
         {
             return accommodationReservation.CheckOut < DateOnly.FromDateTime(DateTime.Now)
@@ -84,29 +78,6 @@ namespace InitialProject.Repositories
             }
             return completedReservations;
         }
-        public void updateLastNotification(AccommodationReservation oldAccommodationReservation)
-        {
-            GetAll();
-            AccommodationReservation newAccommodationReservation = new AccommodationReservation();
-            newAccommodationReservation = oldAccommodationReservation;
-            newAccommodationReservation.LastNotification = newAccommodationReservation.LastNotification.AddDays(1);
-            foreach(AccommodationReservation res in _reservations.ToList())
-            {
-                if(res.Id == oldAccommodationReservation.Id)
-                {
-                    _reservations.Remove(res);
-                }
-            }
-            _reservations.Add(newAccommodationReservation);
-            _fileHandler.Save(_reservations);
-        }
-        public void updateRatingStatus(AccommodationReservation accommodationReservation)
-        {
-            GetAll();
-            AccommodationReservation newAccommodationReservation = _reservations.Find(a => a.Id == accommodationReservation.Id);
-            newAccommodationReservation.IsGuestRated = true;
-            _fileHandler.Save(_reservations);
-        }
         public void Save(AccommodationReservation reservation)
         {
             GetAll();
@@ -119,27 +90,6 @@ namespace InitialProject.Repositories
             GetAll();
             return _reservations?.Max(r => r.Id) + 1 ?? 0;
         }
-
-        public void MarkOwnerAsRated(int reservationId)
-        {
-            var reservation = GetById(reservationId);
-            reservation.IsOwnerRated = true;
-            _fileHandler.Save(_reservations);
-        }
-        public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly NewCheckOut)
-        {
-            GetAll();
-            AccommodationReservation reservation = new AccommodationReservation();
-            AccommodationReservation newReservation = new AccommodationReservation();
-            reservation = _reservations.Find(r => r.Id == reservationId);
-            newReservation = reservation;
-            newReservation.CheckIn = newCheckIn;
-            newReservation.CheckOut = NewCheckOut;
-            _reservations.Remove(reservation);
-            _reservations.Add(newReservation);
-            _fileHandler.Save(_reservations);
-        }
-
         public string CheckAvailability(int accomodationId, DateOnly checkIn, DateOnly checkOut)
         {
             GetAll();
@@ -470,6 +420,15 @@ namespace InitialProject.Repositories
                 }
             }
             return timeSlots;
+        }
+
+        public void Update(AccommodationReservation reservation)
+        {
+            GetAll();
+            AccommodationReservation oldReservation = _reservations.Find(r => r.Id == reservation.Id);
+            _reservations.Remove(oldReservation);
+            _reservations.Add(reservation);
+            _fileHandler.Save(_reservations);
         }
     }
 }

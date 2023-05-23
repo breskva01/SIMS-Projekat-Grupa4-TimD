@@ -60,8 +60,9 @@ namespace InitialProject.Application.Services
                 renovationUrgency = 0;
             var rating = new AccommodationRating(reservation, location, hygiene, pleasantness, fairness, parking,
                                                  comment, pictureURLs, renovationComment, renovationUrgency);
+            reservation.IsOwnerRated = true;
+            _reservationRepository.Update(reservation);
             _ratingRepository.Save(rating);
-            _reservationRepository.MarkOwnerAsRated(reservation.Id);
         }
     }
 }
