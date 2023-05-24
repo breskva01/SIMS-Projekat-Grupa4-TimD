@@ -155,10 +155,15 @@
                 Width="2"
                 Fill="#FF5D5959"/>
 
-            <TextBlock
+            <TextBlock 
                 Margin="10 0"
                 Text="Bilo gde/bilo kada"
                 Style="{StaticResource BaseTextBlockStyle}">
+                <TextBlock.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateAnywhereAnytimeCommand}"/>
+                </TextBlock.InputBindings>
             </TextBlock>
 
             <Rectangle

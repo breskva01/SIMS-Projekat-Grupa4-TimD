@@ -36,11 +36,11 @@ namespace InitialProject.Application.Util
             _availableReservations = new List<AccommodationReservation>();
         }
         public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength,
-            Accommodation accommodation, Guest1 guest, int maxReservationCount = 3)
+            Accommodation accommodation, Guest1 guest, int maxReservationCount = 3, bool searchOutsideDateRange = true)
         {
             StoreParamaters(startDate, endDate, stayLength, accommodation, guest);
             FindInsideDateRange(maxReservationCount);
-            if (_availableReservations.Count == 0)
+            if (_availableReservations.Count == 0 && searchOutsideDateRange)
             {
                 FindOutsideDateRange(maxReservationCount);
             }   

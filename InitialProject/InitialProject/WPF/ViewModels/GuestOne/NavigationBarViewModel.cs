@@ -44,6 +44,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
 
         public ICommand NavigateAccommodationBrowserCommand { get; }
+        public ICommand NavigateAnywhereAnytimeCommand { get; }
         public ICommand NavigateMyResevationsCommand { get; }
         public ICommand NavigateMyRequestsCommand { get; }
         public ICommand NavigateRatingsCommand { get; }
@@ -55,12 +56,14 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             _user = user;
             CheckForNotifications();
             NavigateAccommodationBrowserCommand = new ExecuteMethodCommand(NavigateAccommodationBrowser);
+            NavigateAnywhereAnytimeCommand = new ExecuteMethodCommand(NavigateAnywhereAnytimeBrowser);
             NavigateMyResevationsCommand = new ExecuteMethodCommand(NavigateMyReservations);
             NavigateMyRequestsCommand = new ExecuteMethodCommand(NavigateMyRequests);
             NavigateRatingsCommand = new ExecuteMethodCommand(NavigateRatings);
             NavigateLoginCommand = new ExecuteMethodCommand(NavigateLogin);
             OpenNotificationsPromptCommand = new ExecuteMethodCommand(OpenNotificationsPrompt);
         }
+
         private void CheckForNotifications()
         {
             var requestService = new AccommodationReservationRequestService();
@@ -87,6 +90,12 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         private void NavigateAccommodationBrowser()
         {
             ViewModelBase viewModel = new AccommodationBrowserViewModel(_navigationStore, _user);
+            viewModel = CreateLayoutViewModel(viewModel);
+            Navigate(viewModel);
+        }
+        private void NavigateAnywhereAnytimeBrowser()
+        {
+            ViewModelBase viewModel = new AnywhereAnytimeViewModel(_navigationStore, _user);
             viewModel = CreateLayoutViewModel(viewModel);
             Navigate(viewModel);
         }

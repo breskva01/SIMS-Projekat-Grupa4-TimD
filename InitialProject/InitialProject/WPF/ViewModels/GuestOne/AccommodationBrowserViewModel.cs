@@ -104,7 +104,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             _accommodationService = new AccommodationService();
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetAll());
             GuestCount = 1;
-            NumberOfDays = 1;
+            NumberOfDays = 3;
             SortSelectedIndex = 0;
             SelectedAccommodationType = AccommodationType.Everything;
             ApplyFiltersCommand = new ExecuteMethodCommand(ApplyFilters);
@@ -126,7 +126,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         {
             SortSelectedIndex = 0;
             SearchText = "";
-            GuestCount = NumberOfDays = 1;
+            GuestCount = 1;
+            NumberOfDays = 3;
             SelectedAccommodationType = AccommodationType.Everything;
             Accommodations.Clear();
             _accommodationService.GetAll().ForEach(a => Accommodations.Add(a));
@@ -137,8 +138,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             if (criterion == "")
                 return;
 
-            List<Accommodation> sortedAccommodations;      
-            sortedAccommodations = _accommodationService.Sort(Accommodations, criterion);
+            var sortedAccommodations = _accommodationService.Sort(Accommodations, criterion);
             Accommodations.Clear();
             sortedAccommodations.ForEach(a => Accommodations.Add(a));
         }
