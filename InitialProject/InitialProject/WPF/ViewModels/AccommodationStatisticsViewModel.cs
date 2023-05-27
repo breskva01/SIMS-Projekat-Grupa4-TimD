@@ -10,6 +10,7 @@ using OxyPlot.Axes;
 using OxyPlot.Wpf;
 using System.Windows.Controls;
 using InitialProject.Application.Services;
+using System.Collections.ObjectModel;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -21,6 +22,7 @@ namespace InitialProject.WPF.ViewModels
         public PlotModel Cancellations { get; set; }
         public PlotModel MovedReservations { get; set; }
         public PlotModel RenovationReccommendations { get; set; }
+        public ObservableCollection<Location> PopularLocations { get; set; }
         private string _mostBooked;
         public string MostBooked
         {
