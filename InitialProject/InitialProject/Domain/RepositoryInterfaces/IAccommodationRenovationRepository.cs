@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Domain.RepositoryInterfaces
 {
-    public interface IAccommodationRenovationRepository
+    public interface IAccommodationRenovationRepository: IRepository<AccommodationRenovation>
     {
         public List<AccommodationRenovation> GetAll();
         public void ScheduleRenovation(int id, DateTime start, DateTime end, string description);
