@@ -107,46 +107,6 @@ namespace InitialProject.Application.Services
             }
             return availableReservations;
         }
-        public LineSeries GetYearlyReservations(int id)
-        {
-            return _reservationRepository.GetYearlyReservations(id);
-        }
-        public LineSeries GetYearlyCancellations(int id) 
-        {
-            return _reservationRepository.GetYearlyCancellations(id);
-        }
-        public LineSeries GetYearlyMovedReservations(int id)
-        {
-            return _reservationRepository.GetYearlyMovedReservations(id);
-        }
-        public LineSeries GetYearlyRenovationReccommendations(int id)
-        {
-            return _reservationRepository.GetYearlyRenovationReccommendations(id);
-        }
-        public LineSeries GetMonthlyReservations(int id, int year)
-        {
-            return _reservationRepository.GetMonthlyReservations(id, year);
-        }
-        public LineSeries GetMonthlyCancellations(int id, int year)
-        {
-            return _reservationRepository.GetMonthlyCancellations(id, year);
-        }
-        public LineSeries GetMonthlyMovedReservations(int id, int year)
-        {
-            return _reservationRepository.GetMonthlyMovedReservations(id, year);
-        }
-        public LineSeries GetMonthlyRenovationReccommendations(int id, int year)
-        {
-            return _reservationRepository.GetMonthlyRenovationReccommendations(id, year);
-        }
-        public string GetMostBookedYear(int id)
-        {
-            return _reservationRepository.GetMostBookedYear(id);
-        }
-        public string GetMostBookedMonth(int id, int year)
-        {
-            return _reservationRepository.GetMostBookedMonth(id, year);
-        }
         public List<TimeSlot> GetAvailableDates(DateTime start, DateTime end, int duration, int id)
         {
             return _reservationRepository.GetAvailableDates(start, end, duration, id);
