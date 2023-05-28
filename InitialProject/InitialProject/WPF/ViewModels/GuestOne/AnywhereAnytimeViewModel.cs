@@ -45,8 +45,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 }
             }
         }
-        private DateTime? _startDate;
-        public DateTime? StartDate
+        private DateTime _startDate;
+        public DateTime StartDate
         {
             get => _startDate;
             set
@@ -82,7 +82,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             NumberOfDaysIncrementCommand = new IncrementCommand(() => NumberOfDays, (newValue) => NumberOfDays = newValue);
             GuestCountDecrementCommand = new DecrementCommand(this, () => GuestCount, (newValue) => GuestCount = newValue);
             NumberOfDaysDecrementCommand = new DecrementCommand(this, () => NumberOfDays, (newValue) => NumberOfDays = newValue);
-            OpenReservationFormCommand = new AccommodationReservationClickCommand(ShowReservationForm);
+            OpenReservationFormCommand = new AccommodationReservationClickCommand(NavigateReservationDetails);
         }
 
         private void ApplyFilters()
@@ -91,12 +91,12 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             if (EndDate.HasValue)
             {
                 _reservationService.GetAnywhereAnytime(GuestCount, NumberOfDays, _user,
-                                        DateOnly.FromDateTime(StartDate.Value), DateOnly.FromDateTime(EndDate.Value)).
+                                        DateOnly.FromDateTime(StartDate), DateOnly.FromDateTime(EndDate.Value)).
                     ForEach(r => Reservations.Add(r));
             }
             else
             {
-                _reservationService.GetAnywhereAnytime(GuestCount, NumberOfDays, _user, DateOnly.FromDateTime(StartDate.Value)).
+                _reservationService.GetAnywhereAnytime(GuestCount, NumberOfDays, _user, DateOnly.FromDateTime(StartDate)).
                     ForEach(r => Reservations.Add(r));
             }
         }
@@ -109,9 +109,11 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             Reservations.Clear();
             _reservationService.GetAnywhereAnytime(GuestCount, NumberOfDays, _user).ForEach(r => Reservations.Add(r));
         }
-        private void ShowReservationForm(AccommodationReservation reservation)
+        private void NavigateReservationDetails(AccommodationReservation reservation)
         {
-            MessageBox.Show($"Klik {reservation.Accommodation.Name}");
+            reservation.GuestCount = GuestCount;
+            var viewModel = new AccommodationReservationDetailsViewModel(_navigationStore, _user, reservation, false);
+            new NavigationService(_navigationStore, viewModel).Navigate();
         }
     }
 }

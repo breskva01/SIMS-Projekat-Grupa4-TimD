@@ -25,6 +25,11 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 NavigationBarViewModel.SelectedTab = "AccommodationBrowser";
                 return;
             }
+            if (ContentViewModel is AnywhereAnytimeViewModel)
+            {
+                NavigationBarViewModel.SelectedTab = "AnywhereAnytime";
+                return;
+            }
             if (ContentViewModel is MyAccommodationReservationsViewModel)
             {
                 NavigationBarViewModel.SelectedTab = "MyReservations";

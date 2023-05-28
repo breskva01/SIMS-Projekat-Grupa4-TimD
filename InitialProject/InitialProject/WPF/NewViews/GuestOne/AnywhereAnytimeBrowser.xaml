@@ -247,8 +247,7 @@
                     Padding="2"
                     VerticalAlignment="Center"
                     DisplayDateStart="{x:Static sys:DateTime.Now}"
-                    SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged,
-                        Mode=OneWayToSource}"/>
+                    SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock 
                     Text="Najkasnije do:"
