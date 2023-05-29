@@ -93,7 +93,6 @@ namespace InitialProject.Application.Services
         {
             startDate ??= DateOnly.FromDateTime(DateTime.Now);
             endDate ??= startDate.Value.AddYears(1);
-
             var reservationAvailabilityHandler = new AccommodationReservationAvailabilityHandler(_reservationRepository);
             var availableReservations = new List<AccommodationReservation>();
             var accommodations = new AccommodationService().GetFiltered("", AccommodationType.Everything, guestCount, stayLength);
