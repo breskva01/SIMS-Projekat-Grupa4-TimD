@@ -2,12 +2,15 @@
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.WPF.NewViews;
+using InitialProject.WPF.NewViews.Owner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
@@ -54,6 +57,7 @@ namespace InitialProject.WPF.ViewModels
             GuideTours = new List<Tour>();
             _guestIds = new List<int>();
             _users = new List<User>(_userService.GetAll());
+            _guests = new List<User>();
 
             foreach (Tour tour in _tourService.GetAll())
             {
@@ -68,21 +72,23 @@ namespace InitialProject.WPF.ViewModels
 
             foreach (TourReservation tourReservation in _tourReservations)
             {
-                foreach(Tour tour in GuideTours )
+                foreach(Tour tour in GuideTours)
                 {
-                    if (tourReservation.TourId == tour.Id)
+                    if (tourReservation.TourId == tour.Id && (tour.State == TourState.None || tour.State == TourState.Started))
                     {
                         _guestIds.Add(tourReservation.GuestId);
+                        
                     }
                 }
                 
             }
 
+
             foreach (int id in _guestIds)
             {
                 foreach (User u in _users)
                 {
-                    if (id == u.Id && !_guests.Contains(u))
+                    if (id == u.Id)
                     {
                         _guests.Add(u);
                     }
@@ -98,12 +104,28 @@ namespace InitialProject.WPF.ViewModels
         }
         private void Resign()
         {
-            foreach(Tour t in GuideTours)
+            MessageBoxResult result = MessageBox.Show("ARE YOU SURE YOU WANT TO RESIGN?", "RESIGN CONFIRMATION", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
             {
-                t.State = TourState.Canceled;
-                _tourService.Update(t);
+                foreach (Tour t in GuideTours)
+                {
+                    if (t.Start > DateTime.Now)
+                    {
+                        t.State = TourState.Canceled;
+                        _tourService.Update(t);
+                    }
+
+                }
+                VoucherCreationView view = new VoucherCreationView(_navigationStore, _user, _guests, 2, true);
+                view.Show();
             }
-            VoucherCreationViewModel voucherCreationViewModel = new VoucherCreationViewModel(_navigationStore, _user,_guests, 2 );
+            else if (result == MessageBoxResult.No)
+            {
+                // Perform the action when "No" is clicked
+                // Add your code here for the action you want to perform when "No" is clicked
+            }
+
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using InitialProject.WPF.NewViews;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -23,6 +24,7 @@ namespace InitialProject.WPF.ViewModels
         private User _user;
 
         private List<User> _guests;
+        private List<Voucher> _vouchers;
 
         public int NumberOfYears;
 
@@ -46,12 +48,15 @@ namespace InitialProject.WPF.ViewModels
             }
         }
 
-        public ICommand BackNavigateCommand =>
-           new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
+        /*public ICommand BackNavigateCommand =>
+           new NavigateCommand(new NavigationService(_navigationStore, GoBack()));*/
+
+        public VoucherCreationView View;
+        public bool Resign;
 
         public ICommand CreateVoucherCommand { get; set; }
 
-        public VoucherCreationViewModel(NavigationStore navigationStore, User user, List<User> guests, int years)
+        public VoucherCreationViewModel(NavigationStore navigationStore, User user, List<User> guests, int years, VoucherCreationView view, bool resign)
         {
             _navigationStore = navigationStore;
             _user = user;
@@ -64,6 +69,9 @@ namespace InitialProject.WPF.ViewModels
             _expiration = new DateOnly(dateTime.Year, dateTime.Month, dateTime.Day);
 
             NumberOfYears = years;
+            View = view;
+            _vouchers = new List<Voucher>(_voucherService.GetAll());
+            Resign= resign;
 
             InitializeCommands();
         }
@@ -71,24 +79,56 @@ namespace InitialProject.WPF.ViewModels
         private void InitializeCommands()
         {
             CreateVoucherCommand = new ExecuteMethodCommand(CreateVoucher);
+            
         }
 
         private void CreateVoucher()
         {
             _expiration = _expiration.AddYears(NumberOfYears);
-            Voucher voucher = _voucherService.CreateVoucher(Name, _expiration);
-            foreach (User guest in _guests)
+            Voucher voucher = _voucherService.CreateVoucher(Name, _expiration, _user);
+            
+            if(Resign == true)
             {
-                ((Guest2)guest).VouchersIds.Add(voucher.Id);
-                _userService.Update(guest);
+                foreach (User guest in _guests)
+                {
+                    // Luka - 1 2 3  | Luka - 1 2 3 | Papi
+                    foreach (int id in ((Guest2)guest).VouchersIds)
+                    {
+                        Voucher v = _voucherService.GetById(id);
+                        if (v.GuideId == _user.Id)
+                        {
+                            v.GuideId = -1;
+                            _voucherService.Update(v);
+                        }
+                    }
+                    voucher.GuideId = -1;
+                    _voucherService.Update(voucher);
+                    ((Guest2)guest).VouchersIds.Add(voucher.Id);
+                    _userService.Update(guest);
+                    View.Close();
+                    return;
+                }
             }
-
-            BackNavigateCommand.Execute(null);
+            else
+            {
+                foreach (User guest in _guests)
+                {
+                    ((Guest2)guest).VouchersIds.Add(voucher.Id);
+                    _userService.Update(guest);
+                    View.Close();
+                    return;
+                }
+            }
+            
         }
 
-        private AllToursViewModel GoBack()
-        {
-            return new AllToursViewModel(_navigationStore, _user);
-        }
     }
 }
+/*
+moram da dobijem sve goste koji ce dobiti vaucer
+gost koji dobija vaucer je 
+
+
+
+
+ */

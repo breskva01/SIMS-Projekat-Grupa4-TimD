@@ -37,8 +37,8 @@ namespace InitialProject.WPF.ViewModels
 
         private DateTime _today;
 
-        public ICommand CreateVoucherNavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, CreateVoucher()));
+        /*public ICommand CreateVoucherNavigateCommand =>
+            new NavigateCommand(new NavigationService(_navigationStore, CreateVoucher()));*/
         public ICommand CancelCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand HomeCommand { get; set; }
@@ -149,7 +149,7 @@ namespace InitialProject.WPF.ViewModels
                         }
                     }
 
-                    CreateVoucherNavigateCommand.Execute(null);
+                    //CreateVoucherNavigateCommand.Execute(null);
                     _tourService.Update(SelectedTour);
                     _toursShow.Remove(SelectedTour);
                     return;
@@ -158,12 +158,13 @@ namespace InitialProject.WPF.ViewModels
             MessageBox.Show("It's too late to cancel this tour.");
             return;
         }
-        
+        /*
         private VoucherCreationViewModel CreateVoucher()
         {
-            return new VoucherCreationViewModel(_navigationStore, _user, _guests, 1);
+            return new VoucherCreationViewModel(_navigationStore, _user, _guests, 1, false);
 
         }
+        */
 
         private void ShowGuideMenuView()
         {
