@@ -23,9 +23,9 @@ namespace InitialProject.Application.Services
         {
             return _ratingRepository.GetAll();
         }
-        public GuestRating RateGuest(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperience, string comment)
+        public GuestRating RateGuest(int ownerId, int guestId, int hygiene, int respectsRules, int communication, int timeliness, int noiseLevel, int overallExperience, string comment, AccommodationReservation reservation)
         {
-            return _ratingRepository.Add(ownerId, guestId, hygiene, respectsRules, communication, timeliness, noiseLevel, overallExperience, comment);
+            return _ratingRepository.Add(ownerId, guestId, hygiene, respectsRules, communication, timeliness, noiseLevel, overallExperience, comment, reservation);
         }
         public List<GuestRating> GetEligibleForDisplay(int guestId)
         {

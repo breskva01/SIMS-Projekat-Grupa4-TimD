@@ -1,0 +1,47 @@
+@startuml
+autoactivate on
+title Updating Super Guest Status
+
+participant App
+participant "ActionScheduler" as AS
+participant "SuperGuestHandler" as SGH
+participant Guest1
+participant "AccommodationReservation" as AR
+database "IUserRepository" as UR
+database "IAccommodationReservationRepository" as ARR
+
+Activate App
+App --> AS **: <<create(interval, action)>>
+App -> AS: Start()
+loop OnTimer_Elapsed()
+  AS -> SGH: UpdateSuperGuestStatus()
+  SGH -> UR: GetAllGuest1s()
+  UR --> SGH: guests
+  loop foreach guest
+      SGH -> SGH: ShouldUpdateSuperGuestStatus(guest)
+      SGH -> Guest1: HasSuperGuestExpired()
+      Guest1 --> SGH: hasSuperGuestExpired
+      return shouldUpdate
+      opt shouldUpdate
+          SGH -> SGH: ShouldActivateSuperGuest(guest)
+          SGH -> ARR: GetFilteredReservations(guestId, status)
+          ARR --> SGH: reservations
+          loop foreach reservation
+            SGH -> AR: HappenedInLastYear()
+            AR --> SGH: happenedInLastYear
+          end
+          return shouldActivate
+          alt shouldActivate
+              SGH -> Guest1: ActivateSuperGuest()
+              Deactivate Guest1
+          else else
+              SGH -> Guest1: CancelSuperGuest()
+              Deactivate Guest1
+          end
+          SGH -> UR: Update(guest)
+          Deactivate UR
+      end
+  end
+  Deactivate SGH
+end
+@enduml

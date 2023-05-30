@@ -75,9 +75,9 @@ namespace InitialProject.Repositories
                     notification.UserId = request.UserId;
                     notification.Message = "Tour " + tour.Name + ", similar to a request you've made has just been created." +
                         "Location: " + tour.Location.City + " - " + tour.Location.Country + "" +
-                        "Duration: " + tour.Duration.ToString() + "" +
-                        "Date: " + tour.Start.ToString("dd-mm-yyyy") + "" +
-                        "Language: " + tour.Language + "" +
+                        "Duration: " + tour.Duration.ToString()  +
+                        "Date: " + tour.Start.ToString("dd-MM-yyyy") + 
+                        "Language: " + tour.Language + 
                         "If you want to reserve spots on the tour, check MainMenu/TourReservation";
 
                     notification.Time = DateTime.Now;

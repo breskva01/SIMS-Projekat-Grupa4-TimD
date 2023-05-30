@@ -1,0 +1,31 @@
+@startuml
+
+actor Guest2 as G2
+participant NotificationBrowserViewModel as NBVM
+participant UserNotificationService as UNS
+participant UserNotificationRepository as UNR
+
+G2 -> NBVM : ShowNotificationsBrowserView(user)
+activate NBVM
+NBVM -> UNS : GetByUser(user.Id)
+activate UNS
+UNS -> UNR : GetByUser(userId)
+activate UNR
+UNR -> UNR : GetAll()
+activate UNR
+UNR --> UNR : notifications
+deactivate UNR
+
+loop (UserNotification un in notifications)
+  opt (un.UserId == userId)
+    UNR -> UNR : guestNotifications.Add(un)
+  end
+end
+UNR --> UNS : guestNotifications
+deactivate UNR
+UNS --> NBVM : guestNotifications 
+deactivate UNS
+NBVM -> G2 : guestNotifications
+deactivate NBVM
+
+@enduml

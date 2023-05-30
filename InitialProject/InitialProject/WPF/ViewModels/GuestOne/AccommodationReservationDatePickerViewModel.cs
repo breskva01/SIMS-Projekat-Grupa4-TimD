@@ -31,25 +31,50 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             Reservations = reservations;
             Accommodation = reservations[0].Accommodation;
             ConfirmReservationCommand = new ExecuteMethodCommand(ReserveAccommodation);
-            OpenReservationFormCommand = new ExecuteMethodCommand(ShowReservationForm);
+            OpenReservationFormCommand = new ExecuteMethodCommand(NavigateReservationForm);
         }
 
         private void ReserveAccommodation()
         {
-            if (SelectedReservation == null)
-                MessageBox.Show("Izaberite željeni termin.");
-            else if (GuestCount == 0)
-                MessageBox.Show("Unesite broj gostiju.");
-            else if (GuestCount > SelectedReservation.Accommodation.MaximumGuests)
-                MessageBox.Show($"Uneti broj gostiju prelazi zadati limit " +
-                    $"({SelectedReservation.Accommodation.MaximumGuests})");
-            else
+            if (IsValidReservation())
             {
                 SelectedReservation.GuestCount = GuestCount;
                 _reservationService.Save(SelectedReservation);
-                MessageBox.Show("Rezervacija uspešno kreirana.");
+
+                if (_reservationService.IsDiscountAvailable(SelectedReservation.Guest))
+                {
+                    MessageBox.Show("Rezervacija uspešno kreirana.\n" +
+                                    "Iskoristili ste jedan bonus poen i time ostvarili popust.\n" +
+                                    $"Preostalo vam je {SelectedReservation.Guest.BonusPoints} " +
+                                    "neiskorišćenih bonus poena.");
+                }
+                else
+                {
+                    MessageBox.Show("Rezervacija uspešno kreirana.");
+                }
+
                 NavigateAccommodationBrowser();
             }
+        }
+        private bool IsValidReservation()
+        {
+            if (SelectedReservation == null)
+            {
+                MessageBox.Show("Izaberite željeni termin.");
+                return false;
+            }
+            if (GuestCount == 0)
+            {
+                MessageBox.Show("Unesite broj gostiju.");
+                return false;
+            }
+            if (GuestCount > SelectedReservation.Accommodation.MaximumGuests)
+            {
+                MessageBox.Show($"Uneti broj gostiju prelazi zadati limit " +
+                                $"({SelectedReservation.Accommodation.MaximumGuests})");
+                return false;
+            }
+            return true;
         }
         private void NavigateAccommodationBrowser()
         {
@@ -59,7 +84,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
             navigateCommand.Execute(null);
         }
-        private void ShowReservationForm()
+        private void NavigateReservationForm()
         {
             var viewModel = new AccommodationReservationViewModel(_navigationStore, 
                 Reservations[0].Guest, Reservations[0].Accommodation);

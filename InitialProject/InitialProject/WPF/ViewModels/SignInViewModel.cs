@@ -5,6 +5,7 @@ using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
 using InitialProject.WPF.ViewModels.GuestOne;
 using InitialProject.WPF.ViewModels.GuestTwo;
+using InitialProject.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,10 @@ namespace InitialProject.WPF.ViewModels
 
         private readonly AccommodationReservationService _reservationService;
         private List<AccommodationReservation> _reservations;
+        private readonly AccommodationService _accommodationService;
+        private List<Accommodation> _accommodations;
+        private readonly AccommodationRenovationService _renovationService;
+        private List<AccommodationRenovation> _renovations;
 
         public SecureString Password { get; set; }
         private string _username;
@@ -51,7 +56,7 @@ namespace InitialProject.WPF.ViewModels
             new NavigateCommand(new NavigationService(_navigationStore, CreateGuideVM()));
 
         public ICommand OwnerNavigateCommand =>
-            new NavigateCommand(new NavigationService(_navigationStore, OwnerVM()));
+            new NavigateCommand(new NavigationService(_navigationStore, OwnerMainMenuVM()));
         private readonly NavigationStore _navigationStore;
         private User _user;
         public SignInViewModel(NavigationStore navigationStore)
@@ -62,6 +67,8 @@ namespace InitialProject.WPF.ViewModels
             _tourReservationService = new TourReservationService();
             SignInCommand = new SignInCommand(SignIn);
             _reservationService = new AccommodationReservationService();
+            _accommodationService = new AccommodationService();
+            _renovationService = new AccommodationRenovationService();
             _navigationStore = navigationStore;
         }
 
@@ -89,22 +96,6 @@ namespace InitialProject.WPF.ViewModels
         {
             if (user is Owner owner)
             {
-                int UnratedGuests = 0;
-                bool IsNotified = true;
-                _reservations = _reservationService.FindCompletedAndUnrated(owner.Id);
-                foreach (AccommodationReservation res in _reservations)
-                {
-                    if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
-                    {
-                        _reservationService.updateLastNotification(res);
-                        UnratedGuests++;
-                        IsNotified = false;
-                    }
-
-                }
-                if (UnratedGuests > 0 && !IsNotified)
-                    MessageBox.Show("You have " + UnratedGuests.ToString() + " unrated guests!");
-
                 OwnerNavigateCommand.Execute(null);
             }
             else if(user is Guest1)
@@ -135,9 +126,42 @@ namespace InitialProject.WPF.ViewModels
             return new GuideMenuViewModel(_navigationStore, _user);
         }
 
-        private OwnerViewModel OwnerVM()
+        private OwnerMainMenuViewModel OwnerMainMenuVM()
         {
-            return new OwnerViewModel(_navigationStore, _user);
+            _user = _userService.GetByUsername(Username);
+            bool IsNotified = true;
+            _reservations = _reservationService.FindCompletedAndUnrated(_user.Id);
+            foreach (AccommodationReservation res in _reservations)
+            {
+                if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
+                {
+                    _reservationService.updateLastNotification(res);
+                    IsNotified = false;
+                }
+            }
+            _accommodations = _accommodationService.GetAllOwnersAccommodations(_user.Id);
+            _renovations = _renovationService.GetAll();
+            foreach(Accommodation accommodation in _accommodations)
+            {
+                foreach(AccommodationRenovation renovation in _renovations)
+                {
+                    if(renovation.Accommodation.Id == accommodation.Id)
+                    {
+                        if (DateTime.Now >= renovation.RenovationExpiration)
+                        {
+                            _accommodationService.UpdateRenovationStatus(accommodation.Id);
+                            _renovationService.UpdateStatus(renovation.Id);
+                        }
+                        else if (DateTime.Now >= renovation.End)
+                        {
+                            _accommodationService.UpdateRenovationStatus(accommodation.Id);
+                            _renovationService.UpdateStatus(renovation.Id);
+                        }
+                        
+                    }
+                }
+            }
+            return new OwnerMainMenuViewModel(_navigationStore, (Owner)_user, IsNotified);
         }
     }
 }

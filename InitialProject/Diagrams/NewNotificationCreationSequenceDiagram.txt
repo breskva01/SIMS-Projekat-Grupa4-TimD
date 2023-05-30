@@ -1,0 +1,48 @@
+@startuml
+
+actor Guide as G
+participant TourCreationViewModel as TCVM
+participant UserNotificationService as UNS
+participant TourRequestService as TRS
+participant UserNotificationRepository as UNR
+participant TourRequestRepository as TRR
+
+G -> TCVM : createTourBasedOnStatistics()
+activate TCVM
+TCVM -> UNS : NotifySimilarRequests(tour)
+deactivate TCVM
+activate UNS
+UNS -> TRS : GetOnHold()
+activate TRS
+TRS -> TRR : GetOnHold()
+activate TRR
+TRR -> TRR : GetAll()
+activate TRR
+TRR --> TRR : allRequests
+deactivate TRR
+loop (TourRequest t in allRequests)
+  opt (t.Status == RequestStatus.OnHold)
+    TRR -> TRR : OnHoldRequests.Add(t)
+  end
+end
+TRR --> TRS : OnHoldRequests
+deactivate TRR
+TRS --> UNS : OnHoldRequests
+deactivate TRS
+UNS -> UNR : NotifySimilarRequests(tour, OnHoldRequests)
+deactivate UNS
+activate UNR
+loop (TourRequest request in OnHoldRequests)
+  opt (request.Language == tour.Language || request.Location == tour.Location)
+    UNR --> UserNotification : <<create>>
+    activate UserNotification
+    UserNotification -> UserNotification : Set UserId(request.UserId)
+    UserNotification -> UserNotification : Set Message(tour.Name, tour.Location, tour.Duration, tour.Start, tour.Language)
+    UserNotification -> UserNotification : Set Time(DateTime.Now)
+    UserNotification -> UNR : Save(notification)
+    deactivate UserNotification
+  end
+end
+deactivate UNR
+
+@enduml

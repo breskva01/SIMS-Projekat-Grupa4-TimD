@@ -22,7 +22,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         public string Language => _tourRequest.Language.ToString();
         public string NumberOfGuests => _tourRequest.NumberOfGuests.ToString();
         public string Guide => _guide.FirstName + " " + _guide.LastName;
-        public string Date => _tour.Start.ToString("dd-mm-yyyy");
+        public string Date => _tour.Start.ToString("dd-MM-yyyy");
 
         public ApprovedRequestViewModel(TourRequest tourRequest)
         {

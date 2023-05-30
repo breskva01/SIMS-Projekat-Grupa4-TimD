@@ -161,7 +161,7 @@ namespace InitialProject.WPF.ViewModels
         
         private VoucherCreationViewModel CreateVoucher()
         {
-            return new VoucherCreationViewModel(_navigationStore, _user, _guests);
+            return new VoucherCreationViewModel(_navigationStore, _user, _guests, 1);
 
         }
 

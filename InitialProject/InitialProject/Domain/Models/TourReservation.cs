@@ -35,6 +35,7 @@ namespace InitialProject.Domain.Models
             RatingId = -1; //Guest wasn't present on the tour || Tour hasn't finnished
             UsedVoucher = false;
         }
+        /*
         public TourReservation(int id, int tourId, Tour tour, int guestId, User guest, int numberOfGuests,
             Presence presence, int arrivedAtKeyPoint, int ratingId, bool usedVoucher)
         {
@@ -49,6 +50,7 @@ namespace InitialProject.Domain.Models
             RatingId = ratingId;
             UsedVoucher = usedVoucher;
         }
+        */
 
         public void FromCSV(string[] values)
         {

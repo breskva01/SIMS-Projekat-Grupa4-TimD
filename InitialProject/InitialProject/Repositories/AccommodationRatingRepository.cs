@@ -3,6 +3,7 @@ using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
+using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace InitialProject.Repositories
     {
         private readonly AccommodationRatingFileHandler _fileHandler;
         private readonly UserFileHandler _userFileHandler;
+        private readonly IAccommodationRepository _accommodationRepository;
         private List<AccommodationRating> _ratings;
         private List<User> _users;
 
@@ -22,6 +24,7 @@ namespace InitialProject.Repositories
         {
             _fileHandler = new AccommodationRatingFileHandler();
             _userFileHandler = new UserFileHandler();
+            _accommodationRepository = RepositoryInjector.Get<IAccommodationRepository>();
         }
 
         public List<AccommodationRating> GetAll()
@@ -49,6 +52,8 @@ namespace InitialProject.Repositories
             GetAll();
             _ratings.Add(rating);
             _fileHandler.Save(_ratings);
+            var accommodations = _accommodationRepository.GetAll();
+            _ratings.ForEach(r => r.Reservation.Accommodation = accommodations.Find(acc => acc.Id == r.Reservation.Accommodation.Id));
             double[] totalAverageRating = CalculateTotalAverageOwnerRating(rating);
             UpdateSuperOwnerStatus(rating.Reservation.Accommodation.Owner.Id, totalAverageRating);
         }
@@ -77,8 +82,8 @@ namespace InitialProject.Repositories
             _ratings = GetByOwnerId(ownerId);
             Owner owner = (Owner)_users.Find(o => o.Id == ownerId);
             double OwnerRatingsCount = totalAverageRating[1];
-            owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 2) ? true : false;  
-
+            owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 2) ? true : false;
+            owner.Rating = Math.Round(totalAverageRating[0],2); 
             newOwner = owner;
             _users.Remove(owner);
             _users.Add(newOwner);

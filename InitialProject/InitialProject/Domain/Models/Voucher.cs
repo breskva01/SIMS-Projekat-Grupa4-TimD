@@ -27,6 +27,7 @@ namespace InitialProject.Domain.Models
             State = VoucherState.Unused;
         }
 
+        /*
         public Voucher(int id, string name, DateOnly expiration)
         {
             Id = id;
@@ -34,7 +35,7 @@ namespace InitialProject.Domain.Models
             ExpirationDate = expiration;
             State = VoucherState.Unused;
         }
-
+        */
         public Voucher(Voucher voucher)
         {
             Id = voucher.Id;

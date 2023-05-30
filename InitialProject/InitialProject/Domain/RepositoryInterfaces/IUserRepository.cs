@@ -9,6 +9,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
 {
     public interface IUserRepository : IRepository<User>
     {
+        List<Guest1> GetAllGuest1s();
         User GetByUsername(string username);
         User Update(User user);
         User GetById(int id);

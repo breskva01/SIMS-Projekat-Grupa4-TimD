@@ -24,10 +24,13 @@ namespace InitialProject.WPF.ViewModels
 
         private List<User> _guests;
 
+        public int NumberOfYears;
+
         private VoucherService _voucherService;
         private UserService _userService;
 
         private DateOnly _expiration;
+
 
         private string _name;
         public string Name
@@ -48,7 +51,7 @@ namespace InitialProject.WPF.ViewModels
 
         public ICommand CreateVoucherCommand { get; set; }
 
-        public VoucherCreationViewModel(NavigationStore navigationStore, User user, List<User> guests)
+        public VoucherCreationViewModel(NavigationStore navigationStore, User user, List<User> guests, int years)
         {
             _navigationStore = navigationStore;
             _user = user;
@@ -60,6 +63,8 @@ namespace InitialProject.WPF.ViewModels
             DateTime dateTime = DateTime.Now;
             _expiration = new DateOnly(dateTime.Year, dateTime.Month, dateTime.Day);
 
+            NumberOfYears = years;
+
             InitializeCommands();
         }
 
@@ -70,7 +75,7 @@ namespace InitialProject.WPF.ViewModels
 
         private void CreateVoucher()
         {
-            _expiration = _expiration.AddYears(1);
+            _expiration = _expiration.AddYears(NumberOfYears);
             Voucher voucher = _voucherService.CreateVoucher(Name, _expiration);
             foreach (User guest in _guests)
             {

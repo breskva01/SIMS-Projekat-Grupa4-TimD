@@ -14,7 +14,7 @@
         ResizeMode="NoResize"
         WindowState="Normal">
     <Window.Icon>
-        <BitmapImage UriSource="C:\Users\lukaz\OneDrive\Desktop\Projekat - SIMS\SIMS-Projekat-Grupa4-TimD\InitialProject\InitialProject\Resources\Images\logoB.png"/>
+        <BitmapImage UriSource="\Resources\Images\logoB.png"/>
     </Window.Icon>
     <Grid>
         <Grid.Resources>
@@ -144,8 +144,14 @@
             <DataTemplate DataType="{x:Type vms:ReservationMoveRequestsViewModel}">
                 <views:ReservationsMoveRequestsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:OwnerViewModel}">
-                <views:OwnerView />
+            <DataTemplate DataType="{x:Type vms:OwnerMainMenuViewModel}">
+                <views:OwnerMainMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:OwnerProfileViewModel}">
+                <views:OwnerProfileView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AccommodationsViewModel}">
+                <views:AccommodationsView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg1:MyAccommodationReservationsViewModel}">
                 <viewsg1:MyAccommodationReservationsView />
@@ -173,6 +179,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:TourRequestsStatsViewModel}">
                 <views:TourRequestsStatsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GuideProfileViewModel}">
+                <views:GuideProfileView/>
             </DataTemplate>
         </Grid.Resources>
 

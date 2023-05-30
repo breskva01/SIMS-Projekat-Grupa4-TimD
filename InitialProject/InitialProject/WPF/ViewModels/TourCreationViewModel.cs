@@ -284,8 +284,9 @@ namespace InitialProject.WPF.ViewModels
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
             KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
+            Countries = Locations.Select(l => l.Country).Distinct().ToList();
 
-            if(isParameterLanguage == true)
+            if (isParameterLanguage == true)
             {
                 LanguageType = parameter;
             }
@@ -401,7 +402,7 @@ namespace InitialProject.WPF.ViewModels
                 _keyPointIds.Add(ky.Id);
             }
 
-            Tour tour = _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds);
+            Tour tour = _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds, _user.Id);
 
             if(TourRequest != null)
             {
