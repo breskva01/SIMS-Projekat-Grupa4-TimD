@@ -47,8 +47,6 @@ namespace InitialProject.WPF.ViewModels
             SignOutCommand = new ExecuteMethodCommand(SignOut);
             TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
             TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
-            LogOutCommand = new ExecuteMethodCommand(SignOut);
-            GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);
         }
         
         private void SignOut()
