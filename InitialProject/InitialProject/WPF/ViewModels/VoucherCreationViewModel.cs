@@ -89,22 +89,23 @@ namespace InitialProject.WPF.ViewModels
             
             if(Resign == true)
             {
+
                 foreach (User guest in _guests)
                 {
-                    // Luka - 1 2 3  | Luka - 1 2 3 | Papi
-                    foreach (int id in ((Guest2)guest).VouchersIds)
+                    voucher.GuideId = -1;
+                    _voucherService.Update(voucher);
+                    ((Guest2)guest).VouchersIds.Add(voucher.Id);
+                    _userService.Update(guest);
+                    for(int i = 0; i < ((Guest2)guest).VouchersIds.Count() - 1; i++)
                     {
-                        Voucher v = _voucherService.GetById(id);
+                        Voucher v = _voucherService.GetById(((Guest2)guest).VouchersIds[i]);
                         if (v.GuideId == _user.Id)
                         {
                             v.GuideId = -1;
                             _voucherService.Update(v);
                         }
                     }
-                    voucher.GuideId = -1;
-                    _voucherService.Update(voucher);
-                    ((Guest2)guest).VouchersIds.Add(voucher.Id);
-                    _userService.Update(guest);
+                    
                     View.Close();
                     return;
                 }
