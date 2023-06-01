@@ -42,8 +42,55 @@ namespace InitialProject.WPF.ViewModels
 
             }
         }
+        private string _guideName;
+        public string GuideName
+        {
+            get { return _guideName; }
+            set
+            {
+                _guideName = value;
+                OnPropertyChanged(nameof(GuideName));
+
+            }
+        }
+        private string _guideLastName;
+        public string GuideLastName
+        {
+            get { return _guideLastName; }
+            set
+            {
+                _guideLastName = value;
+                OnPropertyChanged(nameof(GuideLastName));
+
+            }
+        }
+        private string _guideEmail;
+        public string GuideEmail
+        {
+            get { return _guideEmail; }
+            set
+            {
+                _guideEmail = value;
+                OnPropertyChanged(nameof(GuideEmail));
+
+            }
+        }
+        private string _guidePhoneNumber;
+        public string GuidePhoneNumber
+        {
+            get { return _guidePhoneNumber; }
+            set
+            {
+                _guidePhoneNumber = value;
+                OnPropertyChanged(nameof(GuidePhoneNumber));
+
+            }
+        }
+
 
         public ICommand ResignCommand { get; set; }
+        public ICommand SignOutCommand { get; }
+
 
         public GuideProfileViewModel(NavigationStore navigationStore, User user) 
         {
@@ -98,9 +145,23 @@ namespace InitialProject.WPF.ViewModels
 
 
             _guideUserName = user.Username;
+            _guideLastName = user.LastName;
+            _guideEmail = user.Email;
+            _guideName = user.FirstName;
+            _guidePhoneNumber = user.PhoneNumber;
 
             ResignCommand = new ExecuteMethodCommand(Resign);
+            SignOutCommand = new ExecuteMethodCommand(SignOut);
 
+
+
+        }
+        private void SignOut()
+        {
+            SignInViewModel signInViewModel = new SignInViewModel(_navigationStore);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, signInViewModel));
+
+            navigate.Execute(null);
         }
         private void Resign()
         {
@@ -119,6 +180,7 @@ namespace InitialProject.WPF.ViewModels
                 }
                 VoucherCreationView view = new VoucherCreationView(_navigationStore, _user, _guests, 2, true);
                 view.Show();
+                
             }
             else if (result == MessageBoxResult.No)
             {

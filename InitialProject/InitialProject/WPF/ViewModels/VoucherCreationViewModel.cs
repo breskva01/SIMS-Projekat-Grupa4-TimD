@@ -1,10 +1,7 @@
 ﻿using InitialProject.Application.Commands;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
-using InitialProject.Application.Commands;
 using InitialProject.Application.Services;
-using InitialProject.Application.Stores;
-using InitialProject.Domain.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -81,7 +78,13 @@ namespace InitialProject.WPF.ViewModels
             CreateVoucherCommand = new ExecuteMethodCommand(CreateVoucher);
             
         }
+        private void SignOut()
+        {
+            SignInViewModel signInViewModel = new SignInViewModel(_navigationStore);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, signInViewModel));
 
+            navigate.Execute(null);
+        }
         private void CreateVoucher()
         {
             _expiration = _expiration.AddYears(NumberOfYears);
@@ -107,6 +110,7 @@ namespace InitialProject.WPF.ViewModels
                     }
                     
                     View.Close();
+                    SignOut();
                     return;
                 }
             }

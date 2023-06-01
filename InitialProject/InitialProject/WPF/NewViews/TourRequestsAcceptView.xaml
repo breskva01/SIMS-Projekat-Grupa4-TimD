@@ -40,6 +40,8 @@
                         <DataGridTextColumn Header="ᑕOᑌᑎTᖇY" Binding="{Binding Location.Country}"/>
                         <DataGridTextColumn Header="ᗪESᑕᖇIᑭTIOᑎ" Binding="{Binding Description}"/>
                         <DataGridTextColumn Header="ᒪᗩᑎGᑌᗩGE" Binding="{Binding Language}"/>
+                        <DataGridTextColumn Header="EarlistDate" Binding="{Binding EarliestDate}"/>
+                        <DataGridTextColumn Header="LatestsDate" Binding="{Binding LatestDate}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Border Grid.Row="0" Grid.RowSpan="2" Margin="30" BorderBrush="Black" BorderThickness="5">

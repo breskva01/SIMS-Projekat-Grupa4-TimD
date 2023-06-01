@@ -2,6 +2,7 @@
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.WPF.NewViews;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -229,9 +230,15 @@ namespace InitialProject.WPF.ViewModels
         private void AcceptTourRequest()
         {
             SelectedTourRequest.Status = RequestStatus.Approved;
+           
+             TourRequestsAcceptDatePickerView view = new TourRequestsAcceptDatePickerView(_navigationStore, _user, SelectedTourRequest);
+             view.Show();
+            
+            /*
             TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user, SelectedTourRequest);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigate.Execute(null);
+            */
         }
     }
 }

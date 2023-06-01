@@ -111,9 +111,6 @@
             <DataTemplate DataType="{x:Type vms:TourGuestsViewModel}">
                 <views:TourGuestsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:VoucherCreationViewModel}">
-                <views:VoucherCreationView />
-            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:TourStatsViewModel}">
                 <views:TourStatsView />
             </DataTemplate>

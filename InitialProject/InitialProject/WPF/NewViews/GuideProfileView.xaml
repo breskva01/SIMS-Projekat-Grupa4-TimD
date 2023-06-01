@@ -23,19 +23,44 @@
             </Button>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="480"/>
+                    <ColumnDefinition Width="440"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"  BorderBrush="Black" BorderThickness="5" Margin="30">
                     <StackPanel>
                         <Image Source="\Resources\Images\logoB.png" Width="200" Height="200" Margin="20"/>
-                        <Label HorizontalAlignment="Center" Margin="10">
-                            <TextBlock Text="{Binding GuideUserName}" Width="150" Height="50" TextAlignment="Justify" />
-                        </Label>
-                        <Button BorderBrush="Transparent" Cursor="Hand" Content="Resign" Command="{Binding ResignCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                        <Button BorderBrush="Transparent" Cursor="Hand" Content="Log out" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                        <Label HorizontalContentAlignment="Center" Content="{Binding GuideUserName}" FontSize="30" Height="50"/>
+                        <Button BorderBrush="Transparent" Cursor="Hand" Content="Resign" Command="{Binding ResignCommand}" Width="150" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="0,30,0,30"/>
+                        <Button BorderBrush="Transparent" Cursor="Hand" Content="Log out" Command="{Binding SignOutCommand}"  Width="150" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="0,30,0,30"/>
                     </StackPanel>
                 </Border>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="1" Grid.RowSpan="5" BorderThickness="0,0,3,0" BorderBrush="Black"/>
+                    <Label Grid.Row="1" Content="Name" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="57" Width="102"/>
+                    <Label Grid.Row="2" Content="LastName" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="56" Width="163"/>
+                    <Label Grid.Row="3" Content="Email" HorizontalAlignment="Left"  VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="56" Width="93"/>
+                    <Label Grid.Row="4" Content="Phone Number" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="56" Width="245"/>
+                    <Label Grid.Row="5" Content="Super Guide" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="57" Width="200"/>
+
+                    <Label HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Content="{Binding GuideName}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Label HorizontalContentAlignment="Center" Grid.Row="2" Grid.Column="1" Content="{Binding GuideLastName}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    <Label HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="1" Content="{Binding GuideEmail}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    <Label HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="1" Content="{Binding GuidePhoneNumber}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+
+                </Grid>
             </Grid>
 
         </Grid>

@@ -17,7 +17,7 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class TourCreationViewModel : ViewModelBase, IDataErrorInfo
+    public class TourCreationViewModel : ViewModelBase
     {
 
         private bool IsCreatedBasedOnStats;
@@ -308,7 +308,7 @@ namespace InitialProject.WPF.ViewModels
 
 
         }
-        public TourCreationViewModel(NavigationStore navigationStore, User user, TourRequest request)
+        public TourCreationViewModel(NavigationStore navigationStore, User user, TourRequest request, string SelectedDate)
         {
             _navigationStore = navigationStore;
             _user = user;
@@ -329,6 +329,7 @@ namespace InitialProject.WPF.ViewModels
             LanguageType = request.Language.ToString();
             MaximumGuests = request.NumberOfGuests;
             Description = request.Description;
+            Start = SelectedDate;
 
             AddKeyPointCommand = new AddKeyPointCommand(this);
 
@@ -552,7 +553,7 @@ namespace InitialProject.WPF.ViewModels
         {
             MaximumGuests--;
         }
-
+        /*
         public string this[string columnName]
         {
             get
@@ -589,5 +590,6 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
+        */
     }
 }
