@@ -40,6 +40,18 @@ namespace InitialProject.WPF.ViewModels
         public ICommand BackNavigationCommand =>
            new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
 
+        private string _tourName;
+        public string TourName
+        {
+            get { return _tourName; }
+            set
+            {
+                _tourName = value;
+                OnPropertyChanged(nameof(TourName));
+
+            }
+        }
+
         public ICommand KeyPointReachedCommand { get; set; }
         public ICommand StopTourCommand { get; set; }
 
@@ -69,6 +81,9 @@ namespace InitialProject.WPF.ViewModels
             _tourReservations = new List<TourReservation>();
             _keyPointsFromSelectedTour = new ObservableCollection<KeyPointViewModel>();
 
+            TourName = "Tour Name: ";
+
+            TourName += _tour.Name;
 
             KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
             Locations = new ObservableCollection<Location>(_locationService.GetAll());

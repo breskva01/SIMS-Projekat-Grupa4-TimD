@@ -110,7 +110,7 @@
                 <Border Height="80" Width="80" Margin="10">
                     <Image Source="\Resources\Images\logoB.png"/>
                 </Border>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Command="{Binding GuideProfileCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>

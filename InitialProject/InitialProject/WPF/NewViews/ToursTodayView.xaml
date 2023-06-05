@@ -88,7 +88,7 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
-            <Label Grid.Row="0" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            <Label Grid.Row="0" Content="TOURS TODAY" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
             </Label>
             <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="\Resources\Images\menuW.png"></Image>
@@ -113,7 +113,7 @@
                         <DataGridTextColumn Header="ᗪᑌᖇᗩTIOᑎ" Binding="{Binding Duration}"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button Command="{Binding StartTourCommand}" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Row="1" Height="44" Width="180" HorizontalAlignment="Right" Margin="0,0,40,50" FontWeight="Bold" Foreground="White" Background="#270138" Content="STᗩᖇT TOᑌᖇ" FontSize="25"></Button>
+                <Button Command="{Binding StartTourCommand}" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Row="1" Height="50" Width="180" HorizontalAlignment="Right" Margin="5,20,30,35" FontWeight="Bold" Foreground="White" Background="#270138" Content="STᗩᖇT TOᑌᖇ" FontSize="25"></Button>
             </Grid>
             
         </Grid>
