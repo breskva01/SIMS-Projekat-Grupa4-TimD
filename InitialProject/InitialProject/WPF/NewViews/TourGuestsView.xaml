@@ -23,8 +23,7 @@
         <Grid x:Name="InterfaceGrid" Opacity="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="600"></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition ></RowDefinition>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
             <Label Grid.Row="0" Content="TOURS TODAY" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
@@ -36,14 +35,18 @@
                 <Image Source="\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="550"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
                 <DataGrid FontSize="22" FontWeight="Bold" Margin="30,15,30,10" Background="#ECE3F1 " ItemsSource="{Binding Guests}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGuest}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
                         <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+                <Button Margin="30,3,5,13" BorderBrush="Transparent" Background="#270138" Foreground="White" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Row="2" Command="{Binding BackCommand}" Content="Back" FontSize="25" Height="50" Width="180"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
             </Grid>
-            <Button BorderBrush="Transparent" Background="#270138" Foreground="White" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Row="2" Command="{Binding BackCommand}" Content="Back" FontSize="25" Height="44" Width="180"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
         </Grid>

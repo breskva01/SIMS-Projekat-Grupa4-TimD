@@ -7,6 +7,19 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid x:Name="InterfaceGrid">
             <Grid.RowDefinitions>
@@ -32,9 +45,9 @@
                     <RowDefinition Height="550"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button Content="ACCEPT" Command="{Binding AcceptCommand}" Grid.Column="2" Grid.Row="1" Margin="30" Width="160" Height="50"/>
-                <Button Grid.Column="1" Grid.Row="1" Margin="30" Width="160" Height="50"/>
-                <DataGrid SelectedItem="{Binding SelectedTourRequest}" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="30" ItemsSource="{Binding TourRequests}">
+                <Button FontWeight="Bold" FontSize="25" Foreground="White"  Background="#270138" Style="{StaticResource RoundButtonStyle}" Content="ACCEPT" Command="{Binding AcceptCommand}" Grid.Column="2" Grid.Row="1" Margin="30" Width="180" Height="50"/>
+                <Button FontSize="25" Foreground="White"  Background="#270138" Style="{StaticResource RoundButtonStyle}" Grid.Column="1" Grid.Row="1" Margin="30" Width="180" Height="50"/>
+                <DataGrid FontSize="22" FontWeight="Bold" SelectedItem="{Binding SelectedTourRequest}" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="30" ItemsSource="{Binding TourRequests}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ᑕITY" Binding="{Binding Location.City}"/>
                         <DataGridTextColumn Header="ᑕOᑌᑎTᖇY" Binding="{Binding Location.Country}"/>
@@ -46,37 +59,37 @@
                 </DataGrid>
                 <Border Grid.Row="0" Grid.RowSpan="2" Margin="30" BorderBrush="Black" BorderThickness="5">
                     <StackPanel>
-                        <Label Content="FILTERS" HorizontalAlignment="Center" Margin="0,10,0,10" FontSize="25"/>
-                        <Label Content="Country" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                        <ComboBox  ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"  FontSize="15" Margin="10,5,0,5" HorizontalAlignment="Left" Width="200"/>
-                        <Label Content="City" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                        <ComboBox ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" FontSize="15" Margin="10,5,0,5" HorizontalAlignment="Left" Width="200"/>
-                        <Label Content="Language" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                        <ComboBox FontSize="15" Margin="10,5,0,5" HorizontalAlignment="Left" Width="200" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}">
+                        <Label Content="FILTERS" HorizontalAlignment="Center" Margin="0,10,0,10" FontSize="25" FontWeight="Bold"/>
+                        <Label Content="Country" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0" FontWeight="Bold"/>
+                        <ComboBox  ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"  FontSize="20" Margin="1,1,1,1" HorizontalAlignment="Center" Width="250"/>
+                        <Label Content="City" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0" FontWeight="Bold"/>
+                        <ComboBox ItemsSource="{Binding Cities}"  SelectedItem="{Binding SelectedCity}" FontSize="20" Margin="1,1,1,1" HorizontalAlignment="Center" Width="250"/>
+                        <Label Content="Language" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0" FontWeight="Bold"/>
+                        <ComboBox FontSize="20" Margin="1,1,1,1" HorizontalAlignment="Center" Width="250" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}">
                             <ComboBoxItem>English</ComboBoxItem>
                             <ComboBoxItem>Serbian</ComboBoxItem>
                         </ComboBox>
-                        <Label Content="Earliest Date" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                        <xctk:DateTimePicker Text="{Binding EarliestDate, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="10,5,0,0" FontSize="15"/>
-                        <Label Content="Latest Date" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                        <xctk:DateTimePicker Text="{Binding LatestDate, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" Margin="10,5,0,0" FontSize="15"/>
-                        <Label Content="Number of Guests" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                        <Grid VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="10,5,0,0">
+                        <Label Content="Earliest Date" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0" FontWeight="Bold"/>
+                        <xctk:DateTimePicker Text="{Binding EarliestDate, UpdateSourceTrigger=PropertyChanged}" Margin="1,1,1,1" HorizontalAlignment="Center" Width="250" FontSize="20"/>
+                        <Label Content="Latest Date" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0" FontWeight="Bold"/>
+                        <xctk:DateTimePicker Text="{Binding LatestDate, UpdateSourceTrigger=PropertyChanged}" Margin="1,1,1,1" HorizontalAlignment="Center" Width="250" FontSize="20"/>
+                        <Label Content="Number of Guests" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0" FontWeight="Bold" />
+                        <Grid VerticalAlignment="Center" Margin="1,1,1,1" HorizontalAlignment="Center" Width="250">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="180"/>
-                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="215"/>
+                                <ColumnDefinition Width="35"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" FontSize="15" Text="{Binding Path=NumberOfGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True" Background="#ECE3F1 "/>
+                            <TextBox Grid.Column="0" FontSize="20" Text="{Binding Path=NumberOfGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True" Background="#ECE3F1 "/>
                             <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2"/>
                             <StackPanel Grid.Column="1" Orientation="Vertical">
-                                <Button Content="+" Foreground="White" FontSize="10" FontWeight="Bold" Background="#270138" Command="{Binding IncreaseGuestsCommand}" />
-                                <Button Content="-" FontSize="10" FontWeight="Bold" Background="#E5B1FD" Command="{Binding DecreaseGuestsCommand}" />
+                                <Button Content="+" Foreground="White" FontSize="12" FontWeight="Bold" Background="#270138" Command="{Binding IncreaseGuestsCommand}" />
+                                <Button Content="-" FontSize="12" FontWeight="Bold" Background="#E5B1FD" Command="{Binding DecreaseGuestsCommand}" />
                             </StackPanel>
                             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" />
                         </Grid>
                         <DockPanel Margin="0,50,0,0">
-                            <Button Command="{Binding FilterCommand}" Content="Apply" Margin="10,0,10,0" Height="40" Width="100" HorizontalAlignment="Left"/>
-                            <Button Command="{Binding ResetCommand}" Content="Reset" Margin="10,0,10,0" Height="40" Width="100" HorizontalAlignment="Right"/>
+                            <Button FontWeight="Bold" FontSize="22" Foreground="White" Background="#270138" Style="{StaticResource RoundButtonStyle}" Command="{Binding FilterCommand}" Content="Apply" Margin="30,0,10,0" Height="40" Width="100" HorizontalAlignment="Left"/>
+                            <Button FontWeight="Bold" FontSize="22" Foreground="White"  Background="#270138" Style="{StaticResource RoundButtonStyle}" Command="{Binding ResetCommand}" Content="Reset" Margin="10,0,30,0" Height="40" Width="100" HorizontalAlignment="Right"/>
                         </DockPanel>
                     </StackPanel>
                 </Border>

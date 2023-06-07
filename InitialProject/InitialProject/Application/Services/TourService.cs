@@ -5,6 +5,7 @@ using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using InitialProject.Repository;
+using InitialProject.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +126,6 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetFinishedTours();
         }
-
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);
@@ -140,6 +140,10 @@ namespace InitialProject.Application.Services
             {
                 observer.Update();
             }
+        }
+        public string CheckSuperGuide(int GuideId)
+        {
+            return _repository.CheckSuperGuide(GuideId);
         }
 
     }

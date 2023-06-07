@@ -19,16 +19,15 @@ using System.Windows.Shapes;
 namespace InitialProject.WPF.NewViews
 {
     /// <summary>
-    /// Interaction logic for TourCreateView.xaml
+    /// Interaction logic for TourCreationTutorialView.xaml
     /// </summary>
-    public partial class TourCreateView : UserControl
+    public partial class TourCreationTutorialView : Window
     {
-        public TourCreateView()
+        public TourCreationTutorialView(NavigationStore navigationStore, User user)
         {
             InitializeComponent();
-            dateTimePicker.Value = DateTime.Now;
-
+            TourCreationTutorialViewModel viewModel = new TourCreationTutorialViewModel(navigationStore, user, this);
+            tutorialPlayer.Source = new Uri("C:/Users/lukaz/OneDrive/Desktop/Videos/pls.mkv");
         }
-
     }
 }

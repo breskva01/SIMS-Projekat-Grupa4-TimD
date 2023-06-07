@@ -37,6 +37,7 @@
     <None Remove="Resources\Images\go-back.png" />
     <None Remove="Resources\Images\go_back.png" />
     <None Remove="Resources\Images\help.png" />
+    <None Remove="Resources\Images\homeW.jpg.png" />
     <None Remove="Resources\Images\homeWhite.png" />
     <None Remove="Resources\Images\info-icon.png" />
     <None Remove="Resources\Images\kuca_jadran.jpg" />
@@ -63,6 +64,7 @@
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
     <None Remove="Resources\Images\plus.png" />
+    <None Remove="Resources\Images\primer.mp4" />
     <None Remove="Resources\Images\profile.jpg" />
     <None Remove="Resources\Images\profileWhite.png" />
     <None Remove="Resources\Images\search.png" />
@@ -89,6 +91,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\primer.mp4" />
     <Resource Include="Resources\Images\bell.png" />
     <Resource Include="Resources\Images\backgroundLP.jpg" />
     <Resource Include="Resources\Images\backSquare.png" />
@@ -99,6 +102,7 @@
     <Resource Include="Resources\Images\checkmark.png" />
     <Resource Include="Resources\Images\filter.png" />
     <Resource Include="Resources\Images\forwardSquare.png" />
+    <Resource Include="Resources\Images\homeW.jpg.png" />
     <Resource Include="Resources\Images\homeWhite.png" />
     <Resource Include="Resources\Images\left_arrow.png" />
     <Resource Include="Resources\Images\logo.png" />

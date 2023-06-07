@@ -26,6 +26,7 @@ namespace InitialProject.WPF.ViewModels
         public string TourContent => tourRating.TourContent.ToString();
         public string Comment => tourRating.Comment;
         public string Place => (_keyPointService.GetById(_tourReservation.ArrivedAtKeyPoint)).Place;
+        public int TourId => _tourReservation.TourId;
 
         private bool _isValid;
         public bool IsValid

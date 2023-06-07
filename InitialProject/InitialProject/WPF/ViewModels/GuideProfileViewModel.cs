@@ -6,6 +6,7 @@ using InitialProject.WPF.NewViews;
 using InitialProject.WPF.NewViews.Owner;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -86,11 +87,23 @@ namespace InitialProject.WPF.ViewModels
 
             }
         }
+        private string _isSuperGuide;
+        public string IsSuperGuide
+        {
+            get { return _isSuperGuide; }
+            set
+            {
+                _isSuperGuide = value;
+                OnPropertyChanged(nameof(IsSuperGuide));
+
+            }
+        }
 
 
         public ICommand ResignCommand { get; set; }
         public ICommand SignOutCommand { get; }
 
+        public List<RatingViewModel> Ratings { get; set; }
 
         public GuideProfileViewModel(NavigationStore navigationStore, User user) 
         {
@@ -113,9 +126,7 @@ namespace InitialProject.WPF.ViewModels
                     GuideTours.Add(tour);
                 }
             }
-
             _tourReservations = new List<TourReservation>(_tourReservationService.GetAll());
-
 
             foreach (TourReservation tourReservation in _tourReservations)
             {
@@ -129,8 +140,6 @@ namespace InitialProject.WPF.ViewModels
                 }
                 
             }
-
-
             foreach (int id in _guestIds)
             {
                 foreach (User u in _users)
@@ -143,17 +152,15 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
 
-
             _guideUserName = user.Username;
             _guideLastName = user.LastName;
             _guideEmail = user.Email;
             _guideName = user.FirstName;
             _guidePhoneNumber = user.PhoneNumber;
+            _isSuperGuide = _tourService.CheckSuperGuide(user.Id);
 
             ResignCommand = new ExecuteMethodCommand(Resign);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
-
-
 
         }
         private void SignOut()

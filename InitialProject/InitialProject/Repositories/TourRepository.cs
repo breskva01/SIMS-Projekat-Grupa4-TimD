@@ -1,12 +1,15 @@
 ﻿using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories.FileHandlers;
+using InitialProject.WPF.ViewModels;
+using InitialProject.WPF.ViewModels.GuestTwo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace InitialProject.Repositories
 {
@@ -309,5 +312,70 @@ namespace InitialProject.Repositories
             }
             return filterdTours;
         }
+        public string CheckSuperGuide(int GuideId)
+        {
+            _tours = GetFinishedTours();
+            List<Tour> guideTours = new List<Tour>();
+            List<TourReservation> tourReservations = _tourReservationFileHandler.Load();
+            List<RatingViewModel> Ratings = new List<RatingViewModel>();
+
+
+            DateTime currentDate = DateTime.Now;
+            DateTime oneYearBeforeNow = currentDate.AddYears(-1);
+
+            foreach (Tour tour in _tours)
+            {
+                if (tour.GuideId == GuideId && tour.Start > oneYearBeforeNow)
+                {
+                    guideTours.Add(tour);
+                }
+            }
+
+            foreach (TourReservation tourReservation in tourReservations)
+            {
+                if (tourReservation.RatingId > 0)
+                    Ratings.Add(new RatingViewModel(tourReservation));
+            }
+
+            int suma = 0;
+            int brojac = 0;
+            List<Tour> acceptableTours = new List<Tour>();
+            foreach(Tour tour in guideTours)
+            {
+                foreach(RatingViewModel rating in Ratings)
+                {
+                    if(tour.Id == rating.TourId)
+                    {
+                        suma += Convert.ToInt32(rating.TourContent) + Convert.ToInt32(rating.GuideKnowledge) + Convert.ToInt32(rating.TourInteresting) + Convert.ToInt32(rating.TourInformative) + Convert.ToInt32(rating.GuideLanguage);
+                        brojac += 5;
+                    }
+                }
+                double prosek = (double)suma / brojac;
+                if (prosek > 4.0)
+                {
+                    acceptableTours.Add(tour);
+                    suma = 0;
+                    brojac = 0;
+                }
+            }
+            var tourCountsByLanguage = acceptableTours
+            .GroupBy(t => t.Language)
+            .Select(g => new { Language = g.Key, Count = g.Count() })
+            .Where(t => t.Count > 4)
+            .ToList();
+
+            var languageWithMostTours = tourCountsByLanguage
+            .OrderByDescending(t => t.Count)
+            .FirstOrDefault();
+
+            if (languageWithMostTours != null)
+            {
+                return "Yes(" + languageWithMostTours.Language + ")";
+            }
+            return "No";
+
+
+        }
+
     }
 }

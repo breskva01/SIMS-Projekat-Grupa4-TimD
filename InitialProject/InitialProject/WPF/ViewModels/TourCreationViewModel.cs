@@ -3,6 +3,7 @@ using InitialProject.Application.Commands;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.WPF.NewViews;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,6 +41,7 @@ namespace InitialProject.WPF.ViewModels
         private TourRequestService _tourRequestService;
         private UserNotificationService _userNotificationService;
 
+        public ICommand TutorialCommand { get; set; }
         public ICommand ConfirmCommand { get; set; }
         public ICommand CancelCommand { get; }
         public ICommand AddKeyPointCommand { get; }
@@ -385,6 +387,7 @@ namespace InitialProject.WPF.ViewModels
             DecreaseDurationCommand = new ExecuteMethodCommand(DecreaseDuration);
             IncreaseGuestsCommand = new ExecuteMethodCommand(IncreaseGuests);
             DecreaseGuestsCommand = new ExecuteMethodCommand(DecreaseGuests);
+            TutorialCommand = new ExecuteMethodCommand(ShowTutorial);
         }
         public void CreateTour()
         {
@@ -552,6 +555,11 @@ namespace InitialProject.WPF.ViewModels
         private void DecreaseGuests()
         {
             MaximumGuests--;
+        }
+        private void ShowTutorial()
+        {
+            TourCreationTutorialView view = new TourCreationTutorialView(_navigationStore, _user);
+            view.Show();
         }
         /*
         public string this[string columnName]

@@ -76,7 +76,7 @@
                     <Label HorizontalContentAlignment="Center" Grid.Row="2" Grid.Column="1" Content="{Binding GuideLastName}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
                     <Label HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="1" Content="{Binding GuideEmail}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
                     <Label HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="1" Content="{Binding GuidePhoneNumber}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
-
+                    <Label HorizontalContentAlignment="Center" Grid.Row="5" Grid.Column="1" Content="{Binding IsSuperGuide}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
                 </Grid>
             </Grid>
 

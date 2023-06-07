@@ -283,7 +283,7 @@
                     <Image Margin="10" Source="\Resources\Images\plus.png"/>
                 </Button>
                 <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="ᑕᖇEᗩTE" HorizontalAlignment="Left" Margin="133,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25" Command="{Binding ConfirmCommand}" />
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="TᑌTOᖇIᗩᒪ" HorizontalAlignment="Left" Margin="133,30,0,0" Grid.Row="8" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25"/>
+                <Button Command="{Binding TutorialCommand}" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#270138" Content="TᑌTOᖇIᗩᒪ" HorizontalAlignment="Left" Margin="133,30,0,0" Grid.Row="8" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25"/>
             </Grid>
         </Grid>
         <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
