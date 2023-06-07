@@ -19,15 +19,16 @@ using System.Windows.Shapes;
 namespace InitialProject.WPF.NewViews
 {
     /// <summary>
-    /// Interaction logic for VoucherCreationView.xaml
+    /// Interaction logic for TourRequestsAcceptDatePickerView.xaml
     /// </summary>
-    public partial class VoucherCreationView : Window
+    public partial class TourRequestsAcceptDatePickerView : Window
     {
-        public VoucherCreationView(NavigationStore navigationStore, User user, List<User> guests, int years, bool resign)
+        public TourRequestsAcceptDatePickerView(NavigationStore navigationStore, User user, TourRequest SelectedTourRequest)
         {
             InitializeComponent();
-            VoucherCreationViewModel viewModel = new VoucherCreationViewModel(navigationStore, user, guests, years, this, resign);
+            TourRequestsAcceptDatePickerViewModel viewModel = new TourRequestsAcceptDatePickerViewModel(navigationStore, user, SelectedTourRequest, this);
             DataContext = viewModel;
         }
+
     }
 }

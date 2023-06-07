@@ -111,9 +111,6 @@
             <DataTemplate DataType="{x:Type vms:TourGuestsViewModel}">
                 <views:TourGuestsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:VoucherCreationViewModel}">
-                <views:VoucherCreationView />
-            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:TourStatsViewModel}">
                 <views:TourStatsView />
             </DataTemplate>
@@ -179,6 +176,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:TourRequestsStatsViewModel}">
                 <views:TourRequestsStatsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GuideProfileViewModel}">
+                <views:GuideProfileView/>
             </DataTemplate>
         </Grid.Resources>
 

@@ -5,17 +5,71 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <DataGrid Height="300" Width="700" ItemsSource="{Binding KeyPointsFromSelectedTour}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedKeyPoint}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"/>
-                <DataGridTextColumn Header="City" Binding="{Binding Location.City}"/>
-                <DataGridTextColumn Header="Place" Binding="{Binding Place}"/>
-                <DataGridCheckBoxColumn Header="Is Reached" Binding="{Binding IsReached}"  />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Command="{Binding KeyPointReachedCommand}" Content="Reached" HorizontalAlignment="Left" Margin="652,406,0,0" VerticalAlignment="Top" Height="30" Width="69"/>
-        <Button Command="{Binding StopTourCommand}"  Content="Stop Tour" HorizontalAlignment="Left" Margin="106,406,0,0" VerticalAlignment="Top" Height="30" Width="63"/>
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+        <Grid>
+        <Grid x:Name="InterfaceGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
+            <Label Grid.Row="0" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            </Label>
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="500"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="{Binding TourName}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="700" FontSize="25" Margin="30,5,5,5"/>
+                <DataGrid Margin="30,15,30,10" FontSize="22" FontWeight="Bold" Grid.Row="1" Background="#ECE3F1" ItemsSource="{Binding KeyPointsFromSelectedTour}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedKeyPoint}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"/>
+                        <DataGridTextColumn Header="City" Binding="{Binding Location.City}"/>
+                        <DataGridTextColumn Header="Place" Binding="{Binding Place}"/>
+                        <DataGridTemplateColumn Header="IsReached">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="No" />
+                                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsReached}" Value="True">
+                                                        <Setter Property="Text" Value="Yes" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Grid.Row="2" Command="{Binding KeyPointReachedCommand}" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Margin="5,40,30,10" Content="Reached" HorizontalAlignment="Right" VerticalAlignment="Top" Height="50" Width="180" FontWeight="Bold" Foreground="White" Background="#270138" FontSize="25"/>
+                <Button Grid.Row="2" Command="{Binding StopTourCommand}"  Content="Stop Tour"  BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="180" FontWeight="Bold" Foreground="White" Background="#270138" FontSize="25"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

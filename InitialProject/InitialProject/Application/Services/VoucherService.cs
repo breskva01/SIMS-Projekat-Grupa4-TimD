@@ -33,11 +33,12 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetById(voucherId);
         }
-        public Voucher CreateVoucher(string name, DateOnly expirationDate)
+        public Voucher CreateVoucher(string name, DateOnly expirationDate, User user)
         {
             Voucher voucher = new Voucher();
             voucher.Name = name;
             voucher.ExpirationDate = expirationDate;
+            voucher.GuideId = user.Id;
             return _repository.Save(voucher);
         }
         public Voucher Update(Voucher voucher)

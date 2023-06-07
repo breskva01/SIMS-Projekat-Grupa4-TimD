@@ -63,6 +63,7 @@
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
     <None Remove="Resources\Images\plus.png" />
+    <None Remove="Resources\Images\profile.jpg" />
     <None Remove="Resources\Images\profileWhite.png" />
     <None Remove="Resources\Images\search.png" />
     <None Remove="Resources\Images\sort.png" />
@@ -132,6 +133,7 @@
     <Resource Include="Resources\Images\person.png" />
     <Resource Include="Resources\Images\petrovaradin.png" />
     <Content Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\profile.jpg" />
     <Resource Include="Resources\Images\profileWhite.png" />
     <Resource Include="Resources\Images\sun.png" />
     <Resource Include="Resources\Images\urgent-message.png" />

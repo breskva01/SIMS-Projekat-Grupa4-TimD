@@ -5,14 +5,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <DataGrid Width="700" Margin="50,25,50,63" ItemsSource="{Binding Guests}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGuest}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="50,409,0,0" VerticalAlignment="Top" Width="78"/>
+        <Grid x:Name="InterfaceGrid" Opacity="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="600"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
+            <Label Grid.Row="0" Content="TOURS TODAY" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            </Label>
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+            <Grid Grid.Row="1">
+                <DataGrid FontSize="22" FontWeight="Bold" Margin="30,15,30,10" Background="#ECE3F1 " ItemsSource="{Binding Guests}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGuest}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Button BorderBrush="Transparent" Background="#270138" Foreground="White" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Row="2" Command="{Binding BackCommand}" Content="Back" FontSize="25" Height="44" Width="180"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+
+        </Grid>
     </Grid>
 </UserControl>
