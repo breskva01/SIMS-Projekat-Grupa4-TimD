@@ -20,5 +20,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public LineSeries GetMonthlyRenovationReccommendations(int id, int year);
         public string GetMostBookedYear(int id);
         public string GetMostBookedMonth(int id, int year);
+        public List<Location> GetMostPopularLocations();
+        public List<Location> GetMostUnpopularLocations();
     }
 }

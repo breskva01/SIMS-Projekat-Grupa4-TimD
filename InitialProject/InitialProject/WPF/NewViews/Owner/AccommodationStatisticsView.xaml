@@ -110,16 +110,16 @@
                 <TextBlock Grid.Row="0" Foreground="DarkCyan" FontFamily="Impact" FontSize="24" Width="220" TextWrapping="Wrap" >Popular locations for new accommodations</TextBlock>
                 <DataGrid Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding PopularLocations}" SelectionMode="Single" SelectedItem="{Binding SelectedPopularLocation}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Country" Width="125"></DataGridTextColumn>
-                        <DataGridTextColumn Header="City" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Country" Width="125" Binding="{Binding Country}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="City" Width="*" Binding="{Binding City}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button Grid.Row="2" Content="New accommodation"></Button>
                 <Label Grid.Row="3" FontSize="24" Margin="20,10,10,53" Grid.RowSpan="2">Least popular locations</Label>
                 <DataGrid Grid.Row="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding UnpopularLocations}" SelectionMode="Single" SelectedItem="{Binding SelectedUnpopularLocation}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Country" Width="125"></DataGridTextColumn>
-                        <DataGridTextColumn Header="City" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Country" Width="125" Binding="{Binding Country}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="City" Width="*" Binding="{Binding City}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button Grid.Row="5" Content="Remove accommodation"></Button>

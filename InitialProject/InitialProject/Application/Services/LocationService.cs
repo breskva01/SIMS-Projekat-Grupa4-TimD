@@ -32,6 +32,11 @@ namespace InitialProject.Application.Services
             return _repository.GetById(id);
         }
 
+        public Location GetByCityAndCountry(string city, string country)
+        {
+            return _repository.GetByCityAndCountry(city, country);
+        }
+
         public void Subscribe(IObserver observer)
         {
             _observers.Add(observer);
