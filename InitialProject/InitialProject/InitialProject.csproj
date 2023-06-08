@@ -34,6 +34,7 @@
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\forwardSquare.png" />
+    <None Remove="Resources\Images\gift.png" />
     <None Remove="Resources\Images\go-back.png" />
     <None Remove="Resources\Images\go_back.png" />
     <None Remove="Resources\Images\help.png" />
@@ -99,6 +100,7 @@
     <Resource Include="Resources\Images\checkmark.png" />
     <Resource Include="Resources\Images\filter.png" />
     <Resource Include="Resources\Images\forwardSquare.png" />
+    <Resource Include="Resources\Images\gift.png" />
     <Resource Include="Resources\Images\homeWhite.png" />
     <Resource Include="Resources\Images\left_arrow.png" />
     <Resource Include="Resources\Images\logo.png" />

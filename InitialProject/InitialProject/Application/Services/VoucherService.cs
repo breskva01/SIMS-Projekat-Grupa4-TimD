@@ -41,6 +41,15 @@ namespace InitialProject.Application.Services
             voucher.GuideId = user.Id;
             return _repository.Save(voucher);
         }
+        public Voucher GiftFreeVoucher(Guest2 guest)
+        {
+            Voucher voucher = new Voucher();
+            voucher.Name = "TravelBuddy gift voucher";
+            voucher.ExpirationDate = DateOnly.FromDateTime(DateTime.UtcNow.AddMonths(6));
+            voucher.GuideId = -1;
+            return _repository.Save(voucher);
+
+        }
         public Voucher Update(Voucher voucher)
         {
             return _repository.Update(voucher);
