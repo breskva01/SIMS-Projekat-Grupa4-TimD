@@ -82,8 +82,8 @@
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="13">
-                    <Run Text="{Binding Accommodation.Country}"/>,
-                    <Run Text="{Binding Accommodation.City}" />
+                    <Run Text="{Binding Accommodation.Location.Country}"/>,
+                    <Run Text="{Binding Accommodation.Location.City}" />
                 </TextBlock>
 
                 <StackPanel

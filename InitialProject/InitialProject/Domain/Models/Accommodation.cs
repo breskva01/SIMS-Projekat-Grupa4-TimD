@@ -82,7 +82,7 @@ namespace InitialProject.Domain.Models
             {
                 if (! (Name.ToLower().Contains(keyWord) ||
                        Location.City.ToLower().Contains(keyWord) ||
-                       Location.City.ToLower().Contains(keyWord) ))
+                       Location.Country.ToLower().Contains(keyWord) ))
                 {
                     return false;
                 }

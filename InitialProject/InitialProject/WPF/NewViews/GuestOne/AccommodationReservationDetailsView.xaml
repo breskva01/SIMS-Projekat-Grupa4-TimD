@@ -191,7 +191,7 @@
                 <TextBlock 
                     FontWeight="Normal"
                     FontSize="22"
-                    Text="{Binding Reservation.Accommodation.Country}"/>
+                    Text="{Binding Reservation.Accommodation.Location.Country}"/>
                 <TextBlock 
                     FontWeight="Normal"
                     FontSize="22"
@@ -199,7 +199,7 @@
                 <TextBlock 
                     FontWeight="Normal"
                     FontSize="22"
-                    Text="{Binding Reservation.Accommodation.City}"/>
+                    Text="{Binding Reservation.Accommodation.Location.City}"/>
                 <TextBlock 
                     FontWeight="Normal"
                     FontSize="22"

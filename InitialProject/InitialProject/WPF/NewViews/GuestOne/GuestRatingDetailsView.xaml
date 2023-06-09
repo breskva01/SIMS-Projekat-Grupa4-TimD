@@ -55,8 +55,8 @@
                     FontSize="24"
                     VerticalAlignment="Center"
                     Text=" - ">
-                    <Run Text="{Binding Rating.Reservation.Accommodation.Country}"/>,
-                    <Run Text="{Binding Rating.Reservation.Accommodation.City}" />
+                    <Run Text="{Binding Rating.Reservation.Accommodation.Location.Country}"/>,
+                    <Run Text="{Binding Rating.Reservation.Accommodation.Location.City}" />
                 </TextBlock>
             </StackPanel>
 
