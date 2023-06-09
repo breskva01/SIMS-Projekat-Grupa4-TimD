@@ -38,8 +38,13 @@ namespace InitialProject.Repositories
         public void Save(Comment comment)
         {
             GetAll();
+            comment.Id = NextId();
             _comments.Add(comment);
             _fileHandler.Save(_comments);
+        }
+        private int NextId()
+        {
+            return _comments?.Max(c => c.Id) + 1 ?? 0;
         }
     }
 }

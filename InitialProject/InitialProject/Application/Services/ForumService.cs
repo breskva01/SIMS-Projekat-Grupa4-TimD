@@ -27,6 +27,18 @@ namespace InitialProject.Application.Services
 
             _forumRepository.Save(forum);
             _commentRepository.Save(comment);
+            //TO DO: Napravite obavestenje za vlasnike
+        }
+        public void Close(Forum forum)
+        {
+            _forumRepository.Close(forum.Id);
+        }
+        public void PostComment(Forum forum, User user, string commentText)
+        {
+            bool credentialUser = CheckIfUserHasCredentials(user, forum.Location);
+            var comment = new Comment(forum, commentText, user, DateTime.Now, credentialUser);
+            _commentRepository.Save(comment);
+            UpdateVeryUsefulStatus(forum.Id);
         }
         private bool CheckIfUserHasCredentials(User user, Location location)
         {
@@ -40,11 +52,40 @@ namespace InitialProject.Application.Services
         }
         private bool CheckIfGuestVisited(Guest1 guest, Location location)
         {
-            return false;
+            var reservationService = new AccommodationReservationService();
+            return reservationService.CheckIfGuestVisited(guest, location);
         }
         private bool CheckIfOwnerOwnsAccommodation(Owner owner, Location location)
         {
-            return false;
+            var accommodationService = new AccommodationService();
+            return accommodationService.CheckIfOwnerOwnsAccommodation(owner, location);
+        }
+        private void UpdateVeryUsefulStatus(int forumId)
+        {
+            int credentialGuestComments = 0;
+            int credentialOwnerComments = 0;
+            int guestCommentsNeeded = 20;
+            int ownerCommentsNeeded = 10;
+            var forum = _forumRepository.GetById(forumId);
+            //minimum possible number of comments for a forum to become very useful
+            if (forum.Comments.Count < guestCommentsNeeded + ownerCommentsNeeded) 
+                return;
+
+            CountComments(ref credentialGuestComments, ref credentialOwnerComments, forum);
+            if (credentialGuestComments >= guestCommentsNeeded && credentialOwnerComments >= ownerCommentsNeeded)
+                _forumRepository.MarkAsVeryUseful(forum.Id);
+        }
+        private void CountComments(ref int credentialGuestComments, ref int credentialOwnerComments, Forum forum)
+        {
+            foreach (Comment comment in forum.Comments)
+            {
+                if (!comment.CredentialAuthor)
+                    continue;
+                if (comment.Author is Guest1)
+                    credentialGuestComments++;
+                else
+                    credentialOwnerComments++;
+            }
         }
     }
 }

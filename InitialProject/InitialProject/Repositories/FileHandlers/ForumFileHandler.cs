@@ -21,6 +21,7 @@ namespace InitialProject.Repositories.FileHandlers
         {
             var forums = _serializer.FromCSV(_forumsFilePath);
             FillInIniators(forums);
+            FillInLocations(forums);
             FillInComments(forums);
             SortComments(forums);
             return forums;
@@ -28,8 +29,12 @@ namespace InitialProject.Repositories.FileHandlers
         private void FillInIniators(List<Forum> forums)
         {
             var users = new UserFileHandler().Load();
-            forums.ForEach(f =>
-                f.Initiator = users.Find(u => u.Id == f.Initiator.Id));
+            forums.ForEach(f => f.Initiator = users.Find(u => u.Id == f.Initiator.Id));
+        }
+        private void FillInLocations(List<Forum> forums)
+        {
+            var locations = new LocationFileHandler().Load();
+            forums.ForEach(f => f.Location = locations.Find(l => l.Id == f.Location.Id));
         }
         private void FillInComments(List<Forum> forums)
         {

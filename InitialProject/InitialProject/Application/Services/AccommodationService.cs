@@ -50,5 +50,10 @@ namespace InitialProject.Application.Services
         {
             _repository.UpdateRenovationStatus(id);
         }
+        public bool CheckIfOwnerOwnsAccommodation(Owner owner, Location location)
+        {
+            var accommodations = _repository.GetAllOwnersAccommodations(owner.Id);
+            return accommodations.Any(a => a.Location == location);
+        }
     }
 }

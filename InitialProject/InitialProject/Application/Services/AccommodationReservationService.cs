@@ -110,5 +110,12 @@ namespace InitialProject.Application.Services
         {
             return _reservationRepository.GetAvailableDates(start, end, duration, id);
         }
+        public bool CheckIfGuestVisited(Guest1 guest, Location location)
+        {
+            var reservations = _reservationRepository.GetFilteredReservations(guestId: guest.Id, 
+                                                        status: AccommodationReservationStatus.Finished);
+            reservations.AddRange(_reservationRepository.GetFilteredReservations(guestId: guest.Id));
+            return reservations.Any(r => r.Accommodation.Location == location);
+        }
     }
 }
