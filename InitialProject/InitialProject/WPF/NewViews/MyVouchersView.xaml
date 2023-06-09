@@ -40,6 +40,7 @@
         </ListBox>
 
         <Button Content="Menu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,420,0,0" Command="{Binding MenuCommand}" Width="100" />
+        <Button Content="Free voucher" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,420,0,0" Command="{Binding FreeVoucherProgressCommand}" Width="100" />
             
     </Grid>
 </UserControl>

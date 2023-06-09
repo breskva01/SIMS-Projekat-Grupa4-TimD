@@ -135,7 +135,7 @@ namespace InitialProject.WPF.ViewModels
             {
                 if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
                 {
-                    _reservationService.updateLastNotification(res);
+                    _reservationService.UpdateLastNotification(res);
                     IsNotified = false;
                 }
             }

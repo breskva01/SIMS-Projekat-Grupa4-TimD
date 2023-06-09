@@ -22,16 +22,6 @@ namespace InitialProject.Application.Services
         {
             _repository = RepositoryInjector.Get<IAccommodationReservationRepository>();
         }
-        public bool IsDiscountAvailable(Guest1 guest)
-        {
-            bool discountAvailable = guest.SpendABonusPoint();
-            if (discountAvailable)
-            {
-                var userRepository = RepositoryInjector.Get<IUserRepository>();
-                userRepository.Update(guest);
-            }
-            return discountAvailable;
-        }
         public void Save(AccommodationReservation accommodationReservation)
         {
             _repository.Save(accommodationReservation);
@@ -50,7 +40,9 @@ namespace InitialProject.Application.Services
         }
         public void Cancel(int reservationId, int ownerId)
         {
-            _repository.Cancel(reservationId);
+            var reservation = _repository.GetById(reservationId);
+            reservation.Status = AccommodationReservationStatus.Cancelled;
+            _repository.Update(reservation);
             RepositoryInjector.Get<IAccommodationReservationCancellationNotificationRepository>().
                 Save(new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
@@ -66,17 +58,20 @@ namespace InitialProject.Application.Services
         }
         public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly newCheckout)
         {
-            _repository.MoveReservation(reservationId, newCheckIn, newCheckout);
+            var reservation = _repository.GetById(reservationId);
+            reservation.CheckIn = newCheckIn;
+            reservation.CheckOut = newCheckout;
+            _repository.Update(reservation);
         }
-        public void updateLastNotification(AccommodationReservation accommodationReservation)
+        public void UpdateLastNotification(AccommodationReservation accommodationReservation)
         {
-            _repository.updateLastNotification(accommodationReservation);
-            NotifyObservers();
+            accommodationReservation.LastNotification = accommodationReservation.LastNotification.AddDays(1);
+            _repository.Update(accommodationReservation);
         }
-        public void updateRatingStatus(AccommodationReservation accommodationReservation)
+        public void MarkGuestAsRated(AccommodationReservation accommodationReservation)
         {
-            _repository.updateRatingStatus(accommodationReservation);
-            NotifyObservers();
+            accommodationReservation.IsGuestRated = true;
+            _repository.Update(accommodationReservation);
         }
         public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut)
         {
@@ -92,46 +87,6 @@ namespace InitialProject.Application.Services
                 cancelledReservatons.Add(_repository.GetById(n.ReservationId));
             });
             return cancelledReservatons;
-        }
-        public LineSeries GetYearlyReservations(int id)
-        {
-            return _repository.GetYearlyReservations(id);
-        }
-        public LineSeries GetYearlyCancellations(int id) 
-        {
-            return _repository.GetYearlyCancellations(id);
-        }
-        public LineSeries GetYearlyMovedReservations(int id)
-        {
-            return _repository.GetYearlyMovedReservations(id);
-        }
-        public LineSeries GetYearlyRenovationReccommendations(int id)
-        {
-            return _repository.GetYearlyRenovationReccommendations(id);
-        }
-        public LineSeries GetMonthlyReservations(int id, int year)
-        {
-            return _repository.GetMonthlyReservations(id, year);
-        }
-        public LineSeries GetMonthlyCancellations(int id, int year)
-        {
-            return _repository.GetMonthlyCancellations(id, year);
-        }
-        public LineSeries GetMonthlyMovedReservations(int id, int year)
-        {
-            return _repository.GetMonthlyMovedReservations(id, year);
-        }
-        public LineSeries GetMonthlyRenovationReccommendations(int id, int year)
-        {
-            return _repository.GetMonthlyRenovationReccommendations(id, year);
-        }
-        public string GetMostBookedYear(int id)
-        {
-            return _repository.GetMostBookedYear(id);
-        }
-        public string GetMostBookedMonth(int id, int year)
-        {
-            return _repository.GetMostBookedMonth(id, year);
         }
         public List<TimeSlot> GetAvailableDates(DateTime start, DateTime end, int duration, int id)
         {

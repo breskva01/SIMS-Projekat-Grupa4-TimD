@@ -15,6 +15,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public UserNotification Save(UserNotification notification);
         public void NotifyApprovedRequest(Tour tour, int userId);
         public void NotifySimilarRequests(Tour tour, List<TourRequest> requests);
+        public void NotifyFreeVoucher(int userId);
         public int NextId();
         public void Delete(UserNotification notification);
     }

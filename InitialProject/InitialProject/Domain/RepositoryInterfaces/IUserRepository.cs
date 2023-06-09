@@ -14,5 +14,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         User GetByUsername(string username);
         User Update(User user);
         User GetById(int id);
+        public bool IsEligibleForFreeVoucher(Guest2 guest);
     }
 }

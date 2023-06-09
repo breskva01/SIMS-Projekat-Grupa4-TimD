@@ -20,6 +20,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         private readonly VoucherService _voucherService;
 
         public ICommand MenuCommand { get; }
+        public ICommand FreeVoucherProgressCommand { get; }
 
         public MyVouchersViewModel(NavigationStore navigationStore, User user)
         {
@@ -36,12 +37,20 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             Vouchers = new ObservableCollection<Voucher>(_voucherService.FilterUnexpired(vouchers));
 
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
+            FreeVoucherProgressCommand = new ExecuteMethodCommand(ShowFreeVoucherProgressView);
         }
 
         private void ShowGuest2MenuView()
         {
             Guest2MenuViewModel guest2MenuViewModel = new Guest2MenuViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guest2MenuViewModel));
+            navigate.Execute(null);
+        }
+
+        private void ShowFreeVoucherProgressView()
+        {
+            FreeVoucherProgressViewModel freeVoucherProgressViewModel = new FreeVoucherProgressViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, freeVoucherProgressViewModel));
             navigate.Execute(null);
         }
     }

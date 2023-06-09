@@ -60,7 +60,7 @@ namespace InitialProject.Domain.Models
             Type = type;
             MaximumGuests = maximumGuests;
             MinimumDays = minimumDays;
-            MinimumCancelationNotice = minimumCancelationNotice;
+            MinimumCancelationNotice = minimumCancelationNotice >= 1 ? minimumCancelationNotice : 1;
             PictureURLs = pictureURLs;
             Owner = owner;
             Status = status;

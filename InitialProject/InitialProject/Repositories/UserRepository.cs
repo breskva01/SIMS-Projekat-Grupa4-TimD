@@ -50,6 +50,35 @@ namespace InitialProject.Repository
             return _users.FirstOrDefault(u => u.Username == username);
         }
 
+        public bool IsEligibleForFreeVoucher(Guest2 guest)
+        {
+            if(guest.FreeVoucherProgress == 0)
+            {
+                guest.FreeVoucherProgressLimit = DateTime.UtcNow.AddYears(1);
+            }
+
+            if(DateTime.UtcNow.CompareTo(guest.FreeVoucherProgressLimit) > 0)
+            {
+                guest.FreeVoucherProgress = 1;
+                guest.FreeVoucherProgressLimit = DateTime.UtcNow.AddYears(1);
+                Update(guest);
+                return false;
+            }
+            else
+            {
+                guest.FreeVoucherProgress++;
+                if(guest.FreeVoucherProgress == 5)
+                {
+                    guest.FreeVoucherProgress = 0;
+                    Update(guest);
+                    return true;
+                }
+                Update(guest);
+                return false;
+            }
+
+        }
+
         public User Update(User user)
         {
             GetAll();

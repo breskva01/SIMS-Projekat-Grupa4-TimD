@@ -17,12 +17,25 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         private readonly AccommodationReservationRequestService _requestService;
         private readonly NavigationStore _navigationStore;
         public AccommodationReservation Reservation { get; set; }
-        public DateTime CheckIn { get; set; }
+        private DateTime _checkIn;
+        public DateTime CheckIn
+        {
+            get => _checkIn;
+            set
+            {
+                if (_checkIn != value)
+                {
+                    _checkIn = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public DateTime CheckOut { get; set; }
         public ICommand SubmitRequestCommand { get; }
         public ICommand NavigateMyResevationsCommand { get; }
         public AccommodationReservationMoveRequestViewModel(NavigationStore navigationStore, AccommodationReservation reservation)
         {
+            CheckIn = DateTime.Now;
             _navigationStore = navigationStore;
             _requestService = new AccommodationReservationRequestService();
             Reservation = reservation;

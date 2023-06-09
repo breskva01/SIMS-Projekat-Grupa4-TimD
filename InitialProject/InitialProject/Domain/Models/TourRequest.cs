@@ -30,6 +30,7 @@ namespace InitialProject.Domain.Models
         public DateTime EarliestDate { get; set; }
         public DateTime LatestDate { get; set; } 
         public int TourId { get; set; }
+        public bool IsPartOfComplexTour { get; set; }
 
         public TourRequest()
         {
@@ -70,6 +71,7 @@ namespace InitialProject.Domain.Models
             EarliestDate = DateTime.ParseExact(values[7], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             LatestDate = DateTime.ParseExact(values[8], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             TourId = Convert.ToInt32(values[9]);
+            IsPartOfComplexTour = Convert.ToBoolean(values[10]);
         }
 
         public string[] ToCSV()
@@ -86,6 +88,7 @@ namespace InitialProject.Domain.Models
                 EarliestDate.ToString("dd.MM.yyyy. HH:mm:ss"),
                 LatestDate.ToString("dd.MM.yyyy. HH:mm:ss"),
                 TourId.ToString(),
+                IsPartOfComplexTour.ToString(),
             };
             return csvValues;
         }

@@ -19,8 +19,10 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         private Tour _tour;
         private readonly NavigationStore _navigationStore;
         private TourReservation _pendingReservation;
+        private readonly UserService _userService;
         private readonly TourReservationService _tourReservationService;
         private readonly TourService _tourService;
+        private readonly VoucherService _voucherService;
         public string TourName { get; set; }
 
         public ICommand YesCommand { get; }
@@ -32,6 +34,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             _user = user;
             _tourReservationService = new TourReservationService();
             _tourService = new TourService();
+            _userService = new UserService();
 
             _pendingReservation = _tourReservationService.GetActivePending(_user.Id).FirstOrDefault();
             _tour = _tourService.GetById(_pendingReservation.TourId);
@@ -71,6 +74,8 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
                 _tourReservationService.Update(tr);
             }
             _tourService.Update(_tour);
+
+            _userService.CheckVoucherProgress((Guest2) _user);
 
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, DefineNextView()));
             navigate.Execute(null);
