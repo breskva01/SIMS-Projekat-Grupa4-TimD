@@ -71,8 +71,8 @@ namespace InitialProject.Repository
         }
         private List<Accommodation> SortByLocation(List<Accommodation> accommodations)
         {
-            return accommodations.OrderBy(a => a.Country)
-                                          .ThenBy(a => a.City)
+            return accommodations.OrderBy(a => a.Location.Country)
+                                          .ThenBy(a => a.Location.City)
                                           .ToList();
         }
         private List<Accommodation> SortByMaxGuestCount(List<Accommodation> accommodations)
@@ -83,12 +83,12 @@ namespace InitialProject.Repository
         {
             return accommodations.OrderBy(a => a.MinimumDays).ToList();
         }
-        public void Add(string name, string country, string city, string address, AccommodationType type,
+        public void RegisterAccommodation(string name, Location location, string address, AccommodationType type,
             int maximumGuests, int minimumDays, int minimumCancelationNotice, List<string> pictureURLs, User owner)
         {
             GetAll();
             int accommodationId = NextId();
-            Accommodation accommodation = new Accommodation(accommodationId, name, country, city, address,
+            Accommodation accommodation = new Accommodation(accommodationId, name, location, address,
                 type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, (Owner)owner, RenovationStatus.Available, false);
             _accommodations.Add(accommodation);
             _fileHandler.Save(_accommodations);

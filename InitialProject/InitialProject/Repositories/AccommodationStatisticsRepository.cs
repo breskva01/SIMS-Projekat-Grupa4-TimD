@@ -17,19 +17,21 @@ namespace InitialProject.Repositories
         private readonly AccommodationReservationFileHandler _fileHandler;
         private AccommodationReservationMoveRequestRepository _moveRequestRepository;
         private AccommodationRatingRepository _ratingRepository;
+        private LocationRepository _locationRepository;
         public AccommodationStatisticsRepository()
         {
             _fileHandler = new AccommodationReservationFileHandler();
             _moveRequestRepository = new AccommodationReservationMoveRequestRepository();
             _ratingRepository = new AccommodationRatingRepository();
+            _locationRepository = new LocationRepository();
         }
-        public List<AccommodationReservation> GetAll()
+        public List<AccommodationReservation> GetAllReservations()
         {
             return _reservations = _fileHandler.Load();
         }
         public LineSeries GetYearlyReservations(int id)
         {
-            GetAll();
+            GetAllReservations();
             var series = new LineSeries();
             DateOnly start = new DateOnly(2020, 1, 1);
             List<AccommodationReservation> reservationsPerYear = new List<AccommodationReservation>();
@@ -49,7 +51,7 @@ namespace InitialProject.Repositories
         }
         public LineSeries GetYearlyCancellations(int id)
         {
-            GetAll();
+            GetAllReservations();
             var series = new LineSeries();
             DateOnly start = new DateOnly(2020, 1, 1);
             List<AccommodationReservation> cancellationsPerYear = new List<AccommodationReservation>();
@@ -69,7 +71,7 @@ namespace InitialProject.Repositories
         }
         public LineSeries GetYearlyMovedReservations(int id)
         {
-            GetAll();
+            GetAllReservations();
             var series = new LineSeries();
             DateOnly start = new DateOnly(2020, 1, 1);
             List<AccommodationReservation> movedReservationsPerYear = new List<AccommodationReservation>();
@@ -93,7 +95,7 @@ namespace InitialProject.Repositories
         }
         public LineSeries GetYearlyRenovationReccommendations(int id)
         {
-            GetAll();
+            GetAllReservations();
             var series = new LineSeries();
             DateOnly start = new DateOnly(2020, 1, 1);
             List<AccommodationReservation> renovationReccommendationsPerYear = new List<AccommodationReservation>();
@@ -117,7 +119,7 @@ namespace InitialProject.Repositories
         }
         public LineSeries GetMonthlyReservations(int id, int year)
         {
-            GetAll();
+            GetAllReservations();
             var series = new LineSeries();
             DateOnly start = new DateOnly(year, 1, 1);
             DateOnly end = new DateOnly(year, 12, 31);
@@ -138,7 +140,7 @@ namespace InitialProject.Repositories
         }
         public LineSeries GetMonthlyCancellations(int id, int year)
         {
-            GetAll();
+            GetAllReservations();
             var series = new LineSeries();
             DateOnly start = new DateOnly(year, 1, 1);
             DateOnly end = new DateOnly(year, 12, 31);
@@ -159,7 +161,7 @@ namespace InitialProject.Repositories
         }
         public LineSeries GetMonthlyMovedReservations(int id, int year)
         {
-            GetAll();
+            GetAllReservations();
             var series = new LineSeries();
             DateOnly start = new DateOnly(year, 1, 1);
             DateOnly end = new DateOnly(year, 12, 31);
@@ -184,7 +186,7 @@ namespace InitialProject.Repositories
         }
         public LineSeries GetMonthlyRenovationReccommendations(int id, int year)
         {
-            GetAll();
+            GetAllReservations();
             var series = new LineSeries();
             DateOnly start = new DateOnly(year, 1, 1);
             DateOnly end = new DateOnly(year, 12, 31);
@@ -209,7 +211,7 @@ namespace InitialProject.Repositories
         }
         public string GetMostBookedYear(int id)
         {
-            GetAll();
+            GetAllReservations();
             string mostBooked;
             int sumOfDays = 0;
             int max = 0;
@@ -245,7 +247,7 @@ namespace InitialProject.Repositories
         }
         public string GetMostBookedMonth(int id, int year)
         {
-            GetAll();
+            GetAllReservations();
             string mostBooked;
             int monthNumber;
             int sumOfDays = 0;
@@ -313,6 +315,109 @@ namespace InitialProject.Repositories
                 default:
                     return "December";
             }
+        }
+        public List<Location> GetMostPopularLocations() 
+        {
+            GetAllReservations();
+            List<Location> locations= new List<Location>();
+            List<LocationPopularity> popularities= new List<LocationPopularity>();
+            foreach(AccommodationReservation reservation in _reservations)
+            {
+                if (locations.Find(l => l.Id == reservation.Accommodation.Location.Id) == null)
+                {
+                    locations.Add(reservation.Accommodation.Location);
+                }
+            }
+            foreach(Location location in locations)
+            {
+                LocationPopularity locationPopularity = new LocationPopularity(location, 0, 0);
+                popularities.Add(locationPopularity);
+            }
+            locations.Clear();
+            int totalReservations = 0;
+            int sumOfDays = 0;
+            DateTime start = new DateTime(2020, 1, 1);
+            TimeSpan duration;
+            foreach (LocationPopularity popularity in popularities)
+            {
+                foreach(AccommodationReservation reservation in _reservations)
+                {
+                    if(reservation.Accommodation.Location.Id == popularity.Location.Id)
+                    {
+                        totalReservations += 1;
+                        sumOfDays += reservation.CheckOut.DayNumber - reservation.CheckIn.DayNumber;
+                    }
+                }
+                popularity.Reservations = totalReservations;
+                duration = DateTime.Now - start;
+                popularity.OccupancyRate = sumOfDays / Convert.ToDouble(duration.Days);
+                totalReservations = 0;
+                sumOfDays = 0;
+            }
+            var orderedPopularities = popularities.OrderBy(p => p.Reservations).ThenBy(p => p.OccupancyRate);
+            var reversedPopularities = orderedPopularities.Reverse();
+            int i = 0;
+            foreach(LocationPopularity popularity in reversedPopularities)
+            {
+                locations.Add(popularity.Location);
+                i += 1;
+                if(i == 3)
+                {
+                    break;
+                }
+            }
+            return locations;
+        }
+        public List<Location> GetMostUnpopularLocations()
+        {
+            GetAllReservations();
+            List<Location> locations = new List<Location>();
+            List<LocationPopularity> popularities = new List<LocationPopularity>();
+            foreach (AccommodationReservation reservation in _reservations)
+            {
+                if (locations.Find(l => l.Id == reservation.Accommodation.Location.Id) == null)
+                {
+                    locations.Add(reservation.Accommodation.Location);
+                }
+            }
+            foreach (Location location in locations)
+            {
+                LocationPopularity locationPopularity = new LocationPopularity(location, 0, 0);
+                popularities.Add(locationPopularity);
+            }
+            locations.Clear();
+            int totalReservations = 0;
+            int sumOfDays = 0;
+            DateTime start = new DateTime(2020, 1, 1);
+            TimeSpan duration;
+            foreach (LocationPopularity popularity in popularities)
+            {
+                foreach (AccommodationReservation reservation in _reservations)
+                {
+                    if (reservation.Accommodation.Location.Id == popularity.Location.Id)
+                    {
+                        totalReservations += 1;
+                        sumOfDays += reservation.CheckOut.DayNumber - reservation.CheckIn.DayNumber;
+                    }
+                }
+                popularity.Reservations = totalReservations;
+                duration = DateTime.Now - start;
+                popularity.OccupancyRate = sumOfDays / Convert.ToDouble(duration.Days);
+                totalReservations = 0;
+                sumOfDays = 0;
+            }
+            var orderedPopularities = popularities.OrderBy(p => p.Reservations).ThenBy(p => p.OccupancyRate);
+            int i = 0;
+            foreach (LocationPopularity popularity in orderedPopularities)
+            {
+                locations.Add(popularity.Location);
+                i += 1;
+                if (i == 3)
+                {
+                    break;
+                }
+            }
+            return locations;
         }
     }
 }

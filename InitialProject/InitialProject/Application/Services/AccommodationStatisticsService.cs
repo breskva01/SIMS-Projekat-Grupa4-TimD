@@ -1,4 +1,5 @@
 ﻿using InitialProject.Application.Injector;
+using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using OxyPlot.Series;
 using System;
@@ -55,6 +56,14 @@ namespace InitialProject.Application.Services
         public string GetMostBookedMonth(int id, int year)
         {
             return _repository.GetMostBookedMonth(id, year);
+        }
+        public List<Location> GetMostPopularLocations() 
+        {
+            return _repository.GetMostPopularLocations();
+        }
+        public List<Location> GetMostUnpopularLocations()
+        {
+            return _repository.GetMostUnpopularLocations();
         }
     }
 }

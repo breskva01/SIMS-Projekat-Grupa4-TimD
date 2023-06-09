@@ -10,6 +10,7 @@ using OxyPlot.Axes;
 using OxyPlot.Wpf;
 using System.Windows.Controls;
 using InitialProject.Application.Services;
+using System.Collections.ObjectModel;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -21,6 +22,10 @@ namespace InitialProject.WPF.ViewModels
         public PlotModel Cancellations { get; set; }
         public PlotModel MovedReservations { get; set; }
         public PlotModel RenovationReccommendations { get; set; }
+        public ObservableCollection<Location> PopularLocations { get; set; }
+        public ObservableCollection<Location> UnpopularLocations { get; set; }
+        public Location SelectedPopularLocation { get; set; }
+        public Location SelectedUnpopularLocation { get; set; }
         private string _mostBooked;
         public string MostBooked
         {
@@ -99,6 +104,8 @@ namespace InitialProject.WPF.ViewModels
             MovedReservations = new PlotModel { Title = "Moved reservations" };
             RenovationReccommendations = new PlotModel { Title = "Reccommendations" };
             _accommodationStatisticsService = new AccommodationStatisticsService();
+            PopularLocations = new ObservableCollection<Location>(_accommodationStatisticsService.GetMostPopularLocations());
+            UnpopularLocations = new ObservableCollection<Location>(_accommodationStatisticsService.GetMostUnpopularLocations());
             ShowYearlyGraphs();
 
         }
