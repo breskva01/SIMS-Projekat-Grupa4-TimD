@@ -32,12 +32,23 @@ namespace InitialProject.WPF.ViewModels
         public ICommand LogOutCommand { get; }
         public ICommand GuideProfileCommand { get; }
 
-
+        private string _videoSource;
+        public string VideoSource
+        {
+            get { return _videoSource; }
+            set
+            {
+                _videoSource = value;
+                OnPropertyChanged(nameof(VideoSource));
+            }
+        }
 
         public GuideMenuViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
             _user = user;
+
+            VideoSource = "/Resources/Images/backGroundVideo.mp4";
 
             CreateTourCommand = new ExecuteMethodCommand(ShowTourCreationView);
             LiveTrackingCommand = new ExecuteMethodCommand(ShowToursTodayView);

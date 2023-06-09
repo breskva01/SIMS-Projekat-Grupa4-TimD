@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             xmlns:media="clr-namespace:System.Windows.Media;assembly=PresentationCore"
+             xmlns:animations="clr-namespace:System.Windows.Media.Animation;assembly=PresentationCore"
+             xmlns:vlc="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="768" d:DesignWidth="1024">
-
+             d:DesignHeight="768" d:DesignWidth="1024" Loaded="UserControl_Loaded" >
     <UserControl.Resources>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
@@ -72,6 +74,7 @@
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
+            
             <Border Grid.Row="0" Background="#270138 "/>
             <Button x:Name="ButtonMenu" BorderBrush="Transparent"  Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="\Resources\Images\menuW.png"></Image>
@@ -90,7 +93,7 @@
                 <Image Height="40" Width="35" Source="\Resources\Images\profileWhite.png"></Image>
             </Button>
             <Image Source="\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
-            <Label Foreground="Black"  Content="ᗯEᒪᑕOᗰE TO TᖇᗩᐯEᒪᗷᑌᗪᗪY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
+            <Label  x:Name="label" Foreground="Black"  Content="ᗯEᒪᑕOᗰE TO TᖇᗩᐯEᒪᗷᑌᗪᗪY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
 
             </Label>
             <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="ᖴOᑌᑎᗪEᗪ Iᑎ 1996 Iᑎ ᑎOᐯI Sᗩᗪ, .TᖇᗩᐯEᒪᗷᑌᗪᗪY ᕼᗩS GᖇOᗯᑎ ᖴᖇOᗰ ᗩ Sᗰᗩᒪᒪ SEᖇᗷIᗩᑎ STᗩᖇTᑌᑭ TO OᑎE Oᖴ TᕼE ᗯOᖇᒪᗪ’S ᒪEᗩᗪIᑎG ᗪIGITᗩᒪ TᖇᗩᐯEᒪ ᑕOᗰᑭᗩᑎIES. TᖇᗩᐯEᒪᗷᑌᗪᗪY’S ᗰISSIOᑎ IS TO ᗰᗩKE IT EᗩSIEᖇ ᖴOᖇ EᐯEᖇYOᑎE TO E᙭ᑭEᖇIEᑎᑕE TᕼE ᗯOᖇᒪᗪ. TᖇᗩᐯEᒪᗷᑌᗪᗪY IS ᗩᐯᗩIᒪᗩᗷᒪE Iᑎ 43 ᒪᗩᑎGᑌᗩGES ᗩᑎᗪ OᖴᖴEᖇS ᗰOᖇE Tᕼᗩᑎ 28 ᗰIᒪᒪIOᑎ TOTᗩᒪ ᖇEᑭOᖇTEᗪ ᗩᑕᑕOᗰᗰOᗪᗩTIOᑎ ᒪISTIᑎGS, IᑎᑕᒪᑌᗪIᑎG OᐯEᖇ 6.6 ᗰIᒪᒪIOᑎ ᒪISTIᑎGS ᗩᒪOᑎE Oᖴ ᕼOᗰES, ᗩᑭᗩᖇTᗰEᑎTS ᗩᑎᗪ OTᕼEᖇ ᑌᑎIᑫᑌE ᑭᒪᗩᑕES TO STᗩY." VerticalAlignment="Top" Height="270" Width="656" FontSize="20"/>

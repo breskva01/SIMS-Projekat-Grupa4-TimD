@@ -79,8 +79,8 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="TᕼE ᗰOST ᑭOᑭᑌᒪᗩᖇ TOᑌᖇ Iᑎ" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
                     <ComboBox FontSize="25" ItemsSource="{Binding AvaiableYears}" SelectedItem="{Binding SelectedYear}" Grid.Row="0" Grid.Column="1" Width="250" Height="44" HorizontalAlignment="Left"/>
-                    <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20"/>
-                    <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="20" ItemsSource="{Binding MostVisited}" BorderBrush="Black" BorderThickness="2" d:ItemsSource="{d:SampleData ItemCount=1}">
+                    <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,20,45"/>
+                    <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,20,45" ItemsSource="{Binding MostVisited}" BorderBrush="Black" BorderThickness="2" d:ItemsSource="{d:SampleData ItemCount=1}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -128,7 +128,7 @@
                     </ComboBox>
 
                     <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20"/>
-                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="24,20,16,20">
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="24,10,16,10">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -191,13 +191,13 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="TᕼE ᗰOST ᑭOᑭᑌᒪᗩᖇ TOᑌᖇ Iᑎ" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
-                    <ComboBox FontSize="25" ItemsSource="{Binding AvaiableYears}" SelectedItem="{Binding SelectedYear}" Grid.Row="0" Grid.Column="1" Width="250" Height="44" HorizontalAlignment="Left"/>
-                    <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20"/>
-                    <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="20" ItemsSource="{Binding MostVisited}" BorderBrush="Black" BorderThickness="2" d:ItemsSource="{d:SampleData ItemCount=1}">
+                    <ComboBox FontSize="25" ItemsSource="{Binding AvaiableYears}" SelectedItem="{Binding SelectedYear}" Grid.Row="0" Grid.Column="1" Width="250" Height="44" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,20,45"/>
+                    <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="20,0,20,45" ItemsSource="{Binding MostVisited}" BorderBrush="Black" BorderThickness="2" d:ItemsSource="{d:SampleData ItemCount=1}" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding PictureURL}" Width="200" Height="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <StackPanel Height="200" Orientation="Horizontal">
+                                    <Image Source="{Binding PictureURL}" Height="160" Margin="10,10,10,30"/>
                                     <StackPanel>
                                         <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="35" Margin="10,0,0,0"/>
                                         <TextBlock Margin="10,0,0,0">
@@ -241,37 +241,37 @@
                     </ComboBox>
 
                     <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20"/>
-                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="24,20,16,20">
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="24,10,16,10">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="82*"/>
-                            <ColumnDefinition Width="82*"/>
-                            <ColumnDefinition Width="113*"/>
-                            <ColumnDefinition Width="51*"/>
+                                <ColumnDefinition Width="82*"/>
+                                <ColumnDefinition Width="82*"/>
+                                <ColumnDefinition Width="113*"/>
+                                <ColumnDefinition Width="51*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="0,0,3,0"/>
-                        <Label FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᑎᑌᗰᗷEᖇ Oᖴ GᑌESTS" Height="37" Width="194"/>
-                        <Label FontSize="20" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᑌᑎᗪEᖇ 18" Height="37" Width="100"/>
-                        <Label FontSize="20" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᗷETᗯEEᑎ 18 ᗩᑎᗪ 50" Height="37" Width="196"/>
-                        <Label FontSize="20" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᗩᗷOᐯE 50" Height="37" Width="104"/>
-                        <TextBox FontSize="20" Width="50" Height="30" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AllGuests}"  Margin="10,0,0,0" />
-                        <TextBox FontSize="20" Width="50" Height="30" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MinorGuests}"  Margin="10,0,0,0" />
-                        <TextBox FontSize="20" Width="50" Height="30" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MiddleAgeGuests}"  Margin="10,0,0,0" />
-                        <TextBox FontSize="20" Width="50" Height="30" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding OlderGuests}"  Margin="10,0,0,0" />
+                            <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+                            <Border Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="5" BorderThickness="2" BorderBrush="Black"/>
+                        <Label FontSize="20" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᑎᑌᗰᗷEᖇ Oᖴ GᑌESTS" Height="37" Width="194"/>
+                            <Label FontSize="20" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᑌᑎᗪEᖇ 18" Height="37" Width="100"/>
+                            <Label FontSize="20" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᗷETᗯEEᑎ 18 ᗩᑎᗪ 50" Height="37" Width="196"/>
+                            <Label FontSize="20" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᗩᗷOᐯE 50" Height="37" Width="104"/>
+                        <TextBox FontSize="20" Width="50" HorizontalContentAlignment="Center" Height="30" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AllGuests}"  Margin="10,0,0,0" />
+                            <TextBox FontSize="20" Width="50" Height="30" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MinorGuests}"  Margin="10,0,0,0" />
+                            <TextBox FontSize="20" Width="50" Height="30" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MiddleAgeGuests}"  Margin="10,0,0,0" />
+                            <TextBox FontSize="20" Width="50" Height="30" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding OlderGuests}"  Margin="10,0,0,0" />
 
 
-                        <Label Margin="40,0,0,0" Grid.Row="1" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GᑌESTS ᗯITᕼ ᐯOᑌᑕᕼEᖇS" Height="37" Width="300"/>
-                        <Label Margin="40,0,0,0" Grid.Row="2" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GᑌESTS ᗯITᕼOᑌT ᐯOᑌᑕᕼEᖇS" Height="37" Width="300"/>
-                        <TextBox FontSize="20" Grid.Row="1" Grid.Column="3" Width="50" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithVoucher}" IsReadOnly="True" />
-                        <TextBox FontSize="20" Grid.Row="2" Grid.Column="3" Width="50" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithoutVoucher}" IsReadOnly="True"/>
+                            <Label Margin="40,0,0,0" Grid.Row="1" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GᑌESTS ᗯITᕼ ᐯOᑌᑕᕼEᖇS" Height="37" Width="300"/>
+                            <Label Margin="40,0,0,0" Grid.Row="2" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GᑌESTS ᗯITᕼOᑌT ᐯOᑌᑕᕼEᖇS" Height="37" Width="300"/>
+                            <TextBox FontSize="20" Grid.Row="1" Grid.Column="3" Width="60" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithVoucher}" IsReadOnly="True" />
+                            <TextBox FontSize="20" Grid.Row="2" Grid.Column="3" Width="60" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithoutVoucher}" IsReadOnly="True"/>
 
-                    </Grid>
-
+                        </Grid>
                 </Grid>
             </Grid>
         </Grid>

@@ -7,7 +7,6 @@
              mc:Ignorable="d" 
              Height="300" Width="300" WindowStartupLocation="CenterScreen">
     <Grid>
-
         <StackPanel Height="150">
             <TextBox Text="{Binding Name}" Width="100" Margin="30"/>
             

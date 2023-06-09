@@ -9,6 +9,17 @@
              d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid x:Name="InterfaceGrid">
@@ -31,41 +42,38 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="600"/>
+                    <ColumnDefinition Width="340"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="5" Margin="10">
-                    <DockPanel>
-                        <StackPanel>
-                            <Label Content="Country" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                            <ComboBox  ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"  FontSize="15" Margin="10,5,0,5" HorizontalAlignment="Left" Width="200"/>
-                            <Label Content="City" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                            <ComboBox  ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}"  FontSize="15" Margin="10,5,0,5" HorizontalAlignment="Left" Width="200"/>
-                            <Label Content="Language" HorizontalAlignment="Left" FontSize="15" Margin="10,5,0,0"/>
-                            <ComboBox FontSize="15" Margin="10,5,0,5" HorizontalAlignment="Left" Width="200" SelectedItem="{Binding SelectedLanguage}" ItemsSource="{Binding Languages}">
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel>
-                            <DockPanel>
-                                <RadioButton IsChecked="{Binding IsCheckedYears}" Margin="50,0,25,0" VerticalAlignment="Center" GroupName="Opcija"/>
-                                <Label Content="By Years" Margin="0,20,25,20"  VerticalAlignment="Center" FontSize="15"/>
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="3" Margin="20,20,20,20">
+                    <StackPanel Width="290" HorizontalAlignment="Left">
+                        <Label Content="Country" HorizontalAlignment="Left" FontSize="15" Margin="20,10,0,0"/>
+                        <ComboBox  ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"  FontSize="20" Margin="20,5,0,5" HorizontalAlignment="Left" Width="250"/>
+                        <Label Content="City" HorizontalAlignment="Left" FontSize="15" Margin="20,5,0,0"/>
+                        <ComboBox  ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}"  FontSize="20" Margin="20,5,0,5" HorizontalAlignment="Left" Width="250"/>
+                        <Label Content="Language" HorizontalAlignment="Left" FontSize="15" Margin="20,5,0,0"/>
+                        <ComboBox FontSize="20" Margin="20,5,0,5" HorizontalAlignment="Left" Width="250" SelectedItem="{Binding SelectedLanguage}" ItemsSource="{Binding Languages}">
+                        </ComboBox>
+                        <DockPanel Margin="0,10,0,0">
+                            <RadioButton IsChecked="{Binding IsCheckedYears}" Margin="40,0,25,0" VerticalAlignment="Center" GroupName="Opcija"/>
+                            <Label Content="By Years" Margin="0,10,25,10"  VerticalAlignment="Center" FontSize="15"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <RadioButton IsChecked="{Binding IsCheckedMonths}" Margin="40,20,25,20" VerticalAlignment="Center" GroupName="Opcija"/>
+                            <Label Content="By months" Margin="0,10,25,10"  VerticalAlignment="Center" FontSize="15"/>
+                            <ComboBox Text="" Width="70" Height="30" Margin="-10,0,0,0" ItemsSource="{Binding AllYears}" SelectedItem="{Binding SelectedYear}"/>
+                        </DockPanel>
+                        <Button Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" FontSize="22" Foreground="White"  Background="#270138" Command="{Binding ResetCommand}" Content="Reset" Width="140" Margin="5,35,15,5"/>
 
-                            </DockPanel>
-                            <DockPanel>
-                                <RadioButton IsChecked="{Binding IsCheckedMonths}" Margin="50,20,25,20" VerticalAlignment="Center" GroupName="Opcija"/>
-                                <Label Content="By months" Margin="0,20,25,20"  VerticalAlignment="Center" FontSize="15"/>
-                                <ComboBox Text="" Width="70" Height="30" Margin="0,0,0,0" ItemsSource="{Binding AllYears}" SelectedItem="{Binding SelectedYear}"/>
-                            </DockPanel>
-                            <Button Command="{Binding ResetCommand}" Content="Reset" Width="200" Margin="5,100,15,5"/>
-                        </StackPanel>
-                    </DockPanel>
+                    </StackPanel>
+
                 </Border>
-                <Grid  Grid.Row="0" Grid.Column="1">
+                <Grid  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" >
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <lvc:CartesianChart  Visibility="{Binding IsFirstLocationGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}"  Grid.Row="0" Series="{Binding SeriesCollectionYearLocation}" Margin="2">
+                    <lvc:CartesianChart BorderBrush="Black"  BorderThickness="0,0,0,2" Visibility="{Binding IsFirstLocationGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}"  Grid.Row="0" Series="{Binding SeriesCollectionYearLocation}" Margin="0,20,20,-5">
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Years" Labels="{Binding YearsAxes}"/>
                         </lvc:CartesianChart.AxisX>
@@ -73,7 +81,7 @@
                             <lvc:Axis Title="Number of Requests" LabelFormatter="{Binding YFormatter}"/>
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
-                    <lvc:CartesianChart Visibility="{Binding IsSecondLocationGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="0" Series="{Binding SeriesCollectionMonthLocation}" Margin="2">
+                    <lvc:CartesianChart BorderBrush="Black"  BorderThickness="0,0,0,2" Visibility="{Binding IsSecondLocationGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="0" Series="{Binding SeriesCollectionMonthLocation}" Margin="0,20,20,-5">
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Months" Labels="{Binding MonthsAxes}"/>
                         </lvc:CartesianChart.AxisX>
@@ -81,7 +89,7 @@
                             <lvc:Axis Title="Number of Requests" LabelFormatter="{Binding YFormatter}"/>
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
-                    <lvc:CartesianChart  Visibility="{Binding IsFirstLanguageGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}"  Grid.Row="1" Series="{Binding SeriesCollectionYearLanguage}" Margin="2">
+                    <lvc:CartesianChart BorderBrush="Black"  BorderThickness="0,2,0,0" Visibility="{Binding IsFirstLanguageGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}"  Grid.Row="1" Series="{Binding SeriesCollectionYearLanguage}" Margin="0,5,20,0">
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Years" Labels="{Binding YearsAxes}"/>
                         </lvc:CartesianChart.AxisX>
@@ -89,7 +97,7 @@
                             <lvc:Axis Title="Number of Requests" LabelFormatter="{Binding YFormatter}"/>
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
-                    <lvc:CartesianChart Visibility="{Binding IsSecondLanguageGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="1" Series="{Binding SeriesCollectionMonthLanguage}" Margin="2">
+                    <lvc:CartesianChart BorderBrush="Black"  BorderThickness="0,2,0,0" Visibility="{Binding IsSecondLanguageGraphVisible, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="1" Series="{Binding SeriesCollectionMonthLanguage}" Margin="0,5,20,0">
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Months" Labels="{Binding MonthsAxes}"/>
                         </lvc:CartesianChart.AxisX>
@@ -98,35 +106,34 @@
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </Grid>
-                    
+
                 <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,5,0,0"/>
                 <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <DockPanel Grid.Column="0" Grid.Row="0">
-                        <RadioButton IsChecked="{Binding IsCheckedLocation}" GroupName="ForCreatingTour" Margin="80,0,0,0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <Label Margin="0,0,60,0" Content="By most requested location" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <DockPanel Grid.Column="0" Grid.Row="1">
-                        <RadioButton IsChecked="{Binding IsCheckedLanguage}"  GroupName="ForCreatingTour" Margin="80,0,0,0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <Label Margin="0,0,60,0" Content="By most requested language" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <DockPanel Grid.Column="1" Grid.Row="0">
-                        <Label Margin="20,0,5,0" Content="Most requested location is: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox Margin="0,0,40,0" Height="30" Width="96" Text="{Binding Location, UpdateSourceTrigger=PropertyChanged}"/>
-                    </DockPanel>
-                    <DockPanel Grid.Column="1" Grid.Row="1">
-                        <Label Margin="20,0,5,0" Content="Most requested language is: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox Margin="0,0,40,0" Height="30" Width="96" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}"/>
-                    </DockPanel>
-                    <Button Grid.Column="2" Content="CREATE" Command="{Binding CreateCommand}" HorizontalAlignment="Left" Margin="129,80,0,20" VerticalAlignment="Top" Height="54" Grid.RowSpan="2" Width="123" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Most requested LOCATION is : " FontSize="20"  VerticalAlignment="Center" Margin="100,0,0,0"/>
+                    <Label  Grid.Row="1" Grid.Column="0" Content="Most requested LANGUAGE is : " FontSize="20"  VerticalAlignment="Center" Margin="100,0,0,0"/>
+                    <ListBox  SelectedItem="{Binding SelectedLocationCreation, Mode=TwoWay}" d:ItemsSource="{d:SampleData ItemCount=1}" ItemsSource="{Binding LocationsListBox}" Grid.Row="0" Grid.Column="1" Height="50" Width="250" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock  Height="43" FontSize="25" Text="{Binding}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox  SelectedItem="{Binding SelectedLanguageCreation,  Mode=TwoWay}"  d:ItemsSource="{d:SampleData ItemCount=1}" ItemsSource="{Binding LanguagesListBox}" Grid.Row="1" Grid.Column="1" Height="50" Width="250" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock  Height="43" FontSize="25" Text="{Binding}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Cursor="Hand" Command="{Binding CreateCommand}" FontWeight="Bold" FontSize="22" Foreground="White"  Background="#270138" Style="{StaticResource RoundButtonStyle}" Grid.Column="1" Content="CREATE" HorizontalAlignment="Left" Margin="395,70,0,0" VerticalAlignment="Top" Height="58" Grid.RowSpan="2" Width="107"/>
                 </Grid>
 
             </Grid>

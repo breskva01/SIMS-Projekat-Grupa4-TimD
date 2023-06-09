@@ -18,8 +18,96 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="250" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryBoard" Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonMenu" >
+            <BeginStoryboard  Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
+        <Grid x:Name="GridBackground">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
+            <Label Grid.Row="0" Content="PROFILE" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            </Label>
+            <Button BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="440"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Padding="0" BorderBrush="Black" BorderThickness="5" Margin="30">
+                    <StackPanel>
+                        <Ellipse Width="250" Height="250" Margin="5,50,5,20">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="\Resources\Images\profile.jpg" Stretch="UniformToFill" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Label HorizontalContentAlignment="Center" Content="{Binding GuideUserName}" FontSize="30" Height="50"/>
+                        <Button  Style="{StaticResource RoundButtonStyle}" BorderBrush="Transparent" Cursor="Hand" Content="Resign" Command="{Binding ResignCommand}" Width="150" Background="#E5B1FD" FontWeight="Bold"  FontSize="22" Height="44" Margin="0,30,0,30"/>
+                        <Button  Style="{StaticResource RoundButtonStyle}" BorderBrush="Transparent" Cursor="Hand" Content="Log out" Command="{Binding SignOutCommand}"  Width="150" Background="#E5B1FD" FontWeight="Bold"  FontSize="22" Height="44" Margin="0,30,0,30"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="1" Grid.RowSpan="5" BorderThickness="0,0,3,0" BorderBrush="Black"/>
+                    <Label Grid.Row="1" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="57" Width="102"/>
+                    <Label Grid.Row="2" Content="LastName:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="56" Width="163"/>
+                    <Label Grid.Row="3" Content="Email:" HorizontalAlignment="Left"  VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="56" Width="93"/>
+                    <Label Grid.Row="4" Content="Phone Number:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="56" Width="245"/>
+                    <Label Grid.Row="5" Content="Super Guide:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="33" Margin="15,0,0,0" Height="57" Width="200"/>
+
+                    <Label HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Content="{Binding GuideName}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Label HorizontalContentAlignment="Center" Grid.Row="2" Grid.Column="1" Content="{Binding GuideLastName}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    <Label HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="1" Content="{Binding GuideEmail}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    <Label HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="1" Content="{Binding GuidePhoneNumber}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    <Label HorizontalContentAlignment="Center" Grid.Row="5" Grid.Column="1" Content="{Binding IsSuperGuide}"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                </Grid>
+            </Grid>
+        </Grid>
         <Grid x:Name="InterfaceGrid" Opacity="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
@@ -80,6 +168,34 @@
                 </Grid>
             </Grid>
 
+        </Grid>
+        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <StackPanel>
+                <Border Height="80" Width="80" Margin="10">
+                    <Image Source="\Resources\Images\logoB.png"/>
+                </Border>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Command="{Binding RequestsCommand}" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS" Command="{Binding RequestsStatsCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Command="{Binding RatingsViewCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+            </StackPanel>
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
+                <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

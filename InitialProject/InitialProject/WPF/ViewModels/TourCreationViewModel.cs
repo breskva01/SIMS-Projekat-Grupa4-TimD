@@ -18,7 +18,7 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class TourCreationViewModel : ViewModelBase
+    public class TourCreationViewModel : ViewModelBase, IDataErrorInfo
     {
 
         private bool IsCreatedBasedOnStats;
@@ -395,36 +395,46 @@ namespace InitialProject.WPF.ViewModels
             Location.Country = Country;
             Location.City = City;
             Location.Id = Locations.Where(c => c.City == City).Select(c => c.Id).FirstOrDefault();
-            GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
+            //GuideLanguage lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
             //int TourDuration = int.Parse(Duration);
             // int MaxGuests = int.Parse(MaximumGuests);
             int MaxGuests = MaximumGuests;
             int TourDuration = Duration;
-
+            /*
             foreach (KeyPoint ky in _tourKeyPoints)
             {
                 _keyPointIds.Add(ky.Id);
             }
-
-            Tour tour = _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds, _user.Id);
-
-            if(TourRequest != null)
+            */
+            GuideLanguage lang = new GuideLanguage();
+            if (IsTourValid)
             {
-                TourRequest.TourId = tour.Id;
-                _tourRequestService.Update(TourRequest);
-            }
-            if(IsCreatedBasedOnStats)
-            {
-                _userNotificationService.NotifySimilarRequests(tour);
-            }
-            if(IsCreatedBasedOnSignleRequest)
-            {
-                _userNotificationService.NotifyApprovedRequest(tour, TourRequest.UserId);
-            }
+                foreach (KeyPoint ky in _tourKeyPoints)
+                {
+                    _keyPointIds.Add(ky.Id);
+                }
+                lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
+                Tour tour = _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds, _user.Id);
+                if (TourRequest != null)
+                {
+                    TourRequest.TourId = tour.Id;
+                    _tourRequestService.Update(TourRequest);
+                }
+                if (IsCreatedBasedOnStats)
+                {
+                    _userNotificationService.NotifySimilarRequests(tour);
+                }
+                if (IsCreatedBasedOnSignleRequest)
+                {
+                    _userNotificationService.NotifyApprovedRequest(tour, TourRequest.UserId);
+                }
 
-            ClearOutTextBoxes();
+                ClearOutTextBoxes();
+            }
+            
 
-        }
+
+            }
         private void ClearOutTextBoxes()
         {
             TourName = null;
@@ -561,7 +571,7 @@ namespace InitialProject.WPF.ViewModels
             TourCreationTutorialView view = new TourCreationTutorialView(_navigationStore, _user);
             view.Show();
         }
-        /*
+        
         public string this[string columnName]
         {
             get
@@ -570,11 +580,33 @@ namespace InitialProject.WPF.ViewModels
                 string requiredMessage = "Obavezno polje";
                 switch (columnName)
                 {
+                    case nameof(TourName):
+                        if (string.IsNullOrEmpty(TourName)) error = requiredMessage;
+                        else if (TourName.Length < 3) error = "Ime mora biti duze od 3 slova";
+                        break;
+                    case nameof(Description):
+                        if (string.IsNullOrEmpty(Description)) error = requiredMessage;
+                        break;
+                    case nameof(LanguageType):
+                        if (string.IsNullOrEmpty(LanguageType)) error = requiredMessage;
+                        break;
+                    case nameof(Duration):
+                        if (Duration == 0) error = requiredMessage;
+                        break;
+                    case nameof(MaximumGuests):
+                        if (MaximumGuests == 0) error = requiredMessage;
+                        break;
+                    case nameof(Country):
+                        if (string.IsNullOrEmpty(Country)) error = requiredMessage;
+                        break;
+                    case nameof(City):
+                        if (string.IsNullOrEmpty(City)) error = requiredMessage;
+                        break;
+                    case nameof(_tourKeyPoints):
+                        if (_tourKeyPoints.Count() < 2) error = requiredMessage;
+                        break;
                     case nameof(Start):
-                        if (TourRequest != null)
-                        {
-                            if (Convert.ToDateTime(Start) < TourRequest.EarliestDate || Convert.ToDateTime(Start) > TourRequest.LatestDate) error = "NOPE";
-                        }
+                        if(string.IsNullOrEmpty(Start)) error = requiredMessage;
                         break;
                     default:
                         break;
@@ -590,7 +622,15 @@ namespace InitialProject.WPF.ViewModels
             {
                 foreach (var property in new string[]
                 {
-                    nameof(Start) })
+                    nameof(TourName),
+                    nameof(Description),
+                    nameof(LanguageType),
+                    nameof(Duration),
+                    nameof(MaximumGuests),
+                    nameof(Start),
+                    nameof(_tourKeyPoints), 
+                    nameof(Country), 
+                    nameof(City)})
                 {
                     if (this[property] != null) return false;
                 }
@@ -598,6 +638,6 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
-        */
+        
     }
 }
