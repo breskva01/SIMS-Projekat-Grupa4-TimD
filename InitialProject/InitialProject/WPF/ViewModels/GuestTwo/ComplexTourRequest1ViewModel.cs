@@ -4,27 +4,25 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels.GuestTwo
 {
-    public class TourRequestViewModel : ViewModelBase, INotifyPropertyChanged
+    public class ComplexTourRequest1ViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public ObservableCollection<Location> Locations { get; set; }
         private readonly NavigationStore _navigationStore;
         private readonly LocationService _locationService;
         private readonly TourRequestService _tourRequestService;
+        private readonly ComplexTourRequestService _complexTourRequestService;
+        public ComplexTourRequest NewRequest { get; set; }
         private User _user;
 
         private List<string> _countries;
@@ -160,16 +158,18 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
 
         public ICommand IncreaseGuestsCommand => new RelayCommand(() => SelectedNumberOfGuests++);
         public ICommand DecreaseGuestsCommand => new RelayCommand(() => SelectedNumberOfGuests--);
-        public ICommand RequestCommand { get; }
+        public ICommand NextPartCommand { get; }
         public ICommand BackCommand { get; }
         public ICommand MenuCommand { get; }
         public ICommand NotificationCommand { get; }
-        public TourRequestViewModel(NavigationStore navigationStore, User user)
+        public ComplexTourRequest1ViewModel(NavigationStore navigationStore, User user)
         {
             _navigationStore = navigationStore;
             _user = user;
             _locationService = new LocationService();
             _tourRequestService = new TourRequestService();
+            _complexTourRequestService = new ComplexTourRequestService();
+            NewRequest = new ComplexTourRequest();
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
 
@@ -181,7 +181,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             SelectedLatestDate = DateTime.Now;
             Description = string.Empty;
 
-            RequestCommand = new ExecuteMethodCommand(CreateTourRequest);
+            NextPartCommand = new ExecuteMethodCommand(AddRequest);
             BackCommand = new ExecuteMethodCommand(ShowGuest2RequestMenuView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
             NotificationCommand = new ExecuteMethodCommand(ShowNotificationsView);
@@ -209,7 +209,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             navigate.Execute(null);
         }
 
-        public void CreateTourRequest()
+        public void AddRequest()
         {
             Location Location = new Location();
             Location.Country = SelectedCountry;
@@ -217,10 +217,18 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             Location.Id = Locations.Where(c => c.City == SelectedCity).Select(c => c.Id).FirstOrDefault();
             GuideLanguage Language = GetLanguage();
 
-            _tourRequestService.CreateTourRequest(_user.Id, Location, Description, RequestStatus.OnHold, Language, SelectedNumberOfGuests, SelectedEarliestDate, SelectedLatestDate, 0);
-            ShowGuest2RequestMenuView();
+            TourRequest newPart = _tourRequestService.CreateComplexTourRequestPart(_user.Id, Location, Description, RequestStatus.OnHold, Language, SelectedNumberOfGuests, SelectedEarliestDate, SelectedLatestDate, 0);
+            NewRequest.TourRequests.Add(newPart);
+            ShowComplexTourRequest2View();
         }
-        
+
+        public void ShowComplexTourRequest2View()
+        {
+            ComplexTourRequest2ViewModel complexTourRequest2ViewModel = new ComplexTourRequest2ViewModel(_navigationStore, _user, NewRequest);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, complexTourRequest2ViewModel));
+            navigate.Execute(null);
+        }
+
         private GuideLanguage GetLanguage()
         {
             switch (SelectedLanguageIndex)
@@ -233,7 +241,5 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
                     return GuideLanguage.English;
             }
         }
-
-        
     }
 }

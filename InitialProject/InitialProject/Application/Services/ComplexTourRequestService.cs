@@ -14,17 +14,33 @@ namespace InitialProject.Application.Services
     {
         private readonly List<IObserver> _observers;
         private readonly IComplexTourRequestRepository _repository;
+        private readonly TourRequestService _tourRequestService;
 
         public ComplexTourRequestService()
         {
             _observers = new List<IObserver>();
             _repository = RepositoryInjector.Get<IComplexTourRequestRepository>();
+            _tourRequestService = new TourRequestService();
         }
 
         public List<ComplexTourRequest> GetAll()
         {
-            return _repository.GetAll();
+            List<ComplexTourRequest> complexTourRequests = _repository.GetAll();
+            foreach(ComplexTourRequest complexTourRequest in complexTourRequests)
+            {
+                FillTourRequestList(complexTourRequest);
+            }
+            return complexTourRequests;
         }
+
+        public void FillTourRequestList(ComplexTourRequest complexTourRequest)
+        {
+            foreach(int id in complexTourRequest.TourRequestIDs) 
+            {
+                complexTourRequest.TourRequests.Add(_tourRequestService.GetById(id));
+            }
+        }
+
         public ComplexTourRequest GetById(int complexTourRequestId)
         {
             return _repository.GetById(complexTourRequestId);
@@ -42,9 +58,10 @@ namespace InitialProject.Application.Services
             return _repository.GetOnHold();
         }
         
-        public ComplexTourRequest CreateComplexTourRequest(ComplexRequestStatus Status, List<TourRequest> tourRequests)
+        public ComplexTourRequest CreateComplexTourRequest(int userId, ComplexRequestStatus Status, List<TourRequest> tourRequests)
         {
             ComplexTourRequest ComplexTourRequest = new ComplexTourRequest();
+            ComplexTourRequest.UserId = userId;
             ComplexTourRequest.Status = Status;
             ComplexTourRequest.TourRequests = tourRequests;
             foreach(TourRequest t in tourRequests)

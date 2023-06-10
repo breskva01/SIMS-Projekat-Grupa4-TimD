@@ -80,18 +80,50 @@ namespace InitialProject.Repositories
             }
 
             complexTourRequests = CheckIfInvalid(complexTourRequests);
+            complexTourRequests = CheckIfApproved(complexTourRequests);
             return complexTourRequests;
+        }
+
+        public List<ComplexTourRequest> CheckIfApproved(List<ComplexTourRequest> complexTourRequests)
+        {
+            foreach(ComplexTourRequest complexTourRequest in complexTourRequests)
+            {
+                if (AreAllRequestsApproved(complexTourRequest))
+                {
+                    complexTourRequest.Status = ComplexRequestStatus.Approved;
+                    Update(complexTourRequest);
+                }
+            }
+            return complexTourRequests;
+        }
+
+        public bool AreAllRequestsApproved(ComplexTourRequest complexTourRequest)
+        {
+            bool areAllRequestsApproved = true;
+            foreach (TourRequest tourRequest in complexTourRequest.TourRequests)
+            {
+                if (tourRequest.Status != RequestStatus.Approved)
+                {
+                    areAllRequestsApproved = false;
+                }
+            }
+            return areAllRequestsApproved;
         }
 
         public List<ComplexTourRequest> CheckIfInvalid(List<ComplexTourRequest> complexTourRequests)
         {
             TimeSpan timeDifference;
+            bool isItTooLate = false;
             foreach (ComplexTourRequest t in complexTourRequests)
             {
                 timeDifference = GetEarliestDate(t) - DateTime.Now;
                 if (timeDifference.TotalHours < 48)
                 {
+                    isItTooLate = true;   
+                }
+                if(isItTooLate && !IsAnyRequestApproved(t)) {
                     t.Status = ComplexRequestStatus.Invalid;
+                    Update(t);
                 }
             }
             return complexTourRequests;
@@ -101,6 +133,19 @@ namespace InitialProject.Repositories
         {
             TourRequest firstPartOfComplexRequest = complexTourRequest.TourRequests[0];
             return firstPartOfComplexRequest.EarliestDate;
+        }
+
+        public bool IsAnyRequestApproved(ComplexTourRequest complexTourRequest)
+        {
+            bool isAnyRequestApproved = false;
+            foreach(TourRequest tourRequest in complexTourRequest.TourRequests)
+            {
+                if(tourRequest.Status == RequestStatus.Approved)
+                {
+                    isAnyRequestApproved = true;
+                }
+            }
+            return isAnyRequestApproved;
         }
         
 
