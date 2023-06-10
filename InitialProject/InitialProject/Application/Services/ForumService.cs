@@ -27,6 +27,10 @@ namespace InitialProject.Application.Services
         {
             return _forumRepository.GetByIniatorId(id);
         }
+        public Forum GetById(int forumId)
+        {
+            return _forumRepository.GetById(forumId);
+        }
         public void OpenForum(string topic, User iniator, string startingQuestion, Location location)
         {
             var forum = new Forum(iniator, ForumStatus.Open, location, topic, false);

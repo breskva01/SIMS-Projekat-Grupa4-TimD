@@ -131,6 +131,8 @@
             Height="200"
             VerticalAlignment="Top"
             VerticalScrollBarVisibility="Visible"
+            TextWrapping="Wrap" 
+            AcceptsReturn="True"
             Padding="4"
             x:Name="MyTextBox"
             TextChanged="MyTextBox_TextChanged"
@@ -157,9 +159,9 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Margin="30"
-            FontSize="28"
+            FontSize="24"
             Content="Započni forum"
-            Padding="10 2"
+            Padding="10 0"
             Command="{Binding StartForumCommand}"/>
 
     </Grid>

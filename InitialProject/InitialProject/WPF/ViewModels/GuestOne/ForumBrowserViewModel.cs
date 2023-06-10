@@ -36,6 +36,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             }
         }
         public ICommand NavigateStartForumFormCommand { get; }
+        public ICommand NavigateForumCommentsCommand { get; }
         public ICommand CloseForumCommand { get; }
         public ForumBrowserViewModel(NavigationStore navigationStore, Guest1 user)
         {
@@ -45,6 +46,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             Forums = new ObservableCollection<Forum>(_forumService.GetAll());
             NavigateStartForumFormCommand = new ExecuteMethodCommand(NavigateStartForumForm);
             CloseForumCommand = new ExecuteMethodCommand(CloseForum);
+            NavigateForumCommentsCommand = new ExecuteMethodCommand(NavigateForumCommentsView);
         }
         private void CloseForum()
         {
@@ -76,6 +78,16 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         {
             var viewModel = new StartForumViewModel(_navigationStore, _user);
             new NavigationService(_navigationStore, viewModel).Navigate();
+        }
+        private void NavigateForumCommentsView()
+        {
+            if (SelectedForum == null)
+                MessageBox.Show("Izaberite forum čije komentare želite otvoriti.");
+            else
+            {
+                var viewModel = new ForumCommentsViewModel(_navigationStore, _user, SelectedForum);
+                new NavigationService(_navigationStore, viewModel).Navigate();
+            }
         }
     }
 }

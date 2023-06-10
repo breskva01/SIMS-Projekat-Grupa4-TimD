@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
              xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" FontSize="16">
     <UserControl.Resources>
         <converters:ForumStatusToBooleanConverter x:Key="ForumStatusToBooleanConverter" />
     </UserControl.Resources>
@@ -20,7 +20,7 @@
         <TabControl
             Height="40"
             Grid.Row="0"
-            FontSize="14"
+            FontSize="16"
             SelectedIndex="{Binding SelectedTabIndex}"
             Margin="15 10 15 0">
             <TabItem Header="Svi forumi" IsSelected="True"/>
@@ -45,18 +45,19 @@
                     IsReadOnly="True"/>
 
                 <DataGridTextColumn 
-                    Width="0.7*"
+                    Width="0.5*"
                     Header="Komentara" Binding="{Binding CommentCount}"
                     IsReadOnly="True"/>
 
                 <DataGridTextColumn 
-                    Width="0.7*"
+                    Width="0.9*"
                     Header="Poslednji komentar" Binding="{Binding LatestCommentPostTime, StringFormat='dd.MM.yyyy. HH:mm tt'}" 
                     IsReadOnly="True"/>
 
                 <DataGridCheckBoxColumn 
-                    Width="0.5*"
-                    Header="Veoma koristan" Binding="{Binding VeryUseful}"
+                    Width="0.7*"
+                    Header="Veoma koristan" 
+                    Binding="{Binding VeryUseful}"
                     IsReadOnly="True">
                     <DataGridCheckBoxColumn.ElementStyle>
                         <Style TargetType="CheckBox">
@@ -67,8 +68,9 @@
                 </DataGridCheckBoxColumn>
 
                 <DataGridCheckBoxColumn 
-                    Width="0.5*"
-                    Header="Otvoren" Binding="{Binding Status, Converter={StaticResource ForumStatusToBooleanConverter}}"
+                    Width="0.6*"
+                    Header="Otvoren" 
+                    Binding="{Binding Status, Converter={StaticResource ForumStatusToBooleanConverter}}"
                     IsReadOnly="True">
                     <DataGridCheckBoxColumn.ElementStyle>
                         <Style TargetType="CheckBox">
@@ -122,7 +124,8 @@
                 Padding="5 2"
                 Width="auto"
                 Grid.Column="2"
-                Content="Pogledaj sve komentare"/>
+                Content="Pogledaj sve komentare"
+                Command="{Binding NavigateForumCommentsCommand}"/>
 
         </Grid>
         

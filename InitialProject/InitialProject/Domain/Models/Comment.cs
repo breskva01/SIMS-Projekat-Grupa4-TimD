@@ -38,7 +38,7 @@ namespace InitialProject.Domain.Models
         {
             Id = int.Parse(values[0]);
             Forum.Id = int.Parse(values[1]);
-            Text = values[2];
+            Text = values[2].Replace("\\n", Environment.NewLine);
             Author.Id = int.Parse(values[3]);
             PostTime = DateTime.ParseExact(values[4], "dd.MM.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             CredentialAuthor = bool.Parse(values[5]);
@@ -51,7 +51,7 @@ namespace InitialProject.Domain.Models
             { 
                 Id.ToString(),
                 Forum.Id.ToString(),
-                Text,
+                Text.Replace(Environment.NewLine, "\\n"),
                 Author.Id.ToString(),
                 PostTime.ToString("dd.MM.yyyy. HH:mm:ss"),
                 CredentialAuthor.ToString(),
