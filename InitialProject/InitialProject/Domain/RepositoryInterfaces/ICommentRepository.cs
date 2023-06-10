@@ -12,5 +12,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         Comment GetById(int commentId);
         void IncreaseReportCount(int commentId);
         void Save(Comment comment);
+        public List<Comment> GetCommentsByForumId(int id);
+        public Comment SubmitComment(Forum forum, string text, User author);
     }
 }

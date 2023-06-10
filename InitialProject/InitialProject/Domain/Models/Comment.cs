@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace InitialProject.Domain.Models
 {
@@ -17,15 +18,21 @@ namespace InitialProject.Domain.Models
         public User Author { get; set; }
         public DateTime PostTime { get; set; }
         public bool CredentialAuthor { get; set; }
+        public bool IsOwner { get; set; }
+        public bool IsGuest { get; set; }
+        public bool VerifiedOwner => CredentialAuthor && IsOwner;
+        public bool VerifiedGuest => CredentialAuthor && IsGuest;
         public int ReportCount { get; set; }
 
-        public Comment(Forum forum, string text, User author, DateTime postTime, bool credentialAuthor, int reportCount = 0)
+        public Comment(Forum forum, string text, User author, DateTime postTime, bool credentialAuthor, bool isOwner, bool isGuest, int reportCount = 0)
         {
             Forum = forum;
             Text = text;
             Author = author;
             PostTime = postTime;
             CredentialAuthor = credentialAuthor;
+            IsOwner = isOwner;
+            IsGuest = isGuest;
             ReportCount = reportCount;
         }
 
@@ -42,7 +49,9 @@ namespace InitialProject.Domain.Models
             Author.Id = int.Parse(values[3]);
             PostTime = DateTime.ParseExact(values[4], "dd.MM.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             CredentialAuthor = bool.Parse(values[5]);
-            ReportCount = int.Parse(values[6]);
+            IsOwner = bool.Parse(values[6]);
+            IsGuest = bool.Parse(values[7]);
+            ReportCount = int.Parse(values[8]);
         }
 
         public string[] ToCSV()
@@ -55,6 +64,8 @@ namespace InitialProject.Domain.Models
                 Author.Id.ToString(),
                 PostTime.ToString("dd.MM.yyyy. HH:mm:ss"),
                 CredentialAuthor.ToString(),
+                IsOwner.ToString(),
+                IsGuest.ToString(),
                 ReportCount.ToString()
             };
             return csvValues;

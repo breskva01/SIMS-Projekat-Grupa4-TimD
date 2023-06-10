@@ -36,23 +36,17 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
-
-        /*public ICommand AccommodationRegistrationCommand { get; }
-        public ICommand ViewRatingsCommand { get; }
-        public ICommand MoveRequestsCommand { get; }*/
         public ICommand ViewProfileCommand { get; }
         public ICommand SignOutCommand { get; }
+        public ICommand ViewForumsCommand { get; }
         public OwnerMainMenuViewModel(NavigationStore navigationStore, User user, bool isNotified)
         {
             _navigationStore = navigationStore;
             _user = user;
             IsNotified = isNotified;
-            /*AccommodationRegistrationCommand = new ExecuteMethodCommand(ShowAccommodationRegistrationView);
-            ViewRatingsCommand = new ExecuteMethodCommand(ShowOwnerRatingsView);
-            MoveRequestsCommand = new ExecuteMethodCommand(ShowReservationMoveRequestsView);*/
             ViewProfileCommand = new ExecuteMethodCommand(ShowOwnerProfileView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
-
+            ViewForumsCommand = new ExecuteMethodCommand(ShowForumSearchView);
         }
 
         private void SignOut()
@@ -66,6 +60,13 @@ namespace InitialProject.WPF.ViewModels
         {
             OwnerProfileViewModel ownerProfileViewModel = new OwnerProfileViewModel(_navigationStore, (Owner)_user, IsNotified);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, ownerProfileViewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowForumSearchView()
+        {
+            ForumSearchViewModel forumSearchViewModel = new ForumSearchViewModel(_navigationStore, (Owner)_user, IsNotified);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, forumSearchViewModel));
 
             navigate.Execute(null);
         }

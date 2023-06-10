@@ -13,5 +13,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         void Save(Forum forum);
         void Close(int forumId);
         void MarkAsVeryUseful(int forumId);
+        public Forum GetForumByLocationAndTopic(string locationAndTopic);
     }
 }

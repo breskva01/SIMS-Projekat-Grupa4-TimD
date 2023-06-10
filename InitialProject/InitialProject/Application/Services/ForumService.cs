@@ -23,7 +23,7 @@ namespace InitialProject.Application.Services
         {
             var forum = new Forum(iniator, ForumStatus.Open, location, topic, false);
             bool credentialUser = CheckIfUserHasCredentials(iniator, location);
-            var comment = new Comment(forum, startingQuestion, iniator, DateTime.Now, credentialUser);
+            var comment = new Comment(forum, startingQuestion, iniator, DateTime.Now, credentialUser, false, true);
 
             _forumRepository.Save(forum);
             _commentRepository.Save(comment);
@@ -36,7 +36,7 @@ namespace InitialProject.Application.Services
         public void PostComment(Forum forum, User user, string commentText)
         {
             bool credentialUser = CheckIfUserHasCredentials(user, forum.Location);
-            var comment = new Comment(forum, commentText, user, DateTime.Now, credentialUser);
+            var comment = new Comment(forum, commentText, user, DateTime.Now, credentialUser, false, true);
             _commentRepository.Save(comment);
             UpdateVeryUsefulStatus(forum.Id);
         }
@@ -86,6 +86,37 @@ namespace InitialProject.Application.Services
                 else
                     credentialOwnerComments++;
             }
+        }
+        public List<string> GetForumNames()
+        {
+            List<string> forumNames = new List<string>();
+            string forumName;
+            var Forums = _forumRepository.GetAll();
+            foreach(Forum forum in Forums)
+            {
+                if (forum.Status == ForumStatus.Open)
+                {
+                    forumName = forum.Location.Country + " - " + forum.Location.City + ": " + forum.Topic;
+                    if (forum.VeryUseful)
+                    {
+                        forumName += "                  Very useful";
+                    }
+                    forumNames.Add(forumName);
+                }
+            }
+            return forumNames;
+        }
+        public List<Comment> GetCommentsByForumId(int id)
+        {
+            return _commentRepository.GetCommentsByForumId(id);
+        }
+        public Forum GetForumByLocationAndTopic(string locationAndTopic)
+        {
+            return _forumRepository.GetForumByLocationAndTopic(locationAndTopic);
+        }
+        public Comment SubmitComment(Forum forum, string text, User author)
+        {
+           return _commentRepository.SubmitComment(forum, text, author);
         }
     }
 }
