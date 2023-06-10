@@ -104,7 +104,8 @@
                 HorizontalAlignment="Left"
                 Width="auto"
                 Grid.Column="1"
-                Content="Zatvori forum">
+                Content="Zatvori forum"
+                Command="{Binding CloseForumCommand}">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Visibility" Value="Collapsed" />
