@@ -9,6 +9,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
 {
     public interface IForumRepository : IRepository<Forum>
     {
+        List<Forum> GetByIniatorId(int id);
         Forum GetById(int forumId);
         void Save(Forum forum);
         void Close(int forumId);

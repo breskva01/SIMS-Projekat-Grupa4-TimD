@@ -20,6 +20,7 @@ namespace InitialProject.Domain.Models
         public string Topic { get; set; }
         public bool VeryUseful { get; set; }
         public DateTime LatestCommentPostTime => Comments.LastOrDefault().PostTime;
+        public int CommentCount => Comments.Count;
 
         public Forum(User initiator, ForumStatus status, Location location, string topic, bool veryUseful)
         {

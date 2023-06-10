@@ -44,7 +44,12 @@ namespace InitialProject.Repositories
         }
         private int NextId()
         {
-            return _comments?.Max(c => c.Id) + 1 ?? 0;
+            if (_comments == null || _comments.Count == 0)
+            {
+                return 1;
+            }
+
+            return _comments.Max(c => c.Id) + 1;
         }
     }
 }

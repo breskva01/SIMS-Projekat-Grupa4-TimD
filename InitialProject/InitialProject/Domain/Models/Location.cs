@@ -34,6 +34,12 @@ namespace InitialProject.Domain.Models
             };
             return csvValues;
         }
+
+        public override string? ToString()
+        {
+            return Country + " - " + City;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
