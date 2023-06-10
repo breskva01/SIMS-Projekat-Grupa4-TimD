@@ -170,4 +170,28 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\DirectShowLib-2005.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\EVRPresenter32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\DirectShowLib-2005.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\EVRPresenter32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\EVRPresenter64.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\DirectShowLib-2005.dll" />
+  </ItemGroup>
+
 </Project>

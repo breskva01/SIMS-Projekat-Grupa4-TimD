@@ -4,12 +4,14 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
 using InitialProject.WPF.NewViews;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics.Metrics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +59,8 @@ namespace InitialProject.WPF.ViewModels
         public ICommand DecreaseDurationCommand { get; set; }
         public ICommand IncreaseGuestsCommand { get; set; }
         public ICommand DecreaseGuestsCommand { get; set; }
+        public ICommand UploadImageCommand { get; set; }
+
 
         private List<string> _countries;
         public List<string> Countries
@@ -271,6 +275,8 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
+        private List<string> _pictureURLs;
+        private List<string> _selectedFiles;
 
         public TourCreationViewModel(NavigationStore navigationStore, User user, string parameter, bool isParameterLanguage)
         {
@@ -388,6 +394,7 @@ namespace InitialProject.WPF.ViewModels
             IncreaseGuestsCommand = new ExecuteMethodCommand(IncreaseGuests);
             DecreaseGuestsCommand = new ExecuteMethodCommand(DecreaseGuests);
             TutorialCommand = new ExecuteMethodCommand(ShowTutorial);
+            UploadImageCommand = new ExecuteMethodCommand(UploadImages);
         }
         public void CreateTour()
         {
@@ -428,7 +435,7 @@ namespace InitialProject.WPF.ViewModels
                 {
                     _userNotificationService.NotifyApprovedRequest(tour, TourRequest.UserId);
                 }
-
+                CopyImages();
                 ClearOutTextBoxes();
             }
             
@@ -571,7 +578,38 @@ namespace InitialProject.WPF.ViewModels
             TourCreationTutorialView view = new TourCreationTutorialView(_navigationStore, _user);
             view.Show();
         }
-        
+        private void UploadImages()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png";
+            openFileDialog.Multiselect = true;
+            bool? result = openFileDialog.ShowDialog();
+            if (result == true)
+                _selectedFiles = openFileDialog.FileNames.ToList();
+            string selectedFileName = Path.GetFileName(openFileDialog.FileName);
+            PictureUrl = selectedFileName;
+        }
+        private void CopyImages()
+        {
+            if (_selectedFiles != null && _selectedFiles.Count > 0)
+            {
+                string destinationFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                                        "Resources", "Images");
+                Directory.CreateDirectory(destinationFolder);
+
+                foreach (string file in _selectedFiles)
+                {
+                    string fileName = Path.GetFileName(file);
+                    string destinationFile = Path.Combine(destinationFolder, fileName);
+                    File.Copy(file, destinationFile, true);
+                    PictureUrl = fileName;
+
+                    string relativePath = Path.Combine("Resources", "Images", fileName);
+                    PictureUrl = fileName;
+                    _pictureURLs.Add(relativePath);
+                }
+            }
+        }
         public string this[string columnName]
         {
             get
@@ -581,7 +619,8 @@ namespace InitialProject.WPF.ViewModels
                 switch (columnName)
                 {
                     case nameof(TourName):
-                        if (string.IsNullOrEmpty(TourName)) error = requiredMessage;
+                        if
+                            (string.IsNullOrEmpty(TourName)) error = requiredMessage;
                         else if (TourName.Length < 3) error = "Ime mora biti duze od 3 slova";
                         break;
                     case nameof(Description):

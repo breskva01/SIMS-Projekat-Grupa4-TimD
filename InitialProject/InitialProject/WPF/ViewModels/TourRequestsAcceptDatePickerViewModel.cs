@@ -15,6 +15,7 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using LiveCharts.Wpf.Charts.Base;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -43,15 +44,15 @@ namespace InitialProject.WPF.ViewModels
 
         public TourRequestsAcceptDatePickerView View;
 
+
+
         public TourRequestsAcceptDatePickerViewModel(NavigationStore navigationStore, User user,TourRequest SelectedTourRequest, TourRequestsAcceptDatePickerView view)
         {
             _navigationStore = navigationStore;
             _user = user;
             SelectedRequest = SelectedTourRequest;
-
             ConfirmDateCommand = new ExecuteMethodCommand(ConfirmDate);
 
-            
             View = view;
         }
         private void ConfirmDate()

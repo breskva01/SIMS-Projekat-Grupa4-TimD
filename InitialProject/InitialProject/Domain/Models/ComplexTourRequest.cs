@@ -19,6 +19,7 @@ namespace InitialProject.Domain.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public User User { get; set; }
         public ComplexRequestStatus Status { get; set; }
         public List<TourRequest> TourRequests { get; set; }
         public List<int> TourRequestIDs { get; set; }

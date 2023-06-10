@@ -19,7 +19,9 @@
     <Grid>
         <StackPanel>
             <Label Margin="0,20,0,20" Content="Choose exact date for new tour" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
-            <xctk:DateTimePicker Text="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="0,20,0,20" Height="40" Width="300" BorderBrush="Black"/>
+            <xctk:DateTimePicker  Text="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="0,20,0,20" Height="40" Width="300" BorderBrush="Black">
+               
+            </xctk:DateTimePicker>
             <DockPanel Margin="0,20,0,20" Height="40" >
                 <Button  Content="CANCEL" FontSize="18" HorizontalAlignment="Left" Width="150" Margin="60,0,5,0"/>
                 <Button Content="CONFIRM" Command="{Binding ConfirmDateCommand}"  FontSize="18" HorizontalAlignment="Right" Width="150" Margin="5,0,60,0"/>

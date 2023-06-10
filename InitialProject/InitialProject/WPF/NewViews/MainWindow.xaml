@@ -183,6 +183,9 @@
             <DataTemplate DataType="{x:Type vms:GuideProfileViewModel}">
                 <views:GuideProfileView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ComplexTourAcceptViewModel}">
+                <views:ComplexTourAcceptView />
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding CurrentViewModel}" />

@@ -31,6 +31,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand TourRequestsStatsCommand { get; }
         public ICommand LogOutCommand { get; }
         public ICommand GuideProfileCommand { get; }
+        public ICommand ComplexTourCommand { get; }
 
         private string _videoSource;
         public string VideoSource
@@ -59,6 +60,7 @@ namespace InitialProject.WPF.ViewModels
             TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
             TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
             GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);
+            ComplexTourCommand = new ExecuteMethodCommand(ShowComplexTourView);
         }
         
         private void SignOut()
@@ -71,6 +73,14 @@ namespace InitialProject.WPF.ViewModels
         private void ShowTourCreationView()
         {
             TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+
+        private void ShowComplexTourView()
+        {
+            ComplexTourAcceptViewModel viewModel = new ComplexTourAcceptViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
 
             navigate.Execute(null);

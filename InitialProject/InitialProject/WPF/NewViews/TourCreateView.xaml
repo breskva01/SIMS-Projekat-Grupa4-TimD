@@ -268,7 +268,7 @@
                     </Button.Template>
                     <Image Margin="10" Source="\Resources\Images\plus.png"/>
                 </Button>
-                <Button Grid.Row="8" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Grid.Column="3" Height="40" Width="40" HorizontalAlignment="Left" Margin="15,0,15,0" VerticalAlignment="Center"  FontSize="30" VerticalContentAlignment="Center">
+                <Button Command="{Binding UploadImageCommand}" Grid.Row="8" BorderBrush="Transparent" Cursor="Hand" Background="#270138" Grid.Column="3" Height="40" Width="40" HorizontalAlignment="Left" Margin="15,0,15,0" VerticalAlignment="Center"  FontSize="30" VerticalContentAlignment="Center">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
