@@ -86,15 +86,15 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             string messageBoxCaption = "";
             if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
             {
-                messageBoxText = "Jednom zatvoren forum ostaje zauvek zatvoren,\n" +
-                 "već postavljeni komentari će i dalje biti vidljivi svim korisnicima." +
+                messageBoxText = "Jednom zatvoren forum ostaje zauvek zatvoren.\n" +
+                 "Već postavljeni komentari će i dalje biti vidljivi svim korisnicima.\n" +
                  "Da li ste sigurni da želite zatvoriti forum?\n";
                 messageBoxCaption = "Potvrda zatvaranja foruma";
             }
             else
             {
-                messageBoxText = "Once closed, the forum will remain closed forever,\n" +
-                 "existing comments will still be visible to all users." +
+                messageBoxText = "Once closed, the forum will remain closed forever.\n" +
+                 "Existing comments will still be visible to all users.\n" +
                  "Are you sure you want to close the forum?\n";
                 messageBoxCaption = "Forum Closing Confirmation";
             }

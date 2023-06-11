@@ -87,7 +87,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             }
             else
             {
-                messageBoxText = "Would you like to submit the rating";
+                messageBoxText = "Would you like to submit the rating?";
                 messageBoxCaption = "Rating submission";
             }
             MessageBoxResult result = MessageBox.Show(messageBoxText, messageBoxCaption, MessageBoxButton.YesNo, MessageBoxImage.Question);

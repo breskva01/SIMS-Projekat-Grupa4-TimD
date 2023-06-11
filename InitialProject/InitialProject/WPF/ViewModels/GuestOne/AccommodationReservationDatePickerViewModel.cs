@@ -74,7 +74,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
                     MessageBox.Show("Izaberite željeni termin.");
                 else
-                    MessageBox.Show("Please select one of the givn date ranges.");
+                    MessageBox.Show("Please select one of the given date ranges.");
                 return false;
             }
             if (GuestCount == 0)
