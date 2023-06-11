@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InitialProject.WPF.ViewModels;
+using InitialProject.WPF.ViewModels.GuestOne;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,6 +46,17 @@ namespace InitialProject.WPF.NewViews.GuestOne
         private void ResetEvent(object sender, RoutedEventArgs e)
         {
             scrollViewer.ScrollToVerticalOffset(0);
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (DataContext is AccommodationBrowserViewModel viewModel)
+                {
+                    viewModel.ApplyFiltersCommand.Execute(null);
+                }
+            }
         }
     }
 }

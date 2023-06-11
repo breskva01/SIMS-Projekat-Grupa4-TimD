@@ -30,6 +30,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 if (value != _selectedTabIndex)
                 {
                     _selectedTabIndex = value;
+                    if (_selectedTabIndex > 1)
+                        _selectedTabIndex = 0;
                     UpdateDisplayedForums();
                     OnPropertyChanged();
                 }
@@ -50,6 +52,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void CloseForum()
         {
+            if (SelectedTabIndex != 1)
+                return;
             if (SelectedForum == null)
                 MessageBox.Show("Izaberite forum koji želite zatvoriti.");
             else if (SelectedForum.Status == ForumStatus.Closed)

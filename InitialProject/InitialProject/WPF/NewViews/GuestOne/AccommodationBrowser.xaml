@@ -256,7 +256,8 @@
                     Padding="10 2" 
                     Margin="0 0 20 0"
                     Width="250"
-                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                    PreviewKeyDown="TextBox_PreviewKeyDown">
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="Template">

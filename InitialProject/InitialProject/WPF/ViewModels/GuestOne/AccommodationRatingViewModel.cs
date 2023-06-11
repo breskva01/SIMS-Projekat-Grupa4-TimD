@@ -16,7 +16,21 @@ namespace InitialProject.WPF.ViewModels.GuestOne
 {
     public class AccommodationRatingViewModel : ViewModelBase
     {
-        public int SelectedTab { get; set; }
+        private int _selectedTab;
+        public int SelectedTab
+        {
+            get { return _selectedTab; }
+            set
+            {
+                if (value != _selectedTab)
+                {
+                    _selectedTab = value;
+                    if (_selectedTab > 1)
+                        _selectedTab = 0;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public UnratedAccommodationsViewModel UnratedAccommodationsViewModel { get; set; }
         public ReceivedRatingsViewModel ReceivedRatingsViewModel { get; set; }
         public AccommodationRatingViewModel(NavigationStore navigationStore, Guest1 user, int selectedTab = 0)

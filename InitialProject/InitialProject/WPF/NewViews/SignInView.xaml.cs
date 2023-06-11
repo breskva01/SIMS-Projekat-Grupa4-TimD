@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InitialProject.WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,17 @@ namespace InitialProject.WPF.NewViews
         public SignInView()
         {
             InitializeComponent();
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (DataContext is SignInViewModel viewModel)
+                {
+                    viewModel.SignInCommand.Execute(pbPassword);
+                }
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         private readonly NavigationStore _navigationStore;
         public ICommand CancelReservationCommand { get; }
         public ICommand MoveReservationCommand { get; }
+        public ICommand NavigateReservationDetailsCommand { get; }
         public MyAccommodationReservationsViewModel(NavigationStore navigationStore, Guest1 user)
         {
             _navigationStore = navigationStore;
@@ -37,6 +38,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             _reservationService.Subscribe(this);
             CancelReservationCommand = new AccommodationReservationClickCommand(CancelReservation);
             MoveReservationCommand = new AccommodationReservationClickCommand(MoveReservation);
+            NavigateReservationDetailsCommand = new AccommodationReservationClickCommand(NavigateReservationDetails);
         }
         private void CancelReservation(AccommodationReservation reservation)
         {
@@ -75,6 +77,11 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             var viewModel = new AccommodationReservationMoveRequestViewModel(_navigationStore, reservation);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigateCommand.Execute(null);
+        }
+        private void NavigateReservationDetails(AccommodationReservation reservation)
+        {
+            var viewModel = new AccommodationReservationDetailsViewModel(_navigationStore, _user, reservation, true);
+            new NavigationService(_navigationStore, viewModel).Navigate();
         }
     }
 }

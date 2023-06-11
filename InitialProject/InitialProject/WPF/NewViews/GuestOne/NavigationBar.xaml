@@ -131,7 +131,11 @@
                         <MenuItem Header="Moj info"/>
                         <MenuItem Header="Izmeni profil"/>
                         <Separator />
-                        <MenuItem Header="Odjavi se" Command="{Binding NavigateLoginCommand}"/>
+                        <MenuItem 
+                            Header="Odjavi se" 
+                            Command="{Binding NavigateLoginCommand}"
+                            InputGestureText="Ctrl + Q">
+                        </MenuItem>
                     </ContextMenu>
                 </Image.ContextMenu>
             </Image>
@@ -163,7 +167,8 @@
             <TextBlock
                 Margin="10 0"
                 Text="Pretraga smeštaja"
-                Style="{StaticResource AccommodationBrowserStyle}">
+                Style="{StaticResource AccommodationBrowserStyle}"
+                ToolTip="Ctrl + 1">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -178,7 +183,8 @@
             <TextBlock 
                 Margin="10 0"
                 Text="Bilo gde/bilo kada"
-                Style="{StaticResource AnywhereAnytimeStyle}">
+                Style="{StaticResource AnywhereAnytimeStyle}"
+                ToolTip="Ctrl + 2">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -193,7 +199,8 @@
             <TextBlock
                 Margin="10 0"
                 Text="Moje rezervacije"
-                Style="{StaticResource MyReservationsStyle}">
+                Style="{StaticResource MyReservationsStyle}"
+                ToolTip="Ctrl + 3">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -208,7 +215,8 @@
             <TextBlock
                 Margin="10 0"
                 Text="Poslati zahtevi"
-                Style="{StaticResource MyRequestsStyle}">
+                Style="{StaticResource MyRequestsStyle}"
+                ToolTip="Ctrl + 4">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -223,7 +231,8 @@
             <TextBlock
                 Margin="10 0"
                 Text="Ocene"
-                Style="{StaticResource RatingsStyle}">
+                Style="{StaticResource RatingsStyle}"
+                ToolTip="Ctrl + 5">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"
@@ -238,7 +247,8 @@
             <TextBlock
                 Margin="10 0"
                 Text="Forumi"
-                Style="{StaticResource ForumsStyle}">
+                Style="{StaticResource ForumsStyle}"
+                ToolTip="Ctrl + 6">
                 <TextBlock.InputBindings>
                     <MouseBinding 
                         MouseAction="LeftClick"

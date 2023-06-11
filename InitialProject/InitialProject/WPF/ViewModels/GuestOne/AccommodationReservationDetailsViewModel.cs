@@ -77,7 +77,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void RecreateSelf()
         {
-            var viewModel = new AccommodationReservationDetailsViewModel(_navigationStore, Guest, Reservation, false);
+            var viewModel = new AccommodationReservationDetailsViewModel(_navigationStore, Guest, Reservation, IsReadOnlyMode);
             new NavigationService(_navigationStore, viewModel).Navigate();
         }
     }

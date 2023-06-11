@@ -48,7 +48,8 @@
                 Width="235"
                 HorizontalAlignment="Left"
                 Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}"
-                Padding="2"/>
+                Padding="2"
+                PreviewKeyDown="TextBox_PreviewKeyDown"/>
 
             <TextBlock
                 HorizontalAlignment="Left"
@@ -59,7 +60,8 @@
                 Margin="0 3 0 15"
                 Width="235"
                 HorizontalAlignment="Left"
-                Padding="2"/>
+                Padding="2"
+                PreviewKeyDown="TextBox_PreviewKeyDown"/>
 
             <Button
                 Content="Uloguj se" 

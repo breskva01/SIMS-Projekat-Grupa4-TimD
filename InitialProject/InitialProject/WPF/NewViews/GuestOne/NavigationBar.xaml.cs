@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InitialProject.WPF.ViewModels;
+using InitialProject.WPF.ViewModels.GuestOne;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

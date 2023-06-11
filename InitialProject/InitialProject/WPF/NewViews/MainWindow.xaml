@@ -12,7 +12,8 @@
         mc:Ignorable="d"
         Title="TravelBuddy" Height="670" Width="1030" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        WindowState="Normal">
+        WindowState="Normal"
+        KeyDown="Window_KeyDown">
     <Window.Icon>
         <BitmapImage UriSource="\Resources\Images\logoB.png"/>
     </Window.Icon>
