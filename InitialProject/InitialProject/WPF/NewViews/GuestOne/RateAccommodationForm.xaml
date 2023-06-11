@@ -60,10 +60,11 @@
                     Margin="0 18 0 0"
                     Orientation="Horizontal">
                         <TextBlock
-                        FontSize="24"
-                        VerticalAlignment="Center"
-                        Text="{Binding Reservation.Accommodation.Name}" 
-                        FontWeight="Bold" />
+                            FontSize="24"
+                            VerticalAlignment="Center"
+                            Foreground="#9FC33C"
+                            Text="{Binding Reservation.Accommodation.Name}" 
+                            FontWeight="Bold" />
                         <TextBlock 
                         FontSize="24"
                         VerticalAlignment="Center"
@@ -76,12 +77,13 @@
                 </StackPanel>
 
                 <TextBlock
-                Margin="0 10"
-                Grid.Row="1"
-                FontSize="24"
-                Text="{local:Loc PickRatingForEachCategory}" 
-                FontStyle="Italic" 
-                TextDecorations="Underline"/>
+                    Margin="0 10"
+                    Grid.Row="1"
+                    FontSize="24"
+                    Text="{local:Loc PickRatingForEachCategory}" 
+                    FontStyle="Italic" 
+                    Foreground="#deb93e"
+                    TextDecorations="Underline"/>
 
                 <TextBlock 
                     Margin="0 5"

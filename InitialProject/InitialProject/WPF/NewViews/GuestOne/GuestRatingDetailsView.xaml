@@ -47,6 +47,7 @@
                 <TextBlock
                     FontSize="24"
                     VerticalAlignment="Center"
+                    Foreground="#9FC33C"
                     Text="{Binding Rating.Reservation.Accommodation.Name}" 
                     FontWeight="Bold" />
                 <TextBlock 
@@ -66,6 +67,7 @@
             FontSize="24"
             Text="{local:Loc ReceivedRatings}" 
             FontStyle="Italic" 
+            Foreground="#deb93e"
             TextDecorations="Underline"/>
 
         <TextBlock 

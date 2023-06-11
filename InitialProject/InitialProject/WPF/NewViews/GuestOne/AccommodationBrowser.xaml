@@ -287,8 +287,7 @@
                     Padding="5 2" 
                     Margin="0 0 10 0"
                     Content="{local:Loc Search}"
-                    Command="{Binding ApplyFiltersCommand}">
-                </Button>
+                    Command="{Binding ApplyFiltersCommand}"/>
 
                 <Button 
                     Padding="4 2" 

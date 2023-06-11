@@ -28,7 +28,7 @@
             TargetType="TextBlock">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedTab}" Value="AccommodationBrowser">
-                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="Foreground" Value="#9FC33C"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -38,7 +38,7 @@
             TargetType="TextBlock">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedTab}" Value="AnywhereAnytime">
-                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="Foreground" Value="#9FC33C"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -48,7 +48,7 @@
             TargetType="TextBlock">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedTab}" Value="MyReservations">
-                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="Foreground" Value="#9FC33C"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -58,7 +58,7 @@
             TargetType="TextBlock">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedTab}" Value="MyRequests">
-                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="Foreground" Value="#9FC33C"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -68,7 +68,7 @@
             TargetType="TextBlock">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedTab}" Value="Ratings">
-                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="Foreground" Value="#9FC33C"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -78,7 +78,7 @@
             TargetType="TextBlock">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedTab}" Value="Forums">
-                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="Foreground" Value="#9FC33C"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -103,13 +103,62 @@
             <Image
                 Margin="0 0 20 0"
                 Width="40"
-                Source="../../../Resources/Images/paper-plane50.png"/>
+                Source="../../../Resources/Images/paper_plane_colorful.png"/>
 
             <TextBlock
                 FontSize="40"
                 FontWeight="SemiBold"
-                Text="Travel buddy"/>
-            
+                Text="T"
+                Foreground="#9FC33C"/>
+
+            <TextBlock
+                FontSize="40"
+                FontWeight="SemiBold"
+                Text="ra"
+                Foreground="#3283A8"/>
+
+            <TextBlock
+                FontSize="40"
+                FontWeight="SemiBold"
+                Text="v"
+                Foreground="#9FC33C"/>
+
+            <TextBlock
+                FontSize="40"
+                FontWeight="SemiBold"
+                Text="el "
+                Foreground="#DEB93E"/>
+
+            <TextBlock
+                FontSize="40"
+                FontWeight="SemiBold"
+                Text="b"
+                Foreground="#9FC33C"/>
+
+            <TextBlock
+                FontSize="40"
+                FontWeight="SemiBold"
+                Text="u"
+                Foreground="#3283A8"/>
+
+            <TextBlock
+                FontSize="40"
+                FontWeight="SemiBold"
+                Text="d"
+                Foreground="#DEB93E"/>
+
+            <TextBlock
+                FontSize="40"
+                FontWeight="SemiBold"
+                Text="d"
+                Foreground="#9FC33C"/>
+
+            <TextBlock
+                FontSize="40"
+                FontWeight="SemiBold"
+                Text="y"
+                Foreground="#3283A8"/>
+
         </StackPanel>
 
         <Grid Grid.Column="2">

@@ -119,7 +119,7 @@
                     Grid.Row="0" 
                     Grid.Column="1" 
                     Grid.RowSpan="2"
-                    Fill="Black" 
+                    Fill="#DEB93E" 
                     Width="2" />
 
                 <TextBlock
@@ -135,7 +135,7 @@
                     VerticalAlignment="Bottom"
                     Grid.Row="0" 
                     Grid.Column="1" 
-                    Fill="Black" 
+                    Fill="Gray" 
                     Height="2" />
 
                 <TextBlock
@@ -151,7 +151,7 @@
                     Grid.Row="1" 
                     Grid.Column="0" 
                     Grid.ColumnSpan="2"
-                    Fill="Black" 
+                    Fill="#9FC33C" 
                     Height="2" />
 
             </Grid>
@@ -193,6 +193,7 @@
                 HorizontalAlignment="Center"
                 FontSize="30"
                 FontWeight="Bold"
+                Foreground="#9FC33C"
                 Text="{Binding Forum.Topic, Mode=OneTime}"/>
 
             <TextBlock
@@ -206,7 +207,7 @@
             VerticalAlignment="Top"
             Grid.Row="1" 
             Grid.ColumnSpan="2" 
-            Fill="Black" 
+            Fill="#9FC33C" 
             Height="2" />
 
         <ScrollViewer
@@ -263,7 +264,7 @@
                         HorizontalAlignment="Left"
                         Grid.Column="1" 
                         Grid.RowSpan="2"
-                        Fill="Black" 
+                        Fill="#deb93e" 
                         Width="2" />
 
                     <TextBox 

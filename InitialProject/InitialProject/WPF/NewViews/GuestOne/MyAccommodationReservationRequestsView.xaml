@@ -35,6 +35,7 @@
                         Orientation="Horizontal">
                         <TextBlock 
                             Text="{Binding Reservation.Accommodation.Name}" 
+                            Foreground="#9FC33C"
                             FontWeight="SemiBold" 
                             FontSize="16"/>
                         <TextBlock 
@@ -94,17 +95,17 @@
                                     <DataTrigger Binding="{Binding Status}" Value="Pending">
                                         <Setter Property="ToolTip" Value="{local:Loc PendingResponse}" />
                                         <Setter Property="Source" 
-                                                Value="../../../Resources/Images/clipboard_question.png"/>
+                                                Value="../../../Resources/Images/spin_colorful.png"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Status}" Value="Accepted">
                                         <Setter Property="ToolTip" Value="{local:Loc RequestAccepted}" />
                                         <Setter Property="Source" 
-                                                Value="../../../Resources/Images/clipboard_check.png"/>
+                                                Value="../../../Resources/Images/check_colorful.png"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Status}" Value="Declined">
                                         <Setter Property="ToolTip" Value="{local:Loc RequestDenied}" />
                                         <Setter Property="Source" 
-                                                Value="../../../Resources/Images/clipboard_x.png"/>
+                                                Value="../../../Resources/Images/error_colorful.png"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -115,7 +116,7 @@
                         Height="50"
                         Width="50"
                         Margin="20 0"
-                        Source="../../../Resources/Images/comment.png"
+                        Source="../../../Resources/Images/comment_colorful.png"
                         Cursor="Hand"
                         ToolTip="{local:Loc CheckoutOwnerComment}">
                         <Image.InputBindings>

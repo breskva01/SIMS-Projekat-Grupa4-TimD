@@ -33,6 +33,7 @@
                         Orientation="Horizontal">
                         <TextBlock 
                             Text="{Binding Reservation.Accommodation.Name}" 
+                            Foreground="#9FC33C"
                             FontWeight="SemiBold" 
                             FontSize="16"/>
                         <TextBlock 
@@ -88,7 +89,7 @@
                         Height="50"
                         Width="50"
                         Margin="30 0 50 0"
-                        Source="../../../Resources/Images/new-page.png"
+                        Source="../../../Resources/Images/colorful_external_link.png"
                         Cursor="Hand"
                         ToolTip="{local:Loc CheckoutRatingDetails}">
                         <Image.InputBindings>

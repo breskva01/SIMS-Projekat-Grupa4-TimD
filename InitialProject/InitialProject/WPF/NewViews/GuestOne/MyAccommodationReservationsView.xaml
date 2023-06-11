@@ -115,10 +115,10 @@
                     Orientation="Horizontal">
 
                     <Image
-                        Height="50"
-                        Width="50"
+                        Height="40"
+                        Width="40"
                         Margin="10 0"
-                        Source="../../../Resources/Images/calendar-edit.png"
+                        Source="../../../Resources/Images/colorful_calendar.png"
                         Cursor="Hand"
                         ToolTip="{local:Loc MoveReservation}">
                         <Image.InputBindings>
@@ -131,10 +131,10 @@
                     </Image>
 
                     <Image
-                        Height="50"
-                        Width="50"
+                        Height="40"
+                        Width="40"
                         Margin="20 0"
-                        Source="../../../Resources/Images/cross.png"
+                        Source="../../../Resources/Images/colorful_x2.png"
                         Cursor="Hand"
                         ToolTip="{local:Loc CancelReservation}">
                         <Image.InputBindings>

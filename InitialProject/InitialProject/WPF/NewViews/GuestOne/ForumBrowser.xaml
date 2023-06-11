@@ -9,6 +9,31 @@
              d:DesignHeight="450" d:DesignWidth="800" FontSize="16">
     <UserControl.Resources>
         <converters:ForumStatusToBooleanConverter x:Key="ForumStatusToBooleanConverter" />
+        <Style TargetType="Button" x:Key="funkyButton">
+            <Setter Property="Background" Value="#deb93e"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10"
+                            Padding="10 2 10 4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#999997" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid MaxWidth="1000">
         <Grid.RowDefinitions>
@@ -103,7 +128,13 @@
                 Grid.Column="0"
                 Content="{local:Loc StartNewForum}"
                 ToolTip="Ctrl + N"
-                Command="{Binding NavigateStartForumFormCommand}"/>
+                Command="{Binding NavigateStartForumFormCommand}">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource funkyButton}">
+                        <Setter Property="Background" Value="#9FC33C" />
+                    </Style>
+                </Button.Style>
+            </Button>
 
             <Button
                 Padding="5 2"
@@ -114,7 +145,7 @@
                 ToolTip="Ctrl + Shift + C"
                 Command="{Binding CloseForumCommand}">
                 <Button.Style>
-                    <Style TargetType="Button">
+                    <Style TargetType="Button" BasedOn="{StaticResource funkyButton}">
                         <Setter Property="Visibility" Value="Collapsed" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedTabIndex}" Value="1">
@@ -131,7 +162,13 @@
                 Grid.Column="2"
                 Content="{local:Loc ShowAllComments}"
                 ToolTip="Ctrl + O"
-                Command="{Binding NavigateForumCommentsCommand}"/>
+                Command="{Binding NavigateForumCommentsCommand}">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource funkyButton}">
+                        <Setter Property="Background" Value="#9FC33C" />
+                    </Style>
+                </Button.Style>
+            </Button>
 
         </Grid>
         
