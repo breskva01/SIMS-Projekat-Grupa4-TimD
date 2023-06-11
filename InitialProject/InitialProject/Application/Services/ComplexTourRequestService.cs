@@ -15,12 +15,14 @@ namespace InitialProject.Application.Services
         private readonly List<IObserver> _observers;
         private readonly IComplexTourRequestRepository _repository;
         private readonly TourRequestService _tourRequestService;
+        private readonly TourService _tourService;
 
         public ComplexTourRequestService()
         {
             _observers = new List<IObserver>();
             _repository = RepositoryInjector.Get<IComplexTourRequestRepository>();
             _tourRequestService = new TourRequestService();
+            _tourService = new TourService();
         }
 
         public List<ComplexTourRequest> GetAll()
@@ -47,8 +49,38 @@ namespace InitialProject.Application.Services
         }
         public List<ComplexTourRequest> GetByUser(int userId)
         {
-            return _repository.GetByUser(userId);
+            List<ComplexTourRequest> userRequests = _repository.GetByUser(userId, GetAll());
+            userRequests = CreateRequestPartsForAll(userRequests);
+            return userRequests;
         }
+
+
+        public List<ComplexTourRequest> CreateRequestPartsForAll(List<ComplexTourRequest> complexTourRequests)
+        {
+            foreach (ComplexTourRequest complexTourRequest in complexTourRequests)
+            {
+                CreateRequestPartsForOne(complexTourRequest);
+            }
+
+            return complexTourRequests;
+        }
+
+        public void CreateRequestPartsForOne(ComplexTourRequest complexTourRequest)
+        {
+            int i = 1;
+            foreach(TourRequest tourRequest in complexTourRequest.TourRequests)
+            {
+                string requestPart = "Part " + i.ToString() + ": " + tourRequest.Status.ToString();
+                if(tourRequest.Status == RequestStatus.Approved)
+                {
+                    Tour tour = _tourService.GetById(tourRequest.TourId);
+                    requestPart += " | Date: " + tour.Start.ToString("dd-MM-yyyy");
+                }
+                complexTourRequest.RequestParts.Add(requestPart);
+                i++;
+            }
+        }
+
         public List<ComplexTourRequest> GetApproved(List<ComplexTourRequest> complexTourRequests)
         {
             return _repository.GetApproved(complexTourRequests);

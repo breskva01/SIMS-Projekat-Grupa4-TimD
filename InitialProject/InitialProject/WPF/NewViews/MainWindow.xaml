@@ -18,6 +18,12 @@
     </Window.Icon>
     <Grid>
         <Grid.Resources>
+            <DataTemplate DataType="{x:Type vmsg2:ComplexTourRequestDetailsViewModel}">
+                <views:ComplexTourRequestDetailsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:ComplexTourRequestBrowserViewModel}">
+                <views:ComplexTourRequestBrowserView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg2:ComplexTourRequest1ViewModel}">
                 <views:ComplexTourRequest1View/>
             </DataTemplate>

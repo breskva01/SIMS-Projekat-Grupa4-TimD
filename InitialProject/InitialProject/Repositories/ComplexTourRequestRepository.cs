@@ -68,10 +68,10 @@ namespace InitialProject.Repositories
         }
         
 
-        public List<ComplexTourRequest> GetByUser(int userId)
+        public List<ComplexTourRequest> GetByUser(int userId, List<ComplexTourRequest> allRequests)
         {
-            List<ComplexTourRequest> complexTourRequests = GetAll();
-            foreach (ComplexTourRequest t in complexTourRequests)
+            List<ComplexTourRequest> complexTourRequests = new List<ComplexTourRequest>();
+            foreach (ComplexTourRequest t in allRequests)
             {
                 if (t.UserId == userId)
                 {
@@ -93,8 +93,19 @@ namespace InitialProject.Repositories
                     complexTourRequest.Status = ComplexRequestStatus.Approved;
                     Update(complexTourRequest);
                 }
+                if (AreRequestsPartiallyApproved(complexTourRequest))
+                {
+                    complexTourRequest.Status = ComplexRequestStatus.PartiallyApproved;
+                    Update(complexTourRequest);
+                }
             }
             return complexTourRequests;
+        }
+
+        public bool AreRequestsPartiallyApproved(ComplexTourRequest complexTourRequest)
+        {
+            
+            return (!AreAllRequestsApproved(complexTourRequest) && IsAnyRequestApproved(complexTourRequest));
         }
 
         public bool AreAllRequestsApproved(ComplexTourRequest complexTourRequest)
