@@ -46,7 +46,6 @@ namespace InitialProject.WPF.ViewModels
             SelectedForum = selectedForum;
             _forumService = new ForumService();
             Comments = new ObservableCollection<Comment>(_forumService.GetCommentsByForumId(SelectedForum.Id));
-            var SortedComments =  Comments.OrderBy(c => c.PostTime);
             BackCommand = new ExecuteMethodCommand(Back);
             SubmitCommentCommand = new ExecuteMethodCommand(SubmitComment);
             ReportCommentCommand = new ExecuteMethodCommand(ReportComment);
@@ -89,7 +88,6 @@ namespace InitialProject.WPF.ViewModels
             foreach (var comment in _forumService.GetComments())
             {
                 Comments.Add(comment);
-                var SortedComments = Comments.OrderBy(c => c.PostTime);
             }
         }
     }

@@ -48,7 +48,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" FontSize="40" Height="50" Width="300">Forum comments</Label>
-            <ListBox Grid.Row="1" Width="460" ItemsSource="{Binding SortedComments}" SelectedItem="{Binding SelectedComment}">
+            <ListBox Grid.Row="1" Width="460" ItemsSource="{Binding Comments}" SelectedItem="{Binding SelectedComment}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Margin" Value="10,5,10,15" />
