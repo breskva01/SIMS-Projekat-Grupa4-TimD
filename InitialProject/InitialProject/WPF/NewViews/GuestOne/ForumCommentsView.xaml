@@ -9,6 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:ForumStatusToBooleanConverter x:Key="ForumStatusToBooleanConverter" />
+        <converters:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter" />
         <DataTemplate x:Key="CommentTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -54,12 +55,63 @@
                         <Style TargetType="Image">
                             <Setter Property="Visibility" Value="Hidden" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding CredentialAuthor}" Value="True">
+                                <DataTrigger Binding="{Binding VerifiedGuest, Mode=OneTime}" Value="True">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Image.Style>
+                </Image>
+
+                <Image
+                    Margin="7"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    ToolTip="Korisnik poseduje smeštaj na lokaciji"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Height="25"
+                    Source="../../../Resources/Images/verified.png">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding VerifiedOwner, Mode=OneTime}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+
+                <Image
+                    Margin="7"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Height="25"
+                    Source="../../../Resources/Images/exclamation_mark.png">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ReportCount, Mode=OneTime, Converter={StaticResource GreaterThanZeroConverter}}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                    <Image.ToolTip>
+                        <ToolTip>
+                            <ToolTip.Content>
+                                <TextBlock>
+                                    <Run Text="Ovaj komentar je prijavljen kao nevalidan. Broj prijava: " />
+                                    <Run Text="{Binding ReportCount}" />
+                                </TextBlock>
+                            </ToolTip.Content>
+                        </ToolTip>
+                    </Image.ToolTip>
                 </Image>
 
                 <Rectangle 

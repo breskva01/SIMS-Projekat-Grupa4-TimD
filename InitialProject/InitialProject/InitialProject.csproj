@@ -33,6 +33,7 @@
     <None Remove="Resources\Images\dash-line.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\exclamation_mark.png" />
     <None Remove="Resources\Images\forwardSquare.png" />
     <None Remove="Resources\Images\go-back.png" />
     <None Remove="Resources\Images\go_back.png" />
@@ -97,6 +98,7 @@
     <Resource Include="Resources\Images\blueCheck.png" />
     <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\checkmark.png" />
+    <Resource Include="Resources\Images\exclamation_mark.png" />
     <Resource Include="Resources\Images\filter.png" />
     <Resource Include="Resources\Images\forwardSquare.png" />
     <Resource Include="Resources\Images\homeWhite.png" />

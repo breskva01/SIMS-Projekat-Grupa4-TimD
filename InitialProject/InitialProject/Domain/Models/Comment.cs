@@ -20,8 +20,8 @@ namespace InitialProject.Domain.Models
         public bool CredentialAuthor { get; set; }
         public bool IsOwner { get; set; }
         public bool IsGuest { get; set; }
-        public bool VerifiedOwner => CredentialAuthor && IsOwner;
-        public bool VerifiedGuest => CredentialAuthor && IsGuest;
+        public bool VerifiedOwner => CredentialAuthor && Author is Owner;
+        public bool VerifiedGuest => CredentialAuthor && Author is Guest1;
         public int ReportCount { get; set; }
 
         public Comment(Forum forum, string text, User author, DateTime postTime, bool credentialAuthor, bool isOwner, bool isGuest, int reportCount = 0)
