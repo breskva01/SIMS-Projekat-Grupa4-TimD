@@ -21,6 +21,8 @@ namespace InitialProject.Domain.Models
         public bool VeryUseful { get; set; }
         public DateTime LatestCommentPostTime => Comments.LastOrDefault().PostTime;
         public int CommentCount => Comments.Count;
+        public int OwnerComments { get; set; }
+        public int GuestComments { get; set; }
 
         public Forum(User initiator, ForumStatus status, Location location, string topic, bool veryUseful)
         {
@@ -46,6 +48,8 @@ namespace InitialProject.Domain.Models
             Location.Id = int.Parse(values[3]);
             Topic = values[4];
             VeryUseful = bool.Parse(values[5]);
+            OwnerComments = int.Parse(values[6]);
+            GuestComments = int.Parse(values[7]);
         }
 
         public string[] ToCSV()
@@ -57,7 +61,9 @@ namespace InitialProject.Domain.Models
                 Status.ToString(),
                 Location.Id.ToString(),
                 Topic,
-                VeryUseful.ToString()
+                VeryUseful.ToString(),
+                OwnerComments.ToString(),
+                GuestComments.ToString()
             };
             return csvValues;
         }
