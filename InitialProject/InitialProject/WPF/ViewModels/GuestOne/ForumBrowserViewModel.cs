@@ -51,14 +51,25 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         private void CloseForum()
         {
             if (SelectedForum == null)
-                MessageBox.Show("Izaberite forum koji želite zatvoriti");
-            else
+                MessageBox.Show("Izaberite forum koji želite zatvoriti.");
+            else if (SelectedForum.Status == ForumStatus.Closed)
+                MessageBox.Show("Izabrani forum je već zatvoren.");
+            else if (ConfirmClosing())
             {
                 _forumService.Close(SelectedForum);
-                MessageBox.Show("Forum uspešno zatvoren");
+                MessageBox.Show("Forum uspešno zatvoren.");
                 UpdateDisplayedForums();
             }
-            
+        }
+        private bool ConfirmClosing()
+        {
+            MessageBoxResult result = MessageBox.Show
+                ("Jednom zatvoren forum ostaje zauvek zatvoren,\n" +
+                 "već postavljeni komentari će i dalje biti vidljivi svim korisnicima." +
+                 "Da li ste sigurni da želite zatvoriti forum?\n", 
+                 "Potvrda zatvaranja foruma",
+                 MessageBoxButton.YesNo, MessageBoxImage.Question);
+            return result == MessageBoxResult.Yes;
         }
         private void UpdateDisplayedForums()
         {
