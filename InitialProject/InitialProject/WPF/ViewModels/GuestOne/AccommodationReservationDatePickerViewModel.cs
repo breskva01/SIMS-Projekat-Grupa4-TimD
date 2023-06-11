@@ -45,14 +45,23 @@ namespace InitialProject.WPF.ViewModels.GuestOne
 
                 if (_userService.IsDiscountAvailable(SelectedReservation.Guest))
                 {
-                    MessageBox.Show("Rezervacija uspešno kreirana.\n" +
+                    if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                        MessageBox.Show("Rezervacija uspešno kreirana.\n" +
                                     "Iskoristili ste jedan bonus poen i time ostvarili popust.\n" +
                                     $"Preostalo vam je {SelectedReservation.Guest.BonusPoints} " +
                                     "neiskorišćenih bonus poena.");
+                    else
+                        MessageBox.Show("Reservation successfully created.\n" +
+                                    "You have used one bonus point and received a discount.\n" +
+                                    $"You have {SelectedReservation.Guest.BonusPoints} " +
+                                    $"remaining unused bonus points.");
                 }
                 else
                 {
-                    MessageBox.Show("Rezervacija uspešno kreirana.");
+                    if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                        MessageBox.Show("Rezervacija uspešno kreirana.");
+                    else
+                        MessageBox.Show("Reservation successfuly created.");
                 }
 
                 NavigateAccommodationBrowser();
@@ -62,17 +71,27 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         {
             if (SelectedReservation == null)
             {
-                MessageBox.Show("Izaberite željeni termin.");
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Izaberite željeni termin.");
+                else
+                    MessageBox.Show("Please select one of the givn date ranges.");
                 return false;
             }
             if (GuestCount == 0)
             {
-                MessageBox.Show("Unesite broj gostiju.");
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Unesite broj gostiju.");
+                else
+                    MessageBox.Show("Please input the guest count.");
                 return false;
             }
             if (GuestCount > SelectedReservation.Accommodation.MaximumGuests)
             {
-                MessageBox.Show($"Uneti broj gostiju prelazi zadati limit " +
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show($"Uneti broj gostiju prelazi zadati limit " +
+                                $"({SelectedReservation.Accommodation.MaximumGuests})");
+                else
+                    MessageBox.Show("Guest count you've input is exceeding the existing limit " +
                                 $"({SelectedReservation.Accommodation.MaximumGuests})");
                 return false;
             }

@@ -62,9 +62,20 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         private void GetAvailableReservations()
         {
             if (Days == 0)
-                MessageBox.Show("Unesite željeni broj dana.");
+            {
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Unesite željeni broj dana.");
+                else
+                    MessageBox.Show("Please input the desired number of days.");
+            }
             else if (Days < Accommodation.MinimumDays)
-                MessageBox.Show($"Minimalani broj dana: {Accommodation.MinimumDays}");
+            {
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show($"Minimalani broj dana: {Accommodation.MinimumDays}");
+                else
+                    MessageBox.Show($"Minimum number of days: {Accommodation.MinimumDays}");
+
+            }
             else if (StartDate != DateTime.MinValue && EndDate != DateTime.MinValue)
             {
                 DateOnly startDate = DateOnly.FromDateTime(StartDate);
@@ -73,8 +84,10 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 ShowDatePicker(reservations);
                 
             }
+            else if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                MessageBox.Show("Izaberite željeni opseg datuma.");
             else
-                MessageBox.Show("Izaberite željeni opseg datuma");
+                MessageBox.Show("Please select the desired date range.");
         }
         private void ShowDatePicker(List<AccommodationReservation> reservations)
         {

@@ -49,7 +49,13 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         private void PostComment()
         {
             if (string.IsNullOrEmpty(CommentText))
-                MessageBox.Show("Ne možete postaviti prazan komentar.");
+            {
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Ne možete postaviti prazan komentar.");
+                else
+                    MessageBox.Show("An empty comment can not be posted.");
+
+            }
             else
             {
                 _forumService.PostComment(Forum, _user, CommentText);

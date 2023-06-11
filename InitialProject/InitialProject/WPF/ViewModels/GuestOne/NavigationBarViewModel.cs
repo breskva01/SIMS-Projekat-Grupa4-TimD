@@ -80,11 +80,19 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         {
             var requestService = new AccommodationReservationRequestService();
             requestService.UpdateGuestNotifiedField(_user.Id);
-            MessageBoxResult result = MessageBox.Show(
-                   "Stiglo je jedan ili više novih odgovora na vaše zahteve," +
-                   "da li želite da ih pogledate?",
-                   "Obaveštenje", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
+            string messageBoxText = "";
+            string messageBoxCaption = "";
+            if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+            {
+                messageBoxText = "Stiglo je jedan ili više novih odgovora na vaše zahteve, da li želite da ih pogledate?";
+                messageBoxCaption = "Obaveštenje";
+            }
+            else
+            {
+                messageBoxText = "One or more new responses for your requests have arrived. Would you like to take a look?";
+                messageBoxCaption = "Notification";
+            }
+            MessageBoxResult result = MessageBox.Show(messageBoxText, messageBoxCaption, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
                 NavigateMyRequests();
             AnyNotifications = false;

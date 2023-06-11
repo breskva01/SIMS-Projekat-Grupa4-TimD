@@ -48,12 +48,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         public string RenovationComment { get; set; }
         public int RenovationUrgency { get; set; }
-        public string ToolTipText { get; } =
-            "Nivo 1 - bilo bi lepo renovirati neke sitnice, ali sve funkcioniše kako treba i bez toga\r\n" +
-            "Nivo 2 - male zamerke na smeštaj koje kada bi se uklonile bi ga učinile savršenim\r\n" +
-            "Nivo 3 - nekoliko stvari koje su baš zasmetale bi trebalo renovirati\r\n" +
-            "Nivo 4 - ima dosta loših stvari i renoviranje je stvarno neophodno\r\n" +
-            "Nivo 5 - smeštaj je u jako lošem stanju i ne vredi ga uopšte iznajmljivati ukoliko se ne renovira\r\n";
+        public string ToolTipText { get; set; } 
         public RateAccommodationViewModel(NavigationStore navigationStore, AccommodationReservation reservation)
         {
             _navigationStore = navigationStore;
@@ -64,12 +59,38 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             RateReservationCommand = new ExecuteMethodCommand(SubmitRating);
             NavigateRatingsCommand = new ExecuteMethodCommand(NavigateRatings);
             UploadImagesCommand = new ExecuteMethodCommand(UploadImages);
+            FillInToolTipText();
+        }
+        private void FillInToolTipText()
+        {
+            if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                ToolTipText = "Nivo 1 - bilo bi lepo renovirati neke sitnice, ali sve funkcioniše kako treba i bez toga\r\n" +
+                              "Nivo 2 - male zamerke na smeštaj koje kada bi se uklonile bi ga učinile savršenim\r\n" +
+                              "Nivo 3 - nekoliko stvari koje su baš zasmetale bi trebalo renovirati\r\n" +
+                              "Nivo 4 - ima dosta loših stvari i renoviranje je stvarno neophodno\r\n" +
+                              "Nivo 5 - smeštaj je u jako lošem stanju i ne vredi ga uopšte iznajmljivati ukoliko se ne renovira\r\n";
+            else
+                ToolTipText = "Level 1 - it would be nice to renovate some minor things, but everything works fine without it\r\n" +
+                              "Level 2 - minor complaints about the accommodation that, if addressed, would make it perfect\r\n" +
+                              "Level 3 - several things that really bothered me and should be renovated\r\n" +
+                              "Level 4 - there are many bad aspects and renovation is truly necessary\r\n" +
+                              "Level 5 - the accommodation is in a very poor condition and not worth renting unless it's renovated\r\n";
         }
         public void SubmitRating()
         {
-            MessageBoxResult result = MessageBox.Show
-                ("Da li ste sigurni da želite da ocenite rezervaciju?", "Potvrda ocene",
-                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            string messageBoxText = "";
+            string messageBoxCaption = "";
+            if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+            {
+                messageBoxText = "Da li želite podneti ocenu?";
+                messageBoxCaption = "Potvrda ocene";
+            }
+            else
+            {
+                messageBoxText = "Would you like to submit the rating";
+                messageBoxCaption = "Rating submission";
+            }
+            MessageBoxResult result = MessageBox.Show(messageBoxText, messageBoxCaption, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 CopyImages();

@@ -42,25 +42,45 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void CancelReservation(AccommodationReservation reservation)
         {
-            MessageBoxResult result = MessageBox.Show
-                ("Da li ste sigurni da želite da otkažete rezervaciju?", "Potvrda otkazivanja",
-                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            string messageBoxText = "";
+            string messageBoxCaption = "";
+            if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+            {
+                messageBoxText = "Da li ste sigurni da želite da otkažete rezervaciju?";
+                messageBoxCaption = "Potvrda otkazivanja";
+            }
+            else
+            {
+                messageBoxText = "Are you sure you want to cancel the reservation?";
+                messageBoxCaption = "Cancellation Confirmation";
+            }
+            MessageBoxResult result = MessageBox.Show(messageBoxText, messageBoxCaption, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 if (reservation.CanBeCancelled())
                 {
                     _reservationService.Cancel(reservation.Id, reservation.Accommodation.Owner.Id);
-                    MessageBox.Show("Rezervacija uspešno otkazana.");
-                } 
-                else
+                    if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                        MessageBox.Show("Rezervacija uspešno otkazana.");
+                    else
+                        MessageBox.Show("Reservation successfuly canceled.");
+                }
+                else if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
                     MessageBox.Show("Rezervacija se ne može otkazati.");
+                else
+                    MessageBox.Show("This reservation can not be canceled.");
             }
         }
 
         private void MoveReservation(AccommodationReservation reservation)
         { 
             if (_requestService.HasPendingMoveRequest(reservation.Id))
-                MessageBox.Show("Već postoji zahtev za pomeranje ove rezervacije.");
+            {
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Već postoji zahtev za pomeranje ove rezervacije.");
+                else
+                    MessageBox.Show("A request to reschedule this reservation has already been submited.");
+            }
             else
                 ShowMoveRequestPrompt(reservation);
         }

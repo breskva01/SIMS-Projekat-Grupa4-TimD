@@ -31,7 +31,12 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         private void ShowComment(AccommodationReservationMoveRequest request)
         {
             if (string.IsNullOrEmpty(request.Comment))
-                MessageBox.Show("Vlasnik nije ostavio komentar.");
+            {
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Vlasnik nije ostavio komentar.");
+                else
+                    MessageBox.Show("The owner did not leave a comment.");
+            }
             else
             {
                 var viewModel = new OwnerCommentViewModel(_navigationStore, _user, request);

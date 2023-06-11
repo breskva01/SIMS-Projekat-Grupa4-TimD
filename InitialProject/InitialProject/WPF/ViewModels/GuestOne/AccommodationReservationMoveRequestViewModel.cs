@@ -49,11 +49,16 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 DateOnly checkIn = DateOnly.FromDateTime(CheckIn);
                 DateOnly checkOut = DateOnly.FromDateTime(CheckOut);
                 _requestService.Save(Reservation, checkIn, checkOut);
-                MessageBox.Show("Zahtev uspešno poslat.");
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Zahtev uspešno poslat.");
+                else
+                    MessageBox.Show("Request succesffuly sent.");
                 NavigateMyReservations();
             }
-            else
+            else if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
                 MessageBox.Show("Izaberite željene datume.");
+            else
+                MessageBox.Show("Please choose the desire check in & check out dates.");
         }
         private void NavigateMyReservations()
         {

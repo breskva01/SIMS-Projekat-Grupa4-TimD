@@ -100,17 +100,26 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         {
             if (string.IsNullOrEmpty(Topic))
             {
-                MessageBox.Show("Morate uneti temu foruma, pre započinjanja istog.");
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Morate uneti temu foruma, pre započinjanja istog.");
+                else
+                    MessageBox.Show("Forum topic must be entered, before starting a new forum.");
                 return false;
             }
             if (string.IsNullOrEmpty(StartingComment))
             {
-                MessageBox.Show("Morate uneti početni komentar/pitanje, pre započinjanja foruma.");
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Morate uneti početni komentar/pitanje, pre započinjanja foruma.");
+                else
+                    MessageBox.Show("Starting comment/question required, before starting a new forum.");
                 return false;
             }
             if (string.IsNullOrEmpty(SelectedCountry) || string.IsNullOrEmpty(SelectedCity))
             {
-                MessageBox.Show("Morate izabrati lokaciju, pre započinjanja foruma.");
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Morate izabrati lokaciju, pre započinjanja foruma.");
+                else
+                    MessageBox.Show("Location must be selected, before starting a new forum.");
                 return false;
             }
             return true;

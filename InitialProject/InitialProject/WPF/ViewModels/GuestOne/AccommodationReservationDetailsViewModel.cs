@@ -51,14 +51,23 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             _reservationService.Save(Reservation);
             if (_userService.IsDiscountAvailable(Reservation.Guest))
             {
-                MessageBox.Show("Rezervacija uspešno kreirana.\n" +
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Rezervacija uspešno kreirana.\n" +
                                 "Iskoristili ste jedan bonus poen i time ostvarili popust.\n" +
                                 $"Preostalo vam je {Reservation.Guest.BonusPoints} " +
                                 "neiskorišćenih bonus poena.");
+                else
+                    MessageBox.Show("Reservation successfully created.\n" +
+                                "You have used one bonus point and received a discount.\n" +
+                                $"You have {Reservation.Guest.BonusPoints} " +
+                                $"remaining unused bonus points.");
             }
             else
             {
-                MessageBox.Show("Rezervacija uspešno kreirana.");
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
+                    MessageBox.Show("Rezervacija uspešno kreirana.");
+                else
+                    MessageBox.Show("Reservation successfuly created.");
             }
             NavigateAnywhereAnytime();
         }
