@@ -18,21 +18,18 @@ namespace InitialProject.Domain.Models
         public User Author { get; set; }
         public DateTime PostTime { get; set; }
         public bool CredentialAuthor { get; set; }
-        public bool IsOwner { get; set; }
-        public bool IsGuest { get; set; }
-        public bool VerifiedOwner => CredentialAuthor && IsOwner;
-        public bool VerifiedGuest => CredentialAuthor && IsGuest;
+        public bool VerifiedOwner => CredentialAuthor && Author is Owner;
+        public bool VerifiedGuest => CredentialAuthor && Author is Guest1;
         public int ReportCount { get; set; }
+        public List<int> ReportIds { get; set; }
 
-        public Comment(Forum forum, string text, User author, DateTime postTime, bool credentialAuthor, bool isOwner, bool isGuest, int reportCount = 0)
+        public Comment(Forum forum, string text, User author, DateTime postTime, bool credentialAuthor, int reportCount = 0)
         {
             Forum = forum;
             Text = text;
             Author = author;
             PostTime = postTime;
             CredentialAuthor = credentialAuthor;
-            IsOwner = isOwner;
-            IsGuest = isGuest;
             ReportCount = reportCount;
         }
 
@@ -40,6 +37,7 @@ namespace InitialProject.Domain.Models
         {
             Forum = new Forum();
             Author = new User();
+            ReportIds= new List<int>();
         }
         public void FromCSV(string[] values)
         {
@@ -49,13 +47,25 @@ namespace InitialProject.Domain.Models
             Author.Id = int.Parse(values[3]);
             PostTime = DateTime.ParseExact(values[4], "dd.MM.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             CredentialAuthor = bool.Parse(values[5]);
-            IsOwner = bool.Parse(values[6]);
-            IsGuest = bool.Parse(values[7]);
-            ReportCount = int.Parse(values[8]);
+            ReportCount = int.Parse(values[6]);
+            string reportIds = values[7];
+            string[] splitReportIds = reportIds.Split(',');
+            splitReportIds = splitReportIds.SkipLast(1).ToArray();
+            ReportIds = new List<int>();
+            foreach (string reportId in splitReportIds)
+            {
+                ReportIds.Add(Convert.ToInt32(reportId));
+            }
+
         }
 
         public string[] ToCSV()
         {
+            string reportIds = "";
+            foreach (int report in ReportIds)
+            {
+                reportIds += report.ToString() + ",";
+            }
             string[] csvValues =
             { 
                 Id.ToString(),
@@ -64,9 +74,8 @@ namespace InitialProject.Domain.Models
                 Author.Id.ToString(),
                 PostTime.ToString("dd.MM.yyyy. HH:mm:ss"),
                 CredentialAuthor.ToString(),
-                IsOwner.ToString(),
-                IsGuest.ToString(),
-                ReportCount.ToString()
+                ReportCount.ToString(),
+                reportIds
             };
             return csvValues;
         }

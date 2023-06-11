@@ -23,7 +23,7 @@ namespace InitialProject.Application.Services
         {
             var forum = new Forum(iniator, ForumStatus.Open, location, topic, false);
             bool credentialUser = CheckIfUserHasCredentials(iniator, location);
-            var comment = new Comment(forum, startingQuestion, iniator, DateTime.Now, credentialUser, false, true);
+            var comment = new Comment(forum, startingQuestion, iniator, DateTime.Now, credentialUser);
 
             _forumRepository.Save(forum);
             _commentRepository.Save(comment);
@@ -36,7 +36,7 @@ namespace InitialProject.Application.Services
         public void PostComment(Forum forum, User user, string commentText)
         {
             bool credentialUser = CheckIfUserHasCredentials(user, forum.Location);
-            var comment = new Comment(forum, commentText, user, DateTime.Now, credentialUser, false, true);
+            var comment = new Comment(forum, commentText, user, DateTime.Now, credentialUser);
             _commentRepository.Save(comment);
             UpdateVeryUsefulStatus(forum.Id);
         }
@@ -117,6 +117,14 @@ namespace InitialProject.Application.Services
         public Comment SubmitComment(Forum forum, string text, User author)
         {
            return _commentRepository.SubmitComment(forum, text, author);
+        }
+        public string ReportComment(Comment selectedComment, User user) 
+        {
+            return  _commentRepository.ReportComment(selectedComment, user);
+        }
+        public List<Comment> GetComments() 
+        {
+            return _commentRepository.GetAll();
         }
     }
 }

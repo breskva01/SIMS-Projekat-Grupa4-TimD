@@ -48,7 +48,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" FontSize="40" Height="50" Width="300">Forum comments</Label>
-            <ListBox Grid.Row="1" Width="460" ItemsSource="{Binding Comments}" SelectedItem="SelectedComment">
+            <ListBox Grid.Row="1" Width="460" ItemsSource="{Binding SortedComments}" SelectedItem="{Binding SelectedComment}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Margin" Value="10,5,10,15" />
@@ -69,16 +69,20 @@
                                 <Run Text="{Binding PostTime}" FontSize="20"/>
                             </TextBlock>
                             <TextBlock Visibility="{Binding VerifiedOwner, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <Run Text="Owner" FontSize="20"/>
+                                <Run Text="Verified owner" FontSize="20"/>
                             </TextBlock>
                             <TextBlock Visibility="{Binding VerifiedGuest, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Run Text="Verified guest" FontSize="20"/>
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="Reports: " FontSize="20"/>
+                                <Run Text="{Binding ReportCount}" FontSize="20"/>
                             </TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Grid.Row="2" Content="Report comment" Height="35" Width="240"></Button>
+            <Button Grid.Row="2" Content="Report comment" Height="35" Width="240" Command="{Binding ReportCommentCommand}"></Button>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

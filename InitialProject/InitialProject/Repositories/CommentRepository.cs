@@ -75,7 +75,7 @@ namespace InitialProject.Repositories
                 if(credentialAuthor)    
                     break;
             }
-            Comment comment = new Comment(forum, text, author, DateTime.Now, credentialAuthor, true, false);
+            Comment comment = new Comment(forum, text, author, DateTime.Now, credentialAuthor);
             comment.Id = id;
             if (credentialAuthor)
             {
@@ -84,6 +84,61 @@ namespace InitialProject.Repositories
                 _forumRepository.UpdateCommentCount(forum, author.Id);
             }
             return comment;
+        }
+        public string ReportComment(Comment selectedComment, User user) 
+        {
+            if(selectedComment.CredentialAuthor && selectedComment.Author is Guest1)
+            {
+                return "This user was verified on this location!";
+            }
+            if(selectedComment.Author is Owner)
+            {
+                return "This user is an owner on this location!";
+            }
+            GetAll();
+            Comment newComment = selectedComment;
+            string IsReported = "false";
+            if(selectedComment.ReportCount == 0)
+            {
+                newComment.ReportCount++;
+                newComment.ReportIds.Add(user.Id);
+                foreach(Comment comment in _comments.ToList())
+                {
+                    if(comment.Id == selectedComment.Id)
+                    {
+                        _comments.Remove(comment);
+                        _comments.Add(newComment);
+                        _fileHandler.Save(_comments);
+                        return "false";
+                    }
+                }
+            }
+            else 
+            {
+                foreach(int id in selectedComment.ReportIds)
+                {
+                    if(id == user.Id)
+                    {
+                        IsReported = "true";
+                        break;
+                    }
+                }
+                if (IsReported == "false") 
+                {
+                    newComment.ReportCount++;
+                    newComment.ReportIds.Add(user.Id);
+                    foreach (Comment comment in _comments.ToList())
+                    {
+                        if (comment == selectedComment)
+                        {
+                            _comments.Remove(comment);
+                            _comments.Add(newComment);
+                            _fileHandler.Save(_comments);
+                        }
+                    }
+                }
+            }
+            return IsReported;
         }
     }
 }

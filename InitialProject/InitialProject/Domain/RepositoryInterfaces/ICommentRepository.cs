@@ -14,5 +14,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         void Save(Comment comment);
         public List<Comment> GetCommentsByForumId(int id);
         public Comment SubmitComment(Forum forum, string text, User author);
+        public string ReportComment(Comment selectedComment, User user);
     }
 }

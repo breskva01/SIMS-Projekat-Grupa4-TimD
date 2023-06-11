@@ -21,8 +21,10 @@ namespace InitialProject.WPF.ViewModels
         public bool IsNotified;
         public Forum SelectedForum { get; set; }
         public ObservableCollection<Comment> Comments { get; set;}
+        public Comment SelectedComment { get; set; }
         public ICommand BackCommand { get; }
         public ICommand SubmitCommentCommand { get; }
+        public ICommand ReportCommentCommand { get; }
         private string _comment;
         public string Comment
         {
@@ -44,8 +46,10 @@ namespace InitialProject.WPF.ViewModels
             SelectedForum = selectedForum;
             _forumService = new ForumService();
             Comments = new ObservableCollection<Comment>(_forumService.GetCommentsByForumId(SelectedForum.Id));
+            var SortedComments =  Comments.OrderBy(c => c.PostTime);
             BackCommand = new ExecuteMethodCommand(Back);
             SubmitCommentCommand = new ExecuteMethodCommand(SubmitComment);
+            ReportCommentCommand = new ExecuteMethodCommand(ReportComment);
         }
         private void Back()
         {
@@ -65,6 +69,28 @@ namespace InitialProject.WPF.ViewModels
             }
             Comment = "";
             Comments.Add(comment);
+        }
+        private void ReportComment()
+        {
+            string retVal = _forumService.ReportComment(SelectedComment, _owner);
+            if(retVal == "true") 
+            {
+                MessageBox.Show("You have already reported this comment!");
+            }
+            else if(retVal == "This user was verified on this location!")
+            {
+                MessageBox.Show(retVal);
+            }
+            else if(retVal == "This user is an owner on this location!")
+            {
+                MessageBox.Show(retVal);
+            }
+            Comments.Clear();
+            foreach (var comment in _forumService.GetComments())
+            {
+                Comments.Add(comment);
+                var SortedComments = Comments.OrderBy(c => c.PostTime);
+            }
         }
     }
 }
