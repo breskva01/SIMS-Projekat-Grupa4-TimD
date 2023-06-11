@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+        xmlns:local="clr-namespace:InitialProject"
         xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
         mc:Ignorable="d"
         Height="auto" Width="auto" FontSize="14" d:DesignWidth="900" FontFamily="Segoe UI">
     <UserControl.Resources>
-        <converters:EnumDisplayNameConverter x:Key="EnumDisplayNameConverter"/>
         <DataTemplate x:Key="AccommodationTemplate">
             <StackPanel 
                 Margin="5 10" 
@@ -29,7 +28,7 @@
                             CommandParameter="{Binding}"/>
                     </Image.InputBindings>
                 </Image>
-                
+
                 <StackPanel 
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Center"
@@ -45,7 +44,7 @@
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Owner.SuperOwner}" Value="True">
                                         <Setter Property="Visibility" Value="Visible"/>
-                                        <Setter Property="ToolTip" Value="Super vlasnik"/>
+                                        <Setter Property="ToolTip" Value="{local:Loc SuperOwner}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -93,9 +92,9 @@
 
                     <TextBlock
                         FontSize="13">
-                        <Run Text="Maks gostiju:"/>
+                        <Run Text="{local:Loc MaxGuests:}"/>
                         <Run Text="{Binding MaximumGuests}" />,
-                        <Run Text="min dana:"/> 
+                        <Run Text="{local:Loc MinDays:}"/> 
                         <Run Text="{Binding MinimumDays}" />
                     </TextBlock>
 
@@ -130,7 +129,7 @@
                 Margin="0 10">
 
                 <TextBlock 
-                    Text="Broj dana:"
+                    Text="{local:Loc DaysCount:}"
                     Margin="0 0 10 0"
                     VerticalAlignment="Center"/>
 
@@ -178,7 +177,7 @@
                 </Grid>
 
                 <TextBlock 
-                    Text="Broj gostiju:"
+                    Text="{local:Loc GuestCount:}"
                     Margin="25 0 10 0" 
                     VerticalAlignment="Center"/>
 
@@ -228,20 +227,18 @@
 
                 <TextBlock 
                     Margin="25 0 10 0"
-                    Text="Tip smeštaja:"
+                    Text="{local:Loc AccommodationType:}"
                     VerticalAlignment="Center"/>
 
                 <ComboBox 
                     Padding="5 2 0 2"
-                    Width="85"
-                    ItemsSource="{Binding AccommodationTypes}"
-                    SelectedItem="{Binding SelectedAccommodationType}"
+                    Width="95"
+                    SelectedIndex="{Binding AccommodationTypeSelectedIndex, Mode=TwoWay}"
                     VerticalContentAlignment="Center">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
+                    <ComboBoxItem Content="{local:Loc Everything}"/>
+                    <ComboBoxItem Content="{local:Loc House}"/>
+                    <ComboBoxItem Content="{local:Loc Apartment}"/>
+                    <ComboBoxItem Content="{local:Loc Cottage}"/>
                 </ComboBox>
 
             </StackPanel>
@@ -289,7 +286,7 @@
                 <Button 
                     Padding="5 2" 
                     Margin="0 0 10 0"
-                    Content="Pretraži"
+                    Content="{local:Loc Search}"
                     Command="{Binding ApplyFiltersCommand}">
                 </Button>
 
@@ -302,7 +299,7 @@
                 <TextBlock 
                     Margin="10 0"
                     VerticalAlignment="Center"
-                    Text="Sortiraj po:"/>
+                    Text="{local:Loc SortBy:}"/>
 
                 <ComboBox 
                     Padding="5 2 0 2"
@@ -310,12 +307,12 @@
                     VerticalContentAlignment="Center"
                     SelectedIndex="{Binding SortSelectedIndex, Mode=TwoWay}">
                     <ComboBoxItem Content=""/>
-                    <ComboBoxItem Content="Imenu"/>
-                    <ComboBoxItem Content="Lokaciji"/>
-                    <ComboBoxItem Content="Maksimalnom broj gostiju ↗"/>
-                    <ComboBoxItem Content="Maksimalnom broj gostiju ↘"/>
-                    <ComboBoxItem Content="Minimalnom broju dana ↗"/>
-                    <ComboBoxItem Content="Minimalnom broju dana ↘"/>
+                    <ComboBoxItem Content="{local:Loc NameSort}"/>
+                    <ComboBoxItem Content="{local:Loc LocationSort}"/>
+                    <ComboBoxItem Content="{local:Loc MaxGuestSortU}"/>
+                    <ComboBoxItem Content="{local:Loc MaxGuestSortD}"/>
+                    <ComboBoxItem Content="{local:Loc MinDaysSortU}"/>
+                    <ComboBoxItem Content="{local:Loc MinDaysSortD}"/>
                 </ComboBox>
 
             </StackPanel>

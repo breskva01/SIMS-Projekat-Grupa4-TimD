@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             xmlns:local="clr-namespace:InitialProject"
              xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
@@ -196,11 +196,11 @@
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Text" Value="{Binding AccommodationAverageRating, Mode=OneTime, StringFormat={}{0:F1}}"/>
-                            <Setter Property="ToolTip" Value="Prosečna ocena" />
+                            <Setter Property="ToolTip" Value="{local:Loc AverageRating}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding AccommodationAverageRating}" Value="0.0">
                                     <Setter Property="Text" Value="X" />
-                                    <Setter Property="ToolTip" Value="Trenutno ne postoje ocene za ovaj smeštaj" />
+                                    <Setter Property="ToolTip" Value="{local:Loc NoRatingsAccommodation}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -261,7 +261,7 @@
                     <StackPanel
                         Orientation="Horizontal"
                         Margin="0 5">
-                        <TextBlock Text="Vlasnik: "/>
+                        <TextBlock Text="{local:Loc Owner:}"/>
                         <TextBlock Text="{Binding Accommodation.Owner.FirstName}"/>
                         <TextBlock Text=" "/>
                         <TextBlock Text="{Binding Accommodation.Owner.LastName}"/>
@@ -271,11 +271,11 @@
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Text" Value="{Binding OwnerAverageRating, Mode=OneTime, StringFormat={}{0:F1}}"/>
-                                    <Setter Property="ToolTip" Value="Prosečna ocena" />
+                                    <Setter Property="ToolTip" Value="{local:Loc AverageRating}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding OwnerAverageRating}" Value="0.0">
                                             <Setter Property="Text" Value="X" />
-                                            <Setter Property="ToolTip" Value="Trenutno ne postoje ocene za ovog vlasnika" />
+                                            <Setter Property="ToolTip" Value="{local:Loc NoRatingsOwner}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -288,14 +288,14 @@
 
                     <TextBlock 
                         Margin="0 5"
-                        Text="Kontakt telefon: " >
+                        Text="{local:Loc PhoneNumber:}" >
                         <Run 
                             Text="{Binding Accommodation.Owner.PhoneNumber}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 5"
-                        Text="Tip smeštaja: ">
+                        Text="{local:Loc AccommodationType:}">
                         <Run 
                             Text="{Binding Accommodation.Type, 
                                 Converter={StaticResource AccommodationTypeConverter}}"/>
@@ -303,25 +303,25 @@
 
                     <TextBlock 
                         Margin="0 5"
-                        Text="Maksimalno gostiju: ">
+                        Text="{local:Loc MaximumGuests:}">
                         <Run 
                             Text="{Binding Accommodation.MaximumGuests}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 5"
-                        Text="Minimalno dana: ">
+                        Text="{local:Loc MinimumDays:}">
                         <Run 
                             Text="{Binding Accommodation.MinimumDays}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 5"
-                        Text="Minimalni rok za otkazivanje: ">
+                        Text="{local:Loc MinimumCancelationNotification:}">
                         <Run 
                             Text="{Binding Accommodation.MinimumCancelationNotice}"/>
                         <Run 
-                            Text="dana"/>
+                            Text="{local:Loc days}"/>
                     </TextBlock>
 
                 </StackPanel>
@@ -351,7 +351,7 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Margin="5"
-                            Text="Najranije od:"/>
+                            Text="{local:Loc EarliestCheckIn:}"/>
 
                         <DatePicker 
                             Grid.Row="0"
@@ -366,7 +366,7 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Margin="5"
-                            Text="Najkasnije do:"/>
+                            Text="{local:Loc LatestCheckOut:}"/>
 
                         <DatePicker 
                             Grid.Row="1"
@@ -381,7 +381,7 @@
                             Grid.Row="2"
                             Grid.Column="0"
                             Margin="5"
-                            Text="Broj dana:"/>
+                            Text="{local:Loc DaysCount:}"/>
 
                         <TextBox 
                             Grid.Row="2"
@@ -394,7 +394,7 @@
                         <Button 
                             Grid.Row="3"
                             Grid.ColumnSpan="2"
-                            Content="Pronađi slobodne termine"  
+                            Content="{local:Loc FindAvailableDates}"  
                             Margin="5"
                             Command="{Binding FindAvailableReservationsCommand}"/>
 
@@ -413,7 +413,7 @@
             Grid.Column="2"
             Content="?"
             FontSize="22"
-            ToolTip="PDF dokumentacija o rezervisanju smeštaja"/>
+            ToolTip="{local:Loc PDF}"/>
             
     </Grid>
 </UserControl>

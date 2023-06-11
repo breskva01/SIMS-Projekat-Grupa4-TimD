@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
+             xmlns:local="clr-namespace:InitialProject"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -50,14 +50,14 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 FontSize="28"
-                Text="Tema:"/>
+                Text="{local:Loc Topic:}"/>
 
             <TextBlock
                 Margin="0 0 20 0"
                 Grid.Row="1"
                 Grid.Column="0"
                 FontSize="28"
-                Text="Lokacija:"/>
+                Text="{local:Loc Location:}"/>
 
             <TextBox
                 Margin="0 0 0 10"
@@ -148,7 +148,7 @@
             VerticalAlignment="Top"
             Padding="4"
             x:Name="PlaceholderText" 
-            Text="(Obavezno) Početni komentar/pitanje..."
+            Text="{local:Loc StartingQuestion}"
             Visibility="Visible"/>
 
         <Button 
@@ -160,7 +160,7 @@
             VerticalAlignment="Bottom"
             Margin="30"
             FontSize="24"
-            Content="Započni forum"
+            Content="{local:Loc StartForum}"
             Padding="10 0"
             Command="{Binding StartForumCommand}"/>
 

@@ -10,11 +10,13 @@ namespace InitialProject.WPF.ViewModels.GuestOne
     {
         public NavigationBarViewModel NavigationBarViewModel { get; }
         public ViewModelBase ContentViewModel { get; }
+        public StatusBarViewModel StatusBarViewModel { get; }
 
         public LayoutViewModel(NavigationBarViewModel navigationBarViewModel, ViewModelBase contentViewModel)
         {
             NavigationBarViewModel = navigationBarViewModel;
             ContentViewModel = contentViewModel;
+            StatusBarViewModel = new StatusBarViewModel();
             SetAppStatus();
         }
 

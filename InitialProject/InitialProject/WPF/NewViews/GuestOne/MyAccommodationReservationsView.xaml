@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             xmlns:local="clr-namespace:InitialProject"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" FontSize="14" FontWeight="Light">
     <UserControl.Resources>
@@ -85,15 +85,15 @@
                         Margin="0 0 0 5">
                         Minimalni rok za otkazivanje: 
                         <Run Text="{Binding Accommodation.MinimumCancelationNotice}"/>
-                        <Run Text="dana"/>
+                        <Run Text="{local:Loc days}"/>
                     </TextBlock>
 
                     <TextBlock 
                         Margin="0 0 0 5"
                         Text="{Binding GuestCount}">
-                        <Run Text=" gostiju,"/>
+                        <Run Text="{local:Loc sGuestsComma}"/>
                         <Run Text="{Binding NumberOfDays, Mode=OneWay}"/>
-                        <Run Text="dana"/>
+                        <Run Text="{local:Loc days}"/>
                     </TextBlock>
 
                     <TextBlock 
@@ -120,7 +120,7 @@
                         Margin="10 0"
                         Source="../../../Resources/Images/calendar-edit.png"
                         Cursor="Hand"
-                        ToolTip="Pomeri rezervaciju">
+                        ToolTip="{local:Loc MoveReservation}">
                         <Image.InputBindings>
                             <MouseBinding 
                                 MouseAction="LeftClick"
@@ -136,7 +136,7 @@
                         Margin="20 0"
                         Source="../../../Resources/Images/cross.png"
                         Cursor="Hand"
-                        ToolTip="Otkaži rezervaciju">
+                        ToolTip="{local:Loc CancelReservation}">
                         <Image.InputBindings>
                             <MouseBinding 
                                 MouseAction="LeftClick"

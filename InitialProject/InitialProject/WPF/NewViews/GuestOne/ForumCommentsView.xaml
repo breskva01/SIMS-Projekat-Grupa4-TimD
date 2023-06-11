@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
+             xmlns:local="clr-namespace:InitialProject"
              xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -46,7 +46,7 @@
                     Margin="7"
                     Grid.Column="0"
                     Grid.Row="0"
-                    ToolTip="Korisnik je posetio lokaciju"
+                    ToolTip="{local:Loc UserVisitedLocation}"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Height="25"
@@ -67,7 +67,7 @@
                     Margin="7"
                     Grid.Column="0"
                     Grid.Row="0"
-                    ToolTip="Korisnik poseduje smeštaj na lokaciji"
+                    ToolTip="{local:Loc UserOwnsAccommodation}"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Height="25"
@@ -106,7 +106,7 @@
                         <ToolTip>
                             <ToolTip.Content>
                                 <TextBlock>
-                                    <Run Text="Ovaj komentar je prijavljen kao nevalidan. Broj prijava: " />
+                                    <Run Text="{local:Loc ReportedComment}" />
                                     <Run Text="{Binding ReportCount}" />
                                 </TextBlock>
                             </ToolTip.Content>
@@ -289,7 +289,7 @@
                         VerticalAlignment="Top"
                         Padding="4"
                         x:Name="PlaceholderText" 
-                        Text="Vaš komentar..."
+                        Text="{local:Loc YourComent}"
                         Visibility="Visible"/>
 
                     <Button 
@@ -301,7 +301,7 @@
                         VerticalAlignment="Bottom"
                         Margin="15 5 15 15"
                         FontSize="20"
-                        Content="Postavi komentar"
+                        Content="{local:Loc PostComment}"
                         Padding="10 0"
                         Command="{Binding PostCommentCommand}"/>
 

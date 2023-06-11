@@ -61,8 +61,27 @@
             Orientation="Horizontal">
 
             <TextBlock
+                Padding="3 2"
                 VerticalAlignment="Center"
-                Text="SR"/>
+                Text="{Binding CurrentLanguage, UpdateSourceTrigger=PropertyChanged}"
+                Cursor="Hand"
+                ToolTip="Ctrl + L">
+                <TextBlock.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding ChangeLanguageCommand}"/>
+                </TextBlock.InputBindings>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <TextBlock
                 VerticalAlignment="Center"

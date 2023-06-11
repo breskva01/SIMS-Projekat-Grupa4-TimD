@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             xmlns:local="clr-namespace:InitialProject"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" FontFamily="Segoe UI" FontSize="20">
     <UserControl.Resources>
@@ -64,7 +64,7 @@
         <TextBlock
             Margin="0 0 0 20"
             Grid.Row="1"
-            Text="Odaberite željeni opseg datuma:"/>
+            Text="{local:Loc ChooseDateRange:}"/>
 
         <ListBox 
             Margin="0 0 0 20"
@@ -109,8 +109,8 @@
             Margin="0 0 0 20" 
             Grid.Row="3" 
             Orientation="Horizontal">
-            
-            <TextBlock Text="Unesite broj gostiju: "/>
+
+            <TextBlock Text="{local:Loc EnterGuestCount:}"/>
             <TextBox 
                 Padding="3" 
                 MinWidth="100" 
@@ -122,7 +122,7 @@
             HorizontalAlignment="Right"
             Grid.Row="4"
             Padding="3" 
-            Content="Rezerviši"
+            Content="{local:Loc Reserve}"
             Command="{Binding ConfirmReservationCommand}"/>
 
     </Grid>

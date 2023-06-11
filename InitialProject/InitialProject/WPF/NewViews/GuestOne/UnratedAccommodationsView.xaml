@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
+             xmlns:local="clr-namespace:InitialProject"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" FontSize="14" FontWeight="Light">
     <UserControl.Resources>
@@ -54,9 +54,9 @@
                     <TextBlock 
                         Margin="0 0 0 5"
                         Text="{Binding GuestCount}">
-                        <Run Text=" gostiju,"/>
+                        <Run Text="{local:Loc sGuestsComma}"/>
                         <Run Text="{Binding NumberOfDays, Mode=OneWay}"/>
-                        <Run Text="dana"/>
+                        <Run Text="{local:Loc days}"/>
                     </TextBlock>
 
                     <TextBlock 
@@ -80,11 +80,11 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="16"
-                        Text="Imate još ">
-                        <Run Text="{Binding DaysLeftForRating, Mode=OneWay}"/>
-                        <Run Text="dana da"/>
+                        Text="{local:Loc YouHave}">
+                        <Run Text="{Binding DaysLeftForRating, Mode=OneTime}"/>
+                        <Run Text="{local:Loc daysTo}"/>
                         <LineBreak/>
-                        ocenite ovaj smeštaj
+                        <Run Text="{local:Loc rateThisAccommodation}"/>
                     </TextBlock>
 
                     <Image
@@ -93,7 +93,7 @@
                         Margin="30 0 50 0"
                         Source="../../../Resources/Images/new-page.png"
                         Cursor="Hand"
-                        ToolTip="Oceni smeštaj">
+                        ToolTip="{local:Loc RateAccommodation}">
                         <Image.InputBindings>
                             <MouseBinding 
                                 MouseAction="LeftClick"

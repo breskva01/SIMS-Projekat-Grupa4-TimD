@@ -61,17 +61,16 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 }
             }
         }
-        public AccommodationType[] AccommodationTypes { get; } = Enum.GetValues(typeof(AccommodationType)).Cast<AccommodationType>().ToArray();
 
-        private AccommodationType _selectedAccommodationType;
-        public AccommodationType SelectedAccommodationType
+        private int _accommodationTypeSelectedIndex;
+        public int AccommodationTypeSelectedIndex
         {
-            get => _selectedAccommodationType;
+            get => _accommodationTypeSelectedIndex;
             set
             {
-                if (_selectedAccommodationType != value)
+                if (_accommodationTypeSelectedIndex != value)
                 {
-                    _selectedAccommodationType = value;
+                    _accommodationTypeSelectedIndex = value;
                     OnPropertyChanged();
                 }
             }
@@ -106,7 +105,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             GuestCount = 1;
             NumberOfDays = 3;
             SortSelectedIndex = 0;
-            SelectedAccommodationType = AccommodationType.Everything;
+            AccommodationTypeSelectedIndex = 0;
             ApplyFiltersCommand = new ExecuteMethodCommand(ApplyFilters);
             ResetFiltersCommand = new ExecuteMethodCommand(ResetFilters);
             GuestCountIncrementCommand = new IncrementCommand(() => GuestCount, (newValue) => GuestCount = newValue);
@@ -115,11 +114,25 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             NumberOfDaysDecrementCommand = new DecrementCommand(this, () => NumberOfDays, (newValue) => NumberOfDays = newValue);
             OpenReservationFormCommand = new AccommodationClickCommand(ShowReservationForm);
         }
+        private AccommodationType GetSelectedAccommodationType()
+        {
+            switch (AccommodationTypeSelectedIndex)
+            {
+                case 0:
+                    return AccommodationType.Everything;
+                case 1:
+                    return AccommodationType.House;
+                case 2:
+                    return AccommodationType.Apartment;
+                default:
+                    return AccommodationType.Cottage;
+            }
+        }
         
         private void ApplyFilters()
         {
             Accommodations.Clear();
-            _accommodationService.GetFiltered(SearchText, SelectedAccommodationType, GuestCount, NumberOfDays).
+            _accommodationService.GetFiltered(SearchText, GetSelectedAccommodationType(), GuestCount, NumberOfDays).
                 ForEach(a => Accommodations.Add(a));
         }
         private void ResetFilters()
@@ -128,7 +141,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             SearchText = "";
             GuestCount = 1;
             NumberOfDays = 3;
-            SelectedAccommodationType = AccommodationType.Everything;
+            AccommodationTypeSelectedIndex = 0;
             Accommodations.Clear();
             _accommodationService.GetAll().ForEach(a => Accommodations.Add(a));
         }

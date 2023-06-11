@@ -14,22 +14,27 @@ namespace InitialProject.WPF.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is AccommodationType accommodationType)
-            {
-                switch (accommodationType)
+                if (TranslationSource.Instance.CurrentCulture.Name == "sr-Latn")
                 {
-                    case AccommodationType.House:
-                        return "Kuća";
-                    case AccommodationType.Apartment:
-                        return "Apartman";
-                    case AccommodationType.Cottage:
-                        return "Koliba";
-                    case AccommodationType.Everything:
-                        return "Sve";
-                    default:
-                        return "";
+                    switch (accommodationType)
+                    {
+                        case AccommodationType.House:
+                            return "Kuća";
+                        case AccommodationType.Apartment:
+                            return "Apartman";
+                        case AccommodationType.Cottage:
+                            return "Koliba";
+                        case AccommodationType.Everything:
+                            return "Sve";
+                        default:
+                            return "";
+                    }
                 }
-            }
-            return "";
+                else
+                {
+                    return accommodationType;
+                }
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
+             xmlns:local="clr-namespace:InitialProject"
              xmlns:converters="clr-namespace:InitialProject.WPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" FontSize="16">
@@ -23,8 +23,8 @@
             FontSize="16"
             SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged}"
             Margin="15 10 15 0">
-            <TabItem Header="Svi forumi" IsSelected="True"/>
-            <TabItem Header="Moji forumi" />
+            <TabItem Header="{local:Loc AllForums}" IsSelected="True"/>
+            <TabItem Header="{local:Loc MyForums}" />
         </TabControl>
 
         <DataGrid 
@@ -37,27 +37,29 @@
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Width="1.1*"
-                    Header="Tema" Binding="{Binding Topic}" 
+                    Header="{local:Loc Topic}" Binding="{Binding Topic}" 
                     IsReadOnly="True"/>
 
                 <DataGridTextColumn 
                     Width="1.1*"
-                    Header="Lokacija" Binding="{Binding Location}"
+                    Header="{local:Loc Location}" Binding="{Binding Location}"
                     IsReadOnly="True"/>
 
                 <DataGridTextColumn 
                     Width="0.5*"
-                    Header="Komentara" Binding="{Binding CommentCount}"
+                    Header="{local:Loc Comments}"
+                    Binding="{Binding CommentCount}"
                     IsReadOnly="True"/>
 
                 <DataGridTextColumn 
                     Width="0.9*"
-                    Header="Poslednji komentar" Binding="{Binding LatestCommentPostTime, StringFormat='dd.MM.yyyy. HH:mm tt'}" 
+                    Header="{local:Loc LatestComment}" 
+                    Binding="{Binding LatestCommentPostTime, StringFormat='dd.MM.yyyy. HH:mm tt'}" 
                     IsReadOnly="True"/>
 
                 <DataGridCheckBoxColumn 
                     Width="0.7*"
-                    Header="Veoma koristan" 
+                    Header="{local:Loc VeryUseful}" 
                     Binding="{Binding VeryUseful}"
                     IsReadOnly="True">
                     <DataGridCheckBoxColumn.ElementStyle>
@@ -70,7 +72,7 @@
 
                 <DataGridCheckBoxColumn 
                     Width="0.6*"
-                    Header="Otvoren" 
+                    Header="{local:Loc Open}" 
                     Binding="{Binding Status, Converter={StaticResource ForumStatusToBooleanConverter}}"
                     IsReadOnly="True">
                     <DataGridCheckBoxColumn.ElementStyle>
@@ -99,7 +101,7 @@
                 Margin="0 0 10 0"
                 Width="auto"
                 Grid.Column="0"
-                Content="Započni novi forum"
+                Content="{local:Loc StartNewForum}"
                 ToolTip="Ctrl + N"
                 Command="{Binding NavigateStartForumFormCommand}"/>
 
@@ -108,7 +110,7 @@
                 HorizontalAlignment="Left"
                 Width="auto"
                 Grid.Column="1"
-                Content="Zatvori forum"
+                Content="{local:Loc CloseForum}"
                 ToolTip="Ctrl + Shift + C"
                 Command="{Binding CloseForumCommand}">
                 <Button.Style>
@@ -127,7 +129,7 @@
                 Padding="5 2"
                 Width="auto"
                 Grid.Column="2"
-                Content="Pogledaj sve komentare"
+                Content="{local:Loc ShowAllComments}"
                 ToolTip="Ctrl + O"
                 Command="{Binding NavigateForumCommentsCommand}"/>
 

@@ -23,7 +23,10 @@
             MaxWidth="1000"
             Content="{Binding ContentViewModel}" />
 
-        <local:StatusBar Grid.Row="2"/>
+        <ContentControl
+            Grid.Row="2"
+            MaxWidth="1000"
+            Content="{Binding StatusBarViewModel}" />
 
     </Grid>
 </UserControl>

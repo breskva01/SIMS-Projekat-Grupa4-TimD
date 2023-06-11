@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
+             xmlns:local="clr-namespace:InitialProject"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" FontSize="14" FontWeight="Light">
     <UserControl.Resources>
@@ -54,9 +54,9 @@
                     <TextBlock 
                         Margin="0 0 0 5"
                         Text="{Binding Reservation.GuestCount}">
-                        <Run Text=" gostiju,"/>
+                        <Run Text="{local:Loc sGuestsComma}"/>
                         <Run Text="{Binding Reservation.NumberOfDays, Mode=OneWay}"/>
-                        <Run Text="dana"/>
+                        <Run Text="{local:Loc days}"/>
                     </TextBlock>
 
                     <TextBlock 
@@ -80,7 +80,7 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="20"
-                        Text="ocena: ">
+                        Text="{local:Loc rating:s}">
                         <Run Text="{Binding AverageRating, Mode=OneWay, StringFormat={}{0:F1}}"/>
                     </TextBlock>
 
@@ -90,7 +90,7 @@
                         Margin="30 0 50 0"
                         Source="../../../Resources/Images/new-page.png"
                         Cursor="Hand"
-                        ToolTip="Pogledaj detalje dobijene ocene">
+                        ToolTip="{local:Loc CheckoutRatingDetails}">
                         <Image.InputBindings>
                             <MouseBinding 
                                 MouseAction="LeftClick"

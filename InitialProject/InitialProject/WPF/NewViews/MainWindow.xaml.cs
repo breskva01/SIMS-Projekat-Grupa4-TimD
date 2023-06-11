@@ -55,6 +55,8 @@ namespace InitialProject.WPF.NewViews
                 viewModel.NavigationBarViewModel.NavigateForumsCommand.Execute(null);
             else if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.Q))
                 viewModel.NavigationBarViewModel.NavigateLoginCommand.Execute(null);
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.L))
+                viewModel.StatusBarViewModel.ChangeLanguageCommand.Execute(null);
             else if (viewModel.ContentViewModel is ForumBrowserViewModel forumBrowserVM)
                 HandleForumBrowserKeyDown(forumBrowserVM);
             else if (Keyboard.IsKeyDown(Key.Tab) && viewModel.ContentViewModel is AccommodationRatingViewModel ratingVM)

@@ -50,5 +50,16 @@ namespace InitialProject
             SuperGuestHandler handler = new SuperGuestHandler();
             handler.UpdateSuperGuestStatus();
         }
+        public void ChangeLanguage(string currLang)
+        {
+            if (currLang.Equals("en-US"))
+            {
+                TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            }
+            else
+            {
+                TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo("sr-LATN");
+            }
+        }
     }
 }

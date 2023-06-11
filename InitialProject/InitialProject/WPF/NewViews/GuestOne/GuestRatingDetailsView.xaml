@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InitialProject.WPF.NewViews.GuestOne"
+             xmlns:local="clr-namespace:InitialProject"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" FontSize="16" FontFamily="Segoe UI">
     <UserControl.Resources>
@@ -64,14 +64,14 @@
             Margin="0 10"
             Grid.Row="1"
             FontSize="24"
-            Text="Dobijene ocene" 
+            Text="{local:Loc ReceivedRatings}" 
             FontStyle="Italic" 
             TextDecorations="Underline"/>
 
         <TextBlock 
             Margin="0 5"
             Grid.Row="2"
-            Text="Higijena:"  
+            Text="{local:Loc Hygiene:}"  
             HorizontalAlignment="Left"
             VerticalAlignment="Top"/>
         <StackPanel
@@ -95,7 +95,7 @@
         <TextBlock 
             Margin="0 5"
             Grid.Row="3"
-            Text="Poštovanje pravila:"  
+            Text="{local:Loc RespectsRules:}"  
             HorizontalAlignment="Left"
             VerticalAlignment="Top"/>
         <StackPanel
@@ -120,7 +120,7 @@
         <TextBlock 
             Margin="0 5"
             Grid.Row="4"
-            Text="Komunikacija:" 
+            Text="{local:Loc Communication:}" 
             HorizontalAlignment="Left"
             VerticalAlignment="Top"/>
         <StackPanel
@@ -145,7 +145,7 @@
         <TextBlock 
             Margin="0 5"
             Grid.Row="5"
-            Text="Preciznost u vremenu:" 
+            Text="{local:Loc Timeliness:}" 
             HorizontalAlignment="Left"
             VerticalAlignment="Top"/>
         <StackPanel
@@ -170,7 +170,7 @@
         <TextBlock 
             Margin="0 5"
             Grid.Row="6"
-            Text="Poštovanje zvučnih ograničenja:"  
+            Text="{local:Loc NoiseLevel:}"  
             HorizontalAlignment="Left"
             VerticalAlignment="Top"/>
         <StackPanel
@@ -195,7 +195,7 @@
         <TextBlock 
             Margin="0 5"
             Grid.Row="7"
-            Text="Sabrano iskustvo:" 
+            Text="{local:Loc OverallExperience:}" 
             HorizontalAlignment="Left"
             VerticalAlignment="Top"/>
         <StackPanel
@@ -224,7 +224,7 @@
             <TextBlock 
                 VerticalAlignment="Top"
                 Margin="0 0 10 0"
-                Text="Dodatni komentar:" />
+                Text="{local:Loc AdditionalComment:}" />
             <TextBlock
                 Text="{Binding Rating.Comment, Mode=OneTime}"/>
         </StackPanel>
