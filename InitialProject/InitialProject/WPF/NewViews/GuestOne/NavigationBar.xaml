@@ -33,6 +33,16 @@
             </Style.Triggers>
         </Style>
         <Style 
+            x:Key="AnywhereAnytimeStyle" 
+            BasedOn="{StaticResource BaseTextBlockStyle}" 
+            TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedTab}" Value="AnywhereAnytime">
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style 
             x:Key="MyReservationsStyle" 
             BasedOn="{StaticResource BaseTextBlockStyle}" 
             TargetType="TextBlock">
@@ -58,6 +68,16 @@
             TargetType="TextBlock">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedTab}" Value="Ratings">
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style 
+            x:Key="ForumsStyle" 
+            BasedOn="{StaticResource BaseTextBlockStyle}" 
+            TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedTab}" Value="Forums">
                     <Setter Property="Foreground" Value="Black"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -155,10 +175,15 @@
                 Width="2"
                 Fill="#FF5D5959"/>
 
-            <TextBlock
+            <TextBlock 
                 Margin="10 0"
                 Text="Bilo gde/bilo kada"
-                Style="{StaticResource BaseTextBlockStyle}">
+                Style="{StaticResource AnywhereAnytimeStyle}">
+                <TextBlock.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateAnywhereAnytimeCommand}"/>
+                </TextBlock.InputBindings>
             </TextBlock>
 
             <Rectangle
@@ -213,7 +238,12 @@
             <TextBlock
                 Margin="10 0"
                 Text="Forumi"
-                Style="{StaticResource BaseTextBlockStyle}">
+                Style="{StaticResource ForumsStyle}">
+                <TextBlock.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateForumsCommand}"/>
+                </TextBlock.InputBindings>
             </TextBlock>
             
         </StackPanel>

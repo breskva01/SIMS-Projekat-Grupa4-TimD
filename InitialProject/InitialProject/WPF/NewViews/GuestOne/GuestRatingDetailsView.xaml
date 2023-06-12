@@ -15,8 +15,6 @@
             <Setter Property="IsEnabled" Value="False"/>
             <Setter Property="Width" Value="175"/>
             <Setter Property="TickFrequency" Value="1"/>
-            <Setter Property="TickPlacement" Value="BottomRight"/>
-            <Setter Property="AutoToolTipPlacement" Value="TopLeft"/>
         </Style>
     </UserControl.Resources>
     <Grid Margin="25 0 ">
@@ -55,8 +53,8 @@
                     FontSize="24"
                     VerticalAlignment="Center"
                     Text=" - ">
-                    <Run Text="{Binding Rating.Reservation.Accommodation.Country}"/>,
-                    <Run Text="{Binding Rating.Reservation.Accommodation.City}" />
+                    <Run Text="{Binding Rating.Reservation.Accommodation.Location.Country}"/>,
+                    <Run Text="{Binding Rating.Reservation.Accommodation.Location.City}" />
                 </TextBlock>
             </StackPanel>
 
@@ -74,61 +72,150 @@
             Margin="0 5"
             Grid.Row="2"
             Text="Higijena:"  
-            HorizontalAlignment="Left"/>
-        <Slider 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
+        <StackPanel
+            Orientation="Vertical"
             Grid.Row="2"
-            HorizontalAlignment="Center"
-            Value="{Binding Rating.Hygiene, Mode=OneTime}"/>
+            HorizontalAlignment="Center">
+            
+            <Slider 
+                HorizontalAlignment="Center"
+                Value="{Binding Rating.Hygiene, Mode=OneTime}"/>
+
+            <TextBlock
+                Margin="0 -5 0 0"
+                FontSize="14"
+                FontWeight="ExtraLight"
+                HorizontalAlignment="Center"
+                Text="1         2         3        4         5"/>
+
+        </StackPanel>
 
         <TextBlock 
             Margin="0 5"
             Grid.Row="3"
             Text="Poštovanje pravila:"  
-            HorizontalAlignment="Left"/>
-        <Slider 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
+        <StackPanel
+            Orientation="Vertical"
             Grid.Row="3"
-            HorizontalAlignment="Center"
-            Value="{Binding Rating.RespectsRules, Mode=OneTime}"/>
+            HorizontalAlignment="Center">
+
+            <Slider 
+                HorizontalAlignment="Center"
+                Value="{Binding Rating.RespectsRules, Mode=OneTime}"/>
+
+            <TextBlock
+                Margin="0 -5 0 0"
+                FontSize="14"
+                FontWeight="ExtraLight"
+                HorizontalAlignment="Center"
+                Text="1         2         3        4         5"/>
+
+        </StackPanel>
+
 
         <TextBlock 
             Margin="0 5"
             Grid.Row="4"
             Text="Komunikacija:" 
-            HorizontalAlignment="Left"/>
-        <Slider 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
+        <StackPanel
+            Orientation="Vertical"
             Grid.Row="4"
-            HorizontalAlignment="Center"
-            Value="{Binding Rating.Communication, Mode=OneTime}"/>
+            HorizontalAlignment="Center">
+
+            <Slider 
+                HorizontalAlignment="Center"
+                Value="{Binding Rating.Communication, Mode=OneTime}"/>
+
+            <TextBlock
+                Margin="0 -5 0 0"
+                FontSize="14"
+                FontWeight="ExtraLight"
+                HorizontalAlignment="Center"
+                Text="1         2         3        4         5"/>
+
+        </StackPanel>
+
 
         <TextBlock 
             Margin="0 5"
             Grid.Row="5"
             Text="Preciznost u vremenu:" 
-            HorizontalAlignment="Left"/>
-        <Slider 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
+        <StackPanel
+            Orientation="Vertical"
             Grid.Row="5"
-            HorizontalAlignment="Center"
-            Value="{Binding Rating.Timeliness, Mode=OneTime}"/>
+            HorizontalAlignment="Center">
+
+            <Slider 
+                HorizontalAlignment="Center"
+                Value="{Binding Rating.Timeliness, Mode=OneTime}"/>
+
+            <TextBlock
+                Margin="0 -5 0 0"
+                FontSize="14"
+                FontWeight="ExtraLight"
+                HorizontalAlignment="Center"
+                Text="1         2         3        4         5"/>
+
+        </StackPanel>
+
 
         <TextBlock 
             Margin="0 5"
             Grid.Row="6"
             Text="Poštovanje zvučnih ograničenja:"  
-            HorizontalAlignment="Left"/>
-        <Slider 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
+        <StackPanel
+            Orientation="Vertical"
             Grid.Row="6"
-            HorizontalAlignment="Center"
-            Value="{Binding Rating.NoiseLevel, Mode=OneTime}"/>
+            HorizontalAlignment="Center">
+
+            <Slider 
+                HorizontalAlignment="Center"
+                Value="{Binding Rating.NoiseLevel, Mode=OneTime}"/>
+
+            <TextBlock
+                Margin="0 -5 0 0"
+                FontSize="14"
+                FontWeight="ExtraLight"
+                HorizontalAlignment="Center"
+                Text="1         2         3        4         5"/>
+
+        </StackPanel>
+
 
         <TextBlock 
             Margin="0 5"
             Grid.Row="7"
             Text="Sabrano iskustvo:" 
-            HorizontalAlignment="Left"/>
-        <Slider 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
+        <StackPanel
+            Orientation="Vertical"
             Grid.Row="7"
-            HorizontalAlignment="Center"
-            Value="{Binding Rating.OverallExperience, Mode=OneTime}"/>
+            HorizontalAlignment="Center">
+
+            <Slider 
+                HorizontalAlignment="Center"
+                Value="{Binding Rating.OverallExperience, Mode=OneTime}"/>
+
+            <TextBlock
+                Margin="0 -5 0 0"
+                FontSize="14"
+                FontWeight="ExtraLight"
+                HorizontalAlignment="Center"
+                Text="1         2         3        4         5"/>
+
+        </StackPanel>
+
 
         <StackPanel 
             Orientation="Horizontal"

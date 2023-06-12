@@ -9,10 +9,11 @@ namespace InitialProject.Domain.RepositoryInterfaces
 {
     public interface IAccommodationRenovationRepository: IRepository<AccommodationRenovation>
     {
-        public List<AccommodationRenovation> GetAll();
         public void ScheduleRenovation(int id, DateTime start, DateTime end, string description);
         public List<AccommodationRenovation> GetAllAppointmentsByOwner(int id);
         public void UpdateStatus(int id);
         public void CancelAppointment(int id);
+        List<AccommodationRenovation> GetFilteredRenovations
+            (int? accommodationId = null, DateOnly? startDate = null, DateOnly? endDate = null);
     }
 }

@@ -10,7 +10,7 @@
         xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.GuestOne"
         xmlns:vmsg2="clr-namespace:InitialProject.WPF.ViewModels.GuestTwo"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
+        Title="TravelBuddy" Height="670" Width="1030" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowState="Normal">
     <Window.Icon>
@@ -194,6 +194,27 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:TourRequestsStatsViewModel}">
                 <views:TourRequestsStatsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AnywhereAnytimeViewModel}">
+                <viewsg1:AnywhereAnytimeBrowser/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationDetailsViewModel}">
+                <viewsg1:AccommodationReservationDetailsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:ForumBrowserViewModel}">
+                <viewsg1:ForumBrowser/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:StartForumViewModel}">
+                <viewsg1:StartForumForm/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:ForumCommentsViewModel}">
+                <viewsg1:ForumCommentsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ForumSearchViewModel}">
+                <views:ForumSearchView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ForumCommentsViewModel}">
+                <views:ForumCommentsView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:GuideProfileViewModel}">
                 <views:GuideProfileView/>

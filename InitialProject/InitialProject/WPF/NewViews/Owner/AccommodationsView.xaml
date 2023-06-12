@@ -50,8 +50,8 @@
                   KeyboardNavigation.DirectionalNavigation="Continue">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="130" Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Width="130" Header="Country" Binding="{Binding Country}"/>
-                <DataGridTextColumn Width="130" Header="City" Binding="{Binding City}"/>
+                <DataGridTextColumn Width="130" Header="Country" Binding="{Binding Location.Country}"/>
+                <DataGridTextColumn Width="130" Header="City" Binding="{Binding Location.City}"/>
                 <DataGridTextColumn Width="130" Header="Address" Binding="{Binding Address}"/>
                 <DataGridTextColumn Width="137" Header="Maximum Guests" Binding="{Binding MaximumGuests}"/>
                 <DataGridTextColumn Width="130" Header="Minimum days" Binding="{Binding MinimumDays}"/>

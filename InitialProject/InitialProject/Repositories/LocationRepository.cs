@@ -29,6 +29,10 @@ namespace InitialProject.Repositories
         {
             return _locations.Find(x => x.Id == id);
         }
-
+        public Location GetByCityAndCountry(string city, string country)
+        {
+            Location location = _locations.Find(l => (l.City == city) && (l.Country == country));
+            return location;
+        }
     }
 }

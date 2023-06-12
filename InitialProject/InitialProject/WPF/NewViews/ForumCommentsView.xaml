@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="InitialProject.WPF.NewViews.ForumCommentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="670" d:DesignWidth="1030">
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Resources/Images/OwnerLightBlueNew.jpg"/>
+    </UserControl.Background>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <Style TargetType="ListBox">
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="Width" Value="260"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF286DBB" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Aqua" />
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="440"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" FontSize="40" Height="50" Width="300">Forum comments</Label>
+            <ListBox Grid.Row="1" Width="460" ItemsSource="{Binding Comments}" SelectedItem="SelectedComment">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="10,5,10,15" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="BorderBrush" Value="Black" />
+                        <Setter Property="Padding" Value="15" />
+                        <Setter Property="Background" Value="AntiqueWhite"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Author.Username}" FontWeight="Bold" FontSize="20"/>
+                            <TextBlock>
+                                <Run Text="{Binding Text}" FontSize="20"/>
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="{Binding PostTime}" FontSize="20"/>
+                            </TextBlock>
+                            <TextBlock Visibility="{Binding VerifiedOwner, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Run Text="Owner" FontSize="20"/>
+                            </TextBlock>
+                            <TextBlock Visibility="{Binding VerifiedGuest, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Run Text="Verified guest" FontSize="20"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Grid.Row="2" Content="Report comment" Height="35" Width="240"></Button>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="550"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Height="245" Width="373" Margin="61,117,71,178" TextWrapping="Wrap" FontSize="20" Text="{Binding Comment}"></TextBox>
+            <Button Height="35" Width="240" Content="Submit comment" Margin="128,377,137,128" Command="{Binding SubmitCommentCommand}"></Button>
+            <Button Grid.Row="1" Height="35" Width="240" Content="Back" Command="{Binding BackCommand}" Margin="127.5,0,127.5,10"></Button>
+        </Grid>
+    </Grid>
+</UserControl>

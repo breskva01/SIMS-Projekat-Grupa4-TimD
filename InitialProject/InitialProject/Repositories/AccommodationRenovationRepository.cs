@@ -80,5 +80,21 @@ namespace InitialProject.Repositories
                 _fileHandler.Save(_renovations);
             }
         }
+
+        public List<AccommodationRenovation> GetFilteredRenovations(int? accommodationId = null, 
+            DateOnly? startDate = null, DateOnly? endDate = null)
+        {
+            var renovations = GetAll();
+
+            if (accommodationId.HasValue)
+                renovations = renovations.FindAll(r => r.Accommodation.Id == accommodationId.Value);
+
+            if (startDate.HasValue)
+                renovations = renovations.FindAll(r => DateOnly.FromDateTime(r.Start) >= startDate.Value);
+
+            if (endDate.HasValue)
+                renovations = renovations.FindAll(r => DateOnly.FromDateTime(r.End) <= endDate.Value);
+            return renovations;
+        }
     }
 }

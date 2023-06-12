@@ -94,7 +94,12 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void NavigateImageBrowser(string imageURL)
         {
-            var viewModel = new ImageBrowserViewModel(_navigationStore, Guest, Accommodation, imageURL);
+            var viewModel = new ImageBrowserViewModel(Accommodation.PictureURLs, imageURL, RecreateSelf);
+            new NavigationService(_navigationStore, viewModel).Navigate();
+        }
+        private void RecreateSelf()
+        {
+            var viewModel = new AccommodationReservationViewModel(_navigationStore, Guest, Accommodation);
             new NavigationService(_navigationStore, viewModel).Navigate();
         }
     }

@@ -82,7 +82,7 @@ namespace InitialProject.Repositories
             _ratings = GetByOwnerId(ownerId);
             Owner owner = (Owner)_users.Find(o => o.Id == ownerId);
             double OwnerRatingsCount = totalAverageRating[1];
-            owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 2) ? true : false;
+            owner.SuperOwner = (totalAverageRating[0] >= 4.5 && OwnerRatingsCount >= 50) ? true : false;
             owner.Rating = Math.Round(totalAverageRating[0],2); 
             newOwner = owner;
             _users.Remove(owner);

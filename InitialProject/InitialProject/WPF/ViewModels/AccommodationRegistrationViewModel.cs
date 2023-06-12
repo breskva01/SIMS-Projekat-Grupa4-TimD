@@ -85,7 +85,6 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-
         private string _address;
         public string Address
         {
@@ -205,7 +204,8 @@ namespace InitialProject.WPF.ViewModels
             int maximumGuests = int.Parse(MaximumGuests);
             int minimumDays = int.Parse(MinimumDays);
             int minimumCancellationNotice = int.Parse(MinimumCancellationNotice);
-            _accommodationService.RegisterAccommodation(AccommodationName, SelectedCountry, SelectedCity, Address, Type, maximumGuests, minimumDays, minimumCancellationNotice,
+            Location location = _locationService.GetByCityAndCountry(SelectedCity, SelectedCountry);
+            _accommodationService.RegisterAccommodation(AccommodationName, location, Address, Type, maximumGuests, minimumDays, minimumCancellationNotice,
                 PictureURL, _loggedInUser);
             AccommodationName = null;
             SelectedCountry = null;

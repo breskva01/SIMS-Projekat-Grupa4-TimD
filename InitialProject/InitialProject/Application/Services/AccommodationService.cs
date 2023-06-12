@@ -33,14 +33,14 @@ namespace InitialProject.Application.Services
         {
             return _repository.Sort(new List<Accommodation>(accommodations), criterion);
         }
-        public void RegisterAccommodation(string name, string country, string city, string address, AccommodationType type, int maximumGuests,
+        public void RegisterAccommodation(string name, Location location, string address, AccommodationType type, int maximumGuests,
             int minimumDays, int minimumCancelationNotice, string pictureURL, User user)
         {
             List<string> pictureURLs = new List<string>
             {
                 pictureURL
             };
-            _repository.Add(name, country, city, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, user);
+            _repository.RegisterAccommodation(name, location, address, type, maximumGuests, minimumDays, minimumCancelationNotice, pictureURLs, user);
         }
         public List<Accommodation> GetAllOwnersAccommodations(int id)
         {
@@ -49,6 +49,11 @@ namespace InitialProject.Application.Services
         public void UpdateRenovationStatus(int id)
         {
             _repository.UpdateRenovationStatus(id);
+        }
+        public bool CheckIfOwnerOwnsAccommodation(Owner owner, Location location)
+        {
+            var accommodations = _repository.GetAllOwnersAccommodations(owner.Id);
+            return accommodations.Any(a => a.Location == location);
         }
     }
 }

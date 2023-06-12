@@ -44,7 +44,7 @@
         <Image Grid.Row="2" Width="25" Margin="659,5,286,75" Source="../../../Resources/Images/notificationBell1.png" Grid.RowSpan="2"></Image>
         <Ellipse Width="10" Height="10"  Grid.Row="2" Margin="380,0,0,0"></Ellipse>
         <Button Grid.Row="2" Width="348" FontSize="32" Content="Profile" Command="{Binding ViewProfileCommand}" Margin="0,17,0,17" Foreground="White" FontFamily="Impact"></Button>
-        <Button Grid.Row="3" Width="348" FontSize="32" Content="Forums" Margin="0,17,0,17" Foreground="White" FontFamily="Impact"></Button>
+        <Button Grid.Row="3" Width="348" FontSize="32" Content="Forums" Margin="0,17,0,17" Foreground="White" FontFamily="Impact" Command="{Binding ViewForumsCommand}"></Button>
         <Button Grid.Row="4" Width="348" FontSize="32" Content="Help" Margin="0,17,0,17" Foreground="White" FontFamily="Impact"></Button>
         <Button Grid.Row="5" Width="348" FontSize="32" Content="Logout" Command="{Binding SignOutCommand}" Margin="0,87,0,87" Foreground="White" FontFamily="Impact"></Button>
     </Grid>

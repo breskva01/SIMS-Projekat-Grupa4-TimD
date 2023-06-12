@@ -21,6 +21,7 @@ namespace InitialProject.Repositories.FileHandlers
         {
             var accommodations = _serializer.FromCSV(_accommodationsFilePath);
             FillInOwners(accommodations);
+            FillInLocations(accommodations);
             return accommodations;
         }
         private void FillInOwners(List<Accommodation> accommodations)
@@ -28,6 +29,12 @@ namespace InitialProject.Repositories.FileHandlers
             var users = new UserFileHandler().Load();
             accommodations.ForEach(a =>
                 a.Owner = (Owner)users.Find(u => u.Id == a.Owner.Id));
+        }
+        private void FillInLocations(List<Accommodation> accommodations)
+        {
+            var locations = new LocationFileHandler().Load();
+            accommodations.ForEach(a =>
+                a.Location = locations.Find(l => l.Id == a.Location.Id));
         }
         public void Save(List<Accommodation> accommmodations)
         {

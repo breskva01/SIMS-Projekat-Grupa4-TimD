@@ -17,65 +17,65 @@ namespace InitialProject.Application.Services
 {
     public class AccommodationReservationService : Subject
     {
-        private readonly IAccommodationReservationRepository _repository;
+        private readonly IAccommodationReservationRepository _reservationRepository;
         public AccommodationReservationService()
         {
-            _repository = RepositoryInjector.Get<IAccommodationReservationRepository>();
+            _reservationRepository = RepositoryInjector.Get<IAccommodationReservationRepository>();
         }
         public void Save(AccommodationReservation accommodationReservation)
         {
-            _repository.Save(accommodationReservation);
+            _reservationRepository.Save(accommodationReservation);
         }
         public List<AccommodationReservation> GetAll()
         {
-            return _repository.GetAll();
+            return _reservationRepository.GetAll();
         }
         public AccommodationReservation GetById(int reservationId)
         {
-            return _repository.GetById(reservationId);
+            return _reservationRepository.GetById(reservationId);
         }
         public List<AccommodationReservation> GetExistingGuestReservations(int guestId)
         {
-            return _repository.GetFilteredReservations(guestId: guestId);
+            return _reservationRepository.GetFilteredReservations(guestId: guestId);
         }
         public void Cancel(int reservationId, int ownerId)
         {
-            var reservation = _repository.GetById(reservationId);
+            var reservation = _reservationRepository.GetById(reservationId);
             reservation.Status = AccommodationReservationStatus.Cancelled;
-            _repository.Update(reservation);
+            _reservationRepository.Update(reservation);
             RepositoryInjector.Get<IAccommodationReservationCancellationNotificationRepository>().
                 Save(new AccommodationReservationCancellationNotification(reservationId, ownerId));
             NotifyObservers();
         }
         public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, Guest1 guest)
         {
-            var reservationAvailabilityHandler = new AccommodationReservationAvailabilityHandler(_repository);
+            var reservationAvailabilityHandler = new AccommodationReservationAvailabilityHandler(_reservationRepository);
             return reservationAvailabilityHandler.GetAvailable(startDate, endDate, stayLength, accommodation, guest);
         }
         public List<AccommodationReservation> FindCompletedAndUnrated(int ownerId)
         {
-            return _repository.FindCompletedAndUnrated(ownerId);
+            return _reservationRepository.FindCompletedAndUnrated(ownerId);
         }
         public void MoveReservation(int reservationId, DateOnly newCheckIn, DateOnly newCheckout)
         {
-            var reservation = _repository.GetById(reservationId);
+            var reservation = _reservationRepository.GetById(reservationId);
             reservation.CheckIn = newCheckIn;
             reservation.CheckOut = newCheckout;
-            _repository.Update(reservation);
+            _reservationRepository.Update(reservation);
         }
         public void UpdateLastNotification(AccommodationReservation accommodationReservation)
         {
             accommodationReservation.LastNotification = accommodationReservation.LastNotification.AddDays(1);
-            _repository.Update(accommodationReservation);
+            _reservationRepository.Update(accommodationReservation);
         }
         public void MarkGuestAsRated(AccommodationReservation accommodationReservation)
         {
             accommodationReservation.IsGuestRated = true;
-            _repository.Update(accommodationReservation);
+            _reservationRepository.Update(accommodationReservation);
         }
         public string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut)
         {
-            return _repository.CheckAvailability(accommodationId ,checkIn, checkOut);
+            return _reservationRepository.CheckAvailability(accommodationId ,checkIn, checkOut);
         }
         public List<AccommodationReservation> GetAllNewlyCancelled(int ownerId)
         {
@@ -84,13 +84,38 @@ namespace InitialProject.Application.Services
             var cancelledReservatons = new List<AccommodationReservation>();
             notifactions.ForEach(n => 
             {
-                cancelledReservatons.Add(_repository.GetById(n.ReservationId));
+                cancelledReservatons.Add(_reservationRepository.GetById(n.ReservationId));
             });
             return cancelledReservatons;
         }
+        public List<AccommodationReservation> GetAnywhereAnytime(int guestCount, int stayLength, Guest1 guest,
+            DateOnly? startDate = null, DateOnly? endDate = null)
+        {
+            startDate ??= DateOnly.FromDateTime(DateTime.Now);
+            endDate ??= startDate.Value.AddYears(1);
+            var reservationAvailabilityHandler = new AccommodationReservationAvailabilityHandler(_reservationRepository);
+            var availableReservations = new List<AccommodationReservation>();
+            var accommodations = new AccommodationService().GetFiltered("", AccommodationType.Everything, guestCount, stayLength);
+
+            foreach (var accommodation in accommodations)
+            {
+                var reservations = reservationAvailabilityHandler.GetAvailable(
+                    startDate.Value, endDate.Value, stayLength, accommodation, guest, 1, false);
+
+                availableReservations.AddRange(reservations);
+            }
+            return availableReservations;
+        }
         public List<TimeSlot> GetAvailableDates(DateTime start, DateTime end, int duration, int id)
         {
-            return _repository.GetAvailableDates(start, end, duration, id);
+            return _reservationRepository.GetAvailableDates(start, end, duration, id);
+        }
+        public bool CheckIfGuestVisited(Guest1 guest, Location location)
+        {
+            var reservations = _reservationRepository.GetFilteredReservations(guestId: guest.Id, 
+                                                        status: AccommodationReservationStatus.Finished);
+            reservations.AddRange(_reservationRepository.GetFilteredReservations(guestId: guest.Id));
+            return reservations.Any(r => r.Accommodation.Location == location);
         }
     }
 }

@@ -32,8 +32,7 @@ namespace InitialProject.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
+        public Location Location { get; set; }
         public string Address { get; set; }
         public AccommodationType Type { get; set; }
         public int MaximumGuests { get; set; }
@@ -47,15 +46,15 @@ namespace InitialProject.Domain.Models
         public Accommodation() 
         {
             Owner = new Owner();
+            Location = new Location();
             PictureURLs = new List<string>();
         }
-        public Accommodation(int id, string name, string country, string city, string address, AccommodationType type, int maximumGuests, int minimumDays,
+        public Accommodation(int id, string name, Location location, string address, AccommodationType type, int maximumGuests, int minimumDays,
                              int minimumCancelationNotice, List<string> pictureURLs, Owner owner, RenovationStatus status, bool recentlyRenovated)
         {
             Id = id;
             Name = name;
-            City = city;
-            Country = country;
+            Location = location;
             Address = address;
             Type = type;
             MaximumGuests = maximumGuests;
@@ -82,8 +81,8 @@ namespace InitialProject.Domain.Models
             foreach (string keyWord in splitKeyWords)
             {
                 if (! (Name.ToLower().Contains(keyWord) ||
-                       City.ToLower().Contains(keyWord) ||
-                       Country.ToLower().Contains(keyWord) ))
+                       Location.City.ToLower().Contains(keyWord) ||
+                       Location.Country.ToLower().Contains(keyWord) ))
                 {
                     return false;
                 }
@@ -94,26 +93,25 @@ namespace InitialProject.Domain.Models
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            Country = values[2];
-            City = values[3];
-            Address = values[4];
-            Type = (AccommodationType)Enum.Parse(typeof(AccommodationType), values[5]);
-            MaximumGuests = Convert.ToInt32(values[6]);
-            MinimumDays = Convert.ToInt32(values[7]);
-            MinimumCancelationNotice = Convert.ToInt32(values[8]);
+            Location.Id = Convert.ToInt32(values[2]);
+            Address = values[3];
+            Type = (AccommodationType)Enum.Parse(typeof(AccommodationType), values[4]);
+            MaximumGuests = Convert.ToInt32(values[5]);
+            MinimumDays = Convert.ToInt32(values[6]);
+            MinimumCancelationNotice = Convert.ToInt32(values[7]);
 
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string relativePath = @"Resources\Images\";
             string fullPath = Path.Combine(baseDirectory, relativePath);
-            string[] pictureURLs = values[9].Split(';');
+            string[] pictureURLs = values[8].Split(';');
             foreach (string pictureURL in pictureURLs) 
             {
                 string imagePath = Path.Combine(fullPath, pictureURL);
                 PictureURLs.Add(imagePath);
             }
-            Owner.Id = Convert.ToInt32(values[10]);
-            Status = (RenovationStatus)Enum.Parse(typeof(RenovationStatus), values[11]);
-            RecentlyRenovated = bool.Parse(values[12]);
+            Owner.Id = Convert.ToInt32(values[9]);
+            Status = (RenovationStatus)Enum.Parse(typeof(RenovationStatus), values[10]);
+            RecentlyRenovated = bool.Parse(values[11]);
         }
 
         public string[] ToCSV()
@@ -125,8 +123,7 @@ namespace InitialProject.Domain.Models
             {
                 Id.ToString(),
                 Name,
-                Country,
-                City,
+                Location.Id.ToString(),
                 Address,
                 Type.ToString(),
                 MaximumGuests.ToString(),
