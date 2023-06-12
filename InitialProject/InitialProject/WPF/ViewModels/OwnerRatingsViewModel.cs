@@ -139,7 +139,7 @@ namespace InitialProject.WPF.ViewModels
 
                 document.Add(table);
                 document.Close();
-                Process.Start("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", filePath);
+                //Process.Start("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", filePath);
                 MessageBox.Show("PDF file generated successfully.");
             }
             catch (Exception ex)
