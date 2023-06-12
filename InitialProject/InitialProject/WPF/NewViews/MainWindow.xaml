@@ -10,7 +10,7 @@
         xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.GuestOne"
         xmlns:vmsg2="clr-namespace:InitialProject.WPF.ViewModels.GuestTwo"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="670" Width="1030" WindowStartupLocation="CenterScreen"
+        Title="TravelBuddy" Height="800" Width="1030" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowState="Normal">
     <Window.Icon>
