@@ -16,10 +16,9 @@
             <Setter Property="Minimum" Value="1"/>
             <Setter Property="Maximum" Value="5"/>
             <Setter Property="IsSnapToTickEnabled" Value="True"/>
+            <Setter Property="IsMoveToPointEnabled" Value="True"/>
             <Setter Property="Width" Value="175"/>
             <Setter Property="TickFrequency" Value="1"/>
-            <Setter Property="TickPlacement" Value="BottomRight"/>
-            <Setter Property="AutoToolTipPlacement" Value="TopLeft"/>
         </Style>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
@@ -85,78 +84,148 @@
                 TextDecorations="Underline"/>
 
                 <TextBlock 
-                Margin="0 5"
-                Grid.Row="2"
-                Text="Lokacija:" 
-                Width="150" 
-                HorizontalAlignment="Left"/>
-                <Slider 
-                Grid.Row="2"
-                HorizontalAlignment="Right"
-                Value="{Binding Location}"/>
+                    Margin="0 5"
+                    Grid.Row="2"
+                    Text="Lokacija:" 
+                    Width="150" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"/>
+                <StackPanel 
+                    Orientation="Vertical"
+                    Grid.Row="2"
+                    HorizontalAlignment="Right">
+                    
+                    <Slider 
+                        HorizontalAlignment="Center"
+                        Value="{Binding Location}"/>
+
+                    <TextBlock
+                        Margin="0 -5 0 0"
+                        FontSize="14"
+                        FontWeight="ExtraLight"
+                        HorizontalAlignment="Center"
+                        Text="1         2         3        4         5"/>
+
+                </StackPanel>
 
                 <TextBlock 
-                Margin="0 5"
-                Grid.Row="3"
-                Text="Higijena:" 
-                Width="150" 
-                HorizontalAlignment="Left"/>
-                <Slider 
-                Grid.Row="3"
-                HorizontalAlignment="Right"
-                Value="{Binding Hygiene}"/>
+                    Margin="0 5"
+                    Grid.Row="3"
+                    Text="Higijena:" 
+                    Width="150" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"/>
+                <StackPanel 
+                    Orientation="Vertical"
+                    Grid.Row="3"
+                    HorizontalAlignment="Right">
+
+                    <Slider 
+                        HorizontalAlignment="Center"
+                        Value="{Binding Hygiene}"/>
+
+                    <TextBlock
+                        Margin="0 -5 0 0"
+                        FontSize="14"
+                        FontWeight="ExtraLight"
+                        HorizontalAlignment="Center"
+                        Text="1         2         3        4         5"/>
+
+                </StackPanel>
 
                 <TextBlock 
-                Margin="0 5"
-                Grid.Row="4"
-                Text="Prijatnost:" 
-                Width="150" 
-                HorizontalAlignment="Left"/>
-                <Slider 
-                Grid.Row="4"
-                HorizontalAlignment="Right"
-                Value="{Binding Pleasantness}"/>
+                    Margin="0 5"
+                    Grid.Row="4"
+                    Text="Prijatnost:" 
+                    Width="150" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"/>
+                <StackPanel 
+                    Orientation="Vertical"
+                    Grid.Row="4"
+                    HorizontalAlignment="Right">
+
+                    <Slider 
+                        HorizontalAlignment="Center"
+                        Value="{Binding Pleasantness}"/>
+
+                    <TextBlock
+                        Margin="0 -5 0 0"
+                        FontSize="14"
+                        FontWeight="ExtraLight"
+                        HorizontalAlignment="Center"
+                        Text="1         2         3        4         5"/>
+
+                </StackPanel>
 
                 <TextBlock 
-                Margin="0 5"
-                Grid.Row="5"
-                Text="Korektnost:" 
-                Width="150" 
-                HorizontalAlignment="Left"/>
-                <Slider 
-                Grid.Row="5"
-                HorizontalAlignment="Right"
-                Value="{Binding Fairness}"/>
+                    Margin="0 5"
+                    Grid.Row="5"
+                    Text="Korektnost:" 
+                    Width="150" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"/>
+                <StackPanel 
+                    Orientation="Vertical"
+                    Grid.Row="5"
+                    HorizontalAlignment="Right">
+
+                    <Slider 
+                        HorizontalAlignment="Center"
+                        Value="{Binding Fairness}"/>
+
+                    <TextBlock
+                        Margin="0 -5 0 0"
+                        FontSize="14"
+                        FontWeight="ExtraLight"
+                        HorizontalAlignment="Center"
+                        Text="1         2         3        4         5"/>
+
+                </StackPanel>
 
                 <TextBlock 
-                Margin="0 5"
-                Grid.Row="6"
-                Text="Dostupnost parkinga:" 
-                Width="150" 
-                HorizontalAlignment="Left"/>
-                <Slider 
-                Grid.Row="6"
-                HorizontalAlignment="Right"
-                Value="{Binding Parking}"/>
+                    Margin="0 5"
+                    Grid.Row="6"
+                    Text="Dostupnost parkinga:" 
+                    Width="150" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"/>
+                <StackPanel 
+                    Orientation="Vertical"
+                    Grid.Row="6"
+                    HorizontalAlignment="Right">
+
+                    <Slider 
+                        HorizontalAlignment="Center"
+                        Value="{Binding Parking}"/>
+
+                    <TextBlock
+                        Margin="0 -5 0 0"
+                        FontSize="14"
+                        FontWeight="ExtraLight"
+                        HorizontalAlignment="Center"
+                        Text="1         2         3        4         5"/>
+
+                </StackPanel>
 
                 <TextBlock 
-                Margin="0 20 0 5"
-                Grid.Row="7"
-                Text="Dodatni komentar:" 
-                Width="150" 
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"/>
+                    Margin="0 5"
+                    Grid.Row="7"
+                    Text="Dodatni komentar:" 
+                    Width="150" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"/>
                 <TextBox 
-                Margin="0 20 0 5"
-                Grid.Row="7" 
-                HorizontalAlignment="Right"
-                TextWrapping="Wrap" 
-                AcceptsReturn="True" 
-                VerticalScrollBarVisibility="Auto" 
-                Height="100" 
-                Width="350"
-                Padding="2"
-                Text="{Binding Comment}"/>
+                    Margin="0 20 0 5"
+                    Grid.Row="7" 
+                    HorizontalAlignment="Right"
+                    TextWrapping="Wrap" 
+                    AcceptsReturn="True" 
+                    VerticalScrollBarVisibility="Auto" 
+                    Height="100" 
+                    Width="350"
+                    Padding="2"
+                    Text="{Binding Comment}"/>
 
                 <TextBlock 
                 HorizontalAlignment="Left"
@@ -235,23 +304,42 @@
                 Margin="0 0 0 10"    
                 Visibility="{Binding RenovatingNeeded,
                     Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <Image Source="../../../Resources/Images/info-icon.png" 
-                       Width="20"
-                       Height="20"
-                       ToolTip="{Binding ToolTipText, Mode=OneWay}"
-                       Margin=" 0 0 10 0"/>
-                    <TextBlock Text="Nivo hitnosti:" Width="150" VerticalAlignment="Center"/>
-                    <Slider Value="{Binding RenovationUrgency}"/>
+                    <Image 
+                        Source="../../../Resources/Images/info-icon.png" 
+                        Width="20"
+                        Height="20"
+                        ToolTip="{Binding ToolTipText, Mode=OneWay}"
+                        Margin=" 0 0 10 0"
+                        VerticalAlignment="Top"/>
+                    
+                    <TextBlock Text="Nivo hitnosti:" Width="150" VerticalAlignment="Top"/>
+
+                    <StackPanel 
+                        Orientation="Vertical">
+
+                        <Slider 
+                            HorizontalAlignment="Center"
+                            Value="{Binding RenovationUrgency}"/>
+
+                        <TextBlock
+                            Margin="0 -5 0 0"
+                            FontSize="14"
+                            FontWeight="ExtraLight"
+                            HorizontalAlignment="Center"
+                            Text="1         2         3        4         5"/>
+
+                    </StackPanel>
                 </StackPanel>
 
                 <Button 
-                FontSize="20"
-                MaxHeight="34"
-                Grid.Row="2" 
-                Content="Potvrdi ocenu" 
-                HorizontalAlignment="Right" 
-                Padding="10 2" 
-                Command="{Binding RateReservationCommand}"/>
+                    Margin="0 0 0 10"
+                    FontSize="20"
+                    MaxHeight="34"
+                    Grid.Row="2" 
+                    Content="Potvrdi ocenu" 
+                    HorizontalAlignment="Right" 
+                    Padding="10 2" 
+                    Command="{Binding RateReservationCommand}"/>
 
             </Grid>
 

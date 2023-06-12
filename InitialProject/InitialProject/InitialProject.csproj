@@ -11,8 +11,10 @@
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\backgroundLBEdit.jpg" />
     <None Remove="Resources\Images\appLogo1.png" />
     <None Remove="Resources\Images\backgroundLP.jpg" />
+    <None Remove="Resources\Images\backgroundVideo.mp4" />
     <None Remove="Resources\Images\backSquare.png" />
     <None Remove="Resources\Images\backW.jpg" />
     <None Remove="Resources\Images\appLogo.png" />
@@ -35,13 +37,18 @@
     <None Remove="Resources\Images\dash-line.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\fast-forward-16.png" />
+    <None Remove="Resources\Images\exclamation_mark.png" />
     <None Remove="Resources\Images\forwardSquare.png" />
+    <None Remove="Resources\Images\gift.png" />
     <None Remove="Resources\Images\go-back.png" />
     <None Remove="Resources\Images\go_back.png" />
     <None Remove="Resources\Images\help.png" />
+    <None Remove="Resources\Images\homeW.jpg.png" />
     <None Remove="Resources\Images\homeWhite.png" />
     <None Remove="Resources\Images\info-icon.png" />
     <None Remove="Resources\Images\kuca_jadran.jpg" />
+    <None Remove="Resources\Images\lightbulb.png" />
     <None Remove="Resources\Images\logoB.png" />
     <None Remove="Resources\Images\menuW.png" />
     <None Remove="Resources\Images\message.png" />
@@ -51,6 +58,7 @@
     <None Remove="Resources\Images\logo.png" />
     <None Remove="Resources\Images\menu.png" />
     <None Remove="Resources\Images\moscow.png" />
+    <None Remove="Resources\Images\newPoint.png" />
     <None Remove="Resources\Images\notification.png" />
     <None Remove="Resources\Images\notify.png" />
     <None Remove="Resources\Images\new-page.png" />
@@ -62,10 +70,15 @@
     <None Remove="Resources\Images\paper-plane100.png" />
     <None Remove="Resources\Images\paper-plane50.png" />
     <None Remove="Resources\Images\paris.png" />
+    <None Remove="Resources\Images\pause-16.png" />
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
+    <None Remove="Resources\Images\play-16.png" />
     <None Remove="Resources\Images\plus.png" />
+    <None Remove="Resources\Images\primer.mp4" />
+    <None Remove="Resources\Images\profile.jpg" />
     <None Remove="Resources\Images\profileWhite.png" />
+    <None Remove="Resources\Images\rewind-16.png" />
     <None Remove="Resources\Images\search.png" />
     <None Remove="Resources\Images\sort.png" />
     <None Remove="Resources\Images\tourist.png" />
@@ -73,6 +86,7 @@
     <None Remove="Resources\Images\soba_novi_sad.jpg" />
     <None Remove="Resources\Images\sun.png" />
     <None Remove="Resources\Images\urgent-message.png" />
+    <None Remove="Resources\Images\verified.png" />
     <None Remove="Resources\Images\vienna.jpeg" />
     <None Remove="Resources\Images\view.png" />
     <None Remove="Resources\Images\vila_italija.jpg" />
@@ -88,9 +102,19 @@
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
+    <PackageReference Include="Vlc.DotNet.Wpf" Version="3.1.0" />
+    <PackageReference Include="WPFMediaKit" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\backgroundLBEdit.jpg" />
+    <Resource Include="Resources\Images\backgroundVideo.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\fast-forward-16.png" />
+    <Resource Include="Resources\Images\pause-16.png" />
+    <Resource Include="Resources\Images\play-16.png" />
+    <Resource Include="Resources\Images\primer.mp4" />
     <Resource Include="Resources\Images\appLogo1.png" />
     <Resource Include="Resources\Images\bell.png" />
     <Resource Include="Resources\Images\backgroundLP.jpg" />
@@ -101,10 +125,14 @@
     <Resource Include="Resources\Images\bluePlus.png" />
     <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\checkmark.png" />
+    <Resource Include="Resources\Images\exclamation_mark.png" />
     <Resource Include="Resources\Images\filter.png" />
     <Resource Include="Resources\Images\forwardSquare.png" />
+    <Resource Include="Resources\Images\homeW.jpg.png" />
+    <Resource Include="Resources\Images\gift.png" />
     <Resource Include="Resources\Images\homeWhite.png" />
     <Resource Include="Resources\Images\left_arrow.png" />
+    <Resource Include="Resources\Images\lightbulb.png" />
     <Resource Include="Resources\Images\logo.png" />
     <Resource Include="Resources\Images\logoB.png" />
     <Resource Include="Resources\Images\menu.png" />
@@ -121,10 +149,12 @@
     <Resource Include="Resources\Images\moon.png" />
     <Resource Include="Resources\Images\moscow.png" />
     <Resource Include="Resources\Images\new-page.png" />
+    <Resource Include="Resources\Images\newPoint.png" />
     <Resource Include="Resources\Images\next.png" />
     <Content Include="Resources\Images\notificationBell1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\verified.png" />
     <Resource Include="Resources\Images\notification.png" />
     <Resource Include="Resources\Images\notify.png" />
     <Resource Include="Resources\Images\novi_sad.jpg" />
@@ -137,7 +167,9 @@
     <Resource Include="Resources\Images\person.png" />
     <Resource Include="Resources\Images\petrovaradin.png" />
     <Content Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\profile.jpg" />
     <Resource Include="Resources\Images\profileWhite.png" />
+    <Resource Include="Resources\Images\rewind-16.png" />
     <Resource Include="Resources\Images\sun.png" />
     <Resource Include="Resources\Images\urgent-message.png" />
     <Resource Include="Resources\Images\search.png" />
@@ -159,6 +191,36 @@
     <Reference Include="Xceed.Wpf.Toolkit.NET5">
       <HintPath>bin\Debug\net6.0-windows\Xceed.Wpf.Toolkit.NET5.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\DirectShowLib-2005.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\EVRPresenter32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\DirectShowLib-2005.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\EVRPresenter32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\EVRPresenter64.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\DirectShowLib-2005.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Images\backgroundLB.jpg">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

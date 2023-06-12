@@ -21,6 +21,18 @@ namespace InitialProject.Application.Services
             _commentRepository = RepositoryInjector.Get<ICommentRepository>();
             _userNotificationService = new UserNotificationService();
         }
+        public List<Forum> GetAll() 
+        { 
+            return _forumRepository.GetAll(); 
+        }
+        public List<Forum> GetByIniatorId(int id)
+        {
+            return _forumRepository.GetByIniatorId(id);
+        }
+        public Forum GetById(int forumId)
+        {
+            return _forumRepository.GetById(forumId);
+        }
         public void OpenForum(string topic, User iniator, string startingQuestion, Location location)
         {
             var forum = new Forum(iniator, ForumStatus.Open, location, topic, false);

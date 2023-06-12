@@ -33,13 +33,29 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetById(voucherId);
         }
-        public Voucher CreateVoucher(string name, DateOnly expirationDate)
+        public Voucher CreateVoucher(string name, DateOnly expirationDate, User user)
         {
             Voucher voucher = new Voucher();
             voucher.Name = name;
             voucher.ExpirationDate = expirationDate;
+            voucher.GuideId = user.Id;
             return _repository.Save(voucher);
         }
+        public Voucher GiftFreeVoucher(Guest2 guest)
+        {
+            Voucher voucher = new Voucher();
+            voucher.Name = "TravelBuddy gift voucher";
+            voucher.ExpirationDate = DateOnly.FromDateTime(DateTime.UtcNow.AddMonths(6));
+            voucher.GuideId = -1;
+            return _repository.Save(voucher);
+
+        }
+
+        public List<Voucher> FilterGuideVouchers(List<Voucher> vouchers, int guideId)
+        {
+            return _repository.FilterGuideVouchers(vouchers, guideId);
+        }
+
         public Voucher Update(Voucher voucher)
         {
             return _repository.Update(voucher);

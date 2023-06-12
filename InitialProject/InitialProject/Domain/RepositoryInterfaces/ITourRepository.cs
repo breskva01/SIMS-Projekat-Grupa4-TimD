@@ -1,5 +1,6 @@
 ﻿using InitialProject.Domain.Models;
 using InitialProject.Repositories.FileHandlers;
+using InitialProject.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,5 +33,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public string GetNumberOfMiddleAgeGuests(Tour tour);
         public string GetNumberOfOlderGuests(Tour tour);
         public List<Tour> GetFinishedTours();
+        string CheckSuperGuide(int GuideId);
+
     }
 }

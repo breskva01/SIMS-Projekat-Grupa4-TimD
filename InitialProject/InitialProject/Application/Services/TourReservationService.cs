@@ -37,7 +37,12 @@ namespace InitialProject.Application.Services
         }
         public List<TourReservation> GetByUserId(int userId)
         {
-            return _repository.GetByUserId(userId);
+            _reservations =  _repository.GetByUserId(userId);
+            foreach(TourReservation reservation in _reservations)
+            {
+                reservation.Tour = _tourService.GetById(reservation.TourId);
+            }
+            return _reservations;
         }
         public List<TourReservation> GetByUserAndTourId(int userId, int tourId)
         {
@@ -58,6 +63,7 @@ namespace InitialProject.Application.Services
             };
             return _repository.Save(reservation);
         }
+        
 
         public List<TourReservation> GetUnratedByUser(int userId) {
             _reservations = GetByUserId(userId);

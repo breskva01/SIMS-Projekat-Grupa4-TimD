@@ -97,6 +97,15 @@ namespace InitialProject.Repositories
             Save(notification);
         }
 
+        public void NotifyFreeVoucher(int guestId)
+        {
+            UserNotification notification = new UserNotification();
+            notification.UserId = guestId;
+            notification.Message = "You have been awarded a free Voucher for attending 5 tourist tours. The voucher can be used in the next 6 months.";
+            notification.Time = DateTime.Now;
+            Save(notification);
+        }
+
         public UserNotification Save(UserNotification notification)
         {
             notification.Id = NextId();

@@ -20,6 +20,7 @@ namespace InitialProject.Domain.Models
         public string Topic { get; set; }
         public bool VeryUseful { get; set; }
         public DateTime LatestCommentPostTime => Comments.LastOrDefault().PostTime;
+        public int CommentCount => Comments.Count;
         public int OwnerComments { get; set; }
         public int GuestComments { get; set; }
 

@@ -49,7 +49,7 @@
                 <TextBlock Text="In general:" HorizontalAlignment="Left" FontSize="24" Margin="10 50 0 0" />
                 <StackPanel Orientation="Horizontal" Margin="0 60 0 0">
                     <TextBlock Text="Guests:" HorizontalAlignment="Left" FontSize="20" Margin="80 10 0 0" />
-                    <TextBox Text="{Binding GeneralNumberOfGuests}" Width="130" Height ="40" Margin="20 0 0 0"/>
+                    <TextBox Text="{Binding GeneralNumberOfGuests}" Width="130" Height ="40" FontSize="24" Margin="20 0 0 0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="10 70 0 0">
                     <TextBlock Text="For selected year:" HorizontalAlignment="Left" FontSize="24" Margin="0 10 0 0" />
@@ -57,7 +57,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 60 0 0">
                     <TextBlock Text="Guests:" HorizontalAlignment="Left" FontSize="20" Margin="80 10 0 0" />
-                    <TextBox Text="{Binding YearNumberOfGuests}" Width="130" Height ="40" Margin="20 0 0 0"/>
+                    <TextBox Text="{Binding YearNumberOfGuests}" Width="130" Height ="40" FontSize="24" Margin="20 0 0 0"/>
                 </StackPanel>
             </StackPanel>
 
@@ -68,7 +68,7 @@
                         <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />
                     </Image.InputBindings>
                 </Image>
-                <TextBlock Text="BACK" Foreground="#333333" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center" Margin="0 0 70 0">
+                <TextBlock Text="BACK" Foreground="#333333" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center" Margin="0,0,60,0">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />
                     </TextBlock.InputBindings>

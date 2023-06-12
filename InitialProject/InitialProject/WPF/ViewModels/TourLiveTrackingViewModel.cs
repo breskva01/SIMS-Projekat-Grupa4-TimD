@@ -40,8 +40,32 @@ namespace InitialProject.WPF.ViewModels
         public ICommand BackNavigationCommand =>
            new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
 
+        private string _tourName;
+        public string TourName
+        {
+            get { return _tourName; }
+            set
+            {
+                _tourName = value;
+                OnPropertyChanged(nameof(TourName));
+
+            }
+        }
+
         public ICommand KeyPointReachedCommand { get; set; }
         public ICommand StopTourCommand { get; set; }
+        public ICommand HomeCommand { get; set; }
+        public ICommand CreateTourCommand { get; set; }
+        public ICommand LiveTrackingCommand { get; set; }
+        public ICommand CancelTourCommand { get; set; }
+        public ICommand TourStatsCommand { get; set; }
+        public ICommand RatingsViewCommand { get; set; }
+        public ICommand TourRequestsCommand { get; set; }
+        public ICommand TourRequestsStatsCommand { get; set; }
+        public ICommand GuideProfileCommand { get; set; }
+        public ICommand ComplexTourCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+
 
         private KeyPointViewModel _selectedKeyPoint;
         public KeyPointViewModel SelectedKeyPoint
@@ -69,6 +93,9 @@ namespace InitialProject.WPF.ViewModels
             _tourReservations = new List<TourReservation>();
             _keyPointsFromSelectedTour = new ObservableCollection<KeyPointViewModel>();
 
+            TourName = "Tour Name: ";
+
+            TourName += _tour.Name;
 
             KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
@@ -111,6 +138,18 @@ namespace InitialProject.WPF.ViewModels
         {
             KeyPointReachedCommand = new ExecuteMethodCommand(KeyPointReached);
             StopTourCommand = new ExecuteMethodCommand(StopTour);
+            HomeCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+            CreateTourCommand = new ExecuteMethodCommand(ShowTourCreationView);
+            LiveTrackingCommand = new ExecuteMethodCommand(ShowToursTodayView);
+            CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
+            TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
+            RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
+            TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
+            TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
+            GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);
+            ComplexTourCommand = new ExecuteMethodCommand(ShowComplexTourView);
+            BackCommand = new ExecuteMethodCommand(ShowPreviousWindow);
+
         }
 
         private void KeyPointReached()
@@ -141,8 +180,11 @@ namespace InitialProject.WPF.ViewModels
 
         private void StopTour()
         {
-            _tour.State = TourState.Interrupted;
-            _tourService.Update(_tour);
+            if(_tour.State != TourState.Finished)
+            {
+                _tour.State = TourState.Interrupted;
+                _tourService.Update(_tour);
+            }
 
             BackNavigationCommand.Execute(null);
         }
@@ -155,6 +197,80 @@ namespace InitialProject.WPF.ViewModels
         {
             return new ToursTodayViewModel(_navigationStore, _user);
 
+        }
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
+        }
+        private void ShowTourCreationView()
+        {
+            TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+
+        private void ShowComplexTourView()
+        {
+            ComplexTourAcceptViewModel viewModel = new ComplexTourAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowToursTodayView()
+        {
+            ToursTodayViewModel viewModel = new ToursTodayViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourCancellationView()
+        {
+            AllToursViewModel viewModel = new AllToursViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourStatsView()
+        {
+            TourStatsViewModel viewModel = new TourStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideRatingsView()
+        {
+            GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsView()
+        {
+            TourRequestsAcceptViewModel viewModel = new TourRequestsAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsStatsView()
+        {
+            TourRequestsStatsViewModel viewModel = new TourRequestsStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideProfileView()
+        {
+            GuideProfileViewModel viewModel = new GuideProfileViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowPreviousWindow()
+        {
+            BackNavigationCommand.Execute(null);
         }
 
     }

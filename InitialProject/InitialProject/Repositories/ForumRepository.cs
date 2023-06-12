@@ -55,7 +55,18 @@ namespace InitialProject.Repositories
         }
         private int NextId()
         {
-            return _forums?.Max(f => f.Id) + 1 ?? 0;
+            if (_forums == null || _forums.Count == 0)
+            {
+                return 1;
+            }
+
+            return _forums.Max(f => f.Id) + 1;
+        }
+
+        public List<Forum> GetByIniatorId(int id)
+        {
+            GetAll();
+            return _forums.FindAll(f => f.Initiator.Id == id);
         }
         public Forum GetForumByLocationAndTopic(string locationAndTopic)
         {

@@ -43,6 +43,11 @@ namespace InitialProject.Application.Services
             _repository.NotifyApprovedRequest(tour, userId);
         }
 
+        public void NotifyFreeVoucher(int guestId)
+        {
+            _repository.NotifyFreeVoucher(guestId);
+        }
+
         public UserNotification GetById(int notificationId)
         {
             return _repository.GetById(notificationId);

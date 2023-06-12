@@ -5,43 +5,66 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <DataTemplate x:Key="ReservationsTemplate">
-            <StackPanel Margin="7" Orientation="Horizontal" 
-                        HorizontalAlignment="Stretch">
-                <Image Source="{Binding PictureURL}" Width="180" Height="180" />
-                <StackPanel VerticalAlignment="Center" Margin="30" Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0 0 0 5">
-                    </TextBlock>
-                    <TextBlock FontSize="14" FontWeight="Light">
-                        <Run Text="{Binding Location.Country}"/> -
-                        <Run Text="{Binding Location.City}" />
-                    </TextBlock>
-                    <TextBlock FontSize="14" FontWeight="Light">
-                        Check in:
-                        <Run Text="{Binding Start, StringFormat='dd.MM.yyyy.'}" />
-                    </TextBlock>
-                </StackPanel>
-                <Button Height="50" Width="100"  Margin="300 5 5 5" HorizontalAlignment="Right" FontSize="15"
-                        Command="{Binding DataContext.RateTourCommand, 
-                                  RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-                        CommandParameter="{Binding}">Rate</Button>
+             d:DesignHeight="750" d:DesignWidth="430">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="#d7e5ec">
+        <Grid VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Dock on the top -->
+                <RowDefinition Height="Auto"/>
+                <!-- Separator -->
+                <RowDefinition Height="609"/>
+                <!-- Blank bottom part -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Docked content -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,0"  HorizontalAlignment="Center">
+                <Image Source="/Resources/Images/menu.png" Height="30" Width="30" Margin="0 10 0 10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding MenuCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <Image Source="/Resources/Images/notify.png" Height="30" Width="30" Margin="5,0,30,0" VerticalAlignment="Center">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NotificationCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="Tour Rating" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Foreground="#333333" Margin="35,0,35,0"/>
+                <Image Source="/Resources/Images/logo.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="40,0,0,0" VerticalAlignment="Center" />
             </StackPanel>
-        </DataTemplate>
-    </UserControl.Resources>
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom"
-                    Margin="10"
-                    Orientation="Horizontal">
 
-            <Button Height="40" Margin="5,20,5,20" Padding="4 2"
-                    Command="{Binding MenuCommand}"
-                    Content="Menu" Width="100" FontSize="17"/>
+            <!-- Separator -->
+            <Separator Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
 
-        </StackPanel>
-        <ListBox ItemTemplate="{StaticResource ReservationsTemplate}"
-                 ItemsSource="{Binding UnratedTours, UpdateSourceTrigger=PropertyChanged}"
-                 HorizontalAlignment="Stretch"/>
-    </DockPanel>
+            <!-- Blank bottom part -->
+            <StackPanel Orientation="Vertical" Grid.Row="2" Background="White">
+                <TextBlock Text="Please select the tour that you want to rate" FontSize="20" TextAlignment="Center" Margin="0 50 0 0"/>
+                <ComboBox  FontSize="24" HorizontalAlignment="Center" ItemsSource="{Binding UnratedTours}" SelectedItem="{Binding SelectedTour}" DisplayMemberPath="Name" SelectedValuePath="Id" Width="200" Height="35" Margin="0,20,0,0"  />
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 70 0 40">
+                    <Image Source="{Binding SelectedTour.PictureURL}"  Width="170" Height="170"/>
+                    <TextBlock Text="{Binding SelectedTour.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="#779ecb" FontFamily="Segoe UI" Margin="0 10 0 0"/>
+                </StackPanel>
+                <Button Command="{Binding RateTourCommand}" IsEnabled="{Binding IsTourSelected}" Content="Rate" Background="#779ecb" Foreground="White" Padding="10" Margin="0" FontSize="24"  Height="50" Width="180" BorderBrush="Transparent" Cursor="Hand" HorizontalAlignment="Center" />
+                
+            </StackPanel>
+
+            <Separator Grid.Row="3" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
+            <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,5,60,5" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+
+                <Image Source="/Resources/Images/backSquare.png" Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="BACK" Foreground="#333333" HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" VerticalAlignment="Center">
+                    <TextBlock.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </Border>
+    
 </UserControl>

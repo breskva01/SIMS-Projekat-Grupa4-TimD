@@ -15,6 +15,8 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public int NextId();
         public void Delete(Voucher voucher);
         public Voucher GetById(int voucherId);
+        public List<Voucher> FilterGuideVouchers(List<Voucher> vouchers, int guideId);
+        public bool MatchesGuideId(Voucher voucher, int guideId);
         public List<Voucher> FilterUnexpired(List<Voucher> vouchers);
         public List<Voucher> FilterUnused(List<Voucher> vouchers);
         public bool IsExpired(Voucher voucher);

@@ -72,6 +72,16 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style 
+            x:Key="ForumsStyle" 
+            BasedOn="{StaticResource BaseTextBlockStyle}" 
+            TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedTab}" Value="Forums">
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid MaxWidth="1000" Margin="0 0 0 10">
         <Grid.ColumnDefinitions>
@@ -228,7 +238,12 @@
             <TextBlock
                 Margin="10 0"
                 Text="Forumi"
-                Style="{StaticResource BaseTextBlockStyle}">
+                Style="{StaticResource ForumsStyle}">
+                <TextBlock.InputBindings>
+                    <MouseBinding 
+                        MouseAction="LeftClick"
+                        Command="{Binding NavigateForumsCommand}"/>
+                </TextBlock.InputBindings>
             </TextBlock>
             
         </StackPanel>

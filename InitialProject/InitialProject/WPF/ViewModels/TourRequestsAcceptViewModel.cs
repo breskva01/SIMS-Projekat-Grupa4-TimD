@@ -2,9 +2,12 @@
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.WPF.NewViews;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +16,7 @@ using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
 {
-    public class TourRequestsAcceptViewModel : ViewModelBase
+    public class TourRequestsAcceptViewModel : ViewModelBase, IDataErrorInfo
     {
         private readonly NavigationStore _navigationStore;
         private User _user;
@@ -138,6 +141,17 @@ namespace InitialProject.WPF.ViewModels
         public ICommand IncreaseGuestsCommand { get; set; }
         public ICommand DecreaseGuestsCommand { get; set; }
         public ICommand AcceptCommand { get; set; }
+        public ICommand CreateTourCommand { get; set; }
+        public ICommand LiveTrackingCommand { get; set; }
+        public ICommand CancelTourCommand { get; set; }
+        public ICommand TourStatsCommand { get; set; }
+        public ICommand RatingsViewCommand { get; set; }
+        public ICommand TourRequestsCommand { get; set; }
+        public ICommand TourRequestsStatsCommand { get; set; }
+        public ICommand GuideProfileCommand { get; set; }
+        public ICommand ComplexTourCommand { get; set; }
+        public ICommand StatsCommand { get; set; }
+        public ICommand HomeCommand { get; set; }
 
 
         public TourRequestsAcceptViewModel(NavigationStore navigationStore, User user) 
@@ -164,6 +178,18 @@ namespace InitialProject.WPF.ViewModels
             IncreaseGuestsCommand = new ExecuteMethodCommand(IncreaseGuests);
             DecreaseGuestsCommand = new ExecuteMethodCommand(DecreaseGuests);
             AcceptCommand = new ExecuteMethodCommand(AcceptTourRequest);
+            CreateTourCommand = new ExecuteMethodCommand(ShowTourCreationView);
+            LiveTrackingCommand = new ExecuteMethodCommand(ShowToursTodayView);
+            CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
+            TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
+            RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
+            TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
+            TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
+            StatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
+            GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);
+            ComplexTourCommand = new ExecuteMethodCommand(ShowComplexTourView);
+            HomeCommand = new ExecuteMethodCommand(ShowGuideMenuView);
+
         }
         private void PopulateCitiesComboBox()
         {
@@ -226,12 +252,139 @@ namespace InitialProject.WPF.ViewModels
         {
             NumberOfGuests--;
         }
-        private void AcceptTourRequest()
+        private void ShowGuideMenuView()
         {
-            SelectedTourRequest.Status = RequestStatus.Approved;
-            TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user, SelectedTourRequest);
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
             navigate.Execute(null);
+        }
+        private void AcceptTourRequest()
+        {
+           
+            if(SelectedTourRequest != null)
+            {
+                SelectedTourRequest.Status = RequestStatus.Approved;
+                TourRequestsAcceptDatePickerView view = new TourRequestsAcceptDatePickerView(_navigationStore, _user, SelectedTourRequest);
+                view.Show();
+                return;
+            }
+            return;
+        }
+        private void ShowTourCreationView()
+        {
+            TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+
+        private void ShowComplexTourView()
+        {
+            ComplexTourAcceptViewModel viewModel = new ComplexTourAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowToursTodayView()
+        {
+            ToursTodayViewModel viewModel = new ToursTodayViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourCancellationView()
+        {
+            AllToursViewModel viewModel = new AllToursViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourStatsView()
+        {
+            TourStatsViewModel viewModel = new TourStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideRatingsView()
+        {
+            GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsView()
+        {
+            TourRequestsAcceptViewModel viewModel = new TourRequestsAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsStatsView()
+        {
+            TourRequestsStatsViewModel viewModel = new TourRequestsStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideProfileView()
+        {
+            GuideProfileViewModel viewModel = new GuideProfileViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        public string this[string columnName]
+        {
+            get
+            {
+                string? error = null;
+                string requiredMessage = "Obavezno polje";
+                switch (columnName)
+                {
+                    case nameof(EarliestDate):
+                        if(EarliestDate != null && LatestDate != null)
+                        {
+                            if (Convert.ToDateTime(EarliestDate).Date > (Convert.ToDateTime(LatestDate).Date))
+                            {
+                                error = "Ime mora biti duze od 3 slova";
+                            }
+                        }
+                        
+                            break;
+                    case nameof(LatestDate):
+                        if (EarliestDate != null && LatestDate != null)
+                        {
+                            if (Convert.ToDateTime(EarliestDate).Date > (Convert.ToDateTime(LatestDate).Date))
+                            {
+                                error = "Ime mora biti duze od 3 slova";
+                            }
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                return error;
+
+            }
+        }
+        public string Error => null;
+        public bool IsTourValid
+        {
+            get
+            {
+                foreach (var property in new string[]
+                {
+                    nameof(EarliestDate),
+                    nameof(LatestDate)
+                    })
+                {
+                    if (this[property] != null) return false;
+                }
+                return true;
+            }
+
         }
     }
 }

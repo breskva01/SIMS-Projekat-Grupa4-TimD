@@ -1,4 +1,5 @@
 ﻿using InitialProject.Domain.Models;
+using InitialProject.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         User GetByUsername(string username);
         User Update(User user);
         User GetById(int id);
+        public bool IsEligibleForFreeVoucher(Guest2 guest);
     }
 }

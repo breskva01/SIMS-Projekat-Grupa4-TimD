@@ -48,6 +48,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         public ICommand NavigateMyResevationsCommand { get; }
         public ICommand NavigateMyRequestsCommand { get; }
         public ICommand NavigateRatingsCommand { get; }
+        public ICommand NavigateForumsCommand { get; }
         public ICommand NavigateLoginCommand { get; }
         public ICommand OpenNotificationsPromptCommand { get; }
         public NavigationBarViewModel(NavigationStore navigationStore, Guest1 user)
@@ -60,6 +61,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             NavigateMyResevationsCommand = new ExecuteMethodCommand(NavigateMyReservations);
             NavigateMyRequestsCommand = new ExecuteMethodCommand(NavigateMyRequests);
             NavigateRatingsCommand = new ExecuteMethodCommand(NavigateRatings);
+            NavigateForumsCommand = new ExecuteMethodCommand(NavigateForums);
             NavigateLoginCommand = new ExecuteMethodCommand(NavigateLogin);
             OpenNotificationsPromptCommand = new ExecuteMethodCommand(OpenNotificationsPrompt);
         }
@@ -116,7 +118,13 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             ViewModelBase viewModel = new AccommodationRatingViewModel(_navigationStore, _user);
             viewModel = CreateLayoutViewModel(viewModel);
             Navigate(viewModel);
-        }   
+        }
+        private void NavigateForums()
+        {
+            ViewModelBase viewModel = new ForumBrowserViewModel(_navigationStore, _user);
+            viewModel = CreateLayoutViewModel(viewModel);
+            Navigate(viewModel);
+        }
         private void NavigateLogin()
         {
             var viewModel = new SignInViewModel(_navigationStore);

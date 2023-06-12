@@ -50,9 +50,13 @@ namespace InitialProject.WPF.ViewModels
         public ICommand CancelTourCommand { get; set; }
         public ICommand TourStatsCommand { get; set; }
         public ICommand RatingsViewCommand { get; set; }
+        public ICommand TourRequestsCommand { get; set; }
+        public ICommand TourRequestsStatsCommand { get; set; }
+        public ICommand GuideProfileCommand { get; set; }
+        public ICommand ComplexTourCommand { get; set; }
         public ICommand SignOutCommand { get; set; }
 
-        public ToursTodayViewModel(NavigationStore navigationStore, User user) 
+        public ToursTodayViewModel(NavigationStore navigationStore, User user)
         {
             _today = DateTime.Now;
             _toursToday = new ObservableCollection<Tour>();
@@ -75,7 +79,7 @@ namespace InitialProject.WPF.ViewModels
 
             foreach (Tour t in _tours)
             {
-                if (IsDateToday(t))
+                if (IsDateToday(t) && (t.State == TourState.None || t.State == TourState.Started))
                 {
                     _toursToday.Add(t);
                 }
@@ -96,6 +100,10 @@ namespace InitialProject.WPF.ViewModels
             CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
             TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
             RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
+            TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
+            TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
+            GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);
+            ComplexTourCommand = new ExecuteMethodCommand(ShowComplexTourView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
         }
         private bool IsDateToday(Tour t)
@@ -151,6 +159,14 @@ namespace InitialProject.WPF.ViewModels
 
             navigate.Execute(null);
         }
+
+        private void ShowComplexTourView()
+        {
+            ComplexTourAcceptViewModel viewModel = new ComplexTourAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
         private void ShowToursTodayView()
         {
             ToursTodayViewModel viewModel = new ToursTodayViewModel(_navigationStore, _user);
@@ -175,6 +191,27 @@ namespace InitialProject.WPF.ViewModels
         private void ShowGuideRatingsView()
         {
             GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsView()
+        {
+            TourRequestsAcceptViewModel viewModel = new TourRequestsAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsStatsView()
+        {
+            TourRequestsStatsViewModel viewModel = new TourRequestsStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideProfileView()
+        {
+            GuideProfileViewModel viewModel = new GuideProfileViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
 
             navigate.Execute(null);

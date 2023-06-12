@@ -21,7 +21,7 @@
             <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
                 <Button Command="{Binding TourBrowserCommand}" Content="Book a tour" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand" />
                 <Button Command="{Binding TrackingCommand}" Content="Active tour" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
-                <Button Content="My reservations" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
+                <Button Command="{Binding MyReservationsCommand}" Content="My reservations" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
                 <Button Command ="{Binding RequestMenuCommand}" Content="Make a request" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
                 <Button Command="{Binding MyInfoCommand}" Content="My info" Background="#779ecb" Foreground="White" Padding="10" Margin="10" FontSize="20" FontWeight="Bold" Height="60" Width="260" BorderBrush="Transparent" Cursor="Hand"  />
             </StackPanel>

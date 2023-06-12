@@ -45,6 +45,11 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 NavigationBarViewModel.SelectedTab = "Ratings";
                 return;
             }
+            if (ContentViewModel is ForumBrowserViewModel)
+            {
+                NavigationBarViewModel.SelectedTab = "Forums";
+                return;
+            }
         }
     }
 }

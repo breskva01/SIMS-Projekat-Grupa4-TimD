@@ -11,7 +11,6 @@ namespace InitialProject.WPF.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
-        
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public MainWindowViewModel(NavigationStore navigationStore)
         {
