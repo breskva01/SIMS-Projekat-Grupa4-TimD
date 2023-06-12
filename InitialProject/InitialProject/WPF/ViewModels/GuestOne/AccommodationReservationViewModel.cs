@@ -13,6 +13,7 @@ using InitialProject.Application.Commands;
 using iTextSharp.text.pdf;
 using System.IO;
 using System.Diagnostics;
+using InitialProject.Application.Factories;
 
 namespace InitialProject.WPF.ViewModels.GuestOne
 {
@@ -140,29 +141,23 @@ namespace InitialProject.WPF.ViewModels.GuestOne
 
         private void ShowDatePicker(List<AccommodationReservation> reservations)
         {
-            var viewModel = new AccommodationReservationDatePickerViewModel(_navigationStore, reservations);
-            var navigateCommand = new NavigateCommand
-                (new NavigationService(_navigationStore, viewModel));
-
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateReservationDatePickerVM(_navigationStore, reservations);
+            NavigationService.Instance.Navigate(viewModel);
         }
         private void NavigateAcoommodationBrowser()
         {
-            var contentViewModel = new AccommodationBrowserViewModel(_navigationStore, Guest);
-            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, Guest);
-            var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateAccommodationBrowserVM(_navigationStore, Guest);
+            NavigationService.Instance.Navigate(viewModel);
         }
         private void NavigateImageBrowser(string imageURL)
         {
-            var viewModel = new ImageBrowserViewModel(Accommodation.PictureURLs, imageURL, RecreateSelf);
-            new NavigationService(_navigationStore, viewModel).Navigate();
+            var viewModel = ViewModelFactory.Instance.CreateImageBrowserVM(Accommodation.PictureURLs, imageURL, RecreateSelf);
+            NavigationService.Instance.Navigate(viewModel);
         }
         private void RecreateSelf()
         {
-            var viewModel = new AccommodationReservationViewModel(_navigationStore, Guest, Accommodation);
-            new NavigationService(_navigationStore, viewModel).Navigate();
+            var viewModel = ViewModelFactory.Instance.CreateReservationFormVM(_navigationStore, Guest, Accommodation);
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }

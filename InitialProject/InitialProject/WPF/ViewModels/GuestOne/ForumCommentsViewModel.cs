@@ -1,4 +1,5 @@
 ﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Factories;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
@@ -72,10 +73,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void NavigateForumBrowser()
         {
-            ViewModelBase contentViewModel = new ForumBrowserViewModel(_navigationStore, _user);
-            var navigateBarViewModel = new NavigationBarViewModel(_navigationStore, _user);
-            var layoutViewModel = new LayoutViewModel(navigateBarViewModel, contentViewModel);
-            new NavigationService(_navigationStore, layoutViewModel).Navigate();
+            ViewModelBase viewModel = ViewModelFactory.Instance.CreateForumBrowserVM(_navigationStore, _user);
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }

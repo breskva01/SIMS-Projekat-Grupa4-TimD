@@ -1,4 +1,5 @@
 ﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Factories;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
@@ -62,7 +63,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             NavigateMyRequestsCommand = new ExecuteMethodCommand(NavigateMyRequests);
             NavigateRatingsCommand = new ExecuteMethodCommand(NavigateRatings);
             NavigateForumsCommand = new ExecuteMethodCommand(NavigateForums);
-            NavigateLoginCommand = new ExecuteMethodCommand(NavigateLogin);
+            NavigateLoginCommand = new ExecuteMethodCommand(NavigateSignIn);
             OpenNotificationsPromptCommand = new ExecuteMethodCommand(OpenNotificationsPrompt);
         }
 
@@ -99,54 +100,35 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void NavigateAccommodationBrowser()
         {
-            ViewModelBase viewModel = new AccommodationBrowserViewModel(_navigationStore, _user);
-            viewModel = CreateLayoutViewModel(viewModel);
-            Navigate(viewModel);
+            Navigate(ViewModelFactory.Instance.CreateAccommodationBrowserVM(_navigationStore, _user));
         }
         private void NavigateAnywhereAnytimeBrowser()
         {
-            ViewModelBase viewModel = new AnywhereAnytimeViewModel(_navigationStore, _user);
-            viewModel = CreateLayoutViewModel(viewModel);
-            Navigate(viewModel);
+            Navigate(ViewModelFactory.Instance.CreateAnywhereAnytimeVM(_navigationStore, _user));
         }
         private void NavigateMyReservations()
         {
-            ViewModelBase viewModel = new MyAccommodationReservationsViewModel(_navigationStore, _user);
-            viewModel = CreateLayoutViewModel(viewModel);
-            Navigate(viewModel);
+            Navigate(ViewModelFactory.Instance.CreateMyReservationsVM(_navigationStore, _user));
         }
         private void NavigateMyRequests()
         {
-            ViewModelBase viewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _user);
-            viewModel = CreateLayoutViewModel(viewModel);
-            Navigate(viewModel);
+            Navigate(ViewModelFactory.Instance.CreateMyRequestsVM(_navigationStore, _user));
         }
         private void NavigateRatings()
         {
-            ViewModelBase viewModel = new AccommodationRatingViewModel(_navigationStore, _user);
-            viewModel = CreateLayoutViewModel(viewModel);
-            Navigate(viewModel);
+            Navigate(ViewModelFactory.Instance.CreateRatingsVM(_navigationStore, _user));
         }
         private void NavigateForums()
         {
-            ViewModelBase viewModel = new ForumBrowserViewModel(_navigationStore, _user);
-            viewModel = CreateLayoutViewModel(viewModel);
-            Navigate(viewModel);
+            Navigate(ViewModelFactory.Instance.CreateForumBrowserVM(_navigationStore, _user));
         }
-        private void NavigateLogin()
+        private void NavigateSignIn()
         {
-            var viewModel = new SignInViewModel(_navigationStore);
-            Navigate(viewModel);
-        }
-        private ViewModelBase CreateLayoutViewModel(ViewModelBase contentViewModel)
-        {
-            var navigateBarViewModel = new NavigationBarViewModel(_navigationStore, _user);
-            var layoutViewModel = new LayoutViewModel(navigateBarViewModel, contentViewModel);
-            return layoutViewModel;
+            Navigate(ViewModelFactory.Instance.CreateSignInVM(_navigationStore));
         }
         private void Navigate(ViewModelBase viewModel)
         {
-            new NavigationService(_navigationStore, viewModel).Navigate();
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }

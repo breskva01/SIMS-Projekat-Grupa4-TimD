@@ -17,6 +17,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
 using System.Reflection.Metadata;
+using InitialProject.Application.Factories;
 
 namespace InitialProject.WPF.ViewModels.GuestOne
 {
@@ -182,11 +183,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void ShowReservationForm(Accommodation accommodation)
         {
-            var viewModel = new AccommodationReservationViewModel(_navigationStore, _user, accommodation);
-            var navigateCommand = new NavigateCommand
-                (new NavigationService(_navigationStore, viewModel));
-
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateReservationFormVM(_navigationStore, _user, accommodation);
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace InitialProject
             _navigationStore = new NavigationStore();
             _superGuestScheduler = new ActionScheduler(TimeSpan.FromHours(1), UpdateSuperGuestStatus);
             RepositoryInjector.MapRepositories();
+            NavigationService.Instance = new NavigationService(_navigationStore);
         }
         protected override void OnStartup(StartupEventArgs e)
         {

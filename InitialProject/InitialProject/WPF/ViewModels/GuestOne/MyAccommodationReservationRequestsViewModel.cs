@@ -1,4 +1,5 @@
 ﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Factories;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
@@ -39,9 +40,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             }
             else
             {
-                var viewModel = new OwnerCommentViewModel(_navigationStore, _user, request);
-                var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-                navigateCommand.Execute(null);
+                ViewModelBase viewModel = ViewModelFactory.Instance.CreateOwnerCommentVM(_navigationStore, _user, request);
+                NavigationService.Instance.Navigate(viewModel);
             }
         }
     }

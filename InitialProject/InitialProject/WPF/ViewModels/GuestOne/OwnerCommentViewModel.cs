@@ -1,4 +1,5 @@
 ﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Factories;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
@@ -26,11 +27,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void NavigateMyRequests()
         {
-            var contentViewModel = new MyAccommodationReservationRequestsViewModel(_navigationStore, _user);
-            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _user);
-            var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateMyRequestsVM(_navigationStore, _user);
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }

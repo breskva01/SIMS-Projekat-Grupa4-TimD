@@ -1,4 +1,5 @@
 ﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Factories;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
@@ -73,21 +74,20 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void NavigateAnywhereAnytime()
         {
-            var contentViewModel = new AnywhereAnytimeViewModel(_navigationStore, Guest);
-            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, Guest);
-            var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateAnywhereAnytimeVM(_navigationStore, Guest);
+            NavigationService.Instance.Navigate(viewModel);
         }
         private void NavigateImageBrowser(string imageURL)
         {
-            var viewModel = new ImageBrowserViewModel(Reservation.Accommodation.PictureURLs, imageURL, RecreateSelf);
-            new NavigationService(_navigationStore, viewModel).Navigate();
+            var viewModel = ViewModelFactory.Instance.CreateImageBrowserVM
+                (Reservation.Accommodation.PictureURLs, imageURL, RecreateSelf);
+            NavigationService.Instance.Navigate(viewModel);
         }
         private void RecreateSelf()
         {
-            var viewModel = new AccommodationReservationDetailsViewModel(_navigationStore, Guest, Reservation, IsReadOnlyMode);
-            new NavigationService(_navigationStore, viewModel).Navigate();
+            var viewModel = ViewModelFactory.Instance.CreateReservationDetailsVM
+                (_navigationStore, Guest, Reservation, IsReadOnlyMode);
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }

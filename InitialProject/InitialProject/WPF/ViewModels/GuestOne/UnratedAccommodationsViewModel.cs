@@ -1,4 +1,5 @@
 ﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Factories;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
@@ -30,9 +31,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void NavigateRateAccommodation(AccommodationReservation reservation)
         {
-            var viewModel = new RateAccommodationViewModel(_navigationStore, reservation);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateRateAccommodationVM(_navigationStore, reservation);
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }

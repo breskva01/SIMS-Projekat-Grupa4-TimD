@@ -14,6 +14,7 @@ using InitialProject.Application.Stores;
 using InitialProject.Application.Services;
 using InitialProject.Application.Commands;
 using System.Windows.Input;
+using InitialProject.Application.Factories;
 
 namespace InitialProject.WPF.ViewModels.GuestOne
 {
@@ -94,14 +95,13 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void ShowMoveRequestPrompt(AccommodationReservation reservation)
         {
-            var viewModel = new AccommodationReservationMoveRequestViewModel(_navigationStore, reservation);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateReservationMoveRequestVM(_navigationStore, reservation);
+            NavigationService.Instance.Navigate(viewModel);
         }
         private void NavigateReservationDetails(AccommodationReservation reservation)
         {
-            var viewModel = new AccommodationReservationDetailsViewModel(_navigationStore, _user, reservation, true);
-            new NavigationService(_navigationStore, viewModel).Navigate();
+            var viewModel = ViewModelFactory.Instance.CreateReservationDetailsVM(_navigationStore, _user, reservation, true);
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }

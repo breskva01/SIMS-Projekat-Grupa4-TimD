@@ -175,7 +175,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Factories\" />
     <Folder Include="Resources\PDF\" />
   </ItemGroup>
 

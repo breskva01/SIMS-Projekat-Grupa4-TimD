@@ -1,4 +1,5 @@
 ﻿using InitialProject.Application.Commands;
+using InitialProject.Application.Factories;
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
@@ -118,8 +119,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void NavigateStartForumForm()
         {
-            var viewModel = new StartForumViewModel(_navigationStore, _user);
-            new NavigationService(_navigationStore, viewModel).Navigate();
+            var viewModel = ViewModelFactory.Instance.CreateStartForumVM(_navigationStore, _user);
+            NavigationService.Instance.Navigate(viewModel);
         }
         private void NavigateForumCommentsView()
         {
@@ -132,8 +133,8 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             }
             else
             {
-                var viewModel = new ForumCommentsViewModel(_navigationStore, _user, SelectedForum);
-                new NavigationService(_navigationStore, viewModel).Navigate();
+                var viewModel = ViewModelFactory.Instance.CreateForumCommentsVM(_navigationStore, _user, SelectedForum);
+                NavigationService.Instance.Navigate(viewModel);
             }
         }
     }

@@ -10,6 +10,7 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Application.Commands;
 using System.Windows.Input;
+using InitialProject.Application.Factories;
 
 namespace InitialProject.WPF.ViewModels.GuestOne
 {
@@ -99,20 +100,13 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         }
         private void NavigateAccommodationBrowser()
         {
-            var contentViewModel = new AccommodationBrowserViewModel(_navigationStore, SelectedReservation.Guest);
-            var navigationBarViewModel = new NavigationBarViewModel(_navigationStore, SelectedReservation.Guest);
-            var layoutViewModel = new LayoutViewModel(navigationBarViewModel, contentViewModel);
-            var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, layoutViewModel));
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateAccommodationBrowserVM(_navigationStore, SelectedReservation.Guest);
+            NavigationService.Instance.Navigate(viewModel);
         }
         private void NavigateReservationForm()
         {
-            var viewModel = new AccommodationReservationViewModel(_navigationStore, 
-                Reservations[0].Guest, Reservations[0].Accommodation);
-            var navigateCommand = new NavigateCommand
-                (new NavigationService(_navigationStore, viewModel));
-
-            navigateCommand.Execute(null);
+            var viewModel = ViewModelFactory.Instance.CreateReservationFormVM(_navigationStore, Reservations[0].Guest, Reservations[0].Accommodation);
+            NavigationService.Instance.Navigate(viewModel);
         }
     }
 }
