@@ -45,7 +45,7 @@ namespace InitialProject.WPF.NewViews
                     HandleMoveRequestPanelKeydown(reservationMoveRequestsViewModel);
                 else if (mainVM.CurrentViewModel is ForumSearchViewModel forumSearchViewModel)
                     HandleForumsPanelKeydown(forumSearchViewModel);
-                else if (mainVM.CurrentViewModel is ForumCommentsViewModel forumCommentsViewModel)
+                else if (mainVM.CurrentViewModel is ViewModels.ForumCommentsViewModel forumCommentsViewModel)
                     HandleForumCommentsPanelKeydown(forumCommentsViewModel);
                 else if(mainVM.CurrentViewModel is GuestRatingViewModel guestRatingViewModel)
                     HandleGuestRatingPanelKeyDown(guestRatingViewModel);
@@ -133,7 +133,7 @@ namespace InitialProject.WPF.NewViews
             else if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.V))
                 viewModel.ViewForumCommand.Execute(null);
         }
-        private void HandleForumCommentsPanelKeydown(ForumCommentsViewModel viewModel)
+        private void HandleForumCommentsPanelKeydown(ViewModels.ForumCommentsViewModel viewModel)
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.B))
                 viewModel.BackCommand.Execute(null);

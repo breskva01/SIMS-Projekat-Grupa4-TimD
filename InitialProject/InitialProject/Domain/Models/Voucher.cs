@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace InitialProject.Domain.Models
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            ExpirationDate = DateOnly.Parse(values[2]);
+            ExpirationDate = DateOnly.ParseExact(values[2], "dd.MM.yyyy.", CultureInfo.InvariantCulture);
             State = (VoucherState)Enum.Parse(typeof(VoucherState),values[3]);
             GuideId = Convert.ToInt32(values[4]);
         }
@@ -60,7 +61,7 @@ namespace InitialProject.Domain.Models
             {
                 Id.ToString(),
                 Name,
-                ExpirationDate.ToString(),
+                ExpirationDate.ToString("dd.MM.yyyy."),
                 State.ToString(),
                 GuideId.ToString()
             };
