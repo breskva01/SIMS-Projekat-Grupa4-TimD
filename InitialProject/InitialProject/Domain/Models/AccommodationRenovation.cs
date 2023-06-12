@@ -34,6 +34,10 @@ namespace InitialProject.Domain.Models
             RenovationExpiration = renovationExpiration;
             Status = status;
         }
+        public bool Overlaps(DateOnly checkIn, DateOnly checkOut)
+        {
+            return DateOnly.FromDateTime(Start) < checkOut && checkIn < DateOnly.FromDateTime(End);
+        }
 
         public string[] ToCSV()
         {

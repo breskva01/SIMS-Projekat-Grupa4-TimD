@@ -13,9 +13,6 @@ namespace InitialProject.WPF.ViewModels.GuestOne
 {
     public class ImageBrowserViewModel : ViewModelBase
     {
-        private readonly Guest1 _user;
-        private readonly NavigationStore _navigationStore;
-        private readonly Accommodation _accommodation;
         private readonly List<string> _imageUrls;
         private int _currentIndex;
         private string _currentImageUrl;
@@ -36,20 +33,18 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         public ICommand NavigateReservationFormCommand { get; }
         public ICommand PreviousImageCommand { get; }
         public ICommand NextImageCommand { get; }
+        private Action _navigateAction; 
 
-        public ImageBrowserViewModel(NavigationStore navigationStore, Guest1 user,
-            Accommodation accommodation, string imageUrl)
+        public ImageBrowserViewModel(List<string> imageUrls, string imageUrl, Action navigateAction)
         {
-            _navigationStore = navigationStore;
-            _user = user;
-            _accommodation = accommodation;
-            _imageUrls = accommodation.PictureURLs;
+            _imageUrls = imageUrls;
             _currentIndex = _imageUrls.IndexOf(imageUrl);
             CurrentImageUrl = imageUrl;
 
-            NavigateReservationFormCommand = new ExecuteMethodCommand(NavigateReservationForm);
+            NavigateReservationFormCommand = new ExecuteMethodCommand(NavigateBack);
             PreviousImageCommand = new ExecuteMethodCommand(PreviousImage);
             NextImageCommand = new ExecuteMethodCommand(NextImage);
+            _navigateAction = navigateAction;
         }
 
         private void NextImage()
@@ -72,10 +67,9 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             CurrentImageUrl = _imageUrls[_currentIndex];
         }
 
-        private void NavigateReservationForm()
+        private void NavigateBack()
         {
-            var viewModel = new AccommodationReservationViewModel(_navigationStore, _user, _accommodation);
-            new NavigationService(_navigationStore, viewModel).Navigate();
+            _navigateAction.Invoke();
         }
     }
 

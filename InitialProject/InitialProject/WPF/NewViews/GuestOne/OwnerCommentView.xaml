@@ -38,8 +38,8 @@
             <TextBlock 
                 VerticalAlignment="Center"
                 Text=" - ">
-                <Run Text="{Binding Request.Reservation.Accommodation.Country}"/>,
-                <Run Text="{Binding Request.Reservation.Accommodation.City}" />
+                <Run Text="{Binding Request.Reservation.Accommodation.Location.Country}"/>,
+                <Run Text="{Binding Request.Reservation.Accommodation.Location.City}" />
             </TextBlock>
         </StackPanel>
 

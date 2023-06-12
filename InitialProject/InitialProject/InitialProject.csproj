@@ -33,6 +33,7 @@
     <None Remove="Resources\Images\dash-line.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\exclamation_mark.png" />
     <None Remove="Resources\Images\forwardSquare.png" />
     <None Remove="Resources\Images\go-back.png" />
     <None Remove="Resources\Images\go_back.png" />
@@ -71,6 +72,7 @@
     <None Remove="Resources\Images\soba_novi_sad.jpg" />
     <None Remove="Resources\Images\sun.png" />
     <None Remove="Resources\Images\urgent-message.png" />
+    <None Remove="Resources\Images\verified.png" />
     <None Remove="Resources\Images\vienna.jpeg" />
     <None Remove="Resources\Images\view.png" />
     <None Remove="Resources\Images\vila_italija.jpg" />
@@ -96,6 +98,7 @@
     <Resource Include="Resources\Images\blueCheck.png" />
     <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\checkmark.png" />
+    <Resource Include="Resources\Images\exclamation_mark.png" />
     <Resource Include="Resources\Images\filter.png" />
     <Resource Include="Resources\Images\forwardSquare.png" />
     <Resource Include="Resources\Images\homeWhite.png" />
@@ -120,6 +123,7 @@
     <Content Include="Resources\Images\notificationBell1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\verified.png" />
     <Resource Include="Resources\Images\notification.png" />
     <Resource Include="Resources\Images\notify.png" />
     <Resource Include="Resources\Images\novi_sad.jpg" />
