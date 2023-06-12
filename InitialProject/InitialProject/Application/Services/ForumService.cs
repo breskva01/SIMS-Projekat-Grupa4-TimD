@@ -84,11 +84,11 @@ namespace InitialProject.Application.Services
             int ownerCommentsNeeded = 10;
             var forum = _forumRepository.GetById(forumId);
             //minimum possible number of comments for a forum to become very useful
-            if (forum.Comments.Count < guestCommentsNeeded + ownerCommentsNeeded) 
-                return;
+            //if (forum.Comments.Count < guestCommentsNeeded + ownerCommentsNeeded) 
+              //  return;
 
             CountComments(ref credentialGuestComments, ref credentialOwnerComments, forum);
-            if (credentialGuestComments >= guestCommentsNeeded && credentialOwnerComments >= ownerCommentsNeeded)
+            if (credentialGuestComments >= guestCommentsNeeded || credentialOwnerComments >= ownerCommentsNeeded)
                 _forumRepository.MarkAsVeryUseful(forum.Id);
         }
         private void CountComments(ref int credentialGuestComments, ref int credentialOwnerComments, Forum forum)

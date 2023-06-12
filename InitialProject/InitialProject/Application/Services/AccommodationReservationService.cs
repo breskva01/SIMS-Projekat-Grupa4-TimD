@@ -100,7 +100,7 @@ namespace InitialProject.Application.Services
             foreach (var accommodation in accommodations)
             {
                 var reservations = reservationAvailabilityHandler.GetAvailable(
-                    startDate.Value, endDate.Value, stayLength, accommodation, guest, 1, false);
+                    startDate.Value, endDate.Value, stayLength, accommodation, guest, 5, false);
 
                 availableReservations.AddRange(reservations);
             }
