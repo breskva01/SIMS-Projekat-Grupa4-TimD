@@ -50,9 +50,15 @@
                 <DataGridTextColumn Width="*" Header="Minimum cancelation notice" Binding="{Binding MinimumCancelationNotice}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="2" Width="415" Height="40" Content="Back" Command="{Binding BackCommand}" FontSize="32" Margin="308,209,307,56"/>
+        <Button Grid.Row="2" Width="415" Height="40" Content="Back" Command="{Binding BackCommand}" FontSize="32" Margin="288,206,327,59"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Reservation move requests" Command="{Binding ShowReservationMoveRequestsViewCommand}" FontSize="32" Margin="558,144,57,121"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Renovation appointments" Command="{Binding ShowMyRenovationAppointmentsViewCommand}" FontSize="32" Margin="558,79,57,186"/>
+        <TextBlock FontSize="18" Width="70" Height="20" Grid.Row="2" Margin="730,196,230,89">Ctrl + R</TextBlock>
+        <TextBlock FontSize="18" Width="70" Height="20" Grid.Row="2" Margin="730,124,230,161">Ctrl + A + R</TextBlock>
+        <TextBlock FontSize="18" Width="70" Height="20" Grid.Row="2" Margin="730,59,230,226">Ctrl + S + R</TextBlock>
+        <TextBlock FontSize="18" Width="70" Height="20" Grid.Row="2" Margin="200,196,760,89">Ctrl + S</TextBlock>
+        <TextBlock FontSize="18" Width="70" Height="20" Grid.Row="2" Margin="200,119,760,166">Ctrl + D + A</TextBlock>
+        <TextBlock FontSize="18" Width="70" Height="20" Grid.Row="2" Margin="200,59,760,226">Ctrl + N + A</TextBlock>
         <Button Grid.Row="2" Width="415" Height="40" Content="Reserve renovation" Command="{Binding ShowScheduleRenovationViewCommand}" FontSize="32" Margin="558,14,57,251"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Statistics" Command="{Binding ShowAccommodationStatisticsViewCommand}" FontSize="32" Margin="27,144,588,121"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Remove accommodation" FontSize="32" Margin="27,79,588,186"/>

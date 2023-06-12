@@ -86,6 +86,10 @@
             <Ellipse Grid.Row="6" Width="10" Height="10" Margin="420,18,85,33"></Ellipse>
             <Button Grid.Row="9" Width="140" Height="40" Content="Back" Command="{Binding BackCommand}" FontFamily="Impact" FontSize="32" Margin="252,11,103,10"/>
             <Button Grid.Row="9" Width="140" Height="40" Content="Logout" Command="{Binding SignOutCommand}" FontFamily="Impact" FontSize="32" Margin="102,11,253,10"/>
+            <TextBlock Width="70" Height="20" FontSize="18" Grid.Row="3" Margin="24,18,421,23">Ctrl + A</TextBlock>
+            <TextBlock Width="70" Height="20" FontSize="18" Grid.Row="4" Margin="24,18,421,23">Ctrl + G</TextBlock>
+            <TextBlock Width="70" Height="20" FontSize="18" Grid.Row="5" Margin="24,18,421,22">Ctrl + R</TextBlock>
+            <TextBlock Width="70" Height="20" FontSize="18" Grid.Row="6" Margin="24,18,421,23">Ctrl + N</TextBlock>
         </Grid>
     </Grid>
 </UserControl>

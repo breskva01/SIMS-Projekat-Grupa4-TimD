@@ -1,5 +1,6 @@
 ﻿using InitialProject.Domain.Models;
 using InitialProject.WPF.ViewModels;
+using InitialProject.WPF.ViewModels.GuestOne;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +26,26 @@ namespace InitialProject.WPF.NewViews.Owner
         {
             InitializeComponent();
             ScheduleRenovationViewModel scheduleRenovationViewModel = new ScheduleRenovationViewModel(selectedAccommodation);
-            DataContext= scheduleRenovationViewModel;
+            DataContext = scheduleRenovationViewModel;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (DataContext is ScheduleRenovationViewModel scheduleRenovationVM)
+            {
+                    HandleScheduleRenovationPanelKeydown(scheduleRenovationVM);
+            }
+        }
+        private void HandleScheduleRenovationPanelKeydown(ScheduleRenovationViewModel viewModel)
+        {
+            if (Keyboard.IsKeyDown(Key.S) && Keyboard.IsKeyDown(Key.LeftCtrl))
+                viewModel.SearchCommand.Execute(null);
+            else if (Keyboard.IsKeyDown(Key.R) && Keyboard.IsKeyDown(Key.LeftCtrl))
+                viewModel.ScheduleRenovationCommand.Execute(null);
         }
     }
 }

@@ -40,7 +40,11 @@
         <TextBlock FontSize="20" Grid.Row="1" TextWrapping="Wrap" Text="Founded in 2020 in Novi Sad, TravelBuddy has grown from a small serbian startup to one of the world's leading digital travel companies. TravelBuddy's mission is to make it easier for everyone to experience the world." FontFamily="Impact" Foreground="DarkCyan"></TextBlock>
         <Label Grid.Row="2" FontSize="32" Height="50" Width="230">Useful shortcuts</Label>
         <ListBox Grid.Row="3" Background="LightBlue" FontFamily="Impact" Foreground="DarkCyan" FontSize="20">
-            
+            <ListBoxItem>Ctrl+B: Back to previous window</ListBoxItem>
+            <ListBoxItem>Ctrl+L: Sign out</ListBoxItem>
+            <ListBoxItem>Ctrl+P: Go to profile</ListBoxItem>
+            <ListBoxItem>Ctrl+P: Go to forums</ListBoxItem>
+            <ListBoxItem>Ctrl+H: Go to help</ListBoxItem>
         </ListBox>
         <Button Grid.Row="4" Content="Close" FontFamily="Impact" FontSize="24" Height="40" Width="80" Click="Close_Click"></Button>
     </Grid>

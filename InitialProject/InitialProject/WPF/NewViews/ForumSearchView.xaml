@@ -42,7 +42,6 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" FontSize="40" Height="60" Width="135">Forums</Label>
-        <TextBox Grid.Row="0" Height="25" Width="190" Margin="0,115,800,0"></TextBox>
         <ListBox Grid.Row="1" ItemsSource="{Binding Forums}" SelectedItem="{Binding SelectedLocationAndTopic}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             xmlns:cmd="clr-namespace:InitialProject.Application.Commands"
              mc:Ignorable="d" 
              d:DesignHeight="670" d:DesignWidth="1030">
 
@@ -46,7 +47,8 @@
         <Ellipse Width="10" Height="10"  Grid.Row="2" Margin="380,0,0,0"></Ellipse>
         <Button Grid.Row="2" Width="348" FontSize="32" Content="Profile" Command="{Binding ViewProfileCommand}" Margin="0,17,0,17" Foreground="White" FontFamily="Impact"></Button>
         <Button Grid.Row="3" Width="348" FontSize="32" Content="Forums" Margin="0,17,0,17" Foreground="White" FontFamily="Impact" Command="{Binding ViewForumsCommand}"></Button>
-        <Button Grid.Row="4" Width="348" FontSize="32" Content="Help" Margin="0,17,0,17" Foreground="White" FontFamily="Impact" Command="{Binding ViewHelpCommand}"></Button>
+        <Button Grid.Row="4" Width="348" FontSize="32" Content="Help" Margin="0,17,0,17" Foreground="White" FontFamily="Impact" Command="{Binding ViewHelpCommand}">
+        </Button>
         <Button Grid.Row="5" Width="348" FontSize="32" Content="Logout" Command="{Binding SignOutCommand}" Margin="0,87,0,87" Foreground="White" FontFamily="Impact"></Button>
     </Grid>
 </UserControl>

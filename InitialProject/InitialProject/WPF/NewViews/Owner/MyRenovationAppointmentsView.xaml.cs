@@ -31,5 +31,17 @@ namespace InitialProject.WPF.NewViews.Owner
         {
             Close();
         }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (DataContext is MyRenovationAppointmentsViewModel myRenovationAppointmentsVM)
+            {
+                HandleScheduleRenovationPanelKeydown(myRenovationAppointmentsVM);
+            }
+        }
+        private void HandleScheduleRenovationPanelKeydown(MyRenovationAppointmentsViewModel viewModel)
+        {
+            if (Keyboard.IsKeyDown(Key.C) && Keyboard.IsKeyDown(Key.LeftCtrl))
+                viewModel.CancelAppointmentCommand.Execute(null);
+        }
     }
 }
