@@ -339,10 +339,10 @@ namespace InitialProject.Repositories
         }
         public List<TourRequest> GetByUser(int userId)
         {
-            List<TourRequest> tourRequests = GetAll();
-            foreach (TourRequest t in tourRequests)
+            List<TourRequest> tourRequests = new List<TourRequest>();
+            foreach (TourRequest t in GetAll())
             {
-                if (t.UserId == userId)
+                if (t.UserId == userId && t.IsPartOfComplexTour == false)
                 {
                     tourRequests.Add(t);
                 }
@@ -361,6 +361,7 @@ namespace InitialProject.Repositories
                 if(timeDifference.TotalHours < 48)
                 {
                     t.Status = RequestStatus.Invalid;
+                    Update(t);
                 }
             }
             return tourRequests;

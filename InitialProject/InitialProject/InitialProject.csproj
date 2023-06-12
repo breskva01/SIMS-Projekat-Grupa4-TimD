@@ -35,12 +35,14 @@
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\exclamation_mark.png" />
     <None Remove="Resources\Images\forwardSquare.png" />
+    <None Remove="Resources\Images\gift.png" />
     <None Remove="Resources\Images\go-back.png" />
     <None Remove="Resources\Images\go_back.png" />
     <None Remove="Resources\Images\help.png" />
     <None Remove="Resources\Images\homeWhite.png" />
     <None Remove="Resources\Images\info-icon.png" />
     <None Remove="Resources\Images\kuca_jadran.jpg" />
+    <None Remove="Resources\Images\lightbulb.png" />
     <None Remove="Resources\Images\logoB.png" />
     <None Remove="Resources\Images\menuW.png" />
     <None Remove="Resources\Images\message.png" />
@@ -50,6 +52,7 @@
     <None Remove="Resources\Images\logo.png" />
     <None Remove="Resources\Images\menu.png" />
     <None Remove="Resources\Images\moscow.png" />
+    <None Remove="Resources\Images\newPoint.png" />
     <None Remove="Resources\Images\notification.png" />
     <None Remove="Resources\Images\notify.png" />
     <None Remove="Resources\Images\new-page.png" />
@@ -64,6 +67,7 @@
     <None Remove="Resources\Images\person.png" />
     <None Remove="Resources\Images\petrovaradin.png" />
     <None Remove="Resources\Images\plus.png" />
+    <None Remove="Resources\Images\profile.jpg" />
     <None Remove="Resources\Images\profileWhite.png" />
     <None Remove="Resources\Images\search.png" />
     <None Remove="Resources\Images\sort.png" />
@@ -82,6 +86,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="MaterialDesignThemes" Version="2.4.0.1044" />
     <PackageReference Include="Microsoft.Toolkit" Version="7.1.2" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
@@ -101,8 +106,10 @@
     <Resource Include="Resources\Images\exclamation_mark.png" />
     <Resource Include="Resources\Images\filter.png" />
     <Resource Include="Resources\Images\forwardSquare.png" />
+    <Resource Include="Resources\Images\gift.png" />
     <Resource Include="Resources\Images\homeWhite.png" />
     <Resource Include="Resources\Images\left_arrow.png" />
+    <Resource Include="Resources\Images\lightbulb.png" />
     <Resource Include="Resources\Images\logo.png" />
     <Resource Include="Resources\Images\logoB.png" />
     <Resource Include="Resources\Images\menu.png" />
@@ -119,6 +126,7 @@
     <Resource Include="Resources\Images\moon.png" />
     <Resource Include="Resources\Images\moscow.png" />
     <Resource Include="Resources\Images\new-page.png" />
+    <Resource Include="Resources\Images\newPoint.png" />
     <Resource Include="Resources\Images\next.png" />
     <Content Include="Resources\Images\notificationBell1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -136,6 +144,7 @@
     <Resource Include="Resources\Images\person.png" />
     <Resource Include="Resources\Images\petrovaradin.png" />
     <Content Include="Resources\Images\search.png" />
+    <Resource Include="Resources\Images\profile.jpg" />
     <Resource Include="Resources\Images\profileWhite.png" />
     <Resource Include="Resources\Images\sun.png" />
     <Resource Include="Resources\Images\urgent-message.png" />

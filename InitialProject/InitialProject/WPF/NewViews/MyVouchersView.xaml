@@ -5,41 +5,91 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ListBox Grid.Row="0" ItemsSource="{Binding Vouchers}" d:ItemsSource="{d:SampleData ItemCount=4}" VerticalAlignment="Top">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="TextDecorations" Value="None"/>
-                                    <Setter Property="Foreground" Value="#3283a8" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="TextDecorations" Value="Underline" />
-                                            <Setter Property="Foreground" Value="#deb93e" />
-                                            <Setter Property="Cursor" Value="Hand" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock Margin="400,0,0,0" >
-                                State:      
-                                <Run Text="{Binding State, Mode=OneWay}"/>
-                        </TextBlock>
-                        <TextBlock Margin="10,0,0,0" >
-                                Expiration date:      
-                                <Run Text="{Binding ExpirationDate, Mode=OneWay}"/>
-                        </TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+             d:DesignHeight="750" d:DesignWidth="430">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="#d7e5ec">
+        <Grid VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Dock on the top -->
+                <RowDefinition Height="Auto"/>
+                <!-- Separator -->
+                <RowDefinition Height="609"/>
+                <!-- Blank bottom part -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <Button Content="Menu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,420,0,0" Command="{Binding MenuCommand}" Width="100" />
-            
-    </Grid>
+            <!-- Docked content -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,0"  HorizontalAlignment="Center">
+                <Image Source="/Resources/Images/menu.png" Height="30" Width="30" Margin="0 10 0 10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding MenuCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <Image Source="/Resources/Images/notify.png" Height="30" Width="30" Margin="5 0 60 0" VerticalAlignment="Center">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NotificationCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="My Vouchers" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Foreground="#333333"/>
+                <Image Source="/Resources/Images/logo.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="70 0 0 0" VerticalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Separator -->
+            <Separator Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
+
+            <!-- Blank bottom part -->
+            <Grid Grid.Row="2" Background="White" Grid.ColumnSpan="2" Margin="0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="202*"/>
+                    <ColumnDefinition Width="11*"/>
+                </Grid.ColumnDefinitions>
+                <!-- Add your content here -->
+                <ListBox SelectedItem="{Binding SelectedVoucher}" Name="lbTours" Grid.Row ="0" Margin="10,10,10,3" ItemsSource="{Binding Vouchers, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}" Grid.ColumnSpan="2" Background="White" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0 10" BorderBrush="#FF6092CC" BorderThickness="1" CornerRadius="2" Width="390" Height="140" Background="#c3cde6" >
+                                <StackPanel Orientation="Vertical" Margin="15 0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold" FontSize="22" Margin="0,0,0,10" />
+
+                                    <StackPanel Orientation="Horizontal" Margin="0 50 0 0">
+                                        <TextBlock Text="Expiration date:" FontSize="18" FontWeight="Bold" Margin="0 0 10 0"/>
+                                        <TextBlock FontSize="18" Margin="100 0 0 0">
+                                             <Run Text="{Binding ExpirationDate, Mode=OneWay, StringFormat={}{0:dd/MM/yyyy}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <Separator Grid.Row="3" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
+            <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,5,0,5" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <Button Command="{Binding FreeVoucherProgressCommand}" Content="Free voucher" Background="#779ecb" Foreground="White" Padding="10" Margin="0,0,30,0" FontSize="24"  Height="50" Width="180" BorderBrush="Transparent" Cursor="Hand"  />
+                <Image Source="/Resources/Images/backSquare.png" Height="40" Width="40" Margin="20,10,5,10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="BACK" Foreground="#333333" HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" VerticalAlignment="Center">
+                    <TextBlock.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

@@ -38,6 +38,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetApproved(tourRequests);
         }
+        public List<TourRequest> CheckIfInvalid(List<TourRequest> tourRequests)
+        {
+            return _repository.CheckIfInvalid(tourRequests);
+        }
         public int GetMonthNumberOfRequests(int month, string country, string city,int year, List<TourRequest> requests)
         {
             return _repository.GetMonthNumberOfRequests(month, country, city,year, requests);
@@ -111,10 +115,11 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetForChosenLanguage(requests, langauge);
         }
-        public TourRequest CreateTourRequest(Location Location, string Description,RequestStatus Status, GuideLanguage Language,
+        public TourRequest CreateTourRequest(int userId, Location Location, string Description,RequestStatus Status, GuideLanguage Language,
             int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate, int TourId)
         {
             TourRequest TourRequest = new TourRequest();
+            TourRequest.UserId = userId;
             TourRequest.Location = Location;
             TourRequest.Description = Description;
             TourRequest.Status = Status;
@@ -123,6 +128,24 @@ namespace InitialProject.Application.Services
             TourRequest.EarliestDate = EarliestDate;
             TourRequest.LatestDate = LatestDate;
             TourRequest.TourId = TourId;
+            TourRequest.IsPartOfComplexTour = false;
+
+            return _repository.Save(TourRequest);
+        }
+        public TourRequest CreateComplexTourRequestPart(int userId, Location Location, string Description, RequestStatus Status, GuideLanguage Language,
+            int NumberOfGuests, DateTime EarliestDate, DateTime LatestDate, int TourId)
+        {
+            TourRequest TourRequest = new TourRequest();
+            TourRequest.UserId = userId;
+            TourRequest.Location = Location;
+            TourRequest.Description = Description;
+            TourRequest.Status = Status;
+            TourRequest.Language = Language;
+            TourRequest.NumberOfGuests = NumberOfGuests;
+            TourRequest.EarliestDate = EarliestDate;
+            TourRequest.LatestDate = LatestDate;
+            TourRequest.TourId = TourId;
+            TourRequest.IsPartOfComplexTour = true;
 
             return _repository.Save(TourRequest);
         }

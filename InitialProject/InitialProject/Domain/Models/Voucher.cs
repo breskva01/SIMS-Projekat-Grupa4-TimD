@@ -21,6 +21,7 @@ namespace InitialProject.Domain.Models
         public string Name { get; set; }
         public DateOnly ExpirationDate { get; set; }
         public VoucherState State { get; set; }
+        public int GuideId { get; set; }
 
         public Voucher() { 
             Name = string.Empty;
@@ -42,6 +43,7 @@ namespace InitialProject.Domain.Models
             Name = voucher.Name;
             ExpirationDate = voucher.ExpirationDate;
             State = voucher.State;
+            GuideId = voucher.GuideId;
         }
         public void FromCSV(string[] values)
         {
@@ -49,6 +51,7 @@ namespace InitialProject.Domain.Models
             Name = values[1];
             ExpirationDate = DateOnly.Parse(values[2]);
             State = (VoucherState)Enum.Parse(typeof(VoucherState),values[3]);
+            GuideId = Convert.ToInt32(values[4]);
         }
 
         public string[] ToCSV()
@@ -58,7 +61,8 @@ namespace InitialProject.Domain.Models
                 Id.ToString(),
                 Name,
                 ExpirationDate.ToString(),
-                State.ToString()
+                State.ToString(),
+                GuideId.ToString()
             };
             return csvValues;
         }

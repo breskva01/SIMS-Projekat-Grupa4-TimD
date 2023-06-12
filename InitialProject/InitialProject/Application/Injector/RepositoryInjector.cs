@@ -66,6 +66,7 @@ namespace InitialProject.Application.Injector
             Map<IAccommodationStatisticsRepository, AccommodationStatisticsRepository>();
             Map<IForumRepository, ForumRepository>();
             Map<ICommentRepository, CommentRepository>();
+            Map<IComplexTourRequestRepository, ComplexTourRequestRepository>();
         }
     }
 
