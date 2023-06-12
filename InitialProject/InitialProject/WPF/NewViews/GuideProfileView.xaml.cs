@@ -20,6 +20,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using System.ComponentModel;
 using InitialProject.WPF.ViewModels;
+using System.Windows.Media.Effects;
 
 namespace InitialProject.WPF.NewViews
 {
@@ -31,12 +32,10 @@ namespace InitialProject.WPF.NewViews
         private DispatcherTimer timer;
         private bool isColorChanged;
 
-        private System.Windows.Controls.Label labela;
 
         public GuideProfileView()
         {
             InitializeComponent();
-            labela = label;
             
         }
         private void StartColorAnimation()
@@ -93,6 +92,21 @@ namespace InitialProject.WPF.NewViews
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             StartColorAnimation();
+            ButtonGlow();
+        }
+        private void ButtonGlow()
+        {
+            DropShadowEffect glowEffect = new DropShadowEffect()
+            {
+                Color = Colors.Yellow,
+                ShadowDepth = 0,
+                BlurRadius = 40,
+                Opacity = 1
+            };
+
+            // Apply the glowEffect to the button
+            resignButton.Effect = glowEffect;
+            logOutButton.Effect = glowEffect;
         }
     }
 }

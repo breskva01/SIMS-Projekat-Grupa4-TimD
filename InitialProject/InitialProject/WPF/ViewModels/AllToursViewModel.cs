@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -143,112 +144,67 @@ namespace InitialProject.WPF.ViewModels
         }
         private void GeneratePDF()
         {
-            string filePath = OpenFilePicker();
-
-            // Create a new PDF document
-            iTextSharp.text.Document document = new iTextSharp.text.Document();
-
-            // Create a new PdfWriter to write the document to a file
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream("output.pdf", FileMode.Create));
-
-            writer.SetPdfVersion(PdfWriter.PDF_VERSION_1_7);
-            writer.SetFullCompression();
-
-            document.Open();
-
-            iTextSharp.text.Paragraph heading = new(
-                $"Lista gostiju za turu ({SelectedTour.Id}) {SelectedTour.Name}:",
-                    new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD))
+            if(SelectedTour != null)
             {
-                SpacingAfter = 15f
-            };
+                string filePath = OpenFilePicker();
 
-            List<User> guests = new List<User>();
-            User g1 = new User();
-            g1 = _userService.GetById(3);
-            User g2 = new User();
-            g2 = _userService.GetById(4);
+                iTextSharp.text.Document document = new();
 
-            guests.Add(g1);
-            guests.Add(g2);
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
 
-            PdfPTable table = new(6);
+                writer.SetPdfVersion(PdfWriter.PDF_VERSION_1_7);
+                writer.SetFullCompression();
+
+                document.Open();
+
+                iTextSharp.text.Paragraph heading = new(
+                    $"Lista gostiju za turu {SelectedTour.Name}:",
+                        new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD))
+                {
+                    SpacingAfter = 17f
+                };
+                document.Add(heading);
+                List<User> guests = new List<User>();
+                List<TourReservation> reservations = _tourReservationService.GetAll();
+
+                foreach (TourReservation reservation in reservations)
+                {
+                    if (reservation.TourId == SelectedTour.Id)
+                    {
+                        if (!guests.Contains(_userService.GetById(reservation.GuestId)))
+                            guests.Add(_userService.GetById(reservation.GuestId));
+                    }
+                }
+
+                PdfPTable table = new(5);
 
 
-            table.AddCell("Godina");
-            table.AddCell("Broj rezervacija");
-            table.AddCell("Otkazane rezervacije");
-            table.AddCell("Pomerene rezervacije");
-            table.AddCell("Preporuke za renoviranje");
-            table.AddCell("Najveća zauzetost");
+                table.AddCell("Ime");
+                table.AddCell("Prezime");
+                table.AddCell("UserName");
+                table.AddCell("Email");
+                table.AddCell("Telefon");
 
-            document.Add(heading);
-            document.Add(table);
-            document.Close();
+                foreach (var guest in guests)
+                {
+                    table.AddCell(guest.FirstName);
+                    table.AddCell(guest.LastName);
+                    table.AddCell(guest.Username);
+                    table.AddCell(guest.Email);
+                    table.AddCell(guest.PhoneNumber);
+                }
 
-            MessageBox.Show("PDF file generated successfully.");
-        
+                document.Add(table);
+                document.Close();
+
+                MessageBox.Show("PDF file generated successfully.");
+                Process.Start("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", filePath);
+
+                return;
+            }
+            return;
             
-    /*
-    PdfPTable table = statistics.First().Type == Domain.Models.AccommodationStatisticType.Monthly ? new(7) : new(6);
-    table.AddCell("Godina");
-    if (statistics.First().Type == Domain.Models.AccommodationStatisticType.Monthly) table.AddCell("Mesec");
-    table.AddCell("Broj rezervacija");
-    table.AddCell("Otkazane rezervacije");
-    table.AddCell("Pomerene rezervacije");
-    table.AddCell("Preporuke za renoviranje");
-    table.AddCell("Najveća zauzetost");
-    */
-    /*
-    try
-    {
-        string filePath = OpenFilePicker();
-
-        Document document = new();
-        PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
-        writer.SetPdfVersion(PdfWriter.PDF_VERSION_1_7);
-        writer.SetFullCompression();
-
-        document.Open();
-
-        Paragraph heading = new(
-        $"Statistika za smeštaj ({statistics.First().Accommodation.Id}) {statistics.First().Accommodation.Name}:",
-            new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD))
-        {
-            SpacingAfter = 15f
-        };
-        document.Add(heading);
-
-        PdfPTable table = statistics.First().Type == Domain.Models.AccommodationStatisticType.Monthly ? new(7) : new(6);
-        table.AddCell("Godina");
-        if (statistics.First().Type == Domain.Models.AccommodationStatisticType.Monthly) table.AddCell("Mesec");
-        table.AddCell("Broj rezervacija");
-        table.AddCell("Otkazane rezervacije");
-        table.AddCell("Pomerene rezervacije");
-        table.AddCell("Preporuke za renoviranje");
-        table.AddCell("Najveća zauzetost");
-
-        foreach (var statistic in statistics)
-        {
-            table.AddCell(statistic.Year.ToString());
-            if (statistics.First().Type == Domain.Models.AccommodationStatisticType.Monthly) table.AddCell(statistic.ShortMonth);
-            table.AddCell(statistic.TotalReservations.ToString());
-            table.AddCell(statistic.CancelledReservations.ToString());
-            table.AddCell(statistic.RescheduledReservations.ToString());
-            table.AddCell(statistic.RenovationRecommendations.ToString());
-            table.AddCell(statistic.Best ? "DA." : string.Empty);
         }
-
-        document.Add(table);
-        document.Close();
-
-        MessageBox.Show("PDF file generated successfully.");
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show("Error generating PDF file: " + ex.Message);
-    }*/
-}
         
         private void CancelTour()
         {

@@ -104,11 +104,16 @@
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
-                <Image Height="40" Width="35" Source="\Resources\Images\profileWhite.png"></Image>
+                <Image  Height="40" Width="35" Source="\Resources\Images\profileWhite.png"></Image>
             </Button>
             <Image Source="\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
-            <Label Foreground="Black"  FontFamily="Tw Cen Mt" Content="WELCOME TO TRAVELBUDDY" HorizontalAlignment="Center" Margin="0,210,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
-
+            <Label x:Name="myLabel" Foreground="Black"  FontFamily="Tw Cen Mt" Content="WELCOME TO TRAVELBUDDY" HorizontalAlignment="Center" Margin="0,210,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                        <TranslateTransform X="0" Y="0" />
+                    </TransformGroup>
+                </Label.RenderTransform>
             </Label>
             <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Founded in 1996 in Novi Sad, TravelBuddy has grown from a small Serbian startup to one of the world's leading digital travel companies. TravelBuddy's mission is to make it easier for everyone to experience the world. TravelBuddy is available in 43 languages and offers more than 28 million total reported accommodation listings, including over 6.6 million listings alone of homes, apartments, and other unique places to stay." VerticalAlignment="Top" Height="270" Width="656" FontSize="23"/>
 

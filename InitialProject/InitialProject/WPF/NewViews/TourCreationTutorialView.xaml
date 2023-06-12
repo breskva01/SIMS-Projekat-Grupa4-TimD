@@ -8,6 +8,26 @@
              d:DesignHeight="768" d:DesignWidth="1024">
 
     <UserControl.Resources>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="250" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"  Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
         <Style TargetType="Button" x:Key="RoundButtonStyle">
             <Setter Property="Template">
                 <Setter.Value>
@@ -20,7 +40,7 @@
             </Setter>
         </Style>
         <Style x:Key="CustomProgressBarStyle" TargetType="ProgressBar">
-            <Setter Property="Foreground" Value="#270138" />
+            <Setter Property="Foreground" Value="#0A0E30" />
             <!-- Set the desired color here -->
             <Setter Property="Template">
                 <Setter.Value>
@@ -35,22 +55,29 @@
             </Setter>
         </Style>
     </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryBoard" Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonMenu" >
+            <BeginStoryboard  Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
-        <Grid x:Name="InterfaceGrid" >
+        <Grid x:Name="GridBackground">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="#270138"/>
+            <Border Grid.Row="0" Background="#0A0E30"/>
 
-            <Label FontFamily="Tw Cen Mt" Content="ALL TOURS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
-            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+            <Label FontFamily="Tw Cen Mt" Content="TUTORIAL" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+            <Button  BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#0A0E30" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="\Resources\Images\menuW.png"></Image>
             </Button>
-            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#0A0E30" VerticalAlignment="Center" Margin="0,5,10,5">
                 <Image Source="\Resources\Images\homeW.jpg.png"></Image>
             </Button>
-            <Image Grid.Row="1" Source="/Resources/Images/backgroundLP.jpg" Stretch="UniformToFill"/>
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -58,13 +85,13 @@
                     <RowDefinition Height="10"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border BorderBrush="Black" BorderThickness="5" Grid.Row="0" Margin="40,10,40,15" Background=" #C7B2D1">
+                <Border BorderBrush="Black" BorderThickness="5" Grid.Row="0" Margin="40,10,40,15" Background="#C6CBFC">
                     <StackPanel>
-                        <MediaElement  x:Name="tutorialPlayer" LoadedBehavior="Manual" />
+                        <MediaElement  LoadedBehavior="Manual" />
                     </StackPanel>
                 </Border>
                 <Border BorderBrush="Black" BorderThickness="1"  Grid.Row="1" Margin="100,0,100,0">
-                    <ProgressBar Height="5" Style="{StaticResource CustomProgressBarStyle}" x:Name="progressBar"/>
+                    <ProgressBar Height="5" Style="{StaticResource CustomProgressBarStyle}" />
                 </Border>
                 <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
@@ -75,12 +102,101 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button FontSize="22" FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#270138" Grid.Column="0" Click="RewindButton_Click" Content="Back" Height="50" Width="180" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button FontSize="22" FontFamily="Tw Cen Mt" x:Name="playButton" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#270138" Grid.Column="1" Click="ResumeClick"  Content="Play" Visibility="Visible" Height="50" Width="180" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button FontSize="22" FontFamily="Tw Cen Mt" x:Name="pauseButton" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#270138" Grid.Column="1" Click="PauseClick" Content="Pause" Visibility="Hidden" Height="50" Width="180" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button FontSize="22" FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#270138" Grid.Column="2" Click="ForwardButton_Click" Content="Forward" Height="50" Width="180" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button FontSize="22" FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Grid.Column="1" Click="RewindButton_Click" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,10,0,0">
+                        <Image Margin="15" Source="/Resources/Images/rewind-16.png"/>
+                    </Button>
+                    <Button FontSize="22" FontFamily="Tw Cen Mt"  BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Grid.Column="1" Click="ResumeClick" Visibility="Visible" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                        <Image Margin="15" Source="/Resources/Images/play-16.png"/>
+                    </Button>
+                    <Button FontSize="22" FontFamily="Tw Cen Mt"  BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Grid.Column="1" Click="PauseClick" Visibility="Hidden" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                        <Image Margin="15" Source="/Resources/Images/pause-16.png"/>
+                    </Button>
+                    <Button FontSize="22" FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Grid.Column="1" Click="ForwardButton_Click" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="269,10,0,0">
+                        <Image Margin="15" Source="/Resources/Images/fast-forward-16.png"/>
+                    </Button>
                 </Grid>
             </Grid>
+        </Grid>
+        <Grid x:Name="InterfaceGrid" Background="#EDEFFF " >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="#0A0E30"/>
+
+            <Label FontFamily="Tw Cen Mt" Content="TUTORIAL" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#0A0E30" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#0A0E30" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
+            </Button>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="550"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border BorderBrush="Black" BorderThickness="5" Grid.Row="0" Margin="40,10,40,15" Background="#C6CBFC">
+                    <StackPanel>
+                        <MediaElement MediaEnded="VideoPlayer_MediaEnded" x:Name="tutorialPlayer" LoadedBehavior="Manual" />
+                    </StackPanel>
+                </Border>
+                <Border BorderBrush="Black" BorderThickness="1"  Grid.Row="1" Margin="100,0,100,0">
+                    <ProgressBar x:Name="progressBar" Height="5" Style="{StaticResource CustomProgressBarStyle}" />
+                </Border>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button FontSize="22" FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Grid.Column="1" Click="RewindButton_Click" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,10,0,0">
+                        <Image Margin="15" Source="/Resources/Images/rewind-16.png"/>
+                    </Button>
+                    <Button FontSize="22" FontFamily="Tw Cen Mt" x:Name="playButton" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Grid.Column="1" Click="ResumeClick" Visibility="Visible" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                        <Image Margin="15" Source="/Resources/Images/play-16.png"/>
+                    </Button>
+                    <Button FontSize="22" FontFamily="Tw Cen Mt" x:Name="pauseButton" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Grid.Column="1" Click="PauseClick" Visibility="Hidden" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                        <Image Margin="15" Source="/Resources/Images/pause-16.png"/>
+                    </Button>
+                    <Button FontSize="22" FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Grid.Column="1" Click="ForwardButton_Click" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="269,10,0,0">
+                        <Image Margin="15" Source="/Resources/Images/fast-forward-16.png"/>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <StackPanel>
+                <Border Height="80" Width="80" Margin="10">
+                    <Image Source="\Resources\Images\logoB.png"/>
+                </Border>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Command="{Binding GuideProfileCommand}" Content="PROFILE" Width="221" Background="#C6CBFC" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="CREATE TOUR" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="LIVE TRACKING" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="CANCEL TOUR"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR STATS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC" FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR REQUESTS" Width="221" Command="{Binding TourRequestsCommand}" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR REQUESTS STATS" Command="{Binding TourRequestsStatsCommand}" Width="221" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="REVIEWS" Command="{Binding RatingsViewCommand}" Width="221" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="COMPLEX REQUESTS" Width="221" Command="{Binding ComplexTourCommand}" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GENERATE TOUR" Width="221" Background="#C6CBFC " FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+            </StackPanel>
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#0A0E30 " >
+                <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

@@ -32,6 +32,8 @@ namespace InitialProject.WPF.NewViews
             tutorialPlayer.Source = new Uri("C:/Users/lukaz/OneDrive/Desktop/Videos/tutorial.mp4");
 
             tutorialPlayer.MediaOpened += VideoPlayer_MediaOpened;
+            tutorialPlayer.MediaEnded += VideoPlayer_MediaEnded;
+
 
             // Set up timer for updating progress bar
             progressTimer = new DispatcherTimer();
@@ -44,21 +46,34 @@ namespace InitialProject.WPF.NewViews
         {
             double videoDuration = tutorialPlayer.NaturalDuration.TimeSpan.TotalSeconds;
             double currentPosition = tutorialPlayer.Position.TotalSeconds;
-            double progressPercentage = (currentPosition / videoDuration) * 100;
 
-            progressBar.Value = progressPercentage;
+            if (videoDuration > 0)
+            {
+                double progressPercentage = (currentPosition / videoDuration) * 100;
+                progressBar.Value = progressPercentage;
+            }
+            else
+            {
+                progressBar.Value = 0;
+            }
         }
         
         private void VideoPlayer_MediaOpened(object sender, RoutedEventArgs e)
         {
-            // Pause the video when it's opened
-            //tutorialPlayer.Pause(); // Pause the video initially
-            progressTimer.Start(); // Start the progress timer
+
+            if (tutorialPlayer.NaturalDuration.HasTimeSpan)
+            {
+                double videoDuration = tutorialPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                if (videoDuration > 0)
+                {
+                    progressTimer.Tick += ProgressTimer_Tick; // Subscribe to the event handler
+                    progressTimer.Start();
+                }
+            }
         }
         
         private void Timer_Tick(object sender, EventArgs e)
         {
-            // Update the progress bar's value to reflect the current position of the video
             progressBar.Value = tutorialPlayer.Position.TotalSeconds;
         }
 
@@ -96,6 +111,18 @@ namespace InitialProject.WPF.NewViews
         {
             TimeSpan newPosition = tutorialPlayer.Position.Subtract(TimeSpan.FromSeconds(15));
             tutorialPlayer.Position = newPosition;
+        }
+        private void VideoPlayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            tutorialPlayer.Stop();
+            tutorialPlayer.Position = TimeSpan.Zero;
+            progressTimer.Stop();
+            progressTimer = new DispatcherTimer();
+            progressTimer.Interval = TimeSpan.FromSeconds(1); // Unsubscribe from the event handler
+            progressBar.Value = 0;
+            progressTimer.Tick += ProgressTimer_Tick;
+            playButton.Visibility = Visibility.Visible;
+            pauseButton.Visibility = Visibility.Hidden;
         }
     }
 }

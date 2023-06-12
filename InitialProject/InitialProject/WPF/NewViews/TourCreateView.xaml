@@ -286,7 +286,7 @@
                 <Button x:Name="createButton" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#0A0E30" Content="CREATE" FontFamily="Tw Cen Mt" HorizontalAlignment="Left" Margin="133,10,0,0" Grid.Row="10" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25" Command="{Binding ConfirmCommand}" >
                     
                 </Button>
-                <Button  Effect="{Binding ButtonEffect}" Command="{Binding TutorialCommand}" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#0A0E30" Content="TUTORIAL" FontFamily="Tw Cen Mt" HorizontalAlignment="Left" Margin="133,30,0,0" Grid.Row="8" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25"/>
+                <Button x:Name="tutorialButton" Effect="{Binding ButtonEffect}" Command="{Binding TutorialCommand}" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Grid.Column="2" FontWeight="Bold" Foreground="White" Background="#0A0E30" Content="TUTORIAL" FontFamily="Tw Cen Mt" HorizontalAlignment="Left" Margin="133,30,0,0" Grid.Row="8" VerticalAlignment="Top" Height="74" Grid.RowSpan="2" Width="142" FontSize="25"/>
             </Grid>
         </Grid>
         <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Margin="-255,0,0,0" Background="White">

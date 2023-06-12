@@ -83,6 +83,31 @@ namespace InitialProject.WPF.NewViews
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             StartColorAnimation();
+            ChangeFontInLoop();
+        }
+        private void ChangeFontInLoop()
+        {
+            double originalFontSize = cancelButton.FontSize; // Store the original font size
+            FontWeight originalFontWeight = cancelButton.FontWeight; // Store the original font weight
+
+            // Start a DispatcherTimer to periodically change the font properties
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(0.5); // Set the interval for the font change
+            timer.Tick += (sender, e) =>
+            {
+                // Toggle between the original and modified font properties
+                if (cancelButton.FontSize == originalFontSize && cancelButton.FontWeight == originalFontWeight)
+                {
+                    cancelButton.FontSize = originalFontSize + 2; // Increase the font size
+                    cancelButton.FontWeight = FontWeights.Bold; // Change the font weight
+                }
+                else
+                {
+                    cancelButton.FontSize = originalFontSize; // Revert back to the original font size
+                    cancelButton.FontWeight = originalFontWeight; // Revert back to the original font weight
+                }
+            };
+            timer.Start();
         }
     }
 }

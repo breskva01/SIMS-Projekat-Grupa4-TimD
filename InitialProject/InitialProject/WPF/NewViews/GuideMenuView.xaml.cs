@@ -58,6 +58,21 @@ namespace InitialProject.WPF.NewViews
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             StartTextAnimation();
+            StartAnimation();
+        }
+        private void StartAnimation()
+        {
+            // Create a DoubleAnimation to change the FontSize property of the label
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                From = 80, // Starting FontSize value (make it really big)
+                To = 60,   // Ending FontSize value (normal size)
+                Duration = TimeSpan.FromSeconds(2) // Duration of the animation
+            };
+
+            // Apply the animation to the FontSize property of the label
+            myLabel.BeginAnimation(System.Windows.Controls.Label.FontSizeProperty, animation);
         }
     }
 }
+

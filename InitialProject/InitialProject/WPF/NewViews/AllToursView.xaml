@@ -173,7 +173,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button FontFamily="Tw Cen Mt" Grid.Row="1" Margin="5,1,30,50" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Command="{Binding CancelCommand}" Content="CANCEL TOUR" HorizontalAlignment="Right" Height="50" Width="180" FontSize="25"/>
+                <Button x:Name="cancelButton" FontFamily="Tw Cen Mt" Grid.Row="1" Margin="5,1,30,50" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Command="{Binding CancelCommand}" Content="CANCEL TOUR" HorizontalAlignment="Right" Height="50" Width="180" FontSize="25"/>
                 <Button FontFamily="Tw Cen Mt" Grid.Row="1" Margin="30,1,30,50" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Command="{Binding GeneratePDFCommand}" Content="GENERATE PDF" HorizontalAlignment="Left" Height="50" Width="180" FontSize="25"/>
 
             </Grid>

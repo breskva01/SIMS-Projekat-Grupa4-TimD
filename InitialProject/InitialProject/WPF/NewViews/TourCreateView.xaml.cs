@@ -14,6 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -89,6 +90,45 @@ namespace InitialProject.WPF.NewViews
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             StartColorAnimation();
+            ButtonGlow();
+            ChangeFontInLoop();
+        }
+        private void ButtonGlow()
+        {
+            DropShadowEffect glowEffect = new DropShadowEffect()
+            {
+                Color = Colors.Yellow,
+                ShadowDepth = 0,
+                BlurRadius = 40,
+                Opacity = 1
+            };
+
+            // Apply the glowEffect to the button
+            tutorialButton.Effect = glowEffect;
+        }
+        private void ChangeFontInLoop()
+        {
+            double originalFontSize = createButton.FontSize; // Store the original font size
+            FontWeight originalFontWeight = createButton.FontWeight; // Store the original font weight
+
+            // Start a DispatcherTimer to periodically change the font properties
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(0.5); // Set the interval for the font change
+            timer.Tick += (sender, e) =>
+            {
+                // Toggle between the original and modified font properties
+                if (createButton.FontSize == originalFontSize && createButton.FontWeight == originalFontWeight)
+                {
+                    createButton.FontSize = originalFontSize + 4; // Increase the font size
+                    createButton.FontWeight = FontWeights.Bold; // Change the font weight
+                }
+                else
+                {
+                    createButton.FontSize = originalFontSize; // Revert back to the original font size
+                    createButton.FontWeight = originalFontWeight; // Revert back to the original font weight
+                }
+            };
+            timer.Start();
         }
 
     }

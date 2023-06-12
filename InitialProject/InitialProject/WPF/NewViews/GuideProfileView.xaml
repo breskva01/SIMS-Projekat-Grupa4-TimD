@@ -137,8 +137,8 @@
                         </Ellipse>
                         <Label FontFamily="Tw Cen Mt" HorizontalContentAlignment="Center" Content="{Binding GuideUserName}" FontSize="33" Height="50"/>
 
-                        <Button FontFamily="Tw Cen Mt"  Style="{StaticResource RoundButtonStyle}" BorderBrush="Transparent" Cursor="Hand" Content="Resign" Command="{Binding ResignCommand}" Width="150" Background="#0A0E30" Foreground="White" FontWeight="Bold"  FontSize="25" Height="44" Margin="0,30,0,30"/>
-                        <Button FontFamily="Tw Cen Mt"  Style="{StaticResource RoundButtonStyle}" BorderBrush="Transparent" Cursor="Hand" Content="Log out" Command="{Binding SignOutCommand}"  Width="150" Background="#0A0E30" Foreground="White" FontWeight="Bold"  FontSize="25" Height="44" Margin="0,30,0,30"/>
+                        <Button x:Name="resignButton" FontFamily="Tw Cen Mt"  Style="{StaticResource RoundButtonStyle}" BorderBrush="Transparent" Cursor="Hand" Content="Resign" Command="{Binding ResignCommand}" Width="150" Background="#0A0E30" Foreground="White" FontWeight="Bold"  FontSize="25" Height="44" Margin="0,30,0,30"/>
+                        <Button x:Name="logOutButton" FontFamily="Tw Cen Mt"  Style="{StaticResource RoundButtonStyle}" BorderBrush="Transparent" Cursor="Hand" Content="Log out" Command="{Binding SignOutCommand}"  Width="150" Background="#0A0E30" Foreground="White" FontWeight="Bold"  FontSize="25" Height="44" Margin="0,30,0,30"/>
                     </StackPanel>
                 </Border>
                 <Grid Grid.Column="1">
