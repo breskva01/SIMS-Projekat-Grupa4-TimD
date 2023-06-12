@@ -11,6 +11,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels.GuestTwo
@@ -24,6 +26,9 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         private readonly ComplexTourRequestService _complexTourRequestService;
         public ComplexTourRequest NewRequest { get; set; }
         private User _user;
+
+        public bool isEarliestDateSelected { get; set; }
+        public bool isLatestDateSelected { get; set; }
 
         private List<string> _countries;
         public List<string> Countries
@@ -54,6 +59,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             set
             {
                 _selectedCountry = value;
+                CheckIsEverythingComplete();
                 OnPropertyChanged(nameof(SelectedCountry));
                 PopulateCitiesComboBox();
             }
@@ -66,6 +72,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             set
             {
                 _selectedCity = value;
+                CheckIsEverythingComplete();
                 OnPropertyChanged(nameof(SelectedCity));
 
             }
@@ -79,6 +86,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
                 return;
             }
             Cities = Locations.Where(l => l.Country == SelectedCountry).Select(l => l.City).ToList();
+            Cities.Sort();
         }
 
         private int _selectedLanguageIndex;
@@ -98,7 +106,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             get { return _selectedNumberOfGuests; }
             set
             {
-                if (value >= 0)
+                if (value > 0)
                 {
                     _selectedNumberOfGuests = value;
                     OnPropertyChanged(nameof(SelectedNumberOfGuests));
@@ -115,8 +123,18 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             {
                 if (value != _selectedEarliestDate)
                 {
+                    isEarliestDateSelected = true;
                     _selectedEarliestDate = value;
+                    CheckIsEverythingComplete();
+                    IsEnabledLatestDate = true;
+                    OnPropertyChanged(nameof(IsEnabledLatestDate));
+
                     OnPropertyChanged();
+                    if(SelectedLatestDate < SelectedEarliestDate)
+                    {
+                        SelectedLatestDate = SelectedEarliestDate;
+                        OnPropertyChanged(nameof(SelectedLatestDate));
+                    }
                 }
             }
         }
@@ -129,9 +147,33 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             {
                 if (value != _selectedLatestDate)
                 {
+                    isLatestDateSelected = true;
+                    CheckIsEverythingComplete();
                     _selectedLatestDate = value;
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        private bool _isEnabledLatestDate;
+        public bool IsEnabledLatestDate
+        {
+            get { return _isEnabledLatestDate; }
+            set
+            {
+                _isEnabledLatestDate = value;
+                OnPropertyChanged(nameof(IsEnabledLatestDate));
+            }
+        }
+
+        private bool _isEverythingComplete;
+        public bool IsEverythingComplete
+        {
+            get { return _isEverythingComplete; }
+            set
+            {
+                _isEverythingComplete = value;
+                OnPropertyChanged(nameof(IsEverythingComplete));
             }
         }
 
@@ -172,19 +214,29 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             NewRequest = new ComplexTourRequest();
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
+            Countries.Sort();
 
             SelectedCountry = string.Empty;
             SelectedCity = string.Empty;
             SelectedLanguageIndex = 0;
-            SelectedNumberOfGuests = 0;
+            SelectedNumberOfGuests = 1;
             SelectedEarliestDate = DateTime.Now;
             SelectedLatestDate = DateTime.Now;
             Description = string.Empty;
+            IsEnabledLatestDate = false;
+            IsEverythingComplete = false;
+            isEarliestDateSelected = false;
+            isLatestDateSelected = false;
 
             NextPartCommand = new ExecuteMethodCommand(AddRequest);
             BackCommand = new ExecuteMethodCommand(ShowGuest2RequestMenuView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
             NotificationCommand = new ExecuteMethodCommand(ShowNotificationsView);
+        }
+
+        public void CheckIsEverythingComplete()
+        {
+            IsEverythingComplete = (SelectedCountry != string.Empty && SelectedCity != string.Empty) && (isEarliestDateSelected && isLatestDateSelected);
         }
 
         private void ShowGuest2MenuView()
@@ -241,5 +293,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
                     return GuideLanguage.English;
             }
         }
+
+        
     }
 }

@@ -33,7 +33,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
 
             TourBrowserCommand = new ExecuteMethodCommand(ShowTourBrowserView);
             TrackingCommand = new TourTrackingCommand(ShowTourTrackingView, user);
-            //MyReservationsCommand = new ExecuteMethodCommand(ShowMyReservationsView, user);
+            MyReservationsCommand = new ExecuteMethodCommand(ShowMyReservationsView);
             RequestMenuCommand = new ExecuteMethodCommand(ShowRequestMenuView);
             MyInfoCommand = new ExecuteMethodCommand(ShowInfoMenuView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
@@ -60,6 +60,14 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         {
             MyVouchersViewModel myVouchersViewModel = new MyVouchersViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, myVouchersViewModel));
+
+            navigate.Execute(null);
+        }
+
+        private void ShowMyReservationsView()
+        {
+            MyReservationsViewModel myReservationsViewModel = new MyReservationsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, myReservationsViewModel));
 
             navigate.Execute(null);
         }

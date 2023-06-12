@@ -5,33 +5,42 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" BorderThickness="2" BorderBrush="Black" CornerRadius="10" Padding="10" Margin="150,0,150,0">
-            <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Hey there," HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,30,0,0" FontSize="20"/>
-                <TextBlock Grid.Row="1" Text="Looks like the tour that you signed for has started:" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,30,0,0" FontSize="20" />
-                <TextBlock Grid.Row="3" Text="Are you present?" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="20" Margin="0,0,0,15"/>
-                <TextBlock Grid.Row="2" FontWeight="Bold" FontSize="40" Text="{Binding TourName}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,40,0,40"/>
-            </Grid>
-        </Border>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
-            <Button Command="{Binding YesCommand}" Content="Yes" Margin="10" Width="100" FontSize="20"/>
-            <Button Command="{Binding NoCommand}" Content="No" Margin="10" Width="100" FontSize="20"/>
-        </StackPanel>
+             d:DesignHeight="750" d:DesignWidth="430">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="0 80 0 40">
+                <Image Source="/Resources/Images/logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="170" Height="170"/>
+                <TextBlock Text="TravelBuddy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="37" Foreground="#779ecb" FontFamily="Segoe UI"/>
+            </StackPanel>
+            <Border Grid.Row="1" BorderThickness="2" BorderBrush="Black" CornerRadius="10" Padding="10" Margin="30,0,30,30" Height="270" Background="#d7e5ec">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Hey there," HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,10,0,0" FontSize="25"/>
+                    <TextBlock Grid.Row="1" Text="Looks like the tour that you " HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,30,0,0" FontSize="25" />
+                    <TextBlock Grid.Row="2" Text="signed for has started:" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,0,0,0" FontSize="25" />
+                    <TextBlock Grid.Row="4" Text="Are you present?" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="25" Margin="0,5,0,5"/>
+                    <TextBlock Grid.Row="3" FontWeight="Bold" FontSize="25" Text="{Binding TourName}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="0,40,0,40"/>
+                </Grid>
+            </Border>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                <Button Command="{Binding YesCommand}" Content="Yes" Margin="10" FontSize="20" Background="#779ecb" Foreground="White" Padding="10" FontWeight="Bold" Height="55" Width="160" BorderBrush="Transparent" Cursor="Hand"/>
+                <Button Command="{Binding NoCommand}" Content="No" Margin="10" FontSize="20" Background="#779ecb" Foreground="White" Padding="10" FontWeight="Bold" Height="55" Width="160" BorderBrush="Transparent" Cursor="Hand"/>
+            </StackPanel>
 
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

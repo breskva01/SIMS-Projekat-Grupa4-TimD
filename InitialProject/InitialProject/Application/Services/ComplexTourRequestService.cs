@@ -41,6 +41,7 @@ namespace InitialProject.Application.Services
             {
                 complexTourRequest.TourRequests.Add(_tourRequestService.GetById(id));
             }
+            complexTourRequest.TourRequests = _tourRequestService.CheckIfInvalid(complexTourRequest.TourRequests);
         }
 
         public ComplexTourRequest GetById(int complexTourRequestId)

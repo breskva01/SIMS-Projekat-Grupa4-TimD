@@ -38,6 +38,10 @@ namespace InitialProject.Application.Services
         {
             return _repository.GetApproved(tourRequests);
         }
+        public List<TourRequest> CheckIfInvalid(List<TourRequest> tourRequests)
+        {
+            return _repository.CheckIfInvalid(tourRequests);
+        }
         public int GetMonthNumberOfRequests(int month, string country, string city,int year, List<TourRequest> requests)
         {
             return _repository.GetMonthNumberOfRequests(month, country, city,year, requests);

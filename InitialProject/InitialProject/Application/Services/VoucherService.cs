@@ -50,6 +50,12 @@ namespace InitialProject.Application.Services
             return _repository.Save(voucher);
 
         }
+
+        public List<Voucher> FilterGuideVouchers(List<Voucher> vouchers, int guideId)
+        {
+            return _repository.FilterGuideVouchers(vouchers, guideId);
+        }
+
         public Voucher Update(Voucher voucher)
         {
             return _repository.Update(voucher);

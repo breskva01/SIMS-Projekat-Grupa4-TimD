@@ -73,6 +73,25 @@ namespace InitialProject.Repositories
             }
             return _vouchers.Max(t => t.Id) + 1;
         }
+
+        public List<Voucher> FilterGuideVouchers(List<Voucher> vouchers, int guideId)
+        {
+            List<Voucher> filteredVouchers = new List<Voucher>();
+            foreach (Voucher v in vouchers)
+            {
+                if (MatchesGuideId(v, guideId))
+                {
+                    filteredVouchers.Add(v);
+                }
+            }
+            return filteredVouchers;
+        }
+
+        public bool MatchesGuideId(Voucher voucher, int guideId)
+        {
+            return voucher.GuideId == guideId || voucher.GuideId == -1;
+        }
+
         public List<Voucher> FilterUnexpired(List<Voucher> vouchers)
         {
             List<Voucher> filteredVouchers = new List<Voucher>();

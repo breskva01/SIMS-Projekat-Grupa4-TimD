@@ -27,6 +27,9 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         private readonly TourRequestService _tourRequestService;
         private User _user;
 
+        public bool isEarliestDateSelected { get; set; }
+        public bool isLatestDateSelected { get; set; }
+
         private List<string> _countries;
         public List<string> Countries
         {
@@ -56,6 +59,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             set
             {
                 _selectedCountry = value;
+                CheckIsEverythingComplete();
                 OnPropertyChanged(nameof(SelectedCountry));
                 PopulateCitiesComboBox();
             }
@@ -68,6 +72,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             set
             {
                 _selectedCity = value;
+                CheckIsEverythingComplete();
                 OnPropertyChanged(nameof(SelectedCity));
 
             }
@@ -81,6 +86,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
                 return;
             }
             Cities = Locations.Where(l => l.Country == SelectedCountry).Select(l => l.City).ToList();
+            Cities.Sort();
         }
 
         private int _selectedLanguageIndex;
@@ -117,8 +123,17 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             {
                 if (value != _selectedEarliestDate)
                 {
+                    isEarliestDateSelected = true;
                     _selectedEarliestDate = value;
+                    CheckIsEverythingComplete();
+                    IsEnabledLatestDate = true;
+                    OnPropertyChanged(nameof(IsEnabledLatestDate));
                     OnPropertyChanged();
+                    if (SelectedLatestDate < SelectedEarliestDate)
+                    {
+                        SelectedLatestDate = SelectedEarliestDate;
+                        OnPropertyChanged(nameof(SelectedLatestDate));
+                    }
                 }
             }
         }
@@ -131,9 +146,33 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             {
                 if (value != _selectedLatestDate)
                 {
+                    isLatestDateSelected = true;
+                    CheckIsEverythingComplete();
                     _selectedLatestDate = value;
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        private bool _isEnabledLatestDate;
+        public bool IsEnabledLatestDate
+        {
+            get { return _isEnabledLatestDate; }
+            set
+            {
+                _isEnabledLatestDate = value;
+                OnPropertyChanged(nameof(IsEnabledLatestDate));
+            }
+        }
+
+        private bool _isEverythingComplete;
+        public bool IsEverythingComplete
+        {
+            get { return _isEverythingComplete; }
+            set
+            {
+                _isEverythingComplete = value;
+                OnPropertyChanged(nameof(IsEverythingComplete));
             }
         }
 
@@ -172,6 +211,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             _tourRequestService = new TourRequestService();
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
+            Countries.Sort();
 
             SelectedCountry = string.Empty;
             SelectedCity = string.Empty;
@@ -180,11 +220,20 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             SelectedEarliestDate = DateTime.Now;
             SelectedLatestDate = DateTime.Now;
             Description = string.Empty;
+            IsEnabledLatestDate = false;
+            IsEverythingComplete = false;
+            isEarliestDateSelected = false;
+            isLatestDateSelected = false;
 
             RequestCommand = new ExecuteMethodCommand(CreateTourRequest);
             BackCommand = new ExecuteMethodCommand(ShowGuest2RequestMenuView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
             NotificationCommand = new ExecuteMethodCommand(ShowNotificationsView);
+        }
+
+        public void CheckIsEverythingComplete()
+        {
+            IsEverythingComplete = (SelectedCountry != string.Empty && SelectedCity != string.Empty) && (isEarliestDateSelected && isLatestDateSelected);
         }
 
         private void ShowGuest2MenuView()

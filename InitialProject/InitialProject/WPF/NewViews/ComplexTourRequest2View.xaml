@@ -89,11 +89,11 @@
                             Margin="5" 
                             DisplayDateStart="{Binding SelectedLatestDate}"
                             SelectedDate="{Binding SelectedLatestDate, UpdateSourceTrigger=PropertyChanged,
-                                Mode=OneWayToSource}"/>
+                                Mode=OneWayToSource}" IsEnabled="{Binding IsEnabledLatestDate}" />
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Description:" Margin="40,10,50,15" FontSize="24" Foreground="#FF6092CC" />
-                        <TextBox Height="140" Width="350" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Height="140" Width="350" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" FontSize="20"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -101,8 +101,8 @@
             <Separator Grid.Row="3" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
             <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,0,0,0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
 
-                <Button Content="Next part" Command="{Binding NextPartCommand}" Background="#779ecb" Foreground="White" Padding="10" Margin="0,0,15,0" FontSize="24"  Height="50" Width="120" BorderBrush="Transparent" Cursor="Hand"  />
-                <Button Content="Request" Command="{Binding RequestCommand}" Background="#779ecb" Foreground="White" Padding="10" Margin="0,0,5,0" FontSize="24"  Height="50" Width="120" BorderBrush="Transparent" Cursor="Hand"  />
+                <Button Content="Next part" Command="{Binding NextPartCommand}" IsEnabled="{Binding IsEverythingComplete}" Background="#779ecb" Foreground="White" Padding="10" Margin="0,0,15,0" FontSize="24"  Height="50" Width="120" BorderBrush="Transparent" Cursor="Hand"  />
+                <Button Content="Request" Command="{Binding RequestCommand}" IsEnabled="{Binding IsEverythingComplete}" Background="#779ecb" Foreground="White" Padding="10" Margin="0,0,5,0" FontSize="24"  Height="50" Width="120" BorderBrush="Transparent" Cursor="Hand"  />
                 <Image Source="/Resources/Images/backSquare.png" Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" >
                     <Image.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />

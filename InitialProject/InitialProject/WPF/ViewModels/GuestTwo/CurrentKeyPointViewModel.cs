@@ -20,8 +20,11 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         private readonly KeyPointService _keyPointService;
         public string KeyPointPlace { get; set; }
         public string TourName { get; set; }
+        public string Picture { get; set; }
 
         public ICommand MenuCommand { get; }
+        public ICommand BackCommand { get; }
+        public ICommand NotificationCommand { get; }
 
         public CurrentKeyPointViewModel(NavigationStore navigationStore, User user)
         {
@@ -35,8 +38,11 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
 
             TourName = trackedTour.Name;
             KeyPointPlace = _keyPointService.GetById(trackedTour.CurrentKeyPoint).Place;
+            Picture = trackedTour.PictureURL;
 
             MenuCommand = new ExecuteMethodCommand(ShowGuest2Menu);
+            BackCommand = new ExecuteMethodCommand(ShowGuest2Menu);
+            NotificationCommand = new ExecuteMethodCommand(ShowNotificationBrowserView);
 
         }
 
@@ -44,6 +50,13 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         {
             Guest2MenuViewModel guest2MenuViewModel = new Guest2MenuViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guest2MenuViewModel));
+            navigate.Execute(null);
+        }
+
+        private void ShowNotificationBrowserView()
+        {
+            NotificationBrowserViewModel notificationBrowserViewModel = new NotificationBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, notificationBrowserViewModel));
             navigate.Execute(null);
         }
     }

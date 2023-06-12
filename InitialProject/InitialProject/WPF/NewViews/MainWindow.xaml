@@ -18,6 +18,9 @@
     </Window.Icon>
     <Grid>
         <Grid.Resources>
+            <DataTemplate DataType="{x:Type vmsg2:MyReservationsViewModel}">
+                <views:MyReservationsView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg2:ComplexTourRequestDetailsViewModel}">
                 <views:ComplexTourRequestDetailsView/>
             </DataTemplate>
