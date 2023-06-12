@@ -18,6 +18,8 @@ namespace InitialProject.WPF.ViewModels
 {
     public class GuideProfileViewModel : ViewModelBase
     {
+        public GuideProfileView view;
+
         private readonly NavigationStore _navigationStore;
         private User _user;
 
@@ -108,8 +110,10 @@ namespace InitialProject.WPF.ViewModels
         public ICommand CancelTourCommand { get; set; }
         public ICommand TourStatsCommand { get; set; }
         public ICommand RatingsViewCommand { get; set; }
-        public ICommand RequestsStatsCommand { get; set; }
-        public ICommand RequestsCommand { get; set; }
+        public ICommand TourRequestsCommand { get; set; }
+        public ICommand TourRequestsStatsCommand { get; set; }
+        public ICommand GuideProfileCommand { get; set; }
+        public ICommand ComplexTourCommand { get; set; }
 
 
         public List<RatingViewModel> Ratings { get; set; }
@@ -135,6 +139,7 @@ namespace InitialProject.WPF.ViewModels
                     GuideTours.Add(tour);
                 }
             }
+            
             _tourReservations = new List<TourReservation>(_tourReservationService.GetAll());
 
             foreach (TourReservation tourReservation in _tourReservations)
@@ -176,8 +181,10 @@ namespace InitialProject.WPF.ViewModels
             CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
             TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
             RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
-            RequestsCommand = new ExecuteMethodCommand(ShowRequestsView);
-            RequestsStatsCommand = new ExecuteMethodCommand(ShowRequestsStatsView);
+            TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
+            TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
+            GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);
+            ComplexTourCommand = new ExecuteMethodCommand(ShowComplexTourView);
 
 
         }
@@ -227,6 +234,14 @@ namespace InitialProject.WPF.ViewModels
 
             navigate.Execute(null);
         }
+
+        private void ShowComplexTourView()
+        {
+            ComplexTourAcceptViewModel viewModel = new ComplexTourAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
         private void ShowToursTodayView()
         {
             ToursTodayViewModel viewModel = new ToursTodayViewModel(_navigationStore, _user);
@@ -252,18 +267,28 @@ namespace InitialProject.WPF.ViewModels
         {
             GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
             navigate.Execute(null);
         }
-        private void ShowRequestsStatsView()
-        {
-            TourRequestsStatsViewModel viewModel = new TourRequestsStatsViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
-            navigate.Execute(null);
-        }
-        private void ShowRequestsView()
+        private void ShowTourRequestsView()
         {
             TourRequestsAcceptViewModel viewModel = new TourRequestsAcceptViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsStatsView()
+        {
+            TourRequestsStatsViewModel viewModel = new TourRequestsStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideProfileView()
+        {
+            GuideProfileViewModel viewModel = new GuideProfileViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
             navigate.Execute(null);
         }
     }

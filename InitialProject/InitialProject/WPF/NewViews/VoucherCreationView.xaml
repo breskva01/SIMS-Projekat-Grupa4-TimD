@@ -6,11 +6,25 @@
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
              Height="300" Width="300" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#EDEFFF ">
         <StackPanel Height="150">
-            <TextBox Text="{Binding Name}" Width="100" Margin="30"/>
-            
-            <Button Content="Create" Command="{Binding CreateVoucherCommand}" Width="68" Height="32"/>
+            <Label FontSize="22" FontFamily="Tw Cen Mt" HorizontalAlignment="Center" Content="Create Voucher for guests"/>
+            <TextBox FontSize="20" FontFamily="Tw Cen Mt" Text="{Binding Name}" Width="150" Margin="30"/>
+
+            <Button  BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold"  Background="#C6CBFC" Content="Create" Command="{Binding CreateVoucherCommand}" Width="75" Height="32"/>
         </StackPanel>
        
 

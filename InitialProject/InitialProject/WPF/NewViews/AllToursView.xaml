@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews" 
         xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
-        mc:Ignorable="d" Height="768" Width="1024">
+        mc:Ignorable="d" Height="768" Width="1024" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <Storyboard x:Key="OpenMenu">
@@ -113,18 +113,18 @@
                 <Button Grid.Row="1" Margin="5,1,30,50" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#270138" Command="{Binding CancelCommand}" Content="CANCEL TOUR" HorizontalAlignment="Right" Height="50" Width="180" FontSize="25"/>
             </Grid>
         </Grid>
-        <Grid x:Name="InterfaceGrid" >
+        <Grid x:Name="InterfaceGrid" Background="#EDEFFF " >
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="#270138"/>
+            <Border Grid.Row="0" Background="#0A0E30"/>
 
-            <Label Content="ᗩᒪᒪ TOᑌᖇS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
-            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+            <Label x:Name="label" FontFamily="Tw Cen Mt" Content="ALL TOURS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#0A0E30" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="\Resources\Images\menuW.png"></Image>
             </Button>
-            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#0A0E30" VerticalAlignment="Center" Margin="0,5,15,5">
                 <Image Source="\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">
@@ -132,9 +132,9 @@
                     <RowDefinition Height="550"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <ListBox Grid.Row="0" Margin="30,15,30,10" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectedItem="{Binding SelectedTour}" Cursor="Hand" BorderBrush="Black" BorderThickness="5" Name="lbTours" Padding="15,15,5,5" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}">
+                <ListBox FontFamily="Tw Cen Mt" Grid.Row="0" Margin="30,15,30,10" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectedItem="{Binding SelectedTour}" Cursor="Hand" BorderBrush="Black" BorderThickness="5" Name="lbTours" Padding="15,15,5,5" ItemsSource="{Binding ToursShow, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=2}">
                     <ListBox.Background>
-                        #C7B2D1
+                        #C6CBFC
                     </ListBox.Background>
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
@@ -142,7 +142,7 @@
                             <Setter Property="BorderThickness" Value="1" />
                             <Setter Property="BorderBrush" Value="Black" />
                             <Setter Property="Padding" Value="15" />
-                            <Setter Property="Background" Value="LightYellow"/>
+                            <Setter Property="Background" Value="White"/>
                         </Style>
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
@@ -150,30 +150,32 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding PictureURL}" Width="150" Height="150" Margin="0,0,10,0" />
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20"/>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="25"/>
                                     <TextBlock>
-                                <Run Text="{Binding Location.Country}" FontSize="20"/> -
-                                <Run Text="{Binding Location.City}" FontSize="20" />
+                                <Run Text="{Binding Location.Country}" FontSize="25"/> -
+                                <Run Text="{Binding Location.City}" FontSize="25" />
                                     </TextBlock>
                                     <TextBlock>
-                                 <TextBlock FontSize="20">Tour Duration : </TextBlock> 
-                                <Run Text="{Binding Duration}" FontSize="20"/>
+                                 <TextBlock FontSize="25">Tour Duration : </TextBlock> 
+                                <Run Text="{Binding Duration}" FontSize="25"/>
                                  h
                             </TextBlock>
                                     <TextBlock>
-                                <TextBlock FontSize="20">Language: </TextBlock>
+                                <TextBlock FontSize="25">Language: </TextBlock>
                                 <Run Text="{Binding Language}" FontSize="20"/>
                             </TextBlock>
                                     <TextBlock>
                                  <TextBlock FontSize="20">Spaces filled : </TextBlock>
-                                <Run Text="{Binding CurrentNumberOfGuests}" FontSize="20"/>
+                                <Run Text="{Binding CurrentNumberOfGuests}" FontSize="25"/>
                             </TextBlock>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button Grid.Row="1" Margin="5,1,30,50" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#270138" Command="{Binding CancelCommand}" Content="CANCEL TOUR" HorizontalAlignment="Right" Height="50" Width="180" FontSize="25"/>
+                <Button FontFamily="Tw Cen Mt" Grid.Row="1" Margin="5,1,30,50" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Command="{Binding CancelCommand}" Content="CANCEL TOUR" HorizontalAlignment="Right" Height="50" Width="180" FontSize="25"/>
+                <Button FontFamily="Tw Cen Mt" Grid.Row="1" Margin="30,1,30,50" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" FontWeight="Bold" Foreground="White" Background="#0A0E30" Command="{Binding GeneratePDFCommand}" Content="GENERATE PDF" HorizontalAlignment="Left" Height="50" Width="180" FontSize="25"/>
+
             </Grid>
         </Grid>
         
@@ -190,18 +192,18 @@
                 <Border Height="80" Width="80" Margin="10">
                     <Image Source="\Resources\Images\logoB.png"/>
                 </Border>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Command="{Binding RatingsViewCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Command="{Binding GuideProfileCommand}" Content="PROFILE" Width="221" Background="#C6CBFC" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="CREATE TOUR" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="LIVE TRACKING" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="CANCEL TOUR"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR STATS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC" FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR REQUESTS" Width="221" Command="{Binding TourRequestsCommand}" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR REQUESTS STATS" Command="{Binding TourRequestsStatsCommand}" Width="221" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="REVIEWS" Command="{Binding RatingsViewCommand}" Width="221" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="COMPLEX REQUESTS" Width="221" Command="{Binding ComplexTourCommand}" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GENERATE TOUR" Width="221" Background="#C6CBFC " FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>
-            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#0A0E30" >
                 <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
             </Button>
         </Grid>

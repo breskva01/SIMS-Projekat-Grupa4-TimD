@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
              mc:Ignorable="d" 
-             d:DesignHeight="768" d:DesignWidth="1024">
+             d:DesignHeight="768" d:DesignWidth="1024" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <Storyboard x:Key="OpenMenu">
@@ -77,7 +77,7 @@
                         <ColumnDefinition Width="410"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="TᕼE ᗰOST ᑭOᑭᑌᒪᗩᖇ TOᑌᖇ Iᑎ" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
+                    <Label FontFamily="tw cen mt" Grid.Row="0" Grid.Column="0" Content="THE MOST POPULAR TOUR IN" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
                     <ComboBox FontSize="25" ItemsSource="{Binding AvaiableYears}" SelectedItem="{Binding SelectedYear}" Grid.Row="0" Grid.Column="1" Width="250" Height="44" HorizontalAlignment="Left"/>
                     <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,20,45"/>
                     <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,20,45" ItemsSource="{Binding MostVisited}" BorderBrush="Black" BorderThickness="2" d:ItemsSource="{d:SampleData ItemCount=1}">
@@ -120,7 +120,7 @@
                         <ColumnDefinition Width="410"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="GᑌEST STᗩTS ᖴOᖇ TOᑌᖇ:" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
+                    <Label FontFamily="tw cen mt" Grid.Row="0" Grid.Column="0" Content="GUEST STATS FOR TOUR:" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
                     <ComboBox FontSize="25" SelectedItem="{Binding SelectedTourName}" ItemsSource="{Binding TourNames}" Grid.Row="0" Grid.Column="1" Width="250" Height="44" HorizontalAlignment="Left">
                         <ComboBox.Background>
                             <SolidColorBrush Color="Black"/>
@@ -142,38 +142,37 @@
                             <ColumnDefinition Width="51*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="0,0,3,0"/>
-                        <Label FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᑎᑌᗰᗷEᖇ Oᖴ GᑌESTS" Height="37" Width="194"/>
-                        <Label FontSize="20" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᑌᑎᗪEᖇ 18" Height="37" Width="100"/>
-                        <Label FontSize="20" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᗷETᗯEEᑎ 18 ᗩᑎᗪ 50" Height="37" Width="196"/>
-                        <Label FontSize="20" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᗩᗷOᐯE 50" Height="37" Width="104"/>
-                        <TextBox FontSize="20" Width="50" Height="30" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AllGuests}"  Margin="10,0,0,0" />
-                        <TextBox FontSize="20" Width="50" Height="30" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MinorGuests}"  Margin="10,0,0,0" />
-                        <TextBox FontSize="20" Width="50" Height="30" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MiddleAgeGuests}"  Margin="10,0,0,0" />
-                        <TextBox FontSize="20" Width="50" Height="30" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding OlderGuests}"  Margin="10,0,0,0" />
+                        <Label FontFamily="tw cen mt" FontSize="20" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="NUMBER OF GUESTS" Height="37" Width="194"/>
+                        <Label FontFamily="tw cen mt"  FontSize="20" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="UNDER 18" Height="37" Width="100"/>
+                        <Label FontFamily="tw cen mt" FontSize="20" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="BETWEEN 18 NAD 50" Height="37" Width="196"/>
+                        <Label FontFamily="tw cen mt" FontSize="20" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ABOVE 50" Height="37" Width="104"/>
+                        <TextBox FontFamily="tw cen mt" FontSize="20" Width="50" HorizontalContentAlignment="Center" Height="30" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AllGuests}"  Margin="10,0,0,0" />
+                        <TextBox FontFamily="tw cen mt" FontSize="20" Width="50" Height="30" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MinorGuests}"  Margin="10,0,0,0" />
+                        <TextBox FontFamily="tw cen mt" FontSize="20" Width="50" Height="30" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MiddleAgeGuests}"  Margin="10,0,0,0" />
+                        <TextBox FontFamily="tw cen mt"  FontSize="20" Width="50" Height="30" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding OlderGuests}"  Margin="10,0,0,0" />
 
 
-                        <Label Margin="40,0,0,0" Grid.Row="1" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GᑌESTS ᗯITᕼ ᐯOᑌᑕᕼEᖇS" Height="37" Width="300"/>
-                        <Label Margin="40,0,0,0" Grid.Row="2" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GᑌESTS ᗯITᕼOᑌT ᐯOᑌᑕᕼEᖇS" Height="37" Width="300"/>
-                        <TextBox FontSize="20" Grid.Row="1" Grid.Column="3" Width="50" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithVoucher}" IsReadOnly="True" />
-                        <TextBox FontSize="20" Grid.Row="2" Grid.Column="3" Width="50" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithoutVoucher}" IsReadOnly="True"/>
-
+                        <Label FontFamily="tw cen mt" Margin="40,0,0,0" Grid.Row="1" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GUESTS WITH VOUCHERS" Height="37" Width="300"/>
+                        <Label FontFamily="tw cen mt" Margin="40,0,0,0" Grid.Row="2" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GUESTS WITHOUT VOUCHERS" Height="37" Width="300"/>
+                        <TextBox FontFamily="tw cen mt" FontSize="20" Grid.Row="1" Grid.Column="3" Width="60" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithVoucher}" IsReadOnly="True" />
+                        <TextBox FontFamily="tw cen mt" FontSize="20" Grid.Row="2" Grid.Column="3" Width="60" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithoutVoucher}" IsReadOnly="True"/>
                     </Grid>
 
                 </Grid>
             </Grid>
         </Grid>
-        <Grid x:Name="InterfaceGrid">
+        <Grid x:Name="InterfaceGrid" Background="#EDEFFF ">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#270138"/>
-            <Label Grid.Row="0" Content="TOᑌᖇ STᗩTS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 0" Background="#0A0E30"/>
+            <Label x:Name="label" FontFamily="tw cen mt" Grid.Row="0" Content="TOUR STATS" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38">
             </Label>
-            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0" Background="#0A0E30" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="\Resources\Images\menuW.png"></Image>
             </Button>
-            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
+            <Button Command="{Binding HomeCommand}" BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#0A0E30" VerticalAlignment="Center" Margin="0,5,10,5">
                 <Image Source="\Resources\Images\homeW.jpg.png"></Image>
             </Button>
             <Grid Grid.Row="1">
@@ -190,10 +189,10 @@
                         <ColumnDefinition Width="410"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="TᕼE ᗰOST ᑭOᑭᑌᒪᗩᖇ TOᑌᖇ Iᑎ" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
-                    <ComboBox FontSize="25" ItemsSource="{Binding AvaiableYears}" SelectedItem="{Binding SelectedYear}" Grid.Row="0" Grid.Column="1" Width="250" Height="44" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Label FontFamily="tw cen mt" Grid.Row="0" Grid.Column="0" Content="THE MOST POPULAR TOUR IN:" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
+                    <ComboBox FontFamily="tw cen mt" FontSize="25" ItemsSource="{Binding AvaiableYears}" SelectedItem="{Binding SelectedYear}" Grid.Row="0" Grid.Column="1" Width="250" Height="44" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,20,45"/>
-                    <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="20,0,20,45" ItemsSource="{Binding MostVisited}" BorderBrush="Black" BorderThickness="2" d:ItemsSource="{d:SampleData ItemCount=1}" >
+                    <ListBox Background="#C6CBFC" FontFamily="tw cen mt" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="20,0,20,45" ItemsSource="{Binding MostVisited}" BorderBrush="Black" BorderThickness="2" d:ItemsSource="{d:SampleData ItemCount=1}" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Height="200" Orientation="Horizontal">
@@ -233,7 +232,7 @@
                         <ColumnDefinition Width="410"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="GᑌEST STᗩTS ᖴOᖇ TOᑌᖇ:" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
+                    <Label FontFamily="tw cen mt" Grid.Row="0" Grid.Column="0" Content="GUEST STATS FOR TOUR:" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
                     <ComboBox FontSize="25" SelectedItem="{Binding SelectedTourName}" ItemsSource="{Binding TourNames}" Grid.Row="0" Grid.Column="1" Width="250" Height="44" HorizontalAlignment="Left">
                         <ComboBox.Background>
                             <SolidColorBrush Color="Black"/>
@@ -254,22 +253,22 @@
                                 <ColumnDefinition Width="113*"/>
                                 <ColumnDefinition Width="51*"/>
                         </Grid.ColumnDefinitions>
-                            <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="0,0,1,0"/>
-                            <Border Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="5" BorderThickness="2" BorderBrush="Black"/>
-                        <Label FontSize="20" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᑎᑌᗰᗷEᖇ Oᖴ GᑌESTS" Height="37" Width="194"/>
-                            <Label FontSize="20" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᑌᑎᗪEᖇ 18" Height="37" Width="100"/>
-                            <Label FontSize="20" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᗷETᗯEEᑎ 18 ᗩᑎᗪ 50" Height="37" Width="196"/>
-                            <Label FontSize="20" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ᗩᗷOᐯE 50" Height="37" Width="104"/>
-                        <TextBox FontSize="20" Width="50" HorizontalContentAlignment="Center" Height="30" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AllGuests}"  Margin="10,0,0,0" />
-                            <TextBox FontSize="20" Width="50" Height="30" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MinorGuests}"  Margin="10,0,0,0" />
-                            <TextBox FontSize="20" Width="50" Height="30" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MiddleAgeGuests}"  Margin="10,0,0,0" />
-                            <TextBox FontSize="20" Width="50" Height="30" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding OlderGuests}"  Margin="10,0,0,0" />
+                            <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+                            <Border Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="5" BorderThickness="2" BorderBrush="Black"/>
+                        <Label FontFamily="tw cen mt" FontSize="20" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="NUMBER OF GUESTS" Height="37" Width="194"/>
+                        <Label FontFamily="tw cen mt"  FontSize="20" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="UNDER 18" Height="37" Width="100"/>
+                        <Label FontFamily="tw cen mt" FontSize="20" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="BETWEEN 18 NAD 50" Height="37" Width="196"/>
+                        <Label FontFamily="tw cen mt" FontSize="20" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="ABOVE 50" Height="37" Width="104"/>
+                        <TextBox IsReadOnly="True" FontFamily="tw cen mt" FontSize="20" Width="50" HorizontalContentAlignment="Center" Height="30" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AllGuests}"  Margin="10,0,0,0" />
+                        <TextBox IsReadOnly="True" FontFamily="tw cen mt" FontSize="20" Width="50" Height="30" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MinorGuests}"  Margin="10,0,0,0" />
+                        <TextBox IsReadOnly="True" FontFamily="tw cen mt" FontSize="20" Width="50" Height="30" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding MiddleAgeGuests}"  Margin="10,0,0,0" />
+                        <TextBox IsReadOnly="True"  FontFamily="tw cen mt"  FontSize="20" Width="50" Height="30" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding OlderGuests}"  Margin="10,0,0,0" />
 
 
-                            <Label Margin="40,0,0,0" Grid.Row="1" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GᑌESTS ᗯITᕼ ᐯOᑌᑕᕼEᖇS" Height="37" Width="300"/>
-                            <Label Margin="40,0,0,0" Grid.Row="2" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GᑌESTS ᗯITᕼOᑌT ᐯOᑌᑕᕼEᖇS" Height="37" Width="300"/>
-                            <TextBox FontSize="20" Grid.Row="1" Grid.Column="3" Width="60" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithVoucher}" IsReadOnly="True" />
-                            <TextBox FontSize="20" Grid.Row="2" Grid.Column="3" Width="60" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithoutVoucher}" IsReadOnly="True"/>
+                        <Label FontFamily="tw cen mt" Margin="40,0,0,0" Grid.Row="1" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GUESTS WITH VOUCHERS" Height="37" Width="300"/>
+                        <Label FontFamily="tw cen mt" Margin="40,0,0,0" Grid.Row="2" Grid.Column="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Content="GUESTS WITHOUT VOUCHERS" Height="37" Width="300"/>
+                        <TextBox IsReadOnly="True" FontFamily="tw cen mt" FontSize="20" Grid.Row="1" Grid.Column="3" Width="60" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithVoucher}"  />
+                        <TextBox IsReadOnly="True" FontFamily="tw cen mt" FontSize="20" Grid.Row="2" Grid.Column="3" Width="60" Height="30" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding WithoutVoucher}" />
 
                         </Grid>
                 </Grid>
@@ -288,18 +287,18 @@
                 <Border Height="80" Width="80" Margin="10">
                     <Image Source="\Resources\Images\logoB.png"/>
                 </Border>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Command="{Binding RatingsViewCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GEᑎEᖇᗩTE ᖇEᑭOᖇT" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Command="{Binding GuideProfileCommand}" Content="PROFILE" Width="221" Background="#C6CBFC" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="CREATE TOUR" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="LIVE TRACKING" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="CANCEL TOUR"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR STATS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC" FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR REQUESTS" Width="221" Command="{Binding TourRequestsCommand}" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR REQUESTS STATS" Command="{Binding TourRequestsStatsCommand}" Width="221" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="REVIEWS" Command="{Binding RatingsViewCommand}" Width="221" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="COMPLEX REQUESTS" Width="221" Command="{Binding ComplexTourCommand}" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GENERATE TOUR" Width="221" Background="#C6CBFC " FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>
-            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#0A0E30" >
                 <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
             </Button>
         </Grid>

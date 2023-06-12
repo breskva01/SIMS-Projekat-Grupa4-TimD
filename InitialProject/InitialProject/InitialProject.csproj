@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\backgroundLBEdit.jpg" />
     <None Remove="Resources\Images\backgroundLP.jpg" />
     <None Remove="Resources\Images\backgroundVideo.mp4" />
     <None Remove="Resources\Images\backSquare.png" />
@@ -85,6 +86,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="MaterialDesignThemes" Version="2.4.0.1044" />
     <PackageReference Include="Microsoft.Toolkit" Version="7.1.2" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
@@ -95,6 +97,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\backgroundLBEdit.jpg" />
     <Resource Include="Resources\Images\backgroundVideo.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -192,6 +195,12 @@
 
   <ItemGroup>
     <None Remove="C:\Users\lukaz\.nuget\packages\wpfmediakit\2.2.0\build\DirectShowLib-2005.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Images\backgroundLB.jpg">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

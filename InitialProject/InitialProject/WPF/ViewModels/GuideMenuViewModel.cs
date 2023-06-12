@@ -21,17 +21,18 @@ namespace InitialProject.WPF.ViewModels
         private readonly NavigationStore _navigationStore;
         private User _user;
 
-        public ICommand CreateTourCommand { get; }
-        public ICommand LiveTrackingCommand { get; }
-        public ICommand CancelTourCommand { get; }
-        public ICommand TourStatsCommand { get; }
-        public ICommand RatingsViewCommand { get; }
         public ICommand SignOutCommand { get; }
-        public ICommand TourRequestsCommand { get; }
-        public ICommand TourRequestsStatsCommand { get; }
         public ICommand LogOutCommand { get; }
-        public ICommand GuideProfileCommand { get; }
-        public ICommand ComplexTourCommand { get; }
+
+        public ICommand CreateTourCommand { get; set; }
+        public ICommand LiveTrackingCommand { get; set; }
+        public ICommand CancelTourCommand { get; set; }
+        public ICommand TourStatsCommand { get; set; }
+        public ICommand RatingsViewCommand { get; set; }
+        public ICommand TourRequestsCommand { get; set; }
+        public ICommand TourRequestsStatsCommand { get; set; }
+        public ICommand GuideProfileCommand { get; set; }
+        public ICommand ComplexTourCommand { get; set; }
 
         private string _videoSource;
         public string VideoSource
@@ -49,14 +50,13 @@ namespace InitialProject.WPF.ViewModels
             _navigationStore = navigationStore;
             _user = user;
 
-            VideoSource = "/Resources/Images/backGroundVideo.mp4";
+            SignOutCommand = new ExecuteMethodCommand(SignOut);
 
             CreateTourCommand = new ExecuteMethodCommand(ShowTourCreationView);
             LiveTrackingCommand = new ExecuteMethodCommand(ShowToursTodayView);
             CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
             TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
             RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
-            SignOutCommand = new ExecuteMethodCommand(SignOut);
             TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
             TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
             GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);

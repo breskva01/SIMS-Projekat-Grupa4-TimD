@@ -11,7 +11,7 @@
         xmlns:vmsg2="clr-namespace:InitialProject.WPF.ViewModels.GuestTwo"
         mc:Ignorable="d"
         Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
+        
         WindowState="Normal">
     <Window.Icon>
         <BitmapImage UriSource="\Resources\Images\logoB.png"/>
@@ -185,6 +185,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:ComplexTourAcceptViewModel}">
                 <views:ComplexTourAcceptView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:TourCreationTutorialViewModel}">
+                <views:TourCreationTutorialView />
             </DataTemplate>
         </Grid.Resources>
 

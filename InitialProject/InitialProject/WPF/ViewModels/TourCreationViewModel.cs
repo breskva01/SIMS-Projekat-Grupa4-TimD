@@ -17,11 +17,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
+using System.Windows.Media;
+using System.Reflection.Emit;
+using System.Windows.Media.Animation;
+using System.Windows;
 
 namespace InitialProject.WPF.ViewModels
 {
     public class TourCreationViewModel : ViewModelBase, IDataErrorInfo
     {
+        public Effect ButtonEffect
+        {
+            get
+            {
+                if (IsTourValid)
+                {
+                    return new DropShadowEffect()
+                    {
+                        Color = Colors.Red,
+                        BlurRadius = 20,
+                        ShadowDepth = 0,
+                        Opacity = 0.5
+                    };
+                }
+
+                return null;
+            }
+        }
+
+        public TourCreateView view;
 
         private bool IsCreatedBasedOnStats;
         private bool IsCreatedBasedOnSignleRequest;
@@ -54,6 +79,10 @@ namespace InitialProject.WPF.ViewModels
         public ICommand CancelTourCommand { get; set; }
         public ICommand TourStatsCommand { get; set; }
         public ICommand RatingsViewCommand { get; set; }
+        public ICommand TourRequestsCommand { get; set; }
+        public ICommand TourRequestsStatsCommand { get; set; }
+        public ICommand GuideProfileCommand { get; set; }
+        public ICommand ComplexTourCommand { get; set; }
         public ICommand SignOutCommand { get; set; }
         public ICommand IncreaseDurationCommand { get; set; }
         public ICommand DecreaseDurationCommand { get; set; }
@@ -275,6 +304,38 @@ namespace InitialProject.WPF.ViewModels
             }
 
         }
+
+        private string _keyPointCity;
+        public string KeyPointCity
+        {
+
+            get => _keyPointCity;
+            set
+            {
+                if (value != _keyPointCity)
+                {
+                    _keyPointCity = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
+
+        private string _keyPointPlace;
+        public string KeyPointPlace
+        {
+
+            get => _keyPointPlace;
+            set
+            {
+                if (value != _keyPointPlace)
+                {
+                    _keyPointPlace = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
         private List<string> _pictureURLs;
         private List<string> _selectedFiles;
 
@@ -293,6 +354,8 @@ namespace InitialProject.WPF.ViewModels
             KeyPoints = new ObservableCollection<KeyPoint>(_keyPointService.GetAll());
             KeyPointCities = Locations.Select(c => c.City).Distinct().ToList();
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
+
+            view = new TourCreateView();
 
             if (isParameterLanguage == true)
             {
@@ -388,6 +451,10 @@ namespace InitialProject.WPF.ViewModels
             CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
             TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
             RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
+            TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
+            TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
+            GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);
+            ComplexTourCommand = new ExecuteMethodCommand(ShowComplexTourView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
             IncreaseDurationCommand = new ExecuteMethodCommand(IncreaseDuration);
             DecreaseDurationCommand = new ExecuteMethodCommand(DecreaseDuration);
@@ -421,6 +488,7 @@ namespace InitialProject.WPF.ViewModels
                     _keyPointIds.Add(ky.Id);
                 }
                 lang = (GuideLanguage)Enum.Parse(typeof(GuideLanguage), LanguageType);
+                PictureUrl = "/Resources/Images/petrovaradin.png";
                 Tour tour = _tourService.CreateTour(TourName, Location, Description, lang, MaxGuests, Convert.ToDateTime(Start), TourDuration, PictureUrl, _tourKeyPoints, _keyPointIds, _user.Id);
                 if (TourRequest != null)
                 {
@@ -435,7 +503,7 @@ namespace InitialProject.WPF.ViewModels
                 {
                     _userNotificationService.NotifyApprovedRequest(tour, TourRequest.UserId);
                 }
-                CopyImages();
+                //CopyImages();
                 ClearOutTextBoxes();
             }
             
@@ -530,6 +598,14 @@ namespace InitialProject.WPF.ViewModels
 
             navigate.Execute(null);
         }
+
+        private void ShowComplexTourView()
+        {
+            ComplexTourAcceptViewModel viewModel = new ComplexTourAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
         private void ShowToursTodayView()
         {
             ToursTodayViewModel viewModel = new ToursTodayViewModel(_navigationStore, _user);
@@ -555,6 +631,28 @@ namespace InitialProject.WPF.ViewModels
         {
             GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsView()
+        {
+            TourRequestsAcceptViewModel viewModel = new TourRequestsAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsStatsView()
+        {
+            TourRequestsStatsViewModel viewModel = new TourRequestsStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideProfileView()
+        {
+            GuideProfileViewModel viewModel = new GuideProfileViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
             navigate.Execute(null);
         }
         private void IncreaseDuration()
@@ -575,8 +673,13 @@ namespace InitialProject.WPF.ViewModels
         }
         private void ShowTutorial()
         {
+            /*
             TourCreationTutorialView view = new TourCreationTutorialView(_navigationStore, _user);
             view.Show();
+            */
+            TourCreationTutorialViewModel viewModel = new TourCreationTutorialViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+            navigate.Execute(null);
         }
         private void UploadImages()
         {
@@ -647,6 +750,21 @@ namespace InitialProject.WPF.ViewModels
                     case nameof(Start):
                         if(string.IsNullOrEmpty(Start)) error = requiredMessage;
                         break;
+                    case nameof(PictureUrl):
+                        if(string.IsNullOrEmpty(PictureUrl)) error = requiredMessage;
+                        break;
+                    case nameof(KeyPointCity):
+                        if(_tourKeyPoints.Count() < 2)
+                        {
+                            if (string.IsNullOrEmpty(KeyPointCity)) error = requiredMessage;
+                        }
+                        break;
+                    case nameof(KeyPointPlace):
+                        if (_tourKeyPoints.Count() < 2)
+                        {
+                            if (string.IsNullOrEmpty(KeyPointPlace)) error = requiredMessage;
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -669,7 +787,10 @@ namespace InitialProject.WPF.ViewModels
                     nameof(Start),
                     nameof(_tourKeyPoints), 
                     nameof(Country), 
-                    nameof(City)})
+                    nameof(City),
+                    nameof(PictureUrl),
+                    nameof(KeyPointPlace),
+                    nameof(KeyPointCity)})
                 {
                     if (this[property] != null) return false;
                 }
