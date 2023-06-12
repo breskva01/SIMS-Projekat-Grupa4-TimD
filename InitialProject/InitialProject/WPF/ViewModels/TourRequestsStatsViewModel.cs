@@ -251,7 +251,7 @@ namespace InitialProject.WPF.ViewModels
                 OnPropertyChanged(nameof(AllYears));
             }
         }
-
+        /*
         private bool _isCheckedLocation;
         public bool IsCheckedLocation
         {
@@ -282,6 +282,7 @@ namespace InitialProject.WPF.ViewModels
                
             }
         }
+        */
         private string _location;
         public string Location
         {
@@ -295,6 +296,11 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
+
+        public List<string> LocationsListBox { get; set; }
+        public List<string> LanguagesListBox { get; set; }
+
+
         private string _language;
         public string Language
         {
@@ -304,6 +310,33 @@ namespace InitialProject.WPF.ViewModels
                 if (value != _language)
                 {
                     _language = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectedLocationCreation;
+        public string SelectedLocationCreation
+        {
+            get => _selectedLocationCreation;
+            set
+            {
+                if (value != _selectedLocationCreation)
+                {
+                    _selectedLocationCreation = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _selectedLanguageCreation;
+        public string SelectedLanguageCreation
+        {
+            get => _selectedLanguageCreation;
+            set
+            {
+                if (value != _selectedLanguageCreation)
+                {
+                    _selectedLanguageCreation = value;
                     OnPropertyChanged();
                 }
             }
@@ -323,6 +356,17 @@ namespace InitialProject.WPF.ViewModels
 
         public ICommand CreateCommand { get; set; }
         public ICommand ResetCommand { get; set; }
+        public ICommand CreateTourCommand { get; set; }
+        public ICommand LiveTrackingCommand { get; set; }
+        public ICommand CancelTourCommand { get; set; }
+        public ICommand TourStatsCommand { get; set; }
+        public ICommand RatingsViewCommand { get; set; }
+        public ICommand TourRequestsCommand { get; set; }
+        public ICommand TourRequestsStatsCommand { get; set; }
+        public ICommand GuideProfileCommand { get; set; }
+        public ICommand ComplexTourCommand { get; set; }
+        public ICommand HomeCommand { get; set; }
+
 
 
         public TourRequestsStatsViewModel(NavigationStore navigationStore, User user)
@@ -343,6 +387,16 @@ namespace InitialProject.WPF.ViewModels
             }
             CreateCommand = new ExecuteMethodCommand(CreateTour);
             ResetCommand = new ExecuteMethodCommand(ResetFilters);
+            CreateTourCommand = new ExecuteMethodCommand(ShowTourCreationView);
+            LiveTrackingCommand = new ExecuteMethodCommand(ShowToursTodayView);
+            CancelTourCommand = new ExecuteMethodCommand(ShowTourCancellationView);
+            TourStatsCommand = new ExecuteMethodCommand(ShowTourStatsView);
+            RatingsViewCommand = new ExecuteMethodCommand(ShowGuideRatingsView);
+            TourRequestsCommand = new ExecuteMethodCommand(ShowTourRequestsView);
+            TourRequestsStatsCommand = new ExecuteMethodCommand(ShowTourRequestsStatsView);
+            GuideProfileCommand = new ExecuteMethodCommand(ShowGuideProfileView);
+            ComplexTourCommand = new ExecuteMethodCommand(ShowComplexTourView);
+            HomeCommand = new ExecuteMethodCommand(ShowGuideMenuView);
 
             YearsAxes = new string[] { };
             MonthsAxes = new string[] { };
@@ -376,10 +430,16 @@ namespace InitialProject.WPF.ViewModels
             Months.Add("November");
             Months.Add("December");
 
+            LocationsListBox = new List<string>();
+            LanguagesListBox = new List<string>();
+            PopulateLocationTextBox();
+            PopulateLanguageTextBox();
+           
+
         }
         private void PopulateLocationTextBox()
         {
-            Language = null;
+            //Language = null;
 
             var tourRequestCounts = Requests
            .GroupBy(r => r.Location)
@@ -395,11 +455,12 @@ namespace InitialProject.WPF.ViewModels
            .FirstOrDefault();
 
             Location = locationWithMostTours.Location.Country + " " + locationWithMostTours.Location.City;
+            LocationsListBox.Add(Location);
 
         }
         private void PopulateLanguageTextBox()
         {
-            Location = null;
+            //Location = null;
 
             var tourRequestCounts = Requests
           .GroupBy(r => r.Language)
@@ -414,7 +475,8 @@ namespace InitialProject.WPF.ViewModels
            .OrderByDescending(item => item.Count)
            .FirstOrDefault();
 
-            Language = languageWithMostTours.Language.ToString();     
+            Language = languageWithMostTours.Language.ToString();
+            LanguagesListBox.Add(Language);
         }
         private void PopulateYearsComboBox()
         {
@@ -460,6 +522,7 @@ namespace InitialProject.WPF.ViewModels
             YearNumberOfRequestAxes.Title = "yearRequests";
             YearNumberOfRequestAxes.Values = new ChartValues<int>(YearNumberOfRequests);
             YearNumberOfRequestAxes.LineSmoothness = 0;
+            
             SeriesCollectionYearLocation = new SeriesCollection();
             SeriesCollectionYearLocation.Add(YearNumberOfRequestAxes);
 
@@ -597,15 +660,17 @@ namespace InitialProject.WPF.ViewModels
         private void CreateTour()
         {
             
-            if (Language == null && Location != null)
+            if (SelectedLanguageCreation == null && SelectedLocationCreation != null)
             {
+                SelectedLocationCreation = null;
                 bool isParameterLanguage = false;
                 TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user, Location, isParameterLanguage);
                 NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
                 navigate.Execute(null);
             }
-            else if (Language != null && Location == null) 
+            else if (SelectedLanguageCreation != null && SelectedLocationCreation == null) 
             {
+                SelectedLanguageCreation = null;
                 bool isParameterLanguage = true;
                 TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user, Language, isParameterLanguage);
                 NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
@@ -613,7 +678,8 @@ namespace InitialProject.WPF.ViewModels
             }
             else
             {
-                
+                SelectedLanguageCreation = null;
+                SelectedLocationCreation = null;
             }
             
         }
@@ -635,6 +701,77 @@ namespace InitialProject.WPF.ViewModels
             YearsAxes = new string[] { };
             MonthsAxes = new string[] { };
 
+        }
+        private void ShowGuideMenuView()
+        {
+            GuideMenuViewModel viewModel = new GuideMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourCreationView()
+        {
+            TourCreationViewModel viewModel = new TourCreationViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+
+        private void ShowComplexTourView()
+        {
+            ComplexTourAcceptViewModel viewModel = new ComplexTourAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowToursTodayView()
+        {
+            ToursTodayViewModel viewModel = new ToursTodayViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourCancellationView()
+        {
+            AllToursViewModel viewModel = new AllToursViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourStatsView()
+        {
+            TourStatsViewModel viewModel = new TourStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideRatingsView()
+        {
+            GuideRatingsViewModel viewModel = new GuideRatingsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsView()
+        {
+            TourRequestsAcceptViewModel viewModel = new TourRequestsAcceptViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowTourRequestsStatsView()
+        {
+            TourRequestsStatsViewModel viewModel = new TourRequestsStatsViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
+        }
+        private void ShowGuideProfileView()
+        {
+            GuideProfileViewModel viewModel = new GuideProfileViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, viewModel));
+
+            navigate.Execute(null);
         }
     }
 }

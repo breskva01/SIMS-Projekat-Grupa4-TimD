@@ -28,10 +28,12 @@ namespace InitialProject.Application.Services
         public List<ComplexTourRequest> GetAll()
         {
             List<ComplexTourRequest> complexTourRequests = _repository.GetAll();
+            /*
             foreach(ComplexTourRequest complexTourRequest in complexTourRequests)
             {
                 FillTourRequestList(complexTourRequest);
             }
+            */
             return complexTourRequests;
         }
 

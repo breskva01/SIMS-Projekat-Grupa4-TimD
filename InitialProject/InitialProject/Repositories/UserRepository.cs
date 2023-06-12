@@ -4,9 +4,12 @@ using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
 using InitialProject.Repositories;
 using InitialProject.Repositories.FileHandlers;
+using InitialProject.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace InitialProject.Repository
@@ -84,6 +87,49 @@ namespace InitialProject.Repository
             _users.Add(user);
             _fileHandler.Save(_users);
             return user;
+        }
+        public string CheckSuperGuide(List<Tour> finishedTours, List<RatingViewModel> ratings, List<TourReservation> reservations, int GuideId)
+        {
+            int suma = 0;
+            int brojac = 0;
+            List<Tour> acceptableTours = new List<Tour>();
+            foreach (Tour tour in finishedTours)
+            {
+                foreach(TourReservation reservation in reservations )
+                {
+                    if(tour.Id == reservation.TourId)
+                    {
+                        List<RatingViewModel> tourRatings = (List<RatingViewModel>)ratings.Where(r => r.TourId == tour.Id);
+                        foreach(RatingViewModel rating in tourRatings)
+                        {
+                            suma += + Convert.ToInt32(rating.TourContent) + Convert.ToInt32(rating.GuideKnowledge) + Convert.ToInt32(rating.TourInteresting) + Convert.ToInt32(rating.TourInformative) + Convert.ToInt32(rating.GuideLanguage);
+                            brojac += 5;
+                        }
+                        double prosek = (double) suma / brojac;
+                        if(prosek > 4.0) 
+                        {
+                            acceptableTours.Add(tour);
+                            suma = 0;
+                            brojac = 0;
+                        }
+                    }
+                }
+            }
+            var tourCountsByLanguage = acceptableTours
+            .GroupBy(t => t.Language)
+            .Select(g => new { Language = g.Key, Count = g.Count() })
+            .Where(t => t.Count > 20)
+            .ToList();
+
+            var languageWithMostTours = tourCountsByLanguage
+            .OrderByDescending(t => t.Count)
+            .FirstOrDefault();
+
+            if(languageWithMostTours != null)
+            {
+                return "Yes(" + languageWithMostTours.Language + ")";
+            }
+            return "No";
         }
     }
 }

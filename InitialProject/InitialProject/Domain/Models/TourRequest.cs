@@ -24,7 +24,6 @@ namespace InitialProject.Domain.Models
         public Location Location { get; set; }
         public string Description { get; set; }
         public RequestStatus Status { get; set; }
-
         public GuideLanguage Language { get; set; }
         public int NumberOfGuests { get; set; }
         public DateTime EarliestDate { get; set; }
@@ -73,6 +72,7 @@ namespace InitialProject.Domain.Models
             LatestDate = DateTime.ParseExact(values[8], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
             TourId = Convert.ToInt32(values[9]);
             IsPartOfComplexTour = Convert.ToBoolean(values[10]);
+           
         }
 
         public string[] ToCSV()

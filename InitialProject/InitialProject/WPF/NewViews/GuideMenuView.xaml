@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews"
+             xmlns:media="clr-namespace:System.Windows.Media;assembly=PresentationCore"
+             xmlns:animations="clr-namespace:System.Windows.Media.Animation;assembly=PresentationCore"
+             xmlns:vlc="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="768" d:DesignWidth="1024">
-
+             d:DesignHeight="768" d:DesignWidth="1024" Loaded="UserControl_Loaded" >
     <UserControl.Resources>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
@@ -55,25 +57,10 @@
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button  Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
-                <Image Source="\Resources\Images\menuW.png"></Image>
-            </Button>
-            <Button  BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
-                <Image Source="\Resources\Images\homeW.jpg.png"></Image>
-            </Button>
-            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" />
-            <Image Source="\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
-            <Label Content="ᗯEᒪᑕOᗰE TO TᖇᗩᐯEᒪᗷᑌᗪᗪY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60"/>
-            <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="ᖴOᑌᑎᗪEᗪ Iᑎ 1996 Iᑎ ᑎOᐯI Sᗩᗪ, .TᖇᗩᐯEᒪᗷᑌᗪᗪY ᕼᗩS GᖇOᗯᑎ ᖴᖇOᗰ ᗩ Sᗰᗩᒪᒪ SEᖇᗷIᗩᑎ STᗩᖇTᑌᑭ TO OᑎE Oᖴ TᕼE ᗯOᖇᒪᗪ’S ᒪEᗩᗪIᑎG ᗪIGITᗩᒪ TᖇᗩᐯEᒪ ᑕOᗰᑭᗩᑎIES. TᖇᗩᐯEᒪᗷᑌᗪᗪY’S ᗰISSIOᑎ IS TO ᗰᗩKE IT EᗩSIEᖇ ᖴOᖇ EᐯEᖇYOᑎE TO E᙭ᑭEᖇIEᑎᑕE TᕼE ᗯOᖇᒪᗪ. TᖇᗩᐯEᒪᗷᑌᗪᗪY IS ᗩᐯᗩIᒪᗩᗷᒪE Iᑎ 43 ᒪᗩᑎGᑌᗩGES ᗩᑎᗪ OᖴᖴEᖇS ᗰOᖇE Tᕼᗩᑎ 28 ᗰIᒪᒪIOᑎ TOTᗩᒪ ᖇEᑭOᖇTEᗪ ᗩᑕᑕOᗰᗰOᗪᗩTIOᑎ ᒪISTIᑎGS, IᑎᑕᒪᑌᗪIᑎG OᐯEᖇ 6.6 ᗰIᒪᒪIOᑎ ᒪISTIᑎGS ᗩᒪOᑎE Oᖴ ᕼOᗰES, ᗩᑭᗩᖇTᗰEᑎTS ᗩᑎᗪ OTᕼEᖇ ᑌᑎIᑫᑌE ᑭᒪᗩᑕES TO STᗩY." VerticalAlignment="Top" Height="270" Width="656" FontSize="20"/>
-        </Grid>
+            <Image Grid.Row="1" Source="/Resources/Images/backgroundLP.jpg" Stretch="UniformToFill"/>
 
-        <Grid x:Name="InterfaceGrid" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
             <Border Grid.Row="0" Background="#270138 "/>
-            <Button x:Name="ButtonMenu" BorderBrush="Transparent"  Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+            <Button BorderBrush="Transparent"  Cursor="Hand" Grid.Row="0" Background="#270138" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
                 <Image Source="\Resources\Images\menuW.png"></Image>
             </Button>
             <Button Command="{Binding GuideProfileCommand}"  BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#270138" VerticalAlignment="Center" Margin="0,5,10,5">
@@ -90,10 +77,45 @@
                 <Image Height="40" Width="35" Source="\Resources\Images\profileWhite.png"></Image>
             </Button>
             <Image Source="\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
-            <Label Foreground="Black"  Content="ᗯEᒪᑕOᗰE TO TᖇᗩᐯEᒪᗷᑌᗪᗪY" HorizontalAlignment="Center" Margin="0,198,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
+            <Label  x:Name="label" Foreground="Black"  FontFamily="Tw Cen Mt" Content="WELCOME TO TRAVELBUDDY" HorizontalAlignment="Center" Margin="0,210,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
 
             </Label>
-            <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="ᖴOᑌᑎᗪEᗪ Iᑎ 1996 Iᑎ ᑎOᐯI Sᗩᗪ, .TᖇᗩᐯEᒪᗷᑌᗪᗪY ᕼᗩS GᖇOᗯᑎ ᖴᖇOᗰ ᗩ Sᗰᗩᒪᒪ SEᖇᗷIᗩᑎ STᗩᖇTᑌᑭ TO OᑎE Oᖴ TᕼE ᗯOᖇᒪᗪ’S ᒪEᗩᗪIᑎG ᗪIGITᗩᒪ TᖇᗩᐯEᒪ ᑕOᗰᑭᗩᑎIES. TᖇᗩᐯEᒪᗷᑌᗪᗪY’S ᗰISSIOᑎ IS TO ᗰᗩKE IT EᗩSIEᖇ ᖴOᖇ EᐯEᖇYOᑎE TO E᙭ᑭEᖇIEᑎᑕE TᕼE ᗯOᖇᒪᗪ. TᖇᗩᐯEᒪᗷᑌᗪᗪY IS ᗩᐯᗩIᒪᗩᗷᒪE Iᑎ 43 ᒪᗩᑎGᑌᗩGES ᗩᑎᗪ OᖴᖴEᖇS ᗰOᖇE Tᕼᗩᑎ 28 ᗰIᒪᒪIOᑎ TOTᗩᒪ ᖇEᑭOᖇTEᗪ ᗩᑕᑕOᗰᗰOᗪᗩTIOᑎ ᒪISTIᑎGS, IᑎᑕᒪᑌᗪIᑎG OᐯEᖇ 6.6 ᗰIᒪᒪIOᑎ ᒪISTIᑎGS ᗩᒪOᑎE Oᖴ ᕼOᗰES, ᗩᑭᗩᖇTᗰEᑎTS ᗩᑎᗪ OTᕼEᖇ ᑌᑎIᑫᑌE ᑭᒪᗩᑕES TO STᗩY." VerticalAlignment="Top" Height="270" Width="656" FontSize="20"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Founded in 1996 in Novi Sad, TravelBuddy has grown from a small Serbian startup to one of the world's leading digital travel companies. TravelBuddy's mission is to make it easier for everyone to experience the world. TravelBuddy is available in 43 languages and offers more than 28 million total reported accommodation listings, including over 6.6 million listings alone of homes, apartments, and other unique places to stay." VerticalAlignment="Top" Height="270" Width="656" FontSize="23"/>
+        </Grid>
+
+        <Grid x:Name="InterfaceGrid" Background="#EDEFFF ">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="#0A0E30"/>
+            <Button x:Name="ButtonMenu" BorderBrush="Transparent"  Cursor="Hand" Grid.Row="0" Background="#0A0E30" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Height="50" Width="50">
+                <Image Source="\Resources\Images\menuW.png"></Image>
+            </Button>
+            <Button Command="{Binding GuideProfileCommand}"  BorderBrush="Transparent" Cursor="Hand" Grid.Row="0"  Foreground="White" HorizontalAlignment="Right"  Height="50" Width="50" Background="#0A0E30" VerticalAlignment="Center" Margin="0,5,10,5">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="White"
+                                    BorderThickness="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <Image  Height="40" Width="35" Source="\Resources\Images\profileWhite.png"></Image>
+            </Button>
+            <Image Source="\Resources\Images\logoB.png" Margin="431,29,431,499" Grid.Row="1"/>
+            <Label x:Name="myLabel" Foreground="Black"  FontFamily="Tw Cen Mt" Content="WELCOME TO TRAVELBUDDY" HorizontalAlignment="Center" Margin="0,210,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="60" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                        <TranslateTransform X="0" Y="0" />
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+            <TextBlock HorizontalAlignment="Center" Margin="0,346,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Founded in 1996 in Novi Sad, TravelBuddy has grown from a small Serbian startup to one of the world's leading digital travel companies. TravelBuddy's mission is to make it easier for everyone to experience the world. TravelBuddy is available in 43 languages and offers more than 28 million total reported accommodation listings, including over 6.6 million listings alone of homes, apartments, and other unique places to stay." VerticalAlignment="Top" Height="270" Width="656" FontSize="23"/>
 
         </Grid>
 
@@ -110,20 +132,21 @@
                 <Border Height="80" Width="80" Margin="10">
                     <Image Source="\Resources\Images\logoB.png"/>
                 </Border>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑭᖇOᖴIᒪE" Command="{Binding GuideProfileCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᖇEᗩTE TOᑌᖇ" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᒪIᐯE TᖇᗩᑕKIᑎG" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕᗩᑎᑕEᒪ TOᑌᖇ"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#E5B1FD  "  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ STᗩTS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#E5B1FD  " FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS" Width="221" Command="{Binding TourRequestsCommand}" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOᑌᖇ ᖇEᑫᑌESTS STᗩTS" Command="{Binding TourRequestsStatsCommand}"  Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᖇEᐯIEᗯS" Command="{Binding RatingsViewCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="ᑕOᗰᑭᒪE᙭ TOᑌᖇ" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
-                <Button BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="Log out" Command="{Binding LogOutCommand}" Width="221" Background="#E5B1FD" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Command="{Binding GuideProfileCommand}" Content="PROFILE" Width="221" Background="#C6CBFC" FontWeight="Bold" FontSize="19" Height="44" Margin="5"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="CREATE TOUR" Command="{Binding CreateTourCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="LIVE TRACKING" Command="{Binding LiveTrackingCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="CANCEL TOUR"  Command="{Binding CancelTourCommand}" FontWeight="Bold"  Width="221" Background="#C6CBFC"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR STATS" Command="{Binding TourStatsCommand}" FontWeight="Bold" Width="221" Background="#C6CBFC" FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR REQUESTS" Width="221" Command="{Binding TourRequestsCommand}" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="TOUR REQUESTS STATS" Command="{Binding TourRequestsStatsCommand}" Width="221" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="REVIEWS" Command="{Binding RatingsViewCommand}" Width="221" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="COMPLEX REQUESTS" Width="221" Command="{Binding ComplexTourCommand}" Background="#C6CBFC" FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
+                <Button FontFamily="Tw Cen Mt" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}" Content="GENERATE TOUR" Width="221" Background="#C6CBFC " FontWeight="Bold"  FontSize="19" Height="44" Margin="6"/>
             </StackPanel>
-            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#270138" >
+            <Button x:Name="ButtonClose" BorderBrush="Transparent" Cursor="Hand" Style="{StaticResource RoundButtonStyle}"  HorizontalAlignment="Center" Margin="0,675,0,0" VerticalAlignment="Top" Height="45" Width="100" Background="#0A0E30" >
                 <Image Height="30" Source="\Resources\Images\backW.jpg"></Image>
             </Button>
+
         </Grid>
     </Grid>
 </UserControl>
