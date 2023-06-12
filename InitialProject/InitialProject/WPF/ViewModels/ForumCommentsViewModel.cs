@@ -59,35 +59,48 @@ namespace InitialProject.WPF.ViewModels
         }
         private void SubmitComment() 
         {
-            Comment comment = _forumService.SubmitComment(SelectedForum, Comment, _owner);
-            if(!comment.CredentialAuthor)
+            if (Comment == null || Comment == "")
             {
-                MessageBox.Show("You do not own an accommodation on this location!");
-                Comment = "";
-                return;
+                MessageBox.Show("You have to write a comment to post!");
             }
-            Comment = "";
-            Comments.Add(comment);
+            else{
+                Comment comment = _forumService.SubmitComment(SelectedForum, Comment, _owner);
+                if (!comment.CredentialAuthor)
+                {
+                    MessageBox.Show("You do not own an accommodation on this location!");
+                    Comment = "";
+                    return;
+                }
+                Comment = "";
+                Comments.Add(comment);
+            }
         }
         private void ReportComment()
         {
-            string retVal = _forumService.ReportComment(SelectedComment, _owner);
-            if(retVal == "true") 
+            if (SelectedComment == null)
             {
-                MessageBox.Show("You have already reported this comment!");
+                MessageBox.Show("You have to select a comment!");
             }
-            else if(retVal == "This user was verified on this location!")
+            else
             {
-                MessageBox.Show(retVal);
-            }
-            else if(retVal == "This user is an owner on this location!")
-            {
-                MessageBox.Show(retVal);
-            }
-            Comments.Clear();
-            foreach (var comment in _forumService.GetComments())
-            {
-                Comments.Add(comment);
+                string retVal = _forumService.ReportComment(SelectedComment, _owner);
+                if (retVal == "true")
+                {
+                    MessageBox.Show("You have already reported this comment!");
+                }
+                else if (retVal == "This user was verified on this location!")
+                {
+                    MessageBox.Show(retVal);
+                }
+                else if (retVal == "This user is an owner on this location!")
+                {
+                    MessageBox.Show(retVal);
+                }
+                Comments.Clear();
+                foreach (var comment in _forumService.GetComments())
+                {
+                    Comments.Add(comment);
+                }
             }
         }
     }

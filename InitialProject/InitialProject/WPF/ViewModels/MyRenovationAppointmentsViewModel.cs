@@ -27,12 +27,19 @@ namespace InitialProject.WPF.ViewModels
         }
         private void CancelAppointment()
         {
-            _renovationService.CancelAppointment(SelectedAppointment.Id);
-            var appointments = _renovationService.GetAllAppointmentsByOwner(SelectedAppointment.Id);
-            Appointments.Clear();
-            foreach (var appointment in appointments)
+            if (SelectedAppointment == null)
             {
-                Appointments.Add(appointment);
+                MessageBox.Show("You have to select an appointment!");
+            }
+            else
+            {
+                _renovationService.CancelAppointment(SelectedAppointment.Id);
+                var appointments = _renovationService.GetAllAppointmentsByOwner(SelectedAppointment.Id);
+                Appointments.Clear();
+                foreach (var appointment in appointments)
+                {
+                    Appointments.Add(appointment);
+                }
             }
         }
     }

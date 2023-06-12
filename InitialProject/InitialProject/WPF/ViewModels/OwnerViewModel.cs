@@ -31,9 +31,8 @@ namespace InitialProject.WPF.ViewModels
             _navigationStore = navigationStore;
             _user = user;
 
-            AccommodationRegistrationCommand = new ExecuteMethodCommand(ShowAccommodationRegistrationView);
             ViewRatingsCommand = new ExecuteMethodCommand(ShowOwnerRatingsView);
-            MoveRequestsCommand = new ExecuteMethodCommand(ShowReservationMoveRequestsView);
+            //MoveRequestsCommand = new ExecuteMethodCommand(ShowReservationMoveRequestsView);
             //RateGuestCommand = new ExecuteMethodCommand(ShowGuestRatingView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
 
@@ -47,14 +46,6 @@ namespace InitialProject.WPF.ViewModels
             navigate.Execute(null);
         }
 
-        private void ShowAccommodationRegistrationView()
-        {
-            AccommodationRegistrationViewModel accommodationRegistrationViewModel = new AccommodationRegistrationViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, accommodationRegistrationViewModel));
-
-            navigate.Execute(null);
-        }
-
         /*private void ShowGuestRatingView()
         {
             GuestRatingViewModel guestRatingViewModel = new GuestRatingViewModel(_navigationStore, _user);
@@ -63,13 +54,13 @@ namespace InitialProject.WPF.ViewModels
             navigate.Execute(null);
         }*/
 
-        private void ShowReservationMoveRequestsView()
+        /*private void ShowReservationMoveRequestsView()
         {
             ReservationMoveRequestsViewModel reservationMoveRequestsViewModel = new ReservationMoveRequestsViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, reservationMoveRequestsViewModel));
 
             navigate.Execute(null);
-        }
+        }*/
 
         private void ShowOwnerRatingsView()
         {

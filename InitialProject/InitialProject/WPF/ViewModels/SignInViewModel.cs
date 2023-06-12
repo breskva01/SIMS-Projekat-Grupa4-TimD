@@ -31,6 +31,7 @@ namespace InitialProject.WPF.ViewModels
         private List<Accommodation> _accommodations;
         private readonly AccommodationRenovationService _renovationService;
         private List<AccommodationRenovation> _renovations;
+        private readonly UserNotificationService _userNotificationService;
 
         public SecureString Password { get; set; }
         private string _username;
@@ -69,6 +70,7 @@ namespace InitialProject.WPF.ViewModels
             _reservationService = new AccommodationReservationService();
             _accommodationService = new AccommodationService();
             _renovationService = new AccommodationRenovationService();
+            _userNotificationService = new UserNotificationService();
             _navigationStore = navigationStore;
         }
 
@@ -131,12 +133,22 @@ namespace InitialProject.WPF.ViewModels
             _user = _userService.GetByUsername(Username);
             bool IsNotified = true;
             _reservations = _reservationService.FindCompletedAndUnrated(_user.Id);
+            List<UserNotification> notifications = _userNotificationService.GetByUser(_user.Id);
             foreach (AccommodationReservation res in _reservations)
             {
                 if (DateOnly.FromDateTime(DateTime.Now) > res.LastNotification)
                 {
                     _reservationService.UpdateLastNotification(res);
+                    _userNotificationService.CreateNotification(_user.Id, "You have unrated guests!", DateTime.Now);
                     IsNotified = false;
+                }
+            }
+            foreach(UserNotification userNotification in notifications)
+            {
+                if(!userNotification.IsRead) 
+                {
+                    IsNotified = false;
+                    break;
                 }
             }
             _accommodations = _accommodationService.GetAllOwnersAccommodations(_user.Id);

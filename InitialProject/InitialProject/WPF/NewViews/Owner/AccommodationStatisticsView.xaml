@@ -114,7 +114,7 @@
                         <DataGridTextColumn Header="City" Width="*" Binding="{Binding City}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button Grid.Row="2" Content="New accommodation"></Button>
+                <Button Grid.Row="2" Content="New accommodation" Command="{Binding NewAccommodationCommand}"></Button>
                 <Label Grid.Row="3" FontSize="24" Margin="20,10,10,53" Grid.RowSpan="2">Least popular locations</Label>
                 <DataGrid Grid.Row="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding UnpopularLocations}" SelectionMode="Single" SelectedItem="{Binding SelectedUnpopularLocation}">
                     <DataGrid.Columns>

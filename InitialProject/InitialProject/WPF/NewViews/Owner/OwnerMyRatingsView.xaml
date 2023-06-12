@@ -38,12 +38,13 @@
         <DataGrid Grid.Row="1" x:Name="reservationsDataGrid" Foreground="DarkCyan" FontFamily="Impact" FontSize="18" Background="LightBlue" AutoGenerateColumns="False" IsReadOnly="True"
                   ItemsSource="{Binding Path=OwnerRatings, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="128" Header="First Name" Binding="{Binding Reservation.Guest.FirstName}"/>
-                <DataGridTextColumn Width="128" Header="Last Name" Binding="{Binding Reservation.Guest.LastName}"/>
-                <DataGridTextColumn Width="128" Header="Location" Binding="{Binding Location}"/>
-                <DataGridTextColumn Width="128" Header="Hygiene" Binding="{Binding Hygiene}"/>
-                <DataGridTextColumn Width="128" Header="Pleasantness" Binding="{Binding Pleasantness}"/>
-                <DataGridTextColumn Width="128" Header="Fairness" Binding="{Binding Fairness}"/>
+                <DataGridTextColumn Width="100" Header="First Name" Binding="{Binding Reservation.Guest.FirstName}"/>
+                <DataGridTextColumn Width="100" Header="Last Name" Binding="{Binding Reservation.Guest.LastName}"/>
+                <DataGridTextColumn Width="185" Header="Accommodation" Binding="{Binding Reservation.Accommodation.Name}"/>
+                <DataGridTextColumn Width="90" Header="Location" Binding="{Binding Location}"/>
+                <DataGridTextColumn Width="90" Header="Hygiene" Binding="{Binding Hygiene}"/>
+                <DataGridTextColumn Width="110" Header="Pleasantness" Binding="{Binding Pleasantness}"/>
+                <DataGridTextColumn Width="90" Header="Fairness" Binding="{Binding Fairness}"/>
                 <DataGridTextColumn Width="*" Header="Parking" Binding="{Binding Parking}"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -52,7 +53,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Generate PDF" FontSize="28" Height="40" Width="180"/>
+            <Button Grid.Row="0" Content="Generate PDF" Command="{Binding GeneratePDFCommand}" FontSize="28" Height="40" Width="180"/>
             <Button Grid.Row="1" Content="Close" FontSize="28" Width="180" Height="40" Click="Close_Click"/>
         </Grid>
     </Grid>

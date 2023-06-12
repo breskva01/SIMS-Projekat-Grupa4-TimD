@@ -23,14 +23,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Ellipse">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsNotified}" Value="False">
-                    <Setter Property="Fill" Value="Red" />
-                    <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="DarkCyan"/>
             <Setter Property="FontFamily" Value="Impact"/>
@@ -59,13 +51,11 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Row="2" Width="415" Height="40" Content="Back" Command="{Binding BackCommand}" FontSize="32" Margin="308,209,307,56"/>
-        <Image Grid.Row="2" Width="25" Source="../../../Resources/Images/notificationBell1.png" Margin="973,2,32,-2"></Image>
-        <Ellipse Grid.Row="2" Width="10" Height="10" Margin="986,143,34,152"></Ellipse>
-        <Button Grid.Row="2" Width="415" Height="40" Content="Reservation move requests" FontSize="32" Margin="558,144,57,121"/>
+        <Button Grid.Row="2" Width="415" Height="40" Content="Reservation move requests" Command="{Binding ShowReservationMoveRequestsViewCommand}" FontSize="32" Margin="558,144,57,121"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Renovation appointments" Command="{Binding ShowMyRenovationAppointmentsViewCommand}" FontSize="32" Margin="558,79,57,186"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Reserve renovation" Command="{Binding ShowScheduleRenovationViewCommand}" FontSize="32" Margin="558,14,57,251"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Statistics" Command="{Binding ShowAccommodationStatisticsViewCommand}" FontSize="32" Margin="27,144,588,121"/>
         <Button Grid.Row="2" Width="415" Height="40" Content="Remove accommodation" FontSize="32" Margin="27,79,588,186"/>
-        <Button Grid.Row="2" Width="415" Height="40" Content="Register new accommodation" FontSize="32" Margin="27,14,588,251"/>
+        <Button Grid.Row="2" Width="415" Height="40" Content="Register new accommodation" Command="{Binding ShowAccommodationRegistrationViewCommand}" FontSize="32" Margin="27,14,588,251"/>
     </Grid>
 </UserControl>

@@ -2,6 +2,7 @@
 using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using InitialProject.Domain.Models;
+using InitialProject.WPF.NewViews;
 using InitialProject.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace InitialProject.WPF.ViewModels
@@ -22,20 +24,7 @@ namespace InitialProject.WPF.ViewModels
         private readonly User _owner;
         private readonly AccommodationReservationRequestService _requestService;
         private readonly NavigationStore _navigationStore;
-
-        private string _comment;
-        public string Comment
-        {
-            get => _comment;
-            set
-            {
-                if (value != _comment)
-                {
-                    _comment = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public bool IsNotified;
 
         private AccommodationReservationMoveRequest _selectedRequest { get; set; }
         public AccommodationReservationMoveRequest SelectedRequest 
@@ -73,9 +62,10 @@ namespace InitialProject.WPF.ViewModels
         public ICommand BackNavigateCommand =>
         new NavigateCommand(new NavigationService(_navigationStore, GoBack()));
 
-        public ReservationMoveRequestsViewModel(NavigationStore navigationStore, User user) 
+        public ReservationMoveRequestsViewModel(NavigationStore navigationStore, User user, bool isNotified) 
         {
             _owner = user;
+            IsNotified = isNotified;
             _requestService = new AccommodationReservationRequestService();
             _reservationService= new AccommodationReservationService();
             _navigationStore = navigationStore;
@@ -91,15 +81,28 @@ namespace InitialProject.WPF.ViewModels
 
         private void Approve()
         {
-            _reservationService.MoveReservation(SelectedRequest.Reservation.Id, SelectedRequest.RequestedCheckIn, SelectedRequest.RequestedCheckOut);
-            _requestService.ApproveRequest(SelectedRequest.Reservation.Id);
-            MoveRequests.Remove(SelectedRequest);
+            if (SelectedRequest == null)
+            {
+                MessageBox.Show("You have to select a request!");
+            }
+            else
+            {
+                _reservationService.MoveReservation(SelectedRequest.Reservation.Id, SelectedRequest.RequestedCheckIn, SelectedRequest.RequestedCheckOut);
+                _requestService.ApproveRequest(SelectedRequest.Reservation.Id);
+                MoveRequests.Remove(SelectedRequest);
+            }
         }
         private void Deny()
         {
-            _requestService.DenyRequest(SelectedRequest.Reservation.Id, Comment);
-            Comment = "";
-            MoveRequests.Remove(SelectedRequest);
+            if (SelectedRequest == null)
+            {
+                MessageBox.Show("You have to select a request!");
+            }
+            else
+            {
+                RequestDeniedView requestDeniedView = new RequestDeniedView(SelectedRequest);
+                requestDeniedView.Show();
+            }
         }
         private string CheckAvailability(int accommodationId, DateOnly checkIn, DateOnly checkOut)
         {
@@ -109,9 +112,9 @@ namespace InitialProject.WPF.ViewModels
         {
             BackNavigateCommand.Execute(null);
         }
-        private OwnerViewModel GoBack()
+        private AccommodationsViewModel GoBack()
         {
-            return new OwnerViewModel(_navigationStore, _owner);
+            return new AccommodationsViewModel(_navigationStore, _owner, IsNotified);
         }
     }
 }

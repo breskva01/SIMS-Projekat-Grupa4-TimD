@@ -39,6 +39,7 @@ namespace InitialProject.WPF.ViewModels
         public ICommand ViewProfileCommand { get; }
         public ICommand SignOutCommand { get; }
         public ICommand ViewForumsCommand { get; }
+        public ICommand ViewHelpCommand { get; }
         public OwnerMainMenuViewModel(NavigationStore navigationStore, User user, bool isNotified)
         {
             _navigationStore = navigationStore;
@@ -47,6 +48,7 @@ namespace InitialProject.WPF.ViewModels
             ViewProfileCommand = new ExecuteMethodCommand(ShowOwnerProfileView);
             SignOutCommand = new ExecuteMethodCommand(SignOut);
             ViewForumsCommand = new ExecuteMethodCommand(ShowForumSearchView);
+            ViewHelpCommand = new ExecuteMethodCommand(ShowHelp);
         }
 
         private void SignOut()
@@ -69,6 +71,11 @@ namespace InitialProject.WPF.ViewModels
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, forumSearchViewModel));
 
             navigate.Execute(null);
+        }
+        private void ShowHelp()
+        {
+            HelpView helpView = new HelpView();
+            helpView.Show();
         }
     }
 }

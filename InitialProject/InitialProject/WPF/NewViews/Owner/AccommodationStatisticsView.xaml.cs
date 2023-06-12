@@ -23,10 +23,10 @@ namespace InitialProject.WPF.NewViews.Owner
     /// </summary>
     public partial class AccommodationStatisticsView : Window
     {
-        public AccommodationStatisticsView(Accommodation selectedAccommodation)
+        public AccommodationStatisticsView(Accommodation selectedAccommodation, User owner)
         {
             InitializeComponent();
-            AccommodationStatisticsViewModel accommodationStatisticsViewModel= new AccommodationStatisticsViewModel(selectedAccommodation);
+            AccommodationStatisticsViewModel accommodationStatisticsViewModel= new AccommodationStatisticsViewModel(selectedAccommodation, owner);
             populateComboBox();
             DataContext = accommodationStatisticsViewModel;
         }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.WPF.NewViews.Owner"
         mc:Ignorable="d"
-        Title="MyRenovationAppointmentsView" Height="550" Width="900">
+        Title="MyRenovationAppointmentsView" Height="550" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush ImageSource="../../../Resources/Images/OwnerLightBlueNew.jpg"/>
     </Window.Background>
@@ -44,7 +44,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontSize="40" Margin="210,28,210,189" Grid.RowSpan="2" >My renovation appoinmtents</Label>
+        <Label Grid.Row="0" FontSize="40" Margin="190,28,190,189" Grid.RowSpan="2" Width="480" >My renovation appointments</Label>
         <DataGrid Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Appointments}" SelectedItem="{Binding SelectedAppointment}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="180" Header="Accommodation" Binding="{Binding Accommodation.Name}"/>

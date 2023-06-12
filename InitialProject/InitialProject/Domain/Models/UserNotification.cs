@@ -14,7 +14,7 @@ namespace InitialProject.Domain.Models
         public int UserId { get; set; }
         public string Message { get; set; }
         public DateTime Time { get; set; }
-
+        public bool IsRead { get; set; }
 
         public UserNotification()
         {
@@ -38,6 +38,7 @@ namespace InitialProject.Domain.Models
             UserId = Convert.ToInt32(values[1]);
             Message = values[2];
             Time = DateTime.ParseExact(values[3], "d.M.yyyy. HH:mm:ss", CultureInfo.InvariantCulture);
+            IsRead= Convert.ToBoolean(values[4]);
         }
 
         public string[] ToCSV()
@@ -48,6 +49,7 @@ namespace InitialProject.Domain.Models
                 UserId.ToString(),
                 Message,
                 Time.ToString("dd.MM.yyyy. HH:mm:ss"),
+                IsRead.ToString()
             };
             return csvValues;
         }

@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -129,7 +131,7 @@ namespace InitialProject.WPF.ViewModels
             _navigationStore = navigationStore;
             _accommodations = _accommodationService.GetAll();
             _user = user;
-            IsNotified = true;
+            IsNotified = isNotified;
             AccommodationReservations = new ObservableCollection<AccommodationReservation>(_accommodationReservationService.FindCompletedAndUnrated(_user.Id));
             InitializeCommands();
         }
@@ -146,12 +148,23 @@ namespace InitialProject.WPF.ViewModels
 
         private void RateGuest()
         {
-            int ownerId = SelectedReservation.Accommodation.Owner.Id;
-            int guestId = SelectedReservation.Guest.Id;
-            GuestRating guestRating = _guestRatingService.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), int.Parse(Communication), int.Parse(Timeliness), int.Parse(NoiseLevel), int.Parse(OverallExperience), Comment, SelectedReservation);
-            _accommodationReservationService.MarkGuestAsRated(SelectedReservation);
-            AccommodationReservations.Remove(SelectedReservation);
-            ResetData();
+            if(SelectedReservation == null)
+            {
+                MessageBox.Show("You have to select a reservation!");
+            }
+            else if (!IsValid)
+            {
+                MessageBox.Show("You have to fill in ratings!");
+            }
+            else 
+            {
+                int ownerId = SelectedReservation.Accommodation.Owner.Id;
+                int guestId = SelectedReservation.Guest.Id;
+                GuestRating guestRating = _guestRatingService.RateGuest(ownerId, guestId, int.Parse(Hygiene), int.Parse(RespectsRules), int.Parse(Communication), int.Parse(Timeliness), int.Parse(NoiseLevel), int.Parse(OverallExperience), Comment, SelectedReservation);
+                _accommodationReservationService.MarkGuestAsRated(SelectedReservation);
+                AccommodationReservations.Remove(SelectedReservation);
+                ResetData();
+            }
         }
         private void Back()
         {
@@ -171,7 +184,56 @@ namespace InitialProject.WPF.ViewModels
         {
             return new OwnerProfileViewModel(_navigationStore, (Owner)_user, IsNotified);
         }
+        public string this[string columnName]
+        {
+            get
+            {
+                string? error = null;
+                string requiredMessage = "Required field";
+                switch (columnName)
+                {
+                    case nameof(Hygiene):
+                        if
+                            (string.IsNullOrEmpty(Hygiene)) error = requiredMessage;
+                        break;
+                    case nameof(RespectsRules):
+                        if (string.IsNullOrEmpty(Communication)) error = requiredMessage;
+                        break;
+                    case nameof(Timeliness):
+                        if (string.IsNullOrEmpty(Timeliness)) error = requiredMessage;
+                        break;
+                    case nameof(OverallExperience):
+                        if (string.IsNullOrEmpty(OverallExperience)) error = requiredMessage;
+                        break;
+                    case nameof(NoiseLevel):
+                        if (string.IsNullOrEmpty(NoiseLevel)) error = requiredMessage;
+                        break;
+                    default:
+                        break;
+                }
+                return error;
 
+            }
+        }
+        public string Error => null;
+        public bool IsValid
+        {
+            get
+            {
+                foreach (var property in new string[]
+                {
+                    nameof(Hygiene),
+                    nameof(RespectsRules),
+                    nameof(Timeliness),
+                    nameof(NoiseLevel),
+                    nameof(OverallExperience)})
+                {
+                    if (this[property] != null) return false;
+                }
+                return true;
+            }
+
+        }
 
     }
 }

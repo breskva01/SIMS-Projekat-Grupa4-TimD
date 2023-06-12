@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\apartman_liman.jpg" />
+    <None Remove="Resources\Images\appLogo1.png" />
     <None Remove="Resources\Images\backgroundLP.jpg" />
     <None Remove="Resources\Images\backSquare.png" />
     <None Remove="Resources\Images\backW.jpg" />
@@ -18,6 +19,7 @@
     <None Remove="Resources\Images\bell.png" />
     <None Remove="Resources\Images\berlin.jpg" />
     <None Remove="Resources\Images\blueCheck.png" />
+    <None Remove="Resources\Images\bluePlus.png" />
     <None Remove="Resources\Images\brazil_cottage.jpg" />
     <None Remove="Resources\Images\brvnara_rumunija.jpg" />
     <None Remove="Resources\Images\brvnara_tara.jpg" />
@@ -80,6 +82,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="MaterialDesignThemes" Version="2.4.0.1044" />
     <PackageReference Include="Microsoft.Toolkit" Version="7.1.2" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
@@ -88,12 +91,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\appLogo1.png" />
     <Resource Include="Resources\Images\bell.png" />
     <Resource Include="Resources\Images\backgroundLP.jpg" />
     <Resource Include="Resources\Images\backSquare.png" />
     <Resource Include="Resources\Images\backW.jpg" />
     <Resource Include="Resources\Images\berlin.jpg" />
     <Resource Include="Resources\Images\blueCheck.png" />
+    <Resource Include="Resources\Images\bluePlus.png" />
     <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\checkmark.png" />
     <Resource Include="Resources\Images\filter.png" />

@@ -51,8 +51,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="100,0,20,0" Grid.Row="1" Grid.Column="0" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Impact" Foreground="#FF286DBB" Text="{Binding FirstName}"></TextBlock>
-            <TextBlock  Margin="20,0,100,0" Grid.Row="1" Grid.Column="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Impact" Foreground="#FF286DBB" Text="{Binding LastName}"></TextBlock>
+            <Label HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="0" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Impact" Foreground="#FF286DBB" Content="{Binding FirstName}"></Label>
+            <Label HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Impact" Foreground="#FF286DBB" Content="{Binding LastName}"></Label>
             <Label Grid.Row="2" Grid.Column="0" FontSize="28" VerticalAlignment="Center" Margin="35,10,20,10" FontFamily="Impact" Foreground="DarkCyan">Username:</Label>
             <Label Grid.Row="3" Grid.Column="0" FontSize="28" VerticalAlignment="Center" Margin="35,10,20,10" FontFamily="Impact" Foreground="DarkCyan">Email:</Label>
             <Label Grid.Row="4" Grid.Column="0" FontSize="28" VerticalAlignment="Center" Margin="35,10,20,10" FontFamily="Impact" Foreground="DarkCyan">Phone number:</Label>
@@ -81,7 +81,7 @@
             <Button Grid.Row="3" Width="290" Height="40" Content="My accommodations" Command="{Binding ShowMyAccommodationsViewCommand}" FontFamily="Impact" FontSize="32"/>
             <Button Grid.Row="4" Width="290" Height="40" Content="Rate guests" Command="{Binding ShowRateGuestsViewCommand}" FontFamily="Impact" FontSize="32"/>
             <Button Grid.Row="5" Width="290" Height="40" Content="My ratings" Command="{Binding ShowMyRatingsViewCommand}" FontFamily="Impact" FontSize="32"/>
-            <Button Grid.Row="6" Width="290" Height="40" Content="Notifications" FontFamily="Impact" FontSize="32"/>
+            <Button Grid.Row="6" Width="290" Height="40" Content="Notifications" Command="{Binding ShowNotificationsViewCommand}" FontFamily="Impact" FontSize="32"/>
             <Image Grid.Row="5" Width="25" Margin="408,58,83,2" Source="../../../Resources/Images/notificationBell1.png" Grid.RowSpan="2"></Image>
             <Ellipse Grid.Row="6" Width="10" Height="10" Margin="420,18,85,33"></Ellipse>
             <Button Grid.Row="9" Width="140" Height="40" Content="Back" Command="{Binding BackCommand}" FontFamily="Impact" FontSize="32" Margin="252,11,103,10"/>

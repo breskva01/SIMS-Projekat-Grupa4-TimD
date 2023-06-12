@@ -16,11 +16,13 @@ namespace InitialProject.WPF.ViewModels
     {
         private Owner _owner;
         private readonly NavigationStore _navigationStore;
+        private readonly UserNotificationService _userNotificationService;
         public ICommand SignOutCommand { get; }
         public ICommand BackCommand { get; }
         public ICommand ShowRateGuestsViewCommand { get; }
         public ICommand ShowMyAccommodationsViewCommand { get; }
         public ICommand ShowMyRatingsViewCommand { get; }
+        public ICommand ShowNotificationsViewCommand { get; }
         private string _firstName;
         public string FirstName
         {
@@ -129,6 +131,7 @@ namespace InitialProject.WPF.ViewModels
         public OwnerProfileViewModel(NavigationStore navigationStore, Owner owner, bool isNotified)
         {
             _navigationStore = navigationStore;
+            _userNotificationService = new UserNotificationService();
             _owner = owner;
             IsNotified = isNotified;
             FirstName = _owner.FirstName;
@@ -151,6 +154,7 @@ namespace InitialProject.WPF.ViewModels
             ShowRateGuestsViewCommand = new ExecuteMethodCommand(ShowRateGuestsView);
             ShowMyAccommodationsViewCommand = new ExecuteMethodCommand(ShowMyAccommodationsView);
             ShowMyRatingsViewCommand = new ExecuteMethodCommand(ShowMyRatingsView);
+            ShowNotificationsViewCommand = new ExecuteMethodCommand(ShowNotificationsView);
         }
         private void SignOut()
         {
@@ -184,6 +188,13 @@ namespace InitialProject.WPF.ViewModels
         {
             OwnerMyRatingsView ownerMyRatingsView = new OwnerMyRatingsView(_navigationStore, _owner);
             ownerMyRatingsView.Show();
+        }
+        private void ShowNotificationsView()
+        {
+            NotificationsView notificationsView = new NotificationsView(_owner);
+            IsNotified = true;
+            _userNotificationService.UpdateUnreadNotifications(_owner.Id);
+            notificationsView.Show();
         }
     }
 }

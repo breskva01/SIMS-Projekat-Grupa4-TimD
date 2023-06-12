@@ -31,6 +31,7 @@ namespace InitialProject.Domain.Models
             PostTime = postTime;
             CredentialAuthor = credentialAuthor;
             ReportCount = reportCount;
+            ReportIds = new List<int>();
         }
 
         public Comment()

@@ -11,6 +11,9 @@ using OxyPlot.Wpf;
 using System.Windows.Controls;
 using InitialProject.Application.Services;
 using System.Collections.ObjectModel;
+using InitialProject.WPF.NewViews;
+using System.Windows.Input;
+using InitialProject.Application.Commands;
 
 namespace InitialProject.WPF.ViewModels
 {
@@ -26,6 +29,7 @@ namespace InitialProject.WPF.ViewModels
         public ObservableCollection<Location> UnpopularLocations { get; set; }
         public Location SelectedPopularLocation { get; set; }
         public Location SelectedUnpopularLocation { get; set; }
+        private User _owner;
         private string _mostBooked;
         public string MostBooked
         {
@@ -96,8 +100,10 @@ namespace InitialProject.WPF.ViewModels
                 }
             }
         }
-        public AccommodationStatisticsViewModel(Accommodation selectedAccommodation)
+        public ICommand NewAccommodationCommand { get; }
+        public AccommodationStatisticsViewModel(Accommodation selectedAccommodation, User owner)
         {
+            _owner = owner;
             _selectedAccommodation = selectedAccommodation;
             Reservations = new PlotModel { Title = "Reservations" };
             Cancellations = new PlotModel { Title = "Cancellations" };
@@ -106,6 +112,7 @@ namespace InitialProject.WPF.ViewModels
             _accommodationStatisticsService = new AccommodationStatisticsService();
             PopularLocations = new ObservableCollection<Location>(_accommodationStatisticsService.GetMostPopularLocations());
             UnpopularLocations = new ObservableCollection<Location>(_accommodationStatisticsService.GetMostUnpopularLocations());
+            NewAccommodationCommand = new ExecuteMethodCommand(NewAccommodation);
             ShowYearlyGraphs();
 
         }
@@ -206,6 +213,11 @@ namespace InitialProject.WPF.ViewModels
         private void DisplayMostBookedMonth()
         {
             MostBooked = _accommodationStatisticsService.GetMostBookedMonth(_selectedAccommodation.Id, int.Parse(Year));
+        }
+        private void NewAccommodation() 
+        {
+            AccommodationRegistrationView accommodationRegistrationView = new AccommodationRegistrationView(_owner);
+            accommodationRegistrationView.Show();
         }
     }
 }

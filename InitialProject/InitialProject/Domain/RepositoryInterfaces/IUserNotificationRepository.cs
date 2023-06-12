@@ -17,5 +17,6 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public void NotifySimilarRequests(Tour tour, List<TourRequest> requests);
         public int NextId();
         public void Delete(UserNotification notification);
+        public void UpdateUnreadNotifications(int id);
     }
 }

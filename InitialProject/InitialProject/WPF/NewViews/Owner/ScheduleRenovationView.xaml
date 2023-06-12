@@ -37,6 +37,12 @@
             <Setter Property="Background" Value="LightBlue"/>
             <Setter Property="Width" Value="290"/>
         </Style>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+        </ControlTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -60,7 +66,7 @@
             <Label Grid.Row="2" Grid.Column="0" FontSize="24" Width="110" Height="40" Margin="38,0,38,0">Duration:</Label>
             <DatePicker Grid.Row="0" Grid.Column="1" Width="165" Height="40" FontFamily="Impact" FontSize="24" Foreground="#FF286DBB" BorderThickness="0" SelectedDate="{Binding Start, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
             <DatePicker Grid.Row="1" Grid.Column="1" Width="165" Height="40" FontFamily="Impact" FontSize="24" Foreground="#FF286DBB" BorderThickness="0" SelectedDate="{Binding End, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
-            <TextBox Grid.Row="2" Grid.Column="1" Width="40" Height="30" FontFamily="Impact" FontSize="24" Foreground="#FF286DBB" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="2" Grid.Column="1" Width="40" Height="30" FontFamily="Impact" FontSize="24" Foreground="#FF286DBB" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></TextBox>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -89,7 +95,7 @@
             <TextBlock Grid.Column="0" FontFamily="Impact" FontSize="24" Foreground="DarkCyan" TextWrapping="Wrap" Grid.ColumnSpan="2" Margin="38,18,149,-18">Description of renovation:</TextBlock>
             <TextBox Grid.Column="1" Width="140" Height="40" Text="{Binding Description}"></TextBox>
         </Grid>
-        <Button Grid.Row="3" Content="Schedule renovation" Margin="45,25,45,60" Command="{Binding ScheduleRenovationCommand}"></Button>
-        <Button Grid.Row="3" Content="Close" Margin="45,75,45,10" Click="Close_Click"></Button>
+        <Button Grid.Row="3" Content="Schedule renovation" Margin="35,25,35,60" Command="{Binding ScheduleRenovationCommand}"></Button>
+        <Button Grid.Row="3" Content="Close" Margin="35,75,35,10" Click="Close_Click"></Button>
     </Grid>
 </Window>

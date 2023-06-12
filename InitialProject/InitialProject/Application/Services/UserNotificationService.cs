@@ -3,6 +3,7 @@ using InitialProject.Application.Injector;
 using InitialProject.Application.Observer;
 using InitialProject.Domain.Models;
 using InitialProject.Domain.RepositoryInterfaces;
+using InitialProject.Repositories.FileHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,15 @@ namespace InitialProject.Application.Services
     {
         private readonly List<IObserver> _observers;
         private readonly IUserNotificationRepository _repository;
-        private readonly UserService _userService;
+        private readonly IAccommodationRepository _accommodationRepository;
+        private readonly IUserRepository _userRepository;
         private readonly TourRequestService _tourRequestService;
         public UserNotificationService()
         {
             _observers = new List<IObserver>();
             _repository = RepositoryInjector.Get<IUserNotificationRepository>();
+            _accommodationRepository = RepositoryInjector.Get<IAccommodationRepository>();
+            _userRepository = RepositoryInjector.Get<IUserRepository>();
             _tourRequestService = new TourRequestService();
         }
 
@@ -61,7 +65,21 @@ namespace InitialProject.Application.Services
         {
             return _repository.Update(notification);
         }
-
+        public void OpenedForumNotification(Location location, string topic)
+        {
+            List<User> users = _userRepository.GetAll();
+            List<Accommodation> accommodations = _accommodationRepository.GetAll();
+            foreach (User user in users)
+            {
+                foreach (Accommodation accommodation in accommodations)
+                {
+                    if (accommodation.Owner.Id == user.Id && accommodation.Location == location)
+                    {
+                        CreateNotification(user.Id, "A new forum " + topic + " for the location " + location.Country + " - " + location.City + " has opened. Go check it out!", DateTime.Now);
+                    }
+                }
+            }
+        }
 
         public void Subscribe(IObserver observer)
         {
@@ -77,6 +95,10 @@ namespace InitialProject.Application.Services
             {
                 observer.Update();
             }
+        }
+        public void UpdateUnreadNotifications(int id)
+        {
+            _repository.UpdateUnreadNotifications(id);
         }
     }
 }

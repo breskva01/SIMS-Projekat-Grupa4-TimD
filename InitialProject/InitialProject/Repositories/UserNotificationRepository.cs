@@ -15,7 +15,6 @@ namespace InitialProject.Repositories
         private readonly UserNotificationFileHandler _userNotificationFileHandler;
         private readonly UserFileHandler _userFileHandler;
         private List<UserNotification> _notifications;
-
         public UserNotificationRepository()
         {
             _userNotificationFileHandler = new UserNotificationFileHandler();
@@ -44,15 +43,16 @@ namespace InitialProject.Repositories
 
         public List<UserNotification> GetByUser(int userId)
         {
-            List<UserNotification> notifications = GetAll();
-            foreach (UserNotification un in notifications)
+            List<UserNotification> notifications = GetAll(); 
+            List<UserNotification> userNotifications = new List<UserNotification>();
+            foreach (UserNotification un in notifications.ToList())
             {
                 if (un.UserId == userId)
                 {
-                    notifications.Add(un);
+                    userNotifications.Add(un);
                 }
             }
-            return notifications;
+            return userNotifications;
         }
 
         public int NextId()
@@ -114,6 +114,20 @@ namespace InitialProject.Repositories
             _notifications.Add(notification);
             _userNotificationFileHandler.Save(_notifications);
             return notification;
+        }
+        public void UpdateUnreadNotifications(int id)
+        {
+            _notifications = _userNotificationFileHandler.Load();
+            foreach(UserNotification notification in _notifications.ToList())
+            {
+                if(notification.UserId == id && !notification.IsRead)
+                {
+                    _notifications.Remove(notification);
+                    notification.IsRead = true;
+                    _notifications.Add(notification);
+                }
+            }
+            _userNotificationFileHandler.Save(_notifications);
         }
     }
 }

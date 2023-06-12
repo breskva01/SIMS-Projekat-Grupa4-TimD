@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace InitialProject.WPF.NewViews
 {
     /// <summary>
-    /// Interaction logic for AccommodationRegistrationView.xaml
+    /// Interaction logic for HelpView.xaml
     /// </summary>
-    public partial class AccommodationRegistrationView : UserControl
+    public partial class HelpView : Window
     {
-        public AccommodationRegistrationView()
+        public HelpView()
         {
             InitializeComponent();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

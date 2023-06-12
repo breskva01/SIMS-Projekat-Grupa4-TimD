@@ -14,10 +14,12 @@ namespace InitialProject.Application.Services
     {
         private readonly IForumRepository _forumRepository;
         private readonly ICommentRepository _commentRepository;
+        private readonly UserNotificationService _userNotificationService;
         public ForumService()
         {
             _forumRepository = RepositoryInjector.Get<IForumRepository>();
             _commentRepository = RepositoryInjector.Get<ICommentRepository>();
+            _userNotificationService = new UserNotificationService();
         }
         public void OpenForum(string topic, User iniator, string startingQuestion, Location location)
         {
@@ -28,6 +30,8 @@ namespace InitialProject.Application.Services
             _forumRepository.Save(forum);
             _commentRepository.Save(comment);
             //TO DO: Napravite obavestenje za vlasnike
+            _userNotificationService.OpenedForumNotification(location, topic);
+
         }
         public void Close(Forum forum)
         {
