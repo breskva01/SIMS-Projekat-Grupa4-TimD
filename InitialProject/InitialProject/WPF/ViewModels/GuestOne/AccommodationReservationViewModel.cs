@@ -10,6 +10,9 @@ using InitialProject.Application.Services;
 using InitialProject.Application.Stores;
 using System.Windows.Input;
 using InitialProject.Application.Commands;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Diagnostics;
 
 namespace InitialProject.WPF.ViewModels.GuestOne
 {
@@ -44,6 +47,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
         public ICommand NavigateImageBrowserCommand { get; }
         public ICommand FindAvailableReservationsCommand { get; }
         public ICommand NavigateAccommodationBrowserCommand { get; }
+        public ICommand GeneratePDFCommand { get; }
         public AccommodationReservationViewModel(NavigationStore navigationStore ,Guest1 user, Accommodation accommodation)
         {
             StartDate = DateTime.Now;
@@ -57,6 +61,7 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             FindAvailableReservationsCommand = new ExecuteMethodCommand(GetAvailableReservations);
             NavigateAccommodationBrowserCommand = new ExecuteMethodCommand(NavigateAcoommodationBrowser);
             NavigateImageBrowserCommand = new ImageClickCommand(NavigateImageBrowser);
+            GeneratePDFCommand = new ExecuteMethodCommand(PreparePDF);
         }
 
         private void GetAvailableReservations()
@@ -89,6 +94,50 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             else
                 MessageBox.Show("Please select the desired date range.");
         }
+        private void PreparePDF()
+        {
+            string imagePath1 = "../../../Resources/Images/ReservationStep1.png";
+            string imagePath2 = "../../../Resources/Images/ReservationStep2.png";
+            string outputFilePath = "C:/Users/vukma/Documents/GitHub/SIMS-Projekat-Grupa4-TimD/InitialProject/InitialProject/Resources/PDF/output.pdf";
+
+            GeneratePDF(imagePath1, imagePath2, outputFilePath);
+
+            // Open the generated PDF file
+            Process.Start("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", outputFilePath);
+        }
+        public void GeneratePDF(string imagePath1, string imagePath2, string outputFilePath)
+        {
+            using (iTextSharp.text.Document doc = new iTextSharp.text.Document())
+            {
+                // Calculate the dimensions of the images
+                iTextSharp.text.Image img1 = iTextSharp.text.Image.GetInstance(imagePath1);
+                iTextSharp.text.Image img2 = iTextSharp.text.Image.GetInstance(imagePath2);
+
+                // Set the page size based on the larger image dimensions
+                doc.SetPageSize(new iTextSharp.text.Rectangle(0, 0, Math.Max(img1.Width, img2.Width), Math.Max(img1.Height, img2.Height)));
+
+                using (FileStream fs = new FileStream(outputFilePath, FileMode.Create))
+                {
+                    PdfWriter writer = PdfWriter.GetInstance(doc, fs);
+                    doc.Open();
+
+                    // Add the first image to the PDF
+                    img1.SetAbsolutePosition(0, 0);
+                    doc.Add(img1);
+
+                    // Add a new page
+                    doc.NewPage();
+
+                    // Add the second image to the PDF
+                    img2.SetAbsolutePosition(0, 0);
+                    doc.Add(img2);
+
+                    doc.Close();
+                }
+            }
+        }
+
+
         private void ShowDatePicker(List<AccommodationReservation> reservations)
         {
             var viewModel = new AccommodationReservationDatePickerViewModel(_navigationStore, reservations);

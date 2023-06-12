@@ -413,7 +413,8 @@
             Grid.Column="2"
             Content="?"
             FontSize="22"
-            ToolTip="{local:Loc PDF}"/>
+            ToolTip="{local:Loc PDF}"
+            Command="{Binding GeneratePDFCommand}"/>
             
     </Grid>
 </UserControl>

@@ -13,6 +13,10 @@ using System.Windows;
 using InitialProject.Application.Services;
 using InitialProject.Application.Commands;
 using InitialProject.Application.Stores;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Reflection.Metadata;
 
 namespace InitialProject.WPF.ViewModels.GuestOne
 {
@@ -176,7 +180,6 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                     return "";
             }
         }
-
         private void ShowReservationForm(Accommodation accommodation)
         {
             var viewModel = new AccommodationReservationViewModel(_navigationStore, _user, accommodation);
