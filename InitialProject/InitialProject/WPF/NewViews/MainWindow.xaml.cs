@@ -1,5 +1,6 @@
 ﻿using InitialProject.WPF.ViewModels;
 using InitialProject.WPF.ViewModels.GuestOne;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,29 @@ namespace InitialProject.WPF.NewViews
             {
                 if (mainVM.CurrentViewModel is LayoutViewModel viewModel)
                     HandleLayoutPanelKeyDown(viewModel);
+                if (Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.Left))
+                {
+                    if (mainVM.CurrentViewModel is AccommodationReservationViewModel vM1)
+                        vM1.NavigateAccommodationBrowserCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is ImageBrowserViewModel vM2)
+                        vM2.NavigateReservationFormCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is AccommodationReservationDatePickerViewModel vM3)
+                        vM3.OpenReservationFormCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is AccommodationReservationDetailsViewModel vM4)
+                        vM4.NavigateAnywhereAnytimeCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is AccommodationReservationMoveRequestViewModel vM5)
+                        vM5.NavigateMyResevationsCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is ViewModels.GuestOne.ForumCommentsViewModel vM6)
+                        vM6.NavigateBackCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is GuestRatingDetailsViewModel vM7)
+                        vM7.NavigateRatingsCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is OwnerCommentViewModel vM8)
+                        vM8.NavigateMyRequestsCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is RateAccommodationViewModel vM9)
+                        vM9.NavigateRatingsCommand.Execute(null);
+                    else if (mainVM.CurrentViewModel is StartForumViewModel vM10)
+                        vM10.NavigateBackCommand.Execute(null);
+                }
             }
         }
 

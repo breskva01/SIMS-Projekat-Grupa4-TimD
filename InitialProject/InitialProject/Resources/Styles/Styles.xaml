@@ -5,6 +5,7 @@
         <Setter Property="Foreground" Value="White" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="ToolTip" Value="Alt + ⬅" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
