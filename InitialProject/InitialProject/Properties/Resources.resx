@@ -250,7 +250,7 @@
     <value>Minimum days number ↗</value>
   </data>
   <data name="MinimumCancelationNotification:" xml:space="preserve">
-    <value>Minimum cancelation notification: </value>
+    <value>Minimum cancelation notice: </value>
   </data>
   <data name="MinimumDays:" xml:space="preserve">
     <value>Minimum days: </value>

@@ -457,7 +457,7 @@ namespace InitialProject.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimum cancelation notification: .
+        ///   Looks up a localized string similar to Minimum cancelation notice: .
         /// </summary>
         internal static string MinimumCancelationNotification_ {
             get {

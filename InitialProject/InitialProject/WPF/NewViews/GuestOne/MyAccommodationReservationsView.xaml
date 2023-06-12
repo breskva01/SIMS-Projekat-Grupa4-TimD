@@ -82,8 +82,8 @@
                     </TextBlock>
 
                     <TextBlock 
-                        Margin="0 0 0 5">
-                        Minimalni rok za otkazivanje: 
+                        Margin="0 0 0 5"
+                        Text="{local:Loc MinimumCancelationNotification:}"> 
                         <Run Text="{Binding Accommodation.MinimumCancelationNotice}"/>
                         <Run Text="{local:Loc days}"/>
                     </TextBlock>
