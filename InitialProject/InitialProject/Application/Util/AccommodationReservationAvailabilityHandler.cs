@@ -17,13 +17,16 @@ namespace InitialProject.Application.Util
         private Accommodation _accommodation;
         private Guest1 _guest;
         private List<AccommodationReservation> _existingReservations;
+        private List<AccommodationRenovation> _existingRenovations;
         private List<AccommodationReservation> _availableReservations;
         private DateOnly _currentDate => DateOnly.FromDateTime(DateTime.Now);
 
-        private readonly IAccommodationReservationRepository _repository;
-        public AccommodationReservationAvailabilityHandler(IAccommodationReservationRepository repository)
+        private readonly IAccommodationReservationRepository _reservationRepository;
+        private readonly IAccommodationRenovationRepository _renovationRepository;
+        public AccommodationReservationAvailabilityHandler(IAccommodationReservationRepository reservationRepository)
         {
-            _repository = repository;
+            _reservationRepository = reservationRepository;
+            _renovationRepository = RepositoryInjector.Get<IAccommodationRenovationRepository>();
         }
         private void StoreParamaters(DateOnly startDate, DateOnly endDate, int stayLength, Accommodation accommodation, Guest1 guest)
         {
@@ -32,15 +35,16 @@ namespace InitialProject.Application.Util
             _stayLength = stayLength;
             _accommodation = accommodation;
             _guest = guest;
-            _existingReservations = _repository.GetFilteredReservations(accommodationId: _accommodation.Id);
+            _existingReservations = _reservationRepository.GetFilteredReservations(accommodationId: _accommodation.Id);
             _availableReservations = new List<AccommodationReservation>();
+            _existingRenovations = _renovationRepository.GetFilteredRenovations(accommodationId: accommodation.Id);
         }
         public List<AccommodationReservation> GetAvailable(DateOnly startDate, DateOnly endDate, int stayLength,
-            Accommodation accommodation, Guest1 guest, int maxReservationCount = 3)
+            Accommodation accommodation, Guest1 guest, int maxReservationCount = 3, bool searchOutsideDateRange = true)
         {
             StoreParamaters(startDate, endDate, stayLength, accommodation, guest);
             FindInsideDateRange(maxReservationCount);
-            if (_availableReservations.Count == 0)
+            if (_availableReservations.Count == 0 && searchOutsideDateRange)
             {
                 FindOutsideDateRange(maxReservationCount);
             }   
@@ -75,25 +79,51 @@ namespace InitialProject.Application.Util
                 {
                     _availableReservations.Add(new AccommodationReservation(_accommodation, _guest, checkIn, checkOut));
                 }
-                daysOffset++;
+                if (!isBeforeDateRange)
+                    daysOffset++;
                 isBeforeDateRange = !isBeforeDateRange;
             }
         }
         private void SetStartingSearchDates()
         {
-            var reservationsInsideDateRange = _repository.GetFilteredReservations(accommodationId: _accommodation.Id,
-                                                                                  startDate: _startDate, endDate: _endDate);
-            if (reservationsInsideDateRange.Count == 0)
+            var reservationsInsideDateRange = _reservationRepository.GetFilteredReservations
+                (accommodationId: _accommodation.Id, startDate: _startDate, endDate: _endDate);
+
+            var renovationsInsideDateRange = _renovationRepository.GetFilteredRenovations
+                (accommodationId: _accommodation.Id, startDate: _startDate, endDate: _endDate);
+
+            if (reservationsInsideDateRange.Count == 0 && renovationsInsideDateRange.Count == 0)
                 _endDate = _startDate.AddDays(1);
             else
             {
-                _startDate = reservationsInsideDateRange.Min(r => r.CheckIn).AddDays(-_stayLength);
-                _endDate = reservationsInsideDateRange.Max(r => r.CheckOut);
+                DateOnly earliestCheckIn = reservationsInsideDateRange.Any()
+                    ? reservationsInsideDateRange.Min(r => r.CheckIn)
+                    : DateOnly.MaxValue;
+
+                DateOnly earliestRenovationStart = renovationsInsideDateRange.Any()
+                    ? DateOnly.FromDateTime(renovationsInsideDateRange.Min(r => r.Start))
+                    : DateOnly.MaxValue; 
+
+                DateOnly latestCheckOut = reservationsInsideDateRange.Any()
+                    ? reservationsInsideDateRange.Max(r => r.CheckOut)
+                    : DateOnly.MinValue;
+
+                DateOnly latestRenovationEnd = renovationsInsideDateRange.Any()
+                    ? DateOnly.FromDateTime(renovationsInsideDateRange.Max(r => r.End))
+                    : DateOnly.MinValue;
+
+                _startDate = (earliestCheckIn < earliestRenovationStart
+                    ? earliestCheckIn : earliestRenovationStart).AddDays(-_stayLength);
+                _endDate = latestCheckOut > latestRenovationEnd
+                    ? latestCheckOut : latestRenovationEnd;
             }
         }
         private bool IsAvailable(DateOnly checkIn, DateOnly checkOut)
         {
-            return !(checkIn < _currentDate || _existingReservations.Any(r => r.Overlaps(checkIn, checkOut)));
+            return !(checkIn < _currentDate ||
+                     _existingReservations.Any(r => r.Overlaps(checkIn, checkOut)) ||
+                     _existingRenovations.Any(r => r.Overlaps(checkIn, checkOut))
+                    );
         }
     }
 }

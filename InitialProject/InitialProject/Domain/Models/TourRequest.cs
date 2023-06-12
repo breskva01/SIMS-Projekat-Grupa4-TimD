@@ -30,6 +30,7 @@ namespace InitialProject.Domain.Models
         public DateTime LatestDate { get; set; } 
         public int TourId { get; set; }
         public bool IsPartOfComplexTour { get; set; }
+        public int OrderNumber { get; set; }
 
         public TourRequest()
         {

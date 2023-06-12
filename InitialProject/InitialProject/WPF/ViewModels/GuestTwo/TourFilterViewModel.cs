@@ -81,6 +81,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
                 return;
             }
             Cities = Locations.Where(l => l.Country == SelectedCountry).Select(l => l.City).ToList();
+            Cities.Sort();
         }
 
         private int _selectedMinDuration;
@@ -170,6 +171,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             _locationService = new LocationService();
             Locations = new ObservableCollection<Location>(_locationService.GetAll());
             Countries = Locations.Select(l => l.Country).Distinct().ToList();
+            Countries.Sort();
 
             _tourFilterSort = tourFilterSort;
             SelectedCountry = tourFilterSort.FilterCountry;

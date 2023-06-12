@@ -34,5 +34,38 @@ namespace InitialProject.Domain.Models
             };
             return csvValues;
         }
+
+        public override string? ToString()
+        {
+            return Country + " - " + City;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Location other = (Location)obj;
+            return City == other.City && Country == other.Country;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(City, Country);
+        }
+
+        public static bool operator ==(Location location1, Location location2)
+        {
+            if (ReferenceEquals(location1, location2))
+                return true;
+            if (location1 is null || location2 is null)
+                return false;
+            return location1.Equals(location2);
+        }
+
+        public static bool operator !=(Location location1, Location location2)
+        {
+            return !(location1 == location2);
+        }
     }
 }

@@ -25,6 +25,11 @@ namespace InitialProject.WPF.ViewModels.GuestOne
                 NavigationBarViewModel.SelectedTab = "AccommodationBrowser";
                 return;
             }
+            if (ContentViewModel is AnywhereAnytimeViewModel)
+            {
+                NavigationBarViewModel.SelectedTab = "AnywhereAnytime";
+                return;
+            }
             if (ContentViewModel is MyAccommodationReservationsViewModel)
             {
                 NavigationBarViewModel.SelectedTab = "MyReservations";
@@ -38,6 +43,11 @@ namespace InitialProject.WPF.ViewModels.GuestOne
             if (ContentViewModel is AccommodationRatingViewModel)
             {
                 NavigationBarViewModel.SelectedTab = "Ratings";
+                return;
+            }
+            if (ContentViewModel is ForumBrowserViewModel)
+            {
+                NavigationBarViewModel.SelectedTab = "Forums";
                 return;
             }
         }

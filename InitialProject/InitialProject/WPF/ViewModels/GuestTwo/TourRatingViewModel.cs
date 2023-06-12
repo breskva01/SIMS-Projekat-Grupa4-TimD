@@ -22,8 +22,37 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         public ObservableCollection<Location> Locations { get; set; }
         public ObservableCollection<Tour> UnratedTours { get; set; }
 
+        private Tour _selectedTour;
+        public Tour SelectedTour
+        {
+            get { return _selectedTour; }
+            set
+            {
+                _selectedTour = value;
+                if(value != null)
+                {
+                    IsTourSelected = true;
+                    OnPropertyChanged(nameof(IsTourSelected));
+                }
+                OnPropertyChanged(nameof(SelectedTour));
+            }
+        }
+
+        private bool isTourSelected;
+        public bool IsTourSelected
+        {
+            get { return isTourSelected; }
+            set
+            {
+                isTourSelected = value;
+                OnPropertyChanged(nameof(IsTourSelected));
+            }
+        }
+
         public ICommand RateTourCommand { get; }
         public ICommand MenuCommand { get; }
+        public ICommand BackCommand { get; }
+        public ICommand NotificationCommand { get; }
 
         public TourRatingViewModel(NavigationStore navigationStore, User user)
         {
@@ -44,14 +73,17 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             }
             UnratedTours = new ObservableCollection<Tour>(Tours.DistinctBy(t => t.Id));
 
-            RateTourCommand = new TourClickCommand(ShowRateTourView);
+            RateTourCommand = new ExecuteMethodCommand(ShowRateTourView);
             MenuCommand = new ExecuteMethodCommand(ShowGuest2MenuView);
+            BackCommand = new ExecuteMethodCommand(ShowGuest2InfoMenuView);
+            NotificationCommand = new ExecuteMethodCommand(ShowNotificationBrowserView);
 
         }
-        
-        private void ShowRateTourView(Tour tour)
+
+
+        private void ShowRateTourView()
         {
-            RateTourViewModel rateTourViewModel= new RateTourViewModel(_navigationStore, _user, tour);
+            RateTourViewModel rateTourViewModel= new RateTourViewModel(_navigationStore, _user, SelectedTour);
             var navigateCommand = new NavigateCommand(new NavigationService(_navigationStore, rateTourViewModel));
             navigateCommand.Execute(null);
         }
@@ -60,6 +92,20 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
         {
             Guest2MenuViewModel guest2MenuViewModel = new Guest2MenuViewModel(_navigationStore, _user);
             NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guest2MenuViewModel));
+            navigate.Execute(null);
+        }
+
+        private void ShowGuest2InfoMenuView()
+        {
+            Guest2InfoMenuViewModel guest2InfoMenuViewModel = new Guest2InfoMenuViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, guest2InfoMenuViewModel));
+            navigate.Execute(null);
+        }
+
+        private void ShowNotificationBrowserView()
+        {
+            NotificationBrowserViewModel notificationBrowserViewModel = new NotificationBrowserViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, notificationBrowserViewModel));
             navigate.Execute(null);
         }
 

@@ -66,7 +66,7 @@
             </Grid>
 
             <Separator Grid.Row="3" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
-            <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,5,50,5" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+            <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,5,60,5" Grid.ColumnSpan="2" HorizontalAlignment="Right">
                 <Image Source="/Resources/Images/backSquare.png" Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Right" >
                     <Image.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding BackCommand}" />

@@ -26,7 +26,7 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             _user = user;
             
             TourRequestCommand = new ExecuteMethodCommand(ShowRequestView);
-            //ComplexTourRequestCommand = new TourTrackingCommand(ShowComplexRequestView, user);
+            ComplexTourRequestCommand = new ExecuteMethodCommand(ShowComplexRequestView);
             RequestStatsCommand = new ExecuteMethodCommand(ShowRequestStatsView);
             MenuCommand = new ExecuteMethodCommand(ShowMainMenuView);
         }
@@ -40,15 +40,15 @@ namespace InitialProject.WPF.ViewModels.GuestTwo
             navigate.Execute(null);
         }
         
-        /*
+        
         private void ShowComplexRequestView()
         {
-            ComplexTourRequestViewModel complexTourRequestViewModel = new ComplexTourRequestViewModel(_navigationStore, _user);
-            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, complexTourRequestViewModel));
+            ComplexTourRequest1ViewModel complexTourRequest1ViewModel = new ComplexTourRequest1ViewModel(_navigationStore, _user);
+            NavigateCommand navigate = new NavigateCommand(new NavigationService(_navigationStore, complexTourRequest1ViewModel));
 
             navigate.Execute(null);
         }
-        */
+        
         private void ShowRequestStatsView()
         {
             TourRequestStats1ViewModel tourRequestStats1ViewModel = new TourRequestStats1ViewModel(_navigationStore, _user);

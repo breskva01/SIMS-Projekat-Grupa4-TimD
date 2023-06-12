@@ -74,7 +74,7 @@
                         <MouseBinding MouseAction="LeftClick" Command="{Binding NextCommand}" />
                     </Image.InputBindings>
                 </Image>
-                <TextBlock Text="NEXT" Foreground="#333333" FontSize="24" VerticalAlignment="Center" Margin="0,0,30,0">
+                <TextBlock Text="NEXT" Foreground="#333333" FontSize="24" VerticalAlignment="Center" Margin="0,0,60,0">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding NextCommand}" />
                     </TextBlock.InputBindings>

@@ -23,12 +23,14 @@ namespace InitialProject.Domain.Models
         public ComplexRequestStatus Status { get; set; }
         public List<TourRequest> TourRequests { get; set; }
         public List<int> TourRequestIDs { get; set; }
+        public List<string> RequestParts { get; set; }
 
         public ComplexTourRequest()
         {
             Status = ComplexRequestStatus.OnHold;
             TourRequests = new List<TourRequest>();
             TourRequestIDs = new List<int>();
+            RequestParts = new List<string>();
         }
         
 

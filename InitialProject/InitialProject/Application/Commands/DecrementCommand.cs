@@ -1,4 +1,5 @@
-﻿using InitialProject.WPF.ViewModels.GuestOne;
+﻿using InitialProject.WPF.ViewModels;
+using InitialProject.WPF.ViewModels.GuestOne;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,9 +13,9 @@ namespace InitialProject.Application.Commands
     {
         private readonly Func<int> _getValue;
         private readonly Action<int> _setValue;
-        private readonly AccommodationBrowserViewModel _viewModel;
+        private readonly ViewModelBase _viewModel;
 
-        public DecrementCommand(AccommodationBrowserViewModel viewModel, Func<int> getValue,
+        public DecrementCommand(ViewModelBase viewModel, Func<int> getValue,
                                 Action<int> setValue)
         {
             _getValue = getValue;
@@ -35,8 +36,8 @@ namespace InitialProject.Application.Commands
         }
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(_viewModel.GuestCount) ||
-               e.PropertyName == nameof(_viewModel.NumberOfDays))
+            if(e.PropertyName == "GuestCount" ||
+               e.PropertyName == "NumberOfDays")
             {
                 OnCanExecuteChanged(null);
             }

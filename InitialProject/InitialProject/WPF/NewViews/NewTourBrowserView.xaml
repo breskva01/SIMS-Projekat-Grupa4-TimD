@@ -131,7 +131,7 @@
                         <MouseBinding MouseAction="LeftClick" Command="{Binding FilterCommand}" />
                     </TextBlock.InputBindings>
                 </TextBlock>
-                <Image Source="/Resources/Images/sort.png" Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" >
+                <Image Source="/Resources/Images/sort.png" Height="40" Width="40" Margin="30,10,5,10" VerticalAlignment="Center" >
                     <Image.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" />
                     </Image.InputBindings>

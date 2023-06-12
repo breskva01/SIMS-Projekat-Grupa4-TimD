@@ -10,14 +10,29 @@
         xmlns:vmsg1="clr-namespace:InitialProject.WPF.ViewModels.GuestOne"
         xmlns:vmsg2="clr-namespace:InitialProject.WPF.ViewModels.GuestTwo"
         mc:Ignorable="d"
-        Title="TravelBuddy" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
-        
+        Title="TravelBuddy" Height="800" Width="1030" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         WindowState="Normal">
     <Window.Icon>
         <BitmapImage UriSource="\Resources\Images\logoB.png"/>
     </Window.Icon>
     <Grid>
         <Grid.Resources>
+            <DataTemplate DataType="{x:Type vmsg2:MyReservationsViewModel}">
+                <views:MyReservationsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:ComplexTourRequestDetailsViewModel}">
+                <views:ComplexTourRequestDetailsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:ComplexTourRequestBrowserViewModel}">
+                <views:ComplexTourRequestBrowserView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:ComplexTourRequest1ViewModel}">
+                <views:ComplexTourRequest1View/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg2:ComplexTourRequest2ViewModel}">
+                <views:ComplexTourRequest2View/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vmsg2:FreeVoucherProgressViewModel}">
                 <views:FreeVoucherProgressView />
             </DataTemplate>
@@ -179,6 +194,27 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:TourRequestsStatsViewModel}">
                 <views:TourRequestsStatsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AnywhereAnytimeViewModel}">
+                <viewsg1:AnywhereAnytimeBrowser/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:AccommodationReservationDetailsViewModel}">
+                <viewsg1:AccommodationReservationDetailsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:ForumBrowserViewModel}">
+                <viewsg1:ForumBrowser/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:StartForumViewModel}">
+                <viewsg1:StartForumForm/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmsg1:ForumCommentsViewModel}">
+                <viewsg1:ForumCommentsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ForumSearchViewModel}">
+                <views:ForumSearchView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ForumCommentsViewModel}">
+                <views:ForumCommentsView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:GuideProfileViewModel}">
                 <views:GuideProfileView/>

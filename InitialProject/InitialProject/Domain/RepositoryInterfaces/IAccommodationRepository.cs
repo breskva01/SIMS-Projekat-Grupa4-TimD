@@ -11,7 +11,7 @@ namespace InitialProject.Domain.RepositoryInterfaces
     {
         List<Accommodation> GetFiltered(string keyWords, AccommodationType type, int guestNumber, int numberOfDays);
         List<Accommodation> Sort(List<Accommodation> accommodations, string criterium);
-        public void Add(string name, string country, string city, string address, AccommodationType type, 
+        public void RegisterAccommodation(string name, Location location, string address, AccommodationType type, 
             int maximumGuests, int minimumDays, int minimumCancelationNotice, List<string> pictureURLs, User owner);
         public List<Accommodation> GetAllOwnersAccommodations(int id);
         public void UpdateRenovationStatus(int id);

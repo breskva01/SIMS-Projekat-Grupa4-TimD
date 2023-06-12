@@ -24,7 +24,7 @@ namespace InitialProject.Application.Commands
 
         public override bool CanExecute(object? parameter)
         {
-            return !string.IsNullOrEmpty(_tourReservationViewModel.NumberOfGuests) && base.CanExecute(parameter);
+            return !string.IsNullOrEmpty(_tourReservationViewModel.NumberOfGuests.ToString()) && base.CanExecute(parameter);
         }
         public override void Execute(object? parameter)
         {

@@ -5,22 +5,79 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InitialProject.WPF.NewViews" 
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="800">
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="20" Margin="198,227,0,0" TextWrapping="Wrap" Text="Enter number of guests:" VerticalAlignment="Top" Width="160" FontSize="14"/>
-        <TextBox x:Name ="tbNumberOfGuests" HorizontalAlignment="Left" Height="20" Margin="405,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
-        <StackPanel HorizontalAlignment="Center" Height="202" Margin="10,10,0,0" VerticalAlignment="Top" Width="440">
-            <TextBlock Height="25" TextWrapping="Wrap" Text="Tour reservation" Width="145" FontSize="18" FontWeight="Bold" />
-            <TextBlock Height="20" TextWrapping="Wrap" Text="Tour name: " Width="64" HorizontalAlignment="Left"/>
-            <TextBlock x:Name="tbTourName" Text="{Binding SelectedTour.Name}" Height="20" TextWrapping="Wrap"  Width="440" HorizontalAlignment="Left"/>
-            <TextBlock Height="20" TextWrapping="NoWrap" Text="Description: " Width="71" HorizontalAlignment="Left"/>
-            <TextBlock x:Name="tbTourDescription" Text="{Binding SelectedTour.Description}" Height="81" TextWrapping="Wrap"  Width="440"/>
-            <TextBlock Text="Available spots: " TextWrapping="Wrap"/>
-            <TextBlock x:Name="tbTourAvailableSpots" Text="{Binding AvailableSpots}" Height="20" TextWrapping="Wrap" Width="440"/>
-
-        </StackPanel>
-        <Button Content="Reserve" Command="{Binding ReserveCommand}" HorizontalAlignment="Left" Height="20" Margin="490,299,0,0" VerticalAlignment="Top" Width="104" />
-        <Button Content="Use Voucher" Command="{Binding UseVoucherCommand}" HorizontalAlignment="Left" Height="20" Margin="353,299,0,0" VerticalAlignment="Top" Width="104" />
-        <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Left" Height="18" Margin="226,300,0,0" VerticalAlignment="Top" Width="104" />
-    </Grid>
+             d:DesignHeight="750" d:DesignWidth="430">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40" Width="430" Height="750" Background="#d7e5ec">
+        <Grid VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Dock on the top -->
+                <RowDefinition Height="Auto"/>
+                <!-- Separator -->
+                <RowDefinition Height="609"/>
+                <!-- Blank bottom part -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,0"  HorizontalAlignment="Center">
+                <Image Source="/Resources/Images/menu.png" Height="30" Width="30" Margin="0 10 0 10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding MenuCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <Image Source="/Resources/Images/notify.png" Height="30" Width="30" Margin="5,0,30,0" VerticalAlignment="Center">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NotificationCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="Tour Reservation" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Foreground="#333333" Margin="10,0,10,0"/>
+                <Image Source="/Resources/Images/logo.png" Height="40" Width="40" HorizontalAlignment="Right" Margin="30 0 0 0" VerticalAlignment="Center" />
+            </StackPanel>
+            <Separator Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
+            <StackPanel  Grid.Row="2" Background="White" Margin="0 5">
+                <StackPanel Orientation="Horizontal" Height="40" Margin="10 30 0 0" >
+                    <TextBlock Height="40" FontSize="24" TextWrapping="Wrap" Text="Tour name: " Foreground="#FF6092CC" FontWeight="SemiBold" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="tbTourName" FontSize="24"  Text="{Binding SelectedTour.Name}" Height="40" Width="Auto" TextWrapping="Wrap"  HorizontalAlignment="Left"/>
+                </StackPanel>
+                <TextBlock Height="40" TextWrapping="NoWrap" Text="Description: " Foreground="#FF6092CC"  Width="Auto" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="10 10 0 0" FontSize="24"/>
+                <TextBlock x:Name="tbTourDescription" FontSize="20" Text="{Binding SelectedTour.Description}"  Height="150" TextWrapping="Wrap"  Width="Auto" Margin="10 0"/>
+                <Image Source="{Binding SelectedTour.PictureURL}" Width="130" Height="130" Margin="5,10,20,0"  />
+                <StackPanel Orientation="Horizontal" Height="40" Margin="10 10 0 0">
+                    <TextBlock Text="Available spots: " FontWeight="SemiBold" FontSize="24" Height="40" VerticalAlignment="Center" Foreground="#FF6092CC" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="tbTourAvailableSpots" FontSize="24" Text="{Binding AvailableSpots}" Height="40" TextWrapping="Wrap" Width="Auto"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                    <TextBlock Text="Enter the number of guests:" FontWeight="SemiBold" Margin="0,20,25,20" FontSize="24" Foreground="#FF6092CC" />
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="20"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" FontSize="24" Text="{Binding NumberOfGuests}" IsReadOnly="True" Background="#d7e5ec"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <Button Content="+" FontSize="14" FontWeight="Bold" Background="#FF6092CC" Command="{Binding IncreaseNumberCommand}"  />
+                            <Button Content="-" FontSize="14" FontWeight="Bold" Background="#FAA0A0" Command="{Binding DecreaseNumberCommand}" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10 10 0 0" Height="40">
+                    <TextBlock Text="Use voucher: " Foreground="#FF6092CC" FontWeight="SemiBold" TextWrapping="Wrap" Height="40" FontSize="24" Margin="0,0,80,0"/>
+                    <ComboBox  FontSize="24" HorizontalAlignment="Center" ItemsSource="{Binding Vouchers}" SelectedItem="{Binding SelectedVoucher}" DisplayMemberPath="Name" SelectedValuePath="Id" Width="150" Height="35" Margin="20,0,0,0"  />
+                </StackPanel>
+            </StackPanel>
+            <Separator Grid.Row="3" Margin="0,0,0,0" Grid.ColumnSpan="2"/>
+            <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,5,0,5" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <Button Command="{Binding ReserveCommand}" Content="Reserve" Background="#779ecb" Foreground="White" Padding="10" Margin="0,0,30,0" FontSize="24"  Height="50" Width="180" BorderBrush="Transparent" Cursor="Hand"  />
+                <Image Source="/Resources/Images/backSquare.png" Height="40" Width="40" Margin="15,10,5,10" VerticalAlignment="Center" >
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding CancelCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Text="BACK" Foreground="#333333" HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" VerticalAlignment="Center">
+                    <TextBlock.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding CancelCommand}" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

@@ -15,8 +15,12 @@ namespace InitialProject.Domain.RepositoryInterfaces
         public List<ComplexTourRequest> GetApproved(List<ComplexTourRequest> userRequests);
         public List<ComplexTourRequest> GetOnHold();
         public ComplexTourRequest GetById(int complexTourRequestId);
-        public List<ComplexTourRequest> GetByUser(int userId);
+        public List<ComplexTourRequest> GetByUser(int userId, List<ComplexTourRequest> complexTourRequests);
         public List<ComplexTourRequest> CheckIfInvalid(List<ComplexTourRequest> complexTourRequests);
+        public List<ComplexTourRequest> CheckIfApproved(List<ComplexTourRequest> complexTourRequests);
+        public bool AreRequestsPartiallyApproved(ComplexTourRequest complexTourRequest);
+        public bool AreAllRequestsApproved(ComplexTourRequest complexTourRequest);
+        public bool IsAnyRequestApproved(ComplexTourRequest complexTourRequest);
         public DateTime GetEarliestDate(ComplexTourRequest complexTourRequest);
         public int NextId();
         public ComplexTourRequest Save(ComplexTourRequest complexTourRequest);
